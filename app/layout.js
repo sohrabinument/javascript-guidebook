@@ -1,66 +1,62 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { LanguageProvider } from '@/context/LanguageContext';
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const APP_NAME = "রিয়াক্টিভ এক্সিলারেটর";
-const APP_DEFAULT_TITLE = "রিয়াক্টিভ এক্সিলারেটর ডকুমেন্টেশন";
-const APP_TITLE_TEMPLATE = "%s – রিয়াক্টিভ এক্সিলারেটর";
+const APP_NAME = "জাভাস্ক্রিপ্ট গাইডবুক";
+const APP_DEFAULT_TITLE = "জাভাস্ক্রিপ্ট গাইডবুক - A Comprehensive Guide";
+const APP_TITLE_TEMPLATE = "%s – জাভাস্ক্রিপ্ট গাইডবুক";
 const APP_DESCRIPTION =
-    "রিয়াক্ট ও নেক্সট জে এস এর বাংলায় লিখা ডকুমেন্টেশন যা একজন ডেভেলপারকে রিয়াক্ট ও নেক্সট জে এস নিজের ভাষায় আরও সহজ করে বুঝতে সাহায্য করবে।";
+  "জাভাস্ক্রিপ্ট শেখার জন্য একটি সম্পূর্ণ গাইড, যা বাংলা এবং ইংরেজি ভাষায় উপলব্ধ। এটি ডেভেলপারদের জাভাস্ক্রিপ্ট সহজভাবে শিখতে সাহায্য করবে।";
 
 export const metadata = {
-    applicationName: APP_NAME,
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_DEFAULT_TITLE,
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
     title: {
-        default: APP_DEFAULT_TITLE,
-        template: APP_TITLE_TEMPLATE,
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
     },
     description: APP_DESCRIPTION,
-    manifest: "/manifest.json",
-    appleWebApp: {
-        capable: true,
-        statusBarStyle: "default",
-        title: APP_DEFAULT_TITLE,
-        // startUpImage: [],
+  },
+  twitter: {
+    card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
     },
-    formatDetection: {
-        telephone: false,
-    },
-    openGraph: {
-        type: "website",
-        siteName: APP_NAME,
-        title: {
-            default: APP_DEFAULT_TITLE,
-            template: APP_TITLE_TEMPLATE,
-        },
-        description: APP_DESCRIPTION,
-    },
-    twitter: {
-        card: "summary",
-        title: {
-            default: APP_DEFAULT_TITLE,
-            template: APP_TITLE_TEMPLATE,
-        },
-        description: APP_DESCRIPTION,
-    },
+    description: APP_DESCRIPTION,
+  },
 };
 
 export const viewport = {
-    themeColor: "#000000",
+  themeColor: "#F7DF1E", // JavaScript's brand color
 };
 
 export default function RootLayout({ children }) {
-    return (
-        <html lang='en'>
-            <body className={inter.className}>
-                <LanguageProvider>
-                    {children}
-                </LanguageProvider>
-                <SpeedInsights />
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <LanguageProvider>{children}</LanguageProvider>
+        <SpeedInsights />
+      </body>
+    </html>
+  );
 }
-

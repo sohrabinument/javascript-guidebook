@@ -1,15 +1,23 @@
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
+import { useRouter } from "next/router";
+import "@/styles/custom.css";
+
+const Logo = () => {
+  const { asPath } = useRouter();
+  const isEnglish = asPath.includes("-en");
+  return isEnglish ? "Javascript GuideBook" : "জাভাস্ক্রিপ্ট গাইডবুক";
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  logo: <span>জাভাস্ক্রিপ্ট গাইডবুক</span>,
+  logo: Logo,
   project: {
-    link: "https://github.com/yourusername/javascript-guidebook",
+    link: "https://github.com/md-sohrab-hossain/javascript-guidebook",
   },
   docsRepositoryBase:
-    "https://github.com/yourusername/javascript-guidebook/tree/main",
+    "https://github.com/md-sohrab-hossain/javascript-guidebook",
   footer: {
-    text: `MIT ${new Date().getFullYear()} © জাভাস্ক্রিপ্ট গাইডবুক.`,
+    text: `Sohrab Hossain ${new Date().getFullYear()} © Javascript GuideBook.`,
   },
   useNextSeoProps() {
     return {
