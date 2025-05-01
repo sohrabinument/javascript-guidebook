@@ -1,7 +1,7 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { LanguageProvider } from "@/context/LanguageContext";
+import { LanguageProvider } from "@/providers/LanguageProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

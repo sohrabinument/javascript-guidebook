@@ -2,9 +2,6 @@ const withNextra = require("nextra")({
   theme: "nextra-theme-docs",
   themeConfig: "./theme.config.jsx",
   defaultShowCopyCode: true,
-  flexsearch: {
-    codeblocks: true,
-  },
   staticImage: true,
   latex: true,
 });
@@ -19,12 +16,12 @@ const nextConfig = {
   },
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   images: {
-    domains: ['img.icons8.com'],
+    domains: ["img.icons8.com"],
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'img.icons8.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "img.icons8.com",
+        pathname: "/**",
       },
     ],
     unoptimized: false,

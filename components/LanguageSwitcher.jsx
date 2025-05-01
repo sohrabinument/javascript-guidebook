@@ -1,21 +1,14 @@
 "use client";
 
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage } from "@/providers/LanguageProvider";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 export function LanguageSwitcher() {
-  const { language, setLanguage } = useLanguage();
-  const router = useRouter();
-
-  const routeMappings = {
-    bn: "/javascript-guidebook-bn",
-    en: "/javascript-guidebook-en",
-  };
+  const { language, setLanguage, mounted } = useLanguage();
 
   const handleLanguageChange = (newLang) => {
+    if (!mounted) return;
     setLanguage(newLang);
-    router.push(routeMappings[newLang]);
   };
 
   return (
@@ -28,6 +21,7 @@ export function LanguageSwitcher() {
             : "hover:bg-gray-100 dark:hover:bg-gray-800"
         }`}
         aria-label="Switch to English"
+        disabled={!mounted}
       >
         <span role="img" aria-label="English">
           <Image
@@ -47,6 +41,7 @@ export function LanguageSwitcher() {
             : "hover:bg-gray-100 dark:hover:bg-gray-800"
         }`}
         aria-label="Switch to Bengali"
+        disabled={!mounted}
       >
         <span role="img" aria-label="Bengali">
           <Image
