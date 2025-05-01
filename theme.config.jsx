@@ -35,7 +35,7 @@ export default {
   banner: {
     key: "2.0-release",
     text: (
-      <a href="https://github.com/deveripon/" target="_blank">
+      <a href="https://github.com/md-sohrab-hossain/" target="_blank">
         🎉 follow my github →
       </a>
     ),
