@@ -143,7 +143,6 @@ function sum(a, b) {
 
 - **Issues**: [GitHub Issues](https://github.com/md-sohrab-hossain/javascript-guidebook/issues)
 - **Email**: [md.soharubhossen@gmail.com](mailto:md.soharubhossen@gmail.com)
-- **Discord**: [Join our community](your-discord-link)
 
 ---
 
