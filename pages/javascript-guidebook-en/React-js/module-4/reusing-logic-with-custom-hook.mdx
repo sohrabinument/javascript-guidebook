@@ -1,19 +1,19 @@
 import { Steps } from "nextra/components";
 
-রিয়াক্টে বিভিন্ন কাজ করার জন্য বিভিন্ন বিল্ট-ইন হুক রয়েছে যেমনঃ `useState`, `useEffect`,`useContext`. কিন্তু কাজ করতে গিয়ে আপনার মাঝে মধ্যে মনে হতে পারে যে, আমার এই কাজটার জন্য যদি রিয়াক্টের কোন হুক থাকতো ! আপনি এমন সিচুয়েশনে আপনার নিজের একটা কাস্টম হুক বানাতে পারেন।
+React has various built-in hooks for different tasks such as `useState`, `useEffect`, and `useContext`. But while working, you might sometimes think, "I wish React had a hook for this task!" In such situations, you can create your own custom hook.
 
-আমরা এই লিসনে সেটাই জানবো যে, কাস্টম হুক কি ? কিভাবে বানাতে হয় ইত্যাদি বিস্তারিত।
+In this lesson, we'll learn what a custom hook is and how to create one in detail.
 
 ### Custom Hooks: Sharing logic between components
 
-ধরুন আপনি এমন একটা এপ্লিকেশন বানাচ্ছেন যেখানে আপনাকে বার বার চেক করতে হয় যে ইউজার `online` নাকি `offline`। যদি ইউজার অনলাইনে থাকে তাহলে আপনি অনলাইন নামে একটা স্ট্যাটাস দেখাতে চান আর অফলাইন হয়ে গেলে অফলাইন দেখাতে চান।
+Let's say you're building an application where you need to frequently check if the user is `online` or `offline`. If the user is online, you want to show a status saying online, and if offline, you want to show offline.
 
-তাহলে আপনাকে দুইটা কাজ করা লাগবে,
+You'll need to do two things:
 
-1. একটা স্টেট লাগবে যেটা ট্র্যাক করবে ইউজার অনলাইন নাকি অফলাইন আর সেটা JSX এর মাধ্যমে UI তে দেখাবে
-2. ব্রাউজারের অনলাইন এবং অফলাইন ইভেন্টকে এক্সেস করার জন্য একটা ইফেক্ট লাগবে যেটা স্টেট কে আপডেট করবে।
+1. You'll need a state to track whether the user is online or offline, and display it in the UI through JSX
+2. You'll need an effect to access the browser's online and offline events, which will update the state.
 
-এক্ষেত্রে আপনার কোড হবে এমনঃ
+In this case, your code would look like this:
 
 ```jsx
 import { useEffect, useState } from "react";
@@ -43,22 +43,22 @@ const StatusBar = () => {
 export default StatusBar;
 ```
 
-এবং এতে আপনার কাজ হয়ে যাবে, কিন্তু ধরুন আপনি এমন আরও একটা কম্পোনেন্ট বানালেন যেখানে আপনাকে ইউজার অনলাইনে থাকলে একটা কিছু দেখাতে হবে আর যদি অফলাইন হয়ে যায় সেক্ষেত্রে আরেকটা কিছু দেখাতে হবে।
+This will accomplish your task, but let's say you create another component where you need to show something if the user is online and something else if they're offline.
 
-ধরুন আরেকটা কম্পোনেন্টে একটা `Play Now` বাটন আছে, সেই বাটনটা ডিজেবল থাকবে যদি ইউজার এর নেটওয়ার্ক অফলাইন হয়ে যায় এবং সেক্ষেত্রে বাটনের টেক্সট দেখাবে `Reconnecting...`। এক্ষেত্রেও কিন্তু আপনাকে ইউজারের নেটওয়ার্ক স্ট্যাটাস টাই জানা লাগছে, এখন আপনি চাইলে সেই আগের কম্পোনেন্ট থেকে কোডটা কপি করে এই কম্পোনেন্টে পেস্ট করেও কাজ করে ফেলতে পারেন। কিন্তু এটা কোনভাবেই কোন এফিসিয়েন্ট উপায় হলোনা।
+Let's say you have a `Play Now` button in another component that should be disabled if the user's network goes offline, and in that case, the button's text should show `Reconnecting...`. In this case too, you need to know the user's network status. You could copy and paste the code from the previous component into this component to get the job done. But this wouldn't be an efficient approach at all.
 
-কিন্তু তার চাইতে যদি এমন করা যেত যে, ইউজার অনলাইন নাকি অফলাইন এই স্টেটসহ লজিকটাকে একটা আলাদা রি-ইউজেবল কাস্টম হুক বানিয়ে নেয়া যেত ? তাহলে আমরা যত খুশি,যেখানে খুশি সেটাকে রি-ইউজ করতে পারতাম।
+But what if you could turn the logic of checking whether the user is online or offline, along with the state, into a separate reusable custom hook? Then we could reuse it as much as we want, wherever we want.
 
-এই স্টেটফুল লজিকগুলোকে একটা আলাদা হুক বানিয়ে নেয়টাই হলো একটা কাস্টম হুক বানানো। চলুন আগের লজিকটাকে একটা কাস্টম হুকে কনভার্ট করি।
+Creating a custom hook means taking these stateful logics and turning them into a separate hook. Let's convert the previous logic into a custom hook.
 
 ### Extracting your own custom Hook from a component
 
 <Steps>
-    ### প্রথমে হুকের জন্য একটা আলাদা ফাইল বানাবো এবং এবং তাতে কাস্টম হুক বানানোর জন্য একটা ফাংশন ডিক্লেয়ার করবো।
+    ### First, I'll create a separate file for the hook and declare a function for creating the custom hook.
 
-    আমাদেরকে একটা আলাদা ফাইল বানাতে হবে, ফাইলের নাম আমরা যেকোন কিছু দিতে পারি, কিন্তু কনভেনশন হলো যেই হুক বানাচ্ছি সেই হুকের সাথে মিলিয়ে ফাইলের নামটা দেওয়া । এবং হুকের জন্য যেই ফাংশনটা লিখবো সেটাও যেন যেই কাজ করতে চাচ্ছি, একদম সেই কাজ স্পেসিফিক হয়। আর অবশ্যই ফাংশনের নামের শুরুতে `use` দিয়ে শুরু করতে হবে এবং তার পরের প্রথম অক্ষর বড় হাতের দিয়ে শুরু করতে হবেনা।
+    We need to create a separate file. We can name the file anything, but the convention is to name it after the hook we're creating. And the function we write for the hook should be very specific to the task we want to accomplish. And the function name must start with `use` and the first letter after that should not be capitalized.
 
-    এই উদাহরণে আমরা ইউজারের `online` স্ট্যাটাস চেক করবো,আর তাই আমরা হুকের নাম দিচ্ছি `useOnlineStatus`।
+    In this example, we're checking the user's `online` status, so we're naming the hook `useOnlineStatus`.
 
     ```jsx filename="useOnlineStatus.js" /useOnlineStatus/
     export default function useOnlineStatus(){
@@ -67,7 +67,7 @@ export default StatusBar;
 
     ```
 
-### তারপর কম্পোনেন্টের ভিতর আমরা যেই লজিক লিখেছিলাম সেটা কম্পোনেন্ট থেকে cut করে এনে হুকের ভিতরে paste করতে হবে।
+### Then we need to cut the logic we wrote inside the component and paste it inside the hook.
 
 ```jsx {4-20}
 import { useEffect, useState } from "react";
@@ -95,9 +95,9 @@ export default function useOnlineStatus() {
 }
 ```
 
-### তারপর আমদের যেই ভ্যালুটা বা ভ্যারিয়েবলটা আমাদের কম্পোনেন্টে দরকার হবে সেটা হুকের ফাংশন থেকে রিটার্ন করে দিতে হবে।
+### Then we need to return the value or variable that we'll need in our component from the hook function.
 
-এক্ষেত্র যদি একাধিক ভ্যারিয়েবল প্রয়োজন হয় তাহলে অবজেক্ট আকারে রিটার্ন করা যেতে পারে। যেহেতু আমাদের কম্পোনেন্টর শুধু অনলাইন স্ট্যাটাস টা দরকার তাই আমরা এখান থেকে শুধু অনলাইন `isOnline` রিটার্ন করে দিচ্ছি।
+In case multiple variables are needed, they can be returned as an object. Since our component only needs the online status, we're only returning `isOnline` from here.
 
 ```jsx {21-24}
 import { useEffect, useState } from "react";
@@ -126,7 +126,7 @@ export default function useOnlineStatus() {
 }
 ```
 
-### তারপর কম্পোনেন্টের ভিতরে টপ লেভেলে হুকটাকে কল করে `isOnline` টা বের করে কন্ডিশনালি কাজ করতে পারি।
+### Then inside the component at the top level, we can call the hook to extract `isOnline` and work conditionally.
 
 ```jsx
 import useOnlineStatus from "../../hooks/useOnlineStatus";
@@ -141,28 +141,28 @@ export default StatusBar;
 
 </Steps>
 
-এই কয়টা স্টেপেই হয়ে গেলও আমাদের কাস্টম হুক। এখন এই হুক কে আমাদের যতবার খুশি,আর যেখানে খুশি ব্যাবহার করতে পারবো।
+With these few steps, we've created our custom hook. Now we can use this hook as many times as we want, wherever we want.
 
 ### Hook names always start with `use`
 
-রিয়াক্ট এপ্লিকেশনে কম্পোনেন্ট এবং হুকের জন্যে নিচের নেমিং কনভেনশন ফলো করতে হয়,
+In React applications, the following naming conventions need to be followed for components and hooks:
 
-1. **React component names must start with a capital letter** রিয়াক্টের কম্পোনেন্টের নামের প্রথম অক্ষর বড় হাতের দিয়ে শুরু করতে হয়।
-2. **Hook names must start with use followed by a capital letter** হুকের নামের শুরুতে `use` দিয়ে শুরু করতে হবে এবং তারপরের প্রথম অক্ষর অবশ্যই বড় হাতের দিতে হবে।
+1. **React component names must start with a capital letter**
+2. **Hook names must start with use followed by a capital letter**
 
 ### Should all functions called during rendering start with the use prefix?
 
-না, নরমাল ফাংশনগুলোর নাম কখনও `use` দিয়ে শুরু করতে হয়না। `use` প্রিফিক্স একমাত্র হুকের (বিল্ট-ইন অথবা কাস্টম হুক) নামের শুরুতে ব্যাবহার করতে হবে।
+No, regular functions should never start with `use`. The `use` prefix should only be used at the beginning of hook names (built-in or custom hooks).
 
-**যদি কোন ফাংশন তার ভিতরে রিয়াক্টের কোন হুক কে ব্যাবহার না করে, তাহলে তাকে হুক না বানিয়ে নরমাল ফাংশন হিসেবে ব্যাবহার করতে হবে। কেননা রেগুলার ফাংশন হিসেবে লিখলে আপনি এটাকে কম্পোনেন্ট এর যেকোন জায়গায় ব্যাবহার করতে পারবেন অন্যদিকে হুক হিসেবে ব্যাবহার করলে এটাকে শুধু কম্পোনেন্ট এর টপ লেবেলে ব্যাবহার করতে হবে।**
+**If a function doesn't use any React hooks internally, then it should be used as a regular function rather than a hook. This is because if you write it as a regular function, you can use it anywhere in your component, whereas if you use it as a hook, you can only use it at the top level of your component.**
 
 ### When to use custom Hooks
 
-**আপনাকে আপনার কোডের প্রতিটা ছোট ছোট ডুপ্লিকেট কমানোর জন্য কাস্টম হুক বানানোর দরকার নেই, আপনি কিছু কিছু যৌক্তিক ডুপ্লিকেট করতে পারবেন, আর এটা করা ভালো।**
+**You don't need to create a custom hook to reduce every small duplication in your code. You can duplicate some logical parts, and it's good to do so.**
 
-**আপনি যখন কোন ইফেক্ট ব্যাবহার করবেন, তখন আপনি রিয়াক্টের বাহিরের কোন কিছুকে এক্সেস করতে চাইছেন, এপ্নি হয়তো একবার একটা ইফেক্ট লিখছেন এবং এই এফেক্ট টা আপনাকে অনেক অনেক কম্পোনেন্টে ব্যাবহার করতে হবে, এই ক্ষেত্রে আপনি ইফেক্টকে কাস্টম হুক বানিয়ে নিতে পারেন**
+**When you use an effect, you're trying to access something outside React. You might be writing an effect once and need to use it in many components. In such cases, you can turn the effect into a custom hook.**
 
 ### Custom Hooks help you migrate to better patterns
 
-ইফেক্টগুলো হলো `Escape Hatch`। আপনি যখন কোন ইফেক্ট ব্যাবহার করছেন তখন আপনি রিয়াক্টের বাহিরের কোন API কে এক্সেস করছেন। রিয়াক্ট টিম এটা নিয়ে প্রতিনিয়ত কাজ করে যাচ্ছে যাতে আপনাকে খুব বেশি ইফেক্ট ব্যবহার না করতে হয়। তার ইফেক্টগুলোর জন্য কিছু বিল্ট-ইন হুক দিয়ে দিবে, তাই আপনি যদি আপনার বর্তমান কোডবেজের ইফেক্টগুলোকে কাস্টম হুক বানিয়ে ব্যাবহার করেন তাহলে আগামী ভার্সনে রিয়াক্ট যখন এসবের জন্য বিল্ট ইন হুক রিলিজ করবে তখন খুব সহজেই আপনি সেগুলো ব্যবহার করে খুব কম চেঞ্জ করার মাধ্যমে আপনি আপনার হুকগুলোকে সেগুলোতে মাইগ্রেট করতে পারবেন।
+Effects are an `Escape Hatch`. When you use an effect, you're accessing an API outside of React. The React team is constantly working on this so that you don't have to use too many effects. They'll provide some built-in hooks for effects, so if you use your current codebase's effects as custom hooks, when React releases built-in hooks for these in future versions, you can easily migrate your hooks to them with very little change.
 

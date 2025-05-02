@@ -1,26 +1,26 @@
 ### You Might Not Need an Effect
 
-ইফেক্টকে রিয়াক্ট বলে `escape hatch`, মানে হলো শুধুমাত্র যখন আপনি রিয়াক্ট প্যারাডাইমের বাইরে গিয়ে কোন কিছু করবেন,তখনি একমাত্র ইফেক্ট ব্যাবহার করা উচিত না, অপ্রয়োজনীয় ইফেক্ট এপ্লিকশনের কোডবেজের মেইন্টেনেবিলিটি নষ্ট করে এবং অনেক বাগ এর সৃষ্টি করে,
+React calls effects an `escape hatch`, meaning you should only use effects when you need to do something outside of React's paradigm. Unnecessary effects can harm your application's codebase maintainability and create many bugs.
 
-যদি আমরা শুধুমাত্র কোন প্রপ বা স্টেট চেঞ্জ এর ভিত্তিতে কোন কিছু করতে চাই তাহলে আমদের ইফেক্টের কোন দরকার নেই, কোন কোন ক্ষেত্রে আমাদের ইফেক্টের প্রয়োজন নেই সেগুলোই আমরা পরপর কয়েকটা উদাহরণে দেখবো। তার আগে কয়েকটা রুল অফ থাম্ব আমরা জেনে নেই, যেই যেই রুলস অনুযায়ী আমাদের ইফেক্টের কোন প্রয়োজন নেই।
+If we only want to do something based on a prop or state change, we don't need effects. We'll look at several examples where effects aren't needed. But first, let's learn about some rules of thumb that tell us when we don't need effects.
 
-#### You don't need an Effect to transform data for rendaring:
+#### You don't need an Effect to transform data for rendering:
 
-যদি আমরা শুধুমাত্র কোন ডাটা ট্রান্সফর্ম করে UI তে দেখাতে চাই, সেই কাজে কখনই আমাদের Effect ব্যাবহার করা উচিত না। এক্ষেত্রে আমদের [Deriver State](https://reactive-accelarator.vercel.app/javascript-guidebook/React-js/module-3/choosing-the-state-structure#avoid-redundant-state-%E0%A6%85%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A7%9F%E0%A7%8B%E0%A6%9C%E0%A6%A8%E0%A7%80%E0%A7%9F-%E0%A6%B8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%9F-%E0%A6%A8%E0%A6%BE-%E0%A6%A8%E0%A7%87%E0%A7%9F%E0%A6%BE-%E0%A6%AC%E0%A6%BE-%E0%A6%AA%E0%A6%B0%E0%A6%BF%E0%A6%B9%E0%A6%BE%E0%A6%B0-%E0%A6%95%E0%A6%B0%E0%A6%BE) প্যাটার্ন ব্যবহার করে কাজ করা উচিত।
+If we just want to transform data and show it in the UI, we should never use Effects for this. In this case, we should use the [Derived State](https://reactive-accelarator.vercel.app/javascript-guidebook/React-js/module-3/choosing-the-state-structure#avoid-redundant-state-%E0%A6%85%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A7%9F%E0%A7%8B%E0%A6%9C%E0%A6%A8%E0%A7%80%E0%A7%9F-%E0%A6%B8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%9F-%E0%A6%A8%E0%A6%BE-%E0%A6%A8%E0%A7%87%E0%A7%9F%E0%A6%BE-%E0%A6%AC%E0%A6%BE-%E0%A6%AA%E0%A6%B0%E0%A6%BF%E0%A6%B9%E0%A6%BE%E0%A6%B0-%E0%A6%95%E0%A6%B0%E0%A6%BE) pattern.
 
 #### You don't need an Effect to do something when state or prop changes:
 
-যদি কোন প্রপ বা কোন স্টেট চেঞ্জ হলে আমরা কোন কিছু করতে চাই, তাহলে কখনই আমদের Effect ব্যাবহার করা উচিত না।
+If we want to do something when a prop or state changes, we should never use Effects.
 
 #### You don't need an Effect to do something on user events specific actions:
 
-ইউজারের ঘটানো কোন এভেন্টে যেই কাজটা করা উচিত সেটা শুধুমাত্র ইভেন্ট হেন্ডেলার দিয়েই করা উচিত। ইভেন্ট স্পেসিফিক কোন একশনে কখনই আমাদের ইফেক্ট ব্যাবহার করা উচিত না।
+Actions that should be done when a user triggers an event should only be handled by event handlers. We should never use effects for event-specific actions.
 
 ### When You don't need Effects
 
-#### Updating state based on props or state (যখন কোন প্রপ বা স্টেটের উপর বেইজ করে অন্য স্টেট আপডেট করা লাগবে)
+#### Updating state based on props or state
 
-ধরুন আমাদের একটা কম্পোনেন্ট আমরা ইউজারের `firstname` এবং `lastname` ইনপুট হিসেবে নিচ্চি,এবং আমরা সেটা থেকে ইউজারের `Fullname` টা জেনারেট করে UI তে দেখাচ্ছি। এরকম কেসে অনেকেই যেটা করে তা হলো তারা `Fullname` নামে একটা আলাদা স্টেট নেয়, এবং একটা ইফক্টের মধ্যে `firstname` এবং `lastname` কে `Fullname` এর স্টেটে আপডেট করে। এভাবে,
+Let's say we have a component where we're taking a user's `firstname` and `lastname` as inputs, and we're generating and displaying the user's `Fullname` in the UI. In this case, many people create a separate state for `Fullname` and update it in an effect when `firstname` and `lastname` change. Like this:
 
 ```jsx
 function Form() {
@@ -36,7 +36,7 @@ function Form() {
 }
 ```
 
-অথচ এই কাজটা খুব সহজেই করা যেত,Derived State এর মাধ্যমে অতিরিক্ত কোন স্টেট এবং কোন ইফেক্ট ছাড়াই। আমরা একটা আলাদা লোকাল ভ্যারিয়েবল এর মধ্যে `firstname` এবং `lastname` কে কেলকুলেট করে রেন্ডারিং এর সময়ই UI তে দেখিয়ে দিতে পারতাম। যেমনঃ
+But this could be done very easily using Derived State without any additional state or effects. We could calculate `firstname` and `lastname` in a separate local variable and show it in the UI during rendering. For example:
 
 ```jsx
 function Form() {
@@ -48,11 +48,11 @@ function Form() {
 }
 ```
 
-#### Resetting all state when a prop changes (যখন কম্পোনেন্টের প্রপ চেঞ্জ হলে তার লোকাল স্টেটগুলোকে রিসেট করা লাগবে)
+#### Resetting all state when a prop changes
 
-যদি এমন হয় যে আমরা একই কম্পোনেন্ট বার বার রি-ইউজ করেছি এবং সেগুলোকে প্রপ দিয়ে কনট্রোল করেছি। এবং সেই কম্পোনেন্টের আবার নিজস্ব লোকাল স্টেট আছে, এখন আমরা চাচ্ছি যে যদি প্রপ চেঞ্জ হয় তাহলে যেন সেই কম্পনেন্টের লোকাল স্টেটও চেঞ্জ হয়ে যায়।
+What if we've reused the same component multiple times and controlled them with props, and this component has its own local state? Now we want the component's local state to change when its props change.
 
-উদাহরণস্বরূপ, ধরুন একটা ব্লগ পোস্ট এর জন্য পোস্ট নামে কম্পোনেন্ট আছে এবং সেই পোস্টের কমেন্টগুলো ম্যানেজ করার জন্য সেই কম্পোনেটের কিছু লোকাল স্টেট আছে, এখন হয়তো এমন একটা সমস্যা দেখা দিলো যে, আমরা প্রপ্স এর মাধ্যমে পোস্ট এর আইডি চেঞ্জ করে ডিফারেন্ট ডিফারেন্ট পোস্ট দেখাচ্ছি, কিন্তু পোস্টের ভিতরের স্টেটগুলো চেঞ্জ না হউয়ার কারনে সকল পোস্ট এ একই কমেন্ট শো করছে, এমন সিচুয়েশনে অনেকেই যেটা করে তা হলো, কম্পোনেন্টের ভিতরে একটা ইফেক্ট নেয় এবং যখনি প্রপ চেঞ্জ হয় তখনি ইফেক্ট দিয়ে লোকালস্টেটগুলোকে রিসেট করে দেয়। যেমন এভাবেঃ
+For example, let's say we have a component called Post for a blog post, and this component has some local state to manage comments for that post. Now, there might be a problem where we show different posts by changing the post ID through props, but because the internal states don't change, all posts show the same comments. In this situation, many people take an effect inside the component and reset the local states whenever the prop changes. Like this:
 
 ```jsx
 export default function ProfilePage({ postId }) {
@@ -66,13 +66,13 @@ export default function ProfilePage({ postId }) {
 }
 ```
 
-এভাবে করলে হয়তো ঠিকঠাক কাজ করবে, কিন্তু এতে কিন্তু এপ্লিকেশনের পার্ফর্মেন্স খারাপ হবে। কারণ, আমরা জানি যে এফেক্ট রান হয় কম্পোনেন্ট লোড হয়ে স্ক্রিনে চলে আসার পর। এখন দেখেন প্রথমবার যখন কম্পোনেন্ট লোড হলো তখন সেই পোস্টের কমেন্টগুলো সহ UI তে লোড হলো, এর পর যখনি প্রপ চেঞ্জ হয়ে অন্য আরেকটা পোস্ট দেখানো হলো, তখন কিন্তু সবার প্রথমে আগের কমেন্টগুলো সহই আগে UI তে আসবে, তারপর ইফেক্ট রান হবে এবং ` setComment("")` করে কমেন্টের স্টেট রিসেট করবে, এবং ` setComment("")` করার সাথে সাথে কম্পোনেন্ট আবার রি-রেন্ডার হবে। এবং আগের কমেন্টগুলো মুছে যাবে।
+This might work correctly, but it will degrade the application's performance. This is because effects run after the component has loaded and appeared on the screen. Now, when the component first loads, it loads with the comments from the post, then when the prop changes and another post is shown, it will first come to the UI with the previous comments, then the effect will run and reset the comment state with `setComment("")`, and as soon as `setComment("")` is called, the component will re-render. And the previous comments will be erased.
 
-তাহলে চিন্তা করেন এটুকু কাজ করতে কম্পোনেন্ট কতবার রি-রেন্ডার হচ্ছে, তাই এই অতিরিক্ত রি-রেন্ডারের কারনে এপ্লিকেশন স্লো হয়ে যাবে।
+So think about how many times the component is re-rendering to accomplish this small task, which is why the application will become slow due to these extra re-renders.
 
-অথচ এই কাজটাই কোন এফেক্ট ছাড়াই খুব সহজেই করা যেতো `key` প্রপ্স ব্যাবহার করে।
+But this same task could be done very easily using the `key` prop without any effects.
 
-কম্পোনেন্ট রেন্ডার করানোর সময় postId দিয়ে ডায়নামিক ভাবে `key` প্রপ্স দিয়ে রেন্ডার করালে রিয়াক্ট প্রতিবার প্রপ চেঞ্জে অটোমেটিক এর ভিতরের লোকাল স্টেট গুলোকে রিসেট করে দিতো। যেমনঃ
+If we render the component with a dynamic `key` prop using the postId during component rendering, React will automatically reset all the local states inside it whenever the prop changes. For example:
 
 ```jsx
 export default function BlogPage({ postId }) {
@@ -86,13 +86,13 @@ function Posts({ postId }) {
 }
 ```
 
-#### Sharing logic between event handlers (যখন কোন ইভেন্ট-স্পেসিফিক লজিক শেয়ার করা লাগবে)
+#### Sharing logic between event handlers
 
-ধরুন একটা প্রোডাক্টপেজ আছে,এবং প্রতিটা প্রডাক্ট কার্ডে দুইটা বাটন আছে, একটা `Buy Product` আরেকটা হলো `Checkout`। এখন লজিক হলো দুটো বাটনেই ক্লিক করলে একটা নটিফিকেশন মেসেজ দেখাবে যে `Product added to cart` এবং `Checkout` বাটনে ক্লিক করলে `/checkout` পেজে নিয়ে যাবে।
+Let's say there's a product page, and each product card has two buttons, one is `Buy Product` and the other is `Checkout`. Now the logic is that when either button is clicked, it will show a notification message saying `Product added to cart`, and when the `Checkout` button is clicked, it will also take you to the `/checkout` page.
 
-এখন অনেকেই যেটা করে সেটা হলো যে যেহেতু দুইটা বাটনে চাপ দিলে একই কাজ হচ্ছে, (নটিফিকেশন দেখানো) তাই `useEffect` এর মধ্যে লজিকটাকে শেয়ার করে এবং একটা নোটিফিকেশন শো করে।
+Now what many people do is that since the same action happens when either button is clicked (showing a notification), they share the logic inside a `useEffect` and show a notification.
 
-এভাবে,
+Like this:
 
 ```jsx
 function ProductPage({ product, addToCart }) {
@@ -115,9 +115,9 @@ function ProductPage({ product, addToCart }) {
 }
 ```
 
-এতে কিন্তু এপ্লিকেশনে একটা বাগ এর সৃষ্টি হয়, কেননা ইফেক্ট রান হয় কম্পোনেন্ট লোড হয় যাওয়ার পর, এখন যদি কোন ইউজার কোন প্রডাক্টের `Buy Product`বাটনে চাপ দিয়ে প্রোডাক্টটি কার্টে এড করলো, এসব রিয়েল লাইফ এপ্লিকেশনে ডাটা ডাটাবেসে সেভ হবে, তাই ইউজার যখন কোন প্রোডাক্ট কার্টে এড করে অন্য পেজে যাবে ,এবং আবার যখন প্রোডাক্ট পেজে ফিরে আসবে,তখন আসার সাথে সাথেই ইফেক্ট রান হবে, এবং আবার নোটিফিকেশন মেসেজ দেখাবে।
+This creates a bug in the application because effects run after the component has loaded. Now if a user adds a product to the cart by clicking the `Buy Product` button, in real-life applications this data would be saved in a database. So when the user adds a product to the cart, goes to another page, and then returns to the product page, as soon as they return, the effect will run and show the notification message again.
 
-অথচ এই কাজটা যেহেতু ইউজারের ইভেন্ট স্পেসিফিক কাজ, কেননা শুধুমাত্র যখন ইউজার `Buy Product` অথবা `Checkout` বাটনে চাপ দিবে তখনি একমাত্র নোটিফিকেশনটা দেখাবে,তাই এই কাজটা ইভেন্ট হ্যন্ডেলারের মধ্যেই করা উচিত। আমরা এভাবে এটা করতে পারি,
+But since this is a user event-specific task, because the notification should only show when the user clicks the `Buy Product` or `Checkout` button, this task should be done within the event handler. We can do it like this:
 
 ```jsx
 function ProductPage({ product, addToCart }) {
@@ -140,11 +140,11 @@ function ProductPage({ product, addToCart }) {
 }
 ```
 
-#### Sending a POST request (সার্ভারে পোস্ট রিকুয়েস্ট সেন্ট করা)
+#### Sending a POST request
 
-ধরুন আমাদের এপ্লিকেশনে কোন একটা কম্পোনেন্টে কেই ভিসিট করলেই অটোমেটিক একটা এনালাইটিক লগ সার্ভারে পোস্ট হবে, আবার ধরুন আরেকটি ফর্ম আছে যেখানে ইউজারের ইনফরমেশন ইনপুট করবে এবং সাবমিট করবে, সাবমিট বাটনে ক্লিক করলে সার্ভারে একটা পোস্ট রিকুয়েস্ট যাবে,
+Let's say in our application, whenever a component is visited, an analytics log is automatically posted to the server. And let's say there's also a form where the user inputs information and submits it, and when the submit button is clicked, a post request is sent to the server.
 
-তাহলে এই ক্ষত্রে দুইটা কেস, একটাতে আমাদের অটোমেটিক করতে হবে আরেকটাতে ইউজার সাবমিট বাটনে ক্লিক করার পর, তাই আমরা এখানে এভাবে করতে পারি,
+So in this case, we have two scenarios: one where we need to do something automatically, and another where we need to do something after the user clicks the submit button. We can handle it like this:
 
 ```jsx
 function Form() {
@@ -165,11 +165,11 @@ function Form() {
 }
 ```
 
-ইনালাইটিক্স এর জন্য পোস্ট রিকুয়েস্ট যেহেতু অটোমেটিক পাঠাতে হবে তাই এটাকে ইফেক্টের মাঝে রাখতে হবে এবং ইউজার ফর্ম সাবমিট করলে যেই পোস্ট রিকুয়েস্ট sent হবে সেটা ইভেন্ট হ্যান্ডেলারের ভিতর রাখতে হবে।
+Since the post request for analytics needs to be sent automatically, we put it inside an effect, and the post request that should be sent when the user submits the form is placed inside the event handler.
 
-#### Initializing the application (এপ্লিকেশন লোড হওয়ার পর শুধুমাত্র একবার কোন লজিক রান করতে চাইলে)
+#### Initializing the application
 
-ধরুন কোন একটা লজিক আমরা চাইযে পুরো এপ্লিকেশনটা লোড হলে শুধুমাত্র একবার রান হবে, এক্ষত্রে কিন্তু কোন স্পেসিফিক কম্পোনেন্টের কথা বলছি না, পুরো এপ্লিকেশনে শুধুমাত্র একবার রান হবে এমন কোন লজিক যদি ইমপ্লিমেন্ট করতে হয় তাহলে অনেকে এভাবে করতে চায়,
+Let's say there's some logic that we want to run only once when the entire application loads. In this case, we're not talking about a specific component, but logic that should run only once in the entire application. Many people try to do it like this:
 
 ```jsx
 function App() {
@@ -182,7 +182,7 @@ function App() {
 }
 ```
 
-এপ্লিকেশনের টপ লেবেলে কোন ইফেক্ট লিখে কোন ডিপেন্ডেন্সি ছাড়া কল করে, কিন্তু এটা ভেভেলপমেন্ট মুডে দুইবার কম্পোনেন্ট মাউণ্ট হওয়ার কারনে এপ্লিকেশনের লজিক ব্রেক করতে পারে, তাই এমন সিচুয়েশনে আমরা নিচের দুটি পদ্ধতি অনুসরণ করতে পারি,
+They write an effect at the top level of the application and call it without any dependencies. But this could break the application's logic in development mode because the component mounts twice, so we can follow one of these two methods in such situations:
 
 - 1.
 
@@ -217,9 +217,9 @@ function App() {
 }
 ```
 
-#### Notifying parent components about state changes (যদি চাইল্ড কম্পোনেন্টে ইউজারের কোন একশনে স্টেট চেঞ্জ হলে সেটা প্যারেন্ট কম্পোনেন্টকে জানাতে হয়)
+#### Notifying parent components about state changes
 
-মনে করুন আমাদের এমন একটা কম্পোনেন্ট আছে যেটা প্যারেন্ট কম্পোনেন্ট এ একটা স্টেট ম্যানেজ করছে এবং চাইল্ড কম্পোনেন্টে ইউজারের কোন একশনে সেই চাইল্ড কম্পোনেন্টের লোকাল স্টেট চেঞ্জ হলে সেটা প্যারেন্ট কম্পোনেন্টকে জানাতে হবে, এক্ষেত্রে অনেকেই যেটা করতে পারেন,সেটা হলো প্যারেন্ট কম্পোনেন্ট থেকে একটা setter function প্রপ্স দিয়ে চাইল্ড কম্পোনেন্টে পাস করে চাইল্ড কম্পোনেন্টে একটা ইফেক্ট দিয়ে চাইল্ড কম্পোনেন্ট এর স্টেট চেঞ্জ হলে প্যারেন্ট এর setter function কে কল করে দিতে পারেন। যেমনটা নিচে করা হয়েছে,
+Imagine we have a component where the parent component is managing a state, and when the child component's local state changes due to a user action, we need to notify the parent component. In this case, many people might pass a setter function as a prop from the parent component to the child component, and use an effect in the child component to call the parent's setter function when the child's state changes. Like this:
 
 ```jsx
 function Toggle({ onChange }) {
@@ -246,9 +246,9 @@ function Toggle({ onChange }) {
 }
 ```
 
-কিন্তু এভাবে করাটা কোনভাবেই এফিসিয়েন্ট উপায় না, কেননা আমরা জানি ইফেক্ট রান হয় কম্পোনেন্ট লোড হয়ে যাওয়ার পার, তাই এখানে প্যারেন্টের স্টেটের সাথে প্রথমে `Sync` থাকবেনা, পরে সেটা এফেক্টের মাধ্যমে আরেকটা রি-রেন্ডার হয়ে `Sync` হবে। এতে অহেতুক রি-রেন্ডার হচ্চে,এতে এপ্লিকেশন স্লো হয়ে যাবে।
+But this approach is not efficient at all, because we know that effects run after the component has finished loading. So here, the parent's state won't initially be in sync with the child's state. Later, it will sync through the effect with an additional re-render. This causes unnecessary re-renders, which will slow down the application.
 
-তার চাইতে বরং আমরা চাইল্ড কম্পোনেন্টে যেই ইভেন্ট হ্যান্ডেলারের মাধ্যমে চাইল্ড কম্পোনেন্টের লোকাল স্টেট চেঞ্জ হবে সেই হ্যান্ডেলারের মধ্যেই প্যারেন্ট কম্পোনেন্ট থেকে পাওয়া setter function কল করে দিয়ে একটা রেন্ডার পাসেই চাইল্ড এবং প্যারেন্ট এর স্টেটকে `Sync` রাখতে পারি। এতে আমাদের কোডটা হবে এমনঃ
+Instead, we can call the parent component's setter function directly in the same event handler that changes the child component's local state, keeping the child and parent state in sync in a single render pass. Our code would look like this:
 
 ```jsx
 function Toggle({ onChange }) {
@@ -276,9 +276,9 @@ function Toggle({ onChange }) {
 }
 ```
 
-#### Passing data to the parent (চাইল্ড কম্পোনেন্ট থেকে ডাটা প্যারেন্টে পাস করার জন্য)
+#### Passing data to the parent
 
-যখন কোন ডাটা আমদের চাইল্ড কম্পোনেন্টে প্রয়োজন হয় এবং একই সাথে সেম ডাটা প্যারেন্ট কম্পোনেন্টেও প্রয়োজন হয়, তখন অনেকেই যেটা করে চাইল্ড কম্পনেন্টে ডাটা `fetch` করে সেটা ইফেক্টের মাধ্যমে প্যারেন্টে পাস করার চেষ্টা করে। সেক্ষেত্রে তারা এভাবে করে,
+When we need data in a child component and also need the same data in the parent component, many people might try to fetch the data in the child component and then pass it to the parent using an effect. They might do it like this:
 
 ```jsx
 function Parent() {
@@ -299,7 +299,7 @@ function Child({ onFetched }) {
 }
 ```
 
-এভাবে করলে রিয়াক্টেড় ইউনি-ডিরেকশনাল ডাটা ফ্লো টা নষ্ট হচ্ছে, সেটা না করে যদি একই ডাটা চাইল্ড এবং প্যারেন্ট দুই জায়গাতেই প্রয়োজন হয় তাহলে ডাটা চাইল্ডে `fetch` না করে সরাসরি প্যারেন্টে `fetch` করে প্রপ্স আকারে চাইল্ডে পাঠালেই হয়। সেক্ষেত্রে এভাবে করা যায়।
+This breaks React's unidirectional data flow. Instead, if the same data is needed in both the child and parent components, rather than fetching the data in the child, fetch it directly in the parent and pass it down to the child as a prop. This can be done like this:
 
 ```jsx
 function Parent() {

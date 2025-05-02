@@ -1,60 +1,59 @@
-**রিয়াক্টে স্টেট ডিজাইন করার সময় আমাদের কিছু পিন্সিপাল মনে রাখা অবশ্যই জরুরি,এতে আমরা আরও সুন্দর ও ইফিশিয়েন্ট ভাবে স্টেটগুলো ম্যানেজ করতে পারবো। চলুন জেনে নেয়া যাক সেই প্রিন্সিপালগুলো,যেগুলো রিয়াক্টের স্টেট এর স্ট্রাকচার করার সময় আমাদের অবশ্যই মাথায় রাখতে হবে**
+**When designing state in React, it's essential to keep in mind some principles that will allow us to manage states more beautifully and efficiently. Let's learn about these principles that we must keep in mind when structuring React state.**
 
 1. **Group Related State**
 2. **Avoid Contradictions in State**
 3. **Avoid Redundant State**
-4. **Avoid Duplication is State**
+4. **Avoid Duplication in State**
 5. **Avoid Deeply Nested State**
 
-### Group Related State (একইজাতীয় বা পারস্পারিক সম্পর্কযুক্ত স্টেটগুলোকে একটা স্টেটে গ্রুপ করে নেয়া)
+### Group Related State
 
-যদি এমন হয় যে মাল্টিপল স্টেট কিন্তু একটা আরেকটার সাথে সম্পর্কযুক্ত,এবং একটা চেঞ্জ করলে অন্যটাও চেঞ্জ করার প্রয়োজন পরে সেই ক্ষেত্রে স্টেটগুলোকে একটা স্টেট হিসেবে গ্রুপ করে নেয়া উচিত। যেমন ঃ
+If multiple states are related to each other, and when changing one requires changing the other, in that case, it's better to group those states as a single state. For example:
 
 ```jsx
 const [x, setX] = useState(0);
 const [y, setY] = useState(0);
 ```
 
-এখানে একটা কাস্টম কার্সর বানানোর জন্য `x` এবং `y` নামে দুইটা স্টেট নেয়া হয়েছে, এবং মাউসমুভ করার সাথে সাথে স্টেটগুলো আপডেট হতে হবে, তার মানে মাউসমুভ হলেই আমাকে `x` এবং `y` দুইটা স্টেট পরিবর্তন করতে হবে। তাহলে আমরা এভাবে দুইটা স্টেট না নিয়ে বরং একটা স্টেট নিতে পারি `position`নামে এবং এর ভ্যালু হিসেবে `x` এবং `y` কে একটা অবজেক্ট আকারে রাখতে পারি।
+Here, two states named `x` and `y` have been created for making a custom cursor, and these states need to be updated as the mouse moves, meaning whenever the mouse moves, I need to change both the `x` and `y` states. In this case, instead of taking two separate states, we can take a single state named `position` and store `x` and `y` as an object.
 
 ```jsx
 const [position, setPosition] = useState({ x: 0, y: 0 });
 ```
 
-### Avoid contradictions in state (একই সাথে দুইটাই কখনও সত্য অথবা মিথ্যা না হলে দুইটা কে একটা স্টেট হিসেবে নেয়া)
+### Avoid Contradictions in State
 
-এমন অনেক সিনারিও আসতে পারে যেখানে হয়তো দুইটা স্টেট আছে যেখানে হয়তো দুইটা স্টেট আছে,কিন্তু স্টেট দুইটা কখনোই একইসাথে সত্য অথবা একই সাথে মিথ্যা হতে পারেনা। এসব স্টেটকে বলা হয় `Contradiction in State`। এমন হলে দুইটা স্টেট কখনোই নেয়া উচিত না,বরং একটা স্টেট দিয়েই দুইটাকেই ম্যনেজ করা উচিত।
+There may be many scenarios where you have two states, but these states can never be true or false at the same time. These states are called `Contradiction in State`. In such cases, we should never take two separate states, but rather manage both with a single state.
 
-উদাহরণসরূপ একটা লাইটের কথা চিন্তা করুনঃ
+For example, consider a light:
 
-একটা লাইট আছে, যার দুইটা স্টেট
+A light has two states:
 
-১। লাইট জালানো অবস্থা (`isOn`)
-
-২। লাইট বন্ধ অবস্থা (`isOff`)
+1. Light on state (`isOn`)
+2. Light off state (`isOff`)
 
 ```jsx
 const [isOn, setIsOn] = useState(true);
 const [isOff, setIsOff] = useState(true);
 ```
 
-এখানে এই দুইটা স্টেট কি কখনো একইসাথে দুইটাই `true` অথবা `false` হতে পারে? মানে একই সাথে লাইট জালানো বা বন্ধ করা থাকতে পারে ? না সেটা কখনই হতে পারেনা, এটাকেই বলা হয় `Contradiction in State`। এমন অবস্থায় আমাদের একটাই স্টেট নেয়া উচিত যেমনঃ
+Can these two states ever both be `true` or both be `false` at the same time? Can a light be both on and off at the same time? No, that's never possible, and this is what's called a `Contradiction in State`. In such situations, we should take only one state, like:
 
 ```jsx
 const [lightStatus, setLigthStatus] = useState("on");
 ```
 
-এভাবে আমরা একটা স্টেট দিয়েই লাইটের দুইটা অবস্থা ম্যানেজ করতে পারি।
+This way, we can manage both states of the light with a single state.
 
-### Avoid redundant state (অপ্রয়োজনীয় স্টেট না নেয়া বা পরিহার করা)
+### Avoid Redundant State
 
-যদি আমরা কোন স্টেটকে অন্য স্টেট থেকে কেলকুলেট করে নিয়ে ব্যাভারা করতে পারি তাহলে আমাদের নতুন স্টেট না নিয়ে সেই কেলকুলেটেড স্টেট দিয়েই কাজ করা উচিত।
+If we can calculate a state value from another state and use it, then we should work with that calculated state instead of creating a new state.
 
-**এটাকে `Derived State`ও বলা হয়ে থাকে**
+**This is also called `Derived State`**
 
--   **Derived State**: যখন কোন ভ্যালু অন্য কোন স্টেট এর ভ্যালু থেকে `calculate` করে ব্যাবহার করা যায়, তখন সেই `Calculated` ভ্যারিয়েবল কে `Derived State` বলা হয়
+-   **Derived State**: When a value can be `calculated` and used from another state's value, that `Calculated` variable is called a `Derived State`.
 
-ধরুন আমাদের এমন তিনটা স্টেট ম্যানেজ করা লাগবে,`firstName`, `lastName`, `fullName`। এখেত্রে আমদের স্টেট গুলো হবে এমন,
+Let's say we need to manage three states: `firstName`, `lastName`, and `fullName`. Our states would look like this:
 
 ```jsx
 const [firstName, setFirstName] = useState("Shahadat");
@@ -62,41 +61,39 @@ const [lastName, setLastName] = useState("Hussain");
 const [fullName, setFullName] = useState("Shahadat Hussain");
 ```
 
-চিন্তা করে দেখেনতো, এখানে কি আমাদের `fullName` স্টেট-এর কোন দরকার ছিল? আমরা চাইলেইতো `firstName`,এবং `lastName` থেকে `fullName` টা বানিয়ে নিতে পারতাম এভাবে,
+Think about it - did we really need the `fullName` state? We could have easily derived `fullName` from `firstName` and `lastName` like this:
 
 ```jsx
 const fullName = firstName + " " + lastName;
 ```
 
-এক্ষেত্রে
+In this case, the state
 
 ```jsx
 const [fullName, setFullName] = useState("Shahadat Hussain");
 ```
 
-এই স্টেট টা ছিল `Redundant` বা অপ্রয়োজনীয়। আমাদের এসব `Redundant` স্টেটকে Avoid করতে হবে।
+was `Redundant` or unnecessary. We should avoid such `Redundant` states.
 
-#### Don't mirror props in state (প্রপ্স মিরর করা এড়িয়ে চলতে হবে)
+#### Don't Mirror Props in State
 
-একটা স্টেটকে যখন প্যারেন্ট কম্পোনেন্ট এ ডিক্লেয়ার করে সেটার ভ্যালুটা চাইল্ড কম্পোনেন্টে পাস করা হয়, এবং চাইল্ড কম্পোনেন্ট সেই প্রপ্সটা নিয়ে আবার তার নিজস্ব স্টেট এর ভ্যালুকে ইনিশিয়ালাইজ করে,সেটা কে বলা হয় প্রপ্স মিরর করা।
+When a state is declared in a parent component and its value is passed to a child component as a prop, and the child component uses that prop to initialize its own state, this is called mirroring props in state.
 
-এটা করা যাবেনা, কেননা যদি আপনি একবার কোন স্টেট ভ্যালু প্যারেন্ট থেকে চাইল্ডে পাস করেছেন এবং সেটা চাইল্ডের নিজস্ব স্টেট ভ্যরিয়েবল এর ইনিশিয়াল ভ্যালু হিসেবে ব্যাবহার করেছেন,
+This should not be done because if you pass a state value from parent to child and use it as the initial value of the child's state variable, when you want to change the state value from the child component, you can change it from the child, but if the parent component changes the state that you passed as a prop to the child, it won't have any control, and it cannot be changed from the parent. This is because the initial value of a state is initialized at the component's first render and doesn't change afterward. Only through the `setter function` can the state value be changed.
 
-তখন যদি আপনি চাইল্ড কম্পোনেন্ট থেকে স্টেট ভ্যালু চেঞ্জ করেত চান,তখন চাইল্ড থেকে সেটা পরিবর্তন করতে পারলেও, যদি প্যারেন্ট থেকে সেট স্টেট যেটা আপনি প্রপ্স হিসেবে চাইল্ডে পাঠিয়েছেন,সেটার কোন কন্ট্রোল থাকবেনা,এবং প্যারেন্ট থেকে তা পরিবর্তন করা যাবেনা। কেননা স্টেট এর ইনিশিয়াল ভ্যালু কম্পোনেন্টের প্রথম রেন্ডারেই ইনিশিয়ালাইজ হয়, পরে আর ইনিশিয়াল ভ্যালু চেঞ্জ হয়না। শুধু `setter function` এর মাধ্যমেই সেই স্টেট এর ভ্যালু চেঞ্জ করা যায়।
+So in this case, even if you change that state in the parent component, it won't go to the child component as a prop anymore, because the child's state's initial value has already been set in the first render.
 
-তাই এখেত্রে প্যারেন্ট কম্পোনেন্টে সেই স্টেটটা পরিবর্তন করলেও তা কিন্তু প্রপ্স হয়ে আর চাইল্ড কম্পোনেন্টে যাবেনা, কেননা প্রথম রেন্ডারেই চাইল্ডের স্টেটের ইনিশিয়াল ভ্যালু সেট হয়ে গেছে।
+### Avoid Duplication in State
 
-### Avoid duplication in state (ডুপ্লিকেট স্টেট নেয়া যাবেনা)
+If the same value is used with multiple state variables, it's called duplication. We need to be cautious about such duplicate states.
 
-একি ভ্যালু যদি মাল্টিপল স্টেট ভ্যারিয়েবল ব্যাবহার করে সেটাকে ডুপ্লিকেট করা বলে। আমাদের এসব ডুপ্লিকেট স্টেট এর ব্যাপারে সতর্ক থাকতে হবে।
+In other words, if we have a state variable with some values, and we've taken another state with those same values, that's called duplication. State duplication should be avoided; if necessary, use `Derived State` in such cases.
 
-অর্থাৎ যদি এমন হয় যে আমাদের কোন স্টেট ভ্যারিয়েবল এ কিছু ভ্যালু আছে,এবং সেই একই ভ্যালু দিয়ে আমরা আরও একটা স্টেট নিয়েছি, সেটাকে ডুপ্লিকেট করা বলা হয়, স্টেট ডুপ্লিকেট করা যাবেনা,প্রয়োজনে এক্ষেত্রে `Derived State` ব্যাবহার করতে হবে।
+### Avoid Deeply Nested State
 
-### Avoid deeply nested state (ডিপলি নেস্টেড অবজেক্ট কে স্টেট হিসেবে নেয়া থেকে বিরত থাকতে হবে)
+If we have a state that is an object, and one of its properties is another object, and that nested object has more nested objects, creating a multi-layered deeply nested object, this results in a complex structure.
 
-যদি এমন হয় যে আমাদের এমন একটা স্টেট আছে যা একটা অবজেক্ট এবং তার প্রপারর্টি হিসেবে আরও একটা অবজেক্ট আছে, এবং সেই নেস্টেড অবজেক্ট এর-ও আরও নেস্টেড অনেক অবঞ্জেক্ট আছে, এভাবে অনেক লেয়ার ডীপ একটা নেশটেড অবজেক্ট । যা একটা কমপ্লেক্স স্ট্রাকচার।
+Working with such a structure makes updating the state increase code complexity, may cause bugs, and ruins the readability of the code. So we should avoid taking such objects as state.
 
-এমন স্ট্রাকচার নিয়ে কাজ করলে স্টেট আপডেট করতে হলে সেটা কোডের কপ্লেক্সিটি বাড়াবে,বাগ হতে পারে, কোডটার রিডেবিলিটি নষ্ট হবে। তাই এমন অবজেক্টকে স্টেট হিসেবে নেয়া পরিহার করতে হবে।
-
-সেক্ষেত্রে সেই অবজেক্ট ডাটাকে `normalize` বা `flatten` করে নিয়ে তারপর স্টেট হিসেবে ব্যাবহার করতে হবে।
+In such cases, we should `normalize` or `flatten` the object data and then use it as state.
 

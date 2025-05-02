@@ -8,7 +8,7 @@ Git is a `version control` tool.
 
 What is version control?
 
-Let's say you're writing a document on your computer, perhaps writing something today and something else another day. At some point, you might feel that what you wrote in the last two days wasn't right, and you want to delete it and go back to how it was two days ago. In this case, you would need to delete all the writing from these two days. Now, if you can't remember exactly how much to delete or how much was written two days ago, what would you do? This is where Git helps. Git monitors or tracks every change in a file and versions each change. This allows you to switch to any version at any time.
+Imagine you're writing a document on your computer, writing something today and something else on another day. At some point, you might feel that what you wrote in the last two days is not correct, and you want to delete it and go back to the state of two days ago. In this case, you would need to delete all of what you wrote in these two days. Now, if you can't remember exactly how much to delete or how much was written two days ago, what would you do? This is where Git helps. Git monitors or tracks every change in a file and versions each change. This allows you to switch to any version at any time.
 
 ## Some essential Git commands that we'll need to manage files in our local Git repository.
 
@@ -18,7 +18,7 @@ Let's say you're writing a document on your computer, perhaps writing something 
  git init
 ```
 
-2. **Check Git Status**
+2. **Check Git status**
 
 ```bash
 git status
@@ -48,13 +48,13 @@ or
 git log --oneline
 ```
 
-6. **Go back from one commit to another commit state**
+6. **Go back from one commit state to another**
 
 ```bash
 git reset --hard <commit id>
 ```
 
-7. **View Git log with references to all changes**
+7. **View Git log with references for each change**
 
 ```bash
 git reflog
@@ -87,7 +87,7 @@ git switch <branch name >
 12. **Merge code from one branch to another**
 
   <Callout type='warning' emoji="💡">
-    In this case, you need to first switch to the branch where you want to bring in code from another branch using `git switch <branchname>`. Then you can run the command.
+    In this case, to bring code from another branch into the branch you want, first use `git switch <branchname>` to go to that branch. Then enter the command.
 </Callout>
 
 ```bash
@@ -100,33 +100,33 @@ git merge <branch name >
 git branch -d <branch name >
 ```
 
-14. **To change a branch name**
+14. **Change branch name**
 
- <Callout type='warning' emoji="💡"> In this case, we need to first switch to the branch whose name we want to change using `git switch <branchname>`. Then we can run the command. </Callout>
+ <Callout type='warning' emoji="💡"> In this case, to change the name of a branch, first use `git switch <branchname>` to go to that branch. Then enter the command. </Callout>
 
 ```bash
 git branch -m <updated branch name >
 ```
 
-15. **Stash Git changes (save uncommitted work in Git's draft)**
+15. **Stash Git changes (save uncommitted work in Git draft)**
 
 ```bash
 git stash
 ```
 
-16. **Check Git stash list**
+16. **Check stash list**
 
 ```bash
 git stash list
 ```
 
-17. **To see what was saved in Git's stash**
+17. **See what was saved in Git stash**
 
 ```bash
 git stash show -p
 ```
 
-18. **To apply Git stash**
+18. **Apply Git stash**
 
 ```bash
 git stash apply <statsh id>
@@ -134,7 +134,7 @@ or
 git stash pop
 ```
 
-19. If you accidentally add a file to Git or after committing you feel that the file should be ignored from Git, then:
+19. If you accidentally add a file to Git or realize after committing that you want to ignore it from Git:
 
 <Steps>
 
@@ -175,7 +175,7 @@ example:
 
 </Steps>
 
-21. Pull from a remote repository
+21. Pull from remote repository
 
 ```bash
 git pull

@@ -1,13 +1,13 @@
-## রিয়াক্টে কিভাবে `import & export` করতে হয়?
+## How to `import & export` in React?
 
-**রিয়াক্টে দুইভাবে কম্পোনেন্ট `import & export` করা যায়ঃ **
+**There are two ways to `import & export` components in React:**
 
 1. `default export and import`
 2. `named export and import`
 
 ## `default export and import`
 
-**উদাহরনঃ**
+**Example:**
 
 ### `default export`
 
@@ -17,7 +17,7 @@ export default function Gallery() {
 }
 ```
 
-তাছাড়া আরেকভাবে `default export` করা যায়,
+Alternatively, `default export` can be done this way:
 
 ```javascript showLineNumbers filename="Gallery.js"
 function Gallery() {
@@ -29,14 +29,14 @@ export default Gallery;
 ### `default import`
 
 ```javascript showLineNumbers filename="App.js"
-import Gallery from "Gallery"; // এখানে .js বা .jsx না লিখলেও কোন সমস্যা নেই
+import Gallery from "Gallery"; // Here, writing .js or .jsx is not necessary
 ```
 
-**`default import` এর ক্ষেত্রে আমরা যেকোন নামে কম্পোনেন্ট `import` করতে পারি। তবে, যেই নামে কম্পোনেন্ট `import` করা হবে সেই নামেই ব্যাবহার করতে হবে।**
+**In the case of `default import`, we can import a component with any name. However, we must use the same name that we used for importing the component.**
 
 ## `named export and import`
 
-**উদাহরনঃ**
+**Example:**
 
 ### `named export`
 
@@ -46,7 +46,7 @@ export function Gallery() {
 }
 ```
 
-**`named export` এর মাধ্যমে আমরা চাইলে একটা ফাইল থেকে একাধিক কম্পোনেন্ট এক্সপোর্ট করতে পারি, যেমনঃ**
+**With `named export`, we can export multiple components from a single file, such as:**
 
 ```javascript showLineNumbers filename="Gallery.js"
 export function Card() {
@@ -65,12 +65,12 @@ export function Profile() {
 ### `named import`
 
 ```javascript showLineNumbers filename="App.js"
-import { Card, Image, Profile } from "Gallery"; // এভাবে আমরা এক্লাইনেই একাধিক কম্পোনেন্ট ইম্পোর্ট করতে পারি।
+import { Card, Image, Profile } from "Gallery"; // This way we can import multiple components in a single line.
 ```
 
 #### Alias Named Import
 
-`named import` এর ক্ষেত্রে আমরা চাইলে `Alias` দিয়ে রিনেম করেও কম্পোনেন্ট ইম্পোর্ট করতে পারি।
+In the case of `named import`, we can also rename components using an `Alias`.
 
 ```javascript showLineNumbers filename="App.js"
 import { Card as ImageCard } from "Gallery";

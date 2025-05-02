@@ -6,7 +6,7 @@ import { Callout } from "nextra/components";
 
 ### Primitive
 
-The Bengali meaning of primitive is `primitive/basic`. The DATATYPES in JavaScript include:
+The Bengali meaning of primitive is `ancient` or `original`. The DATATYPES in JavaScript include:
 
 -   String
 -   Number
@@ -16,43 +16,43 @@ The Bengali meaning of primitive is `primitive/basic`. The DATATYPES in JavaScri
 -   Undefined
 -   Symbol
 
-These are the core or fundamental elements of JavaScript. Other data types are built using these. These are called primitive data or values.
+These are the core or basic elements of JavaScript. Other data types are built using these. These are called primitive data or values.
 
 ### References
 
-In JavaScript, `Array` and `Object` are called reference type data or values.
+JavaScript's `Array` and `Object` are called reference type data or values.
 
-### Difference between Primitive and Reference type data:
+### Differences between Primitive and Reference type data:
 
-The main difference between primitive and reference type data is in their behavior. This is explained below with examples:
+The main difference between primitive and reference type data is in their behavior. As shown in the examples below:
 
 ### Primitive
 
 ![Primitive](../../public/primitive.png)
 
-Primitive data only shares the value. It doesn't share the reference of the data.
+Primitive data only shares the value. It does not share the reference of the data.
 
 ### Reference
 
 ![Reference](../../public/ref1.png)
 
-Here, when `a` was reassigned with `b`, naturally the value of `a` changed to the value of `b`. But when the value of `b` was changed below, that change also affected `a` and changed it too. This is because when `b` was assigned to `a`, the reference of `b` also went to `a`, so changing either one changes both.
+Here, when `a` is reassigned with `b`, naturally the value of `a` changes to whatever value `b` had. But below, when the value of `b` is changed, that change also affects `a` and changes it too. This is because when `b` was assigned to `a`, the reference of `b` also went to `a`, so changing either one changes both.
 
 What happened here is:
 
 ![Reference](../../public/ref2.png)
 
-When `a` and `b` were defined, two `Arrays` were allocated in memory, and these `Arrays` are pointed to by their variable names `a` and `b`. But when we did `a = b`, both pointers became one, pointing from the value of `b` to both `a` and `b`. So now changing either `a` or `b` will change both.
+When `a` and `b` were defined, two `Arrays` were allocated in memory, and these `Arrays` are pointed to by the variable names `a` and `b`. But when `a = b` was done, both pointers became one, pointing from the value of `b` to both `a` and `b`. So now, changing either `a` or `b` will change both.
 
 This is the main difference between `primitives` and `References` values.
 
 ## Shallow Copy Vs Deep Copy
 
-In JavaScript, "Shallow Copy" and "Deep Copy" are two different processes used to create a copy of an `Object` or `Array`. However, the big difference is in how the data is copied. Below I explain each concept in detail:
+In JavaScript, "Shallow Copy" and "Deep Copy" are two different processes used to create a copy of an `Object` or `Array`. The big difference between them is in how the data is copied. Below, I explain each concept in detail:
 
 ### Shallow Copy
 
-In a shallow copy, only the first level values of the object are copied. This means that if there are nested objects within the object or array, they are copied as references. That is, a reference is created for the nested object or array, sharing the same data in the new object.
+In a shallow copy, only the first level values of the object are copied. This means that if the object or array contains nested objects, they are copied as references. In other words, a reference is created for nested objects or arrays, sharing the same data in the new object.
 
 #### Example:
 
@@ -68,18 +68,18 @@ console.log(shallowCopy); // [1, 2, { a: 3, b: 4 }]
 shallowCopy[2].a = 10;
 
 console.log(originalArray); // [1, 2, { a: 10, b: 4 }]
-console.log(shallowCopy); // [1, 2, { a: 10, b: 4 }] // Because the nested object was copied as a reference, changing it in the copy also changed it in the main data.
+console.log(shallowCopy); // [1, 2, { a: 10, b: 4 }] // Because the nested object was copied as a reference, changes to the copy also change the main data.
 ```
 
-In this example, we can see that `originalArray` and `shallowCopy` share the same nested object. When `shallowCopy[2].a` is changed, the change also occurs in the original object. This is a limitation of shallow copy.
+In this example, we can see that `originalArray` and `shallowCopy` share the same nested object. When `shallowCopy[2].a` is changed, the change also occurs in the original object. This is a limitation of shallow copying.
 
-#### Methods to create a Shallow Copy:
+#### Methods for creating a Shallow Copy:
 
 -   Spread Operator: `let copy = [...array];`
 
 ### Deep Copy
 
-In a deep copy, a copy of each level of an object is created, including separate copies of nested objects. As a result, changes to the original object do not affect the new copy object and vice versa.
+In a deep copy, a copy of every level of an object is created, including nested objects. As a result, changes to the original object do not affect the new copy object, and vice versa.
 
 #### Example:
 
@@ -98,9 +98,9 @@ console.log(originalArray); // [1, 2, { a: 3, b: 4 }]
 console.log(deepCopy); // [1, 2, { a: 10, b: 4 }]
 ```
 
-Here we can see that even after changing `deepCopy[2].a`, the nested object in `originalArray` remains unchanged. This is because in a deep copy, a new copy of the nested object is created.
+Here we can see that after changing `deepCopy[2].a`, the nested object in `originalArray` remains unchanged. This is because in a deep copy, a new copy of the nested object is created.
 
-#### Methods to create a Deep Copy:
+#### Methods for creating a Deep Copy:
 
 -   1.  `JSON.parse(JSON.stringify(obj))`: A simple method, but it cannot handle functions and undefined.
 
@@ -108,13 +108,13 @@ Here we can see that even after changing `deepCopy[2].a`, the nested object in `
 
 Example:
 
-First, you need to install lodash:
+First, install lodash:
 
 ```bash
  npm i --save lodash
 ```
 
-Then
+Then:
 
 ```javascript showlineNumbers
 const _ = require("lodash");
@@ -129,24 +129,24 @@ console.log(originalObject); // { a: 1, b: { c: 2, d: 3 } }
 console.log(deepCopiedObject); // { a: 1, b: { c: 10, d: 3 } }
 ```
 
-**Lodash's cloneDeep method can correctly handle all data types and nested objects. It is very effective for handling functions, dates, Maps, Sets, and other complex data structures.**
+**The cloneDeep method of Lodash can properly handle all data types and nested objects. It is very effective for handling functions, dates, Maps, Sets, and other complex data structures.**
 
-### Shallow Copy vs Deep Copy Differences:
+### Differences between Shallow Copy and Deep Copy:
 
 | **Shallow Copy** | **Deep Copy** |
 | --- | --- |
 | Copies only the first level. | Creates a new copy for each level. |
-| Nested objects are copied as references. | Nested objects have completely new copies. |
+| Nested objects are copied as references. | Complete new copies are made of nested objects. |
 
-The choice between these two types of copying depends on your needs.
+The difference between these two types of copies depends on your needs.
 
 # Advanced JavaScript
 
-## Usage of `this`. Where and how.
+## Using `this`. Where and how.
 
 ### Implicit Binding
 
-**`👉Rule:` You need to see where the function is called, whether there is a dot in front of where it's called, and what's in front of that dot. If there is something, then that is `this`. In this case, the exception is that `this` will only work in normal functions. But `Arrow` functions won't recognize `this`.**
+**`👉Rule:` You need to check where the function was called, whether there is a dot before where it was called, and what is in front of the dot. If there is something, that is the `this`. In this case, the exception is that `this` will only work in a normal function. But an `Arrow` function will not recognize `this`.**
 
 Example:
 
@@ -166,7 +166,7 @@ player.printPlayerName();
 
 #### .call()
 
-**👉 Sometimes there is a need to call an external function with another object. In that case, the syntax is like this:**
+**👉 Sometimes you need to call an external function with another object. In this case, the syntax is like this:**
 
 ```javascript showlineNumbers
 function printName() {
@@ -178,14 +178,14 @@ let player = {
     age: 33,
 };
 
-printName.call(player); // This global function is called with the `player` object using `.call()`.
+printName.call(player); // This global function is `.call()`'ed with the `player` object.
 ```
 
-**In this case, what is passed inside `.call()` is what `this` points to. Here, it's explicitly stating what `this` will be.**
+**In this case, what is passed inside `.call()`, `this` points to that. In this case, it is explicitly stated what `this` will be.**
 
 #### .apply()
 
-**👉 `.apply()` and `.call()` do the same thing. Everything is the same. However, `.apply()` can take an `Array` as its second parameter, while `.call()` cannot take an `Array`.**
+**👉 `.apply()` and `.call()` do the same thing. Everything is the same. However, `.apply()` can take an `Array` as its second parameter. Whereas `.call()` cannot take an `Array`.**
 
 ```javascript showlineNumbers
 function printPlayerName() {
@@ -198,27 +198,76 @@ let mashrafe = {
 };
 let vartu1 = "Honest";
 let vartu2 = "Captain";
+let vartu3 = "Leader";
+let vertue = [vartu1, vartu2, vartu3];
+
+printPlayerName.apply(mashrafe, vertue);
 ```
 
-# JS Itarator
+#### .bind()
 
-## `Itarables` কি ?
+**👉 `.bind()` also does the same job as `.call()`. However, the difference is that `.bind()` does not call the function directly but returns a new instance of the function. And that instance needs to be called by the variable in which it is stored.**
 
-`Itarables` বলতে মূলত সেই সমস্ত জিনিস বা অবজেক্ট কে বোঝায়,যেগুলোর মধ্যে দিয়ে লুপ `eg: for...of` করে স্টেপ বাই স্টেপ যাওয়া যায়। যেমনঃ `Array`,`String`,`Map`,`Set`
+Example:
 
-টেকনিক্যালি বললে, যেসব অবজেক্টের প্রোটোটাইপের ভিতরে `symbol.itarator` প্রপার্টি রয়েছে সেটাই `itarable` `symbol.itarator` এর মাধ্যমেই জাভাস্ক্রিপ্ট ডিফাইন করে যে, কোনটা `itarable` আর কোনটা নয় ।
+```javascript showlineNumbers
+function printAPlayerName() {
+    console.log(this.name);
+}
+
+let bdPlayer = {
+    name: "Ashraful",
+    age: 39,
+};
+
+let printFunction = printAPlayerName.bind(bdPlayer);
+printFunction();
+```
+
+# JS Iterator
+
+## What are `Iterables`?
+
+`Iterables` essentially refers to all those things or objects that can be looped through (e.g., using `for...of`) step by step. For example: `Array`, `String`, `Map`, `Set`.
+
+Technically speaking, any object that has the `symbol.iterator` property in its prototype is an `iterable`. JavaScript defines what is `iterable` and what is not through `symbol.iterator`.
 
 <Callout
     type='warning'
     emoji='💡'>
-    `Map`,`Set` বলতে এখানে জাভাস্ক্রিপ্ট এর `Map` `Set` ডাটা স্ট্রাকচার কে
-    বুঝানো হয়েছে
+    `Map` and `Set` here refer to JavaScript's `Map` and `Set` data structures
 </Callout>
 
-## itarator বলতে কি বুঝায় ?
+## What is an iterator?
 
-`itarable` অবজেক্টকে যার দ্বারা `itarate` করা যায়,সেটাই হলো `itarator`
+An `iterator` is what allows you to iterate through an `iterable` object.
 
-## `itarating` বলতে কি বুঝায় ?
+## What is `iterating`?
 
-`itarating` বলতে মূলত `Itarables` অবজেক্টগুলোকে লুপ করে স্টেপ বাই স্টেপ যাওয়ার যেই প্রসেস সেটাকে বুঝায় । যখন `itarate` করা হয় তখন সেটা হলো `itarating`
+`Iterating` essentially refers to the process of looping through `Iterable` objects step by step. When you `iterate`, that is `iterating`.
+
+## Iterating an `Array`.
+
+```javascript showLineNumbers filename="iterate.js" copy
+const arr = [1, 2, 3, 4, 5, 6, 7];
+for (item of arr) {
+    console.log(item);
+}
+//Output: 1 2 3 4 5 6 7
+```
+
+## Iterating a `String`.
+
+```javascript showLineNumbers filename="iterate.js" copy
+const str = "Bangladesh";
+for (character of str) {
+    console.log(character);
+}
+
+// Output : B a n g l a d e s h
+```
+
+# Asynchronous JavaScript
+
+JavaScript is a single-threaded programming language
+

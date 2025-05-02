@@ -2,27 +2,27 @@ import { Steps, Tabs } from "nextra/components";
 
 ### Synchronizing with Effects
 
-**যখন আমাদের কোন এক্সটার্নাল API নিয়ে কাজ করা লাগবে বা কোন সাইড ইফেক্ট (যেমনঃ API কল করা, এলার্ট দেখানো, ডাটাবেজ এক্সেস করা) হ্যান্ডেল করা লাগবে তখন আমরা `useEffect` ব্যাবহার করবো।**
+**When we need to work with external APIs or handle side effects (such as making API calls, showing alerts, accessing databases), we use `useEffect`.**
 
-**মনে রাখতে হবে যে যেসব একশন অটোমেটিক ট্রিগার হতে হবে সেগুলাই `useEffect` এর মাধ্যমে হেন্ডেল করা লাগবে আর যেগুলো ইউজারের কোন একশনের ভিত্তিতে ট্রিগার হবে সেগুলো `event handler` এর মাধ্যমে হেন্ডেল করা লাগবে।**
+**Remember that actions that need to trigger automatically should be handled through `useEffect`, while those triggered based on user actions should be handled through `event handlers`.**
 
-**যেমন ধরুন আমাদের কম্পোনেন্ট লোড হয়ে যাওয়ার সাথে সাথেই আমদের স্ক্রিনে সকল প্রডাক্ট এর লিস্ট দেখাতে হবে, এই প্রডাক্ট এর লিস্ট আসছে API থেকে। তাহলে এক্ষেত্রে আমাদের এমন কিছু করতে হবে যে আমাদের কোন `event handler` ছাড়াই কম্পোনেন্ট লোড হয়ে যাওয়ার সাথে সাথেই অটোমেটিক ভাবে API কল করে দিতে হবে। এই অটোমেটিক কাজটাই আমরা `useEffect` দিয়ে করতে পারি।**
+**For example, let's say we need to display a list of all products on our screen as soon as our component loads, and this list is coming from an API. In this case, we need to do something that automatically calls the API without any `event handler` as soon as the component loads. We can do this automatic task with `useEffect`.**
 
-**আবার ধরুন কোন একটা প্রডাক্টের কার্ডে `Show Details` নামে একটা বাটন আছে,যেখানে ক্লিক করলে প্রডাক্টের ডিটেইলস দেখাবে, এইযে ক্লিক করলে কিছু হবে, এটা আমরা `event handler` দিয়ে করবো**
+**On the other hand, let's say there's a `Show Details` button on a product card, which shows the product details when clicked. This "something happens when clicked" will be handled with an `event handler`.**
 
-**`useEffect` শুধুমাত্র কম্পোনেন্ট রেন্ডার হয়ে কমিট হয়ে যাওয়ার পর এক্সিকিউট হয়। মানে হলো আমরা ইফেক্টের ভিতর যা লিখবো তা শুধুমাত্র আমাদের কম্পোনেন্ট লোড হয়ে স্ক্রিনে চলে আসার পর এক্সিকিউট হবে।**
+**`useEffect` only executes after the component has rendered and committed. This means that whatever we write inside the effect will only execute after our component has loaded and appeared on the screen.**
 
-#### How to write an Effect (কিভাবে ইফেক্ট লিখতে হয়)
+#### How to write an Effect
 
-ইফেক্ট লিখতে হলে আমাদেরকে তিনটি স্টেপ ফলো করতে হয়, চলুন বিস্তারিত জেনে নেই।
+To write an effect, we need to follow three steps. Let's learn about them in detail.
 
-1. **Declare an Effect. (ইফেক্ট ডিক্লেয়ার করা)**
-2. **Specify the Effect dependencies.(ইফেক্ট রান হউয়ার ডিপেন্ডেসিগুলো বলে দেয়া)**
-3. **Add cleanup if needed.(ইফেক্ট ক্লিন-আপ করা যদি প্রয়োজন হয়)**
+1. **Declare an Effect.**
+2. **Specify the Effect dependencies.**
+3. **Add cleanup if needed.**
 
 <Steps>
-    ### **Declare an Effect. (ইফেক্ট ডিক্লেয়ার করা)**
-    ইফেক্ট ডিক্লেয়ার করার জন্য সর্বপ্রথম আমাদের কম্পোনেন্টের ভিতর `useEffect` হুক কে ইম্পোর্ট করতে হবে। এবং তারপর `useEffect` কে কম্পোনেন্টের টপ লেবেলে কল করতে হবে।
+    ### **Declare an Effect.**
+    To declare an effect, first we need to import the `useEffect` hook into our component. Then we need to call `useEffect` at the top level of our component.
 
     ```jsx {3-5}
     import React from 'react'
@@ -39,19 +39,19 @@ import { Steps, Tabs } from "nextra/components";
     export default App
     ```
 
-ইফেক্টের কোড শুধুমাত্র কম্পোনেন্ট রি-রেন্ডার হয়ে যাওয়ার পর স্ক্রিনে যখন ভিজিবল হয় শুধুমাত্র তখন এক্সিকিউট হয়। এই অবস্থায় ইফেক্টের ভিতরে আমরা যা লিখবো তা প্রতিবার আমাদের কম্পোনেন্ট রি-রেন্ডার হউয়ার সাথে সাথে রান হবে।
+The effect code only executes after the component has re-rendered and is visible on the screen. In this state, whatever we write inside the effect will run every time our component re-renders.
 
-কিন্তু এইটা তো একটা সমস্যা, কেননা আমরা যদি এফেক্ট এর ভিতরে এমন কিছু লিখি যা আমাদের শুধুমাত্র একবার কম্পোনেন্ট লোড হউয়ার সময় রান করা দরকার, পরে আর কম্পোনেন্ট রি-রেন্ডার হলেও আমারা ইফেক্টের ওই কোড রান করাতে চাইনা। যেমন ধরুনঃ আমরা কোন কম্পোনেন্টে কোন সার্ভারের সাথে কানেক্ট করালাম, এখন সেই কম্পোনেন্টে একটা ইনপুট ফর্ম আছে, তাহলেতো প্রতিবার টাইপিং এ আমাদের কম্পোনেন্ট রি-রেন্ডার হবে এবং প্রতিবার আমাদের ইফেক্ট রান হবে এবং সার্ভারের সাথে কানেকশন করাবে। কিন্তু এই কানেকশন করানো কি আমাদের প্রতিটা কি-প্রেসে দরকার আছে ? আমরা শুধু চাই আমাদের কম্পোনেন্ট যদি প্রথমবার লোড হয় তাহলে শুধুমাত্র যেন সার্ভারের সাথে কানেকশনটা হয়।
+But this is a problem because what if we write something inside the effect that we only need to run once when the component loads, and we don't want that effect code to run again even if the component re-renders? For example: We connected to a server in a component, and now that component has an input form. So every time we type, our component will re-render, and each time our effect will run and connect to the server. But do we need this connection on every key press? We only want the connection to happen if our component loads for the first time.
 
-তাহলে আমাদের এমন কিছু দরকার যা দিয়ে আমরা এই বিহেবিয়ার টা কনট্রোল করতে পারি। এই জন্যই আমরা এফেক্টে ডিপেন্ডেন্সি এড করবো।
+So we need something that allows us to control this behavior. For this reason, we'll add dependencies to the effect.
 
-### **Specify the Effect dependencies.(ইফেক্ট রান হউয়ার ডিপেন্ডেসিগুলো বলে দেয়া)**
+### **Specify the Effect dependencies.**
 
-রিয়াক্টের ইফেক্টের উপর আমাদের কনট্রোল আনার জন্য আমরা ডিপেন্ডেসি এড করবো। কেননা আমরা বলে দিতে চাই যে আমাদের কম্পোনেন্ট কখন কখন রান করা উচিত, এটা কি প্রতিটা রি-রেন্ডারে কল হবে নাকি শুধুমাত্র একবার কল হবে নাকি কোন নির্দিষ্ট বিষয়ের উপর ডিপেন্ড করে কল হবে।
+We'll add dependencies to have control over React's effect. Because we want to specify when our component should run, will it be called on every re-render, or just once, or will it depend on something specific?
 
-ডিপেন্ডেসি এড করার জন্য আমাদের ইফেক্ট এর সেকন্ড প্যারামিটারে কিছু ভ্যালু ( [] অথবা অন্যান্য ডিপেন্ডেন্সি) দিতে হয় ।
+To add dependencies, we need to provide some values ([] or other dependencies) as the second parameter of the effect.
 
-**যদি আমরা চাই যে প্রতিবার রি-রেন্ডারে ইফেক্ট কল হবে তাহলে এভাবে লিখতে হয়**
+**If we want the effect to be called on every re-render, we write it like this:**
 
 ```jsx
 useEffect(() => {
@@ -59,9 +59,9 @@ useEffect(() => {
 });
 ```
 
-এক্ষেত্র কোন ডিপেন্ডেসি বলে দিতে হয়না ।
+In this case, we don't need to specify any dependencies.
 
-**যদি আমরা চাই যে শুধু প্রথম রেন্ডারে ইফেক্ট কল হবে এবং পরবর্তিতে কম্পোনেন্ট রি-রেন্ডার হলেও আর ইফেক্ট কল হবেনা, তাহলে এভাবে লিখতে হয়**
+**If we want the effect to be called only on the first render and not when the component re-renders later, we write it like this:**
 
 ```jsx
 useEffect(() => {
@@ -69,9 +69,9 @@ useEffect(() => {
 }, []);
 ```
 
-এক্ষেত্র সেকন্ড প্যারামিটারে শুধুমাত্র একটা [] দিতে হয়
+In this case, we just need to provide an empty [] as the second parameter.
 
-**যদি আমরা চাই যে কম্পোনেন্ট লোড হউয়ার সাথে সাথে একবার রান হবে এবং কোন স্পেসিফিক কিছু চেঞ্জ হলে আবার রান হবে,সেক্ষেত্রে আমাদের সেকেন্ড প্যারামিটারে [] এর ভিতরে ডীপেন্ডেন্সিগুলো বলে দিতে হবে**
+**If we want the component to run once when the component loads and then run again when something specific changes, we need to specify the dependencies inside [] in the second parameter:**
 
 ```jsx
 useEffect(() => {
@@ -79,17 +79,17 @@ useEffect(() => {
 }, [a, b]);
 ```
 
-এক্ষেত্রে আমরা ডিপেন্ডেন্সিতে `a` এবং `b` এড করেছি, এটা যে কোন কিছু হতে পারে,যেগুলো আমরা আমাদের ইফেক্টের ভিতর ব্যাবহার করেছি, সেগুলো ডিপেন্ডেন্সিতে এড করা লাগবে, আমরা মাল্টিপল ডিপেন্ডেন্সি এড করতে পারি। আমাদের কি কি ডিপেন্ডেন্সি এড করা লাগবে তা `eslint` আমাদের অটোমেটিক সাজেশন দিবে। আমরা সেগুলো ফলো করেও ডিপেন্ডেন্সি এড করতে পারি।
+In this case, we've added `a` and `b` as dependencies, which can be anything that we've used inside our effect. We need to add these to the dependencies. We can add multiple dependencies. `eslint` will automatically suggest what dependencies we need to add. We can also follow these suggestions to add dependencies.
 
-তবে আমাদের বুঝতে হবে যে কোন কোন ভ্যালূ চেঞ্জ হলে আমরা এফেক্ট আবার রান করাতে চাই,সেগুলোই আমরা ইফেক্টের ডিপেন্ডেন্সি হিসেবে ব্যাবহার করবো।
+However, we need to understand which values we want the effect to run again when they change, and use those as dependencies in the effect.
 
-আমরা ডিপেন্ডেন্সি তে যেসব ভ্যালু এড করবো রিয়াক্ট প্রতিবার কম্পোনেন্ট রেন্ডার হয়ে যাওয়ার পর চেক করে দেখবে যে সেই ভ্যালুগুলো আগের রেন্ডারে যা ছিল পরের রেন্ডারে কি তাই আছে নাকি চেঞ্জ হয়েছে, আর এটা করবে রিয়াক্ট জাভাস্ক্রিপ্টের `Object.is()` মেথডের মাধ্যমে। যদি কোন একটার ভ্যালু চেঞ্জ হয় তাহলেই রিয়াক্ট এফেক্টকে আরেকবার কল করবে।
+For the values we add as dependencies, React will check after each component render to see if those values are the same as in the previous render or if they've changed, and it does this using JavaScript's `Object.is()` method. If any one of the values has changed, React will call the effect again.
 
-### **Add cleanup if needed.(ইফেক্ট ক্লিন-আপ করা যদি প্রয়োজন হয়)**
+### **Add cleanup if needed.**
 
-চলুন একটা উদাহরণের কথা ভাবা যাক,যাতে আমরা বুঝতে পারি যে কখন আমাদের ক্লিন-আপ করা প্রয়োজন এবং ক্লিন-আপ কেন করতে হবে।
+Let's consider an example to understand when we need cleanup and why we need to do it.
 
-ধরুন আমাদের একটা চ্যাট এপ্লিকেশন আছে। এখন যখনি কোন ইউজার চ্যাট করার জন্য এপ্লিকেশনটা অন করে চ্যাট কম্পোনেন্টে ক্লিক করবে সাথে সাথে ইফেক্টের মাধ্যমে একটা চ্যাট সার্ভারের সাথে কানেকশন ঘটাবে।
+Let's say we have a chat application. Now, whenever a user turns on the application to chat and clicks on the chat component, it will immediately establish a connection with a chat server through an effect.
 
 <Tabs items={["App.js", "Chat.js"]}>
     <Tabs.Tab>
@@ -125,11 +125,11 @@ useEffect(() => {
 
 </Tabs>
 
-এখন ইউজার আবার বেক করে অন্য কম্পোনেন্টে চলে গেল এবং পুনরায় আবার এসে চ্যাট কম্পোনেন্টে ক্লিক করলো, এখন আবার একটা কানেকশন ঘটলো।
+Now the user went back to another component and then came back again and clicked on the chat component, now another connection was established.
 
-খেয়াল করলে বুঝবেন যে, প্রথমবার যখন ইউজার চ্যাট আইকনে ক্লিক করার পর যেই কানেকশনটি হয়ছিল,ইউজার বেক করে অন্য পেজে চলে যাওয়ার পর কিন্তু সেই কানেকশনটি বন্ধ করা হয়নি এবং এবং ইউজার যখন আবার পুনরায় এসে আবার চ্যাট আইকনে ক্লিক করলো তখন আরও একটা কানেকশন ঘটলো, এভাবে যদি ইউজার বার বার বেক এন্ড ফোর্থ করতে থাকে তাহলে অসংখ্য কানেকশন রানিং হয়ে যাবে এবং এতে মেমরি লিক হবে। তাই সবসময় কম্পোনেন্ট যখন আনমাউন্ট হবে তখন প্রতিবার আমাদের ইফেক্টকে ক্লিন-আপ করে নিতে হবে।
+If you notice, the first connection that was made after the user clicked on the chat icon wasn't closed when the user went back to another page, and when the user came back again and clicked on the chat icon again, another connection was established. If the user keeps going back and forth like this, countless connections will be running, leading to memory leaks. Therefore, we should always clean up our effect when the component unmounts.
 
-ক্লিন-আপ করার জন্য আমাদের ইফেক্ট এর কলব্যাক ফাংশনের ভিতর থেকে রিটার্ন করতে হবে একটা ফাংশন কল, তার ভিতর আমরা ক্লিন-আপ লিখে দিবো।
+To clean up, we need to return a function call from within the callback function of the effect, and inside that function, we'll write the cleanup.
 
 ```jsx {4-6}
 useEffect(() => {

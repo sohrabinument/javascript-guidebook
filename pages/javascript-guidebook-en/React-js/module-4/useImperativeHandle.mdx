@@ -1,9 +1,9 @@
 import { Steps } from "nextra/components";
 
-**`forwardRef` ব্যাবহার করলে আমরা আমদের কম্পোনেন্ট এর সকল এক্সেস প্যারেন্ট কম্পোনেন্ট কে দিয়ে দেই ফরোয়ার্ড করে, কিন্তু আমরা যদি চাই যে না, আমরা `forwardRef` করে রেফারেন্স টা ফরোয়ার্ড করবো ঠিকই কিন্তু সেই সাথে আমরা এটাও বলে দিবো যে সেই রেফারেন্স নিয়ে প্যারেন্ট কম্পোনেন্ট ঠিক কি কি করতে পারবে, মানে হলো আমরা চাইল্ড থেকে প্যারেন্ট কম্পোনেন্ট এর এক্সেস টা লিমিটেড করে দিতে চাচ্ছি, যদি এমনটা করতে চাই তাহলে আমাদেরকে `useImperativeHandle` নামে রিয়াক্টের একটা বিল্ট-ইন হুক ব্যাবহার করতে হবে। আমরা নিচের স্টেপগুলো ফলো করে এটা করতে পারি।**
+**When using `forwardRef`, we forward all access to our component to the parent component. But what if we want to forward the reference, but also specify exactly what the parent component can do with that reference? In other words, we want to limit the access from the child to the parent component. If we want to do this, we'll need to use a built-in React hook called `useImperativeHandle`. We can do this by following the steps below.**
 
 <Steps>
-### চাইল্ড কম্পোনেন্টের ভিতর একটা `ref` নেয়া লাগবে সেই কম্পোনেন্টের NODE এ চাইল্ড কম্পোনেন্টের `ref` ব্যাবহার করা লাগবে।
+### The child component needs to take a `ref` for the component's NODE and use the child component's `ref`.
 
 ```jsx {4,8}
 import { forwardRef, useRef } from "react";
@@ -19,7 +19,7 @@ const MyInput = forwardRef((props, ref) => {
 });
 ```
 
-### `useImperativeHandle` হুক এর মাধ্যমে বলে দিতে হবে আমরা কোন কোন বিষয়ের এক্সেস দিতে চাই।
+### Use the `useImperativeHandle` hook to specify which functionalities we want to give access to.
 
 ```jsx {7-11}
 import { forwardRef, useRef, useImperativeHandle } from "react";

@@ -1,42 +1,42 @@
 import { Callout, Steps } from "nextra/components";
 
-**রিয়াক্টে যেকোন ধরনের জাভাস্ক্রিপ্ট ভ্যালুকে তার স্টেট হিসেবে নিতে পারে। কিন্তু যখনি আমরা রিয়াক্টের স্টেট হিসেবে কোন জাভাস্ক্রিপ্ট অবজেক্ট ব্যাবহার করবো তা কখনওই আমরা সরাসরি চেঞ্জ করতে পারবোনা বা মিউটেড করতে পারবোনা। এক্ষেত্র আমাদেরকে সম্পূর্ন নতুন অবজেক্ট দিয়ে আগের অবজেক্টকে রিপ্লেস করে দিতে হবে, নাহলে আগের অবজেক্ট থেকে একটা কপি বানিয়ে সেই কপি অবজেক্ট দিয়ে আগের স্টেট এর অবজেক্ট কে রিপ্লেস করে দিতে হবে। অর্থাৎ যেভাবেই করি আমাদেরকে সবসময় স্টেট আপডেট করার সময় নতুন ভ্যালু দিয়ে আগের ভ্যালু রিপ্লেস করে দিতে হবে।**
+**React can take any type of JavaScript value as its state. But whenever we use a JavaScript object as a React state, we can never directly change or mutate it. In this case, we have to completely replace the previous object with a new object, or make a copy of the previous object and replace the state's object with that copy object. In other words, however we do it, we always have to replace the previous value with a new value when updating the state.**
 
-### (What is a Mutation) মিউটেশন কি ?
+### (What is a Mutation) What is Mutation?
 
-মিউটেশন মানে হলো পরিবর্তন করা । জাভাস্ক্রিপ্টের ভাষায় কোন ভেরিয়েবল এর ভ্যালুকে সরাসরি পরিবর্তন করে ফেলাকে মিউটেশন বলা হয়। রিয়াক্ট স্টেটের ভ্যালুকে সরাসরি পরিবর্তন করাকে নিরুৎসাহিত করে। রিয়াক্টে স্টেট হিসেবে যেকোন ভ্যালু স্টোর করা যায় যেমনঃ `string` ,`number`,`Boolean`,`Array` ,`Object`।
+Mutation means to change. In JavaScript terms, directly changing the value of a variable is called mutation. React discourages directly changing the value of a state. In React, any value can be stored as state, such as `string`, `number`, `Boolean`, `Array`, `Object`.
 
-`string` ,`number`,`Boolean` হলো জাভাস্ক্রিপ্টের প্রিমিটিভ ভ্যালু যা `read-only` বা কখনো এগুলো পরিবর্তন করা যায়না।
+`string`, `number`, `Boolean` are JavaScript primitive values that are `read-only` or can never be changed.
 
-অন্যদিকে `Array` ,`Object` হলো রেফারেন্স ভ্যালু। যা টেকনিক্যালি পরিবর্তন করা গেলেও রিয়াক্ট স্টেট-এর ভ্যালুতে সরাসরি রেফারেন্স ভ্যালুকে পরিবর্তন করতে নিষেধ করে। রিয়াক্টে স্টেট আপডেটের ক্ষেত্রে এসব ভ্যালুকেও `read-only` হিসেবে চিন্তা করতে বলে ।
+On the other hand, `Array`, `Object` are reference values. Although they can technically be changed, React forbids directly changing reference values in state values. React suggests thinking of these values as `read-only` when updating state.
 
-জাভাস্ক্রিপ্ট এর প্রিমিটিভ ও রেফারেন্স ভ্যালু সম্পর্কে আরও বিস্তারিত জানতে চাইলে [এখানে ক্লিক করুন](https://reactive-accelarator.vercel.app/javascript-guidebook/javascript-refresher#primitive-and-reference-types-value)
+To learn more about JavaScript's primitive and reference values, [click here](https://reactive-accelarator.vercel.app/javascript-guidebook/javascript-refresher#primitive-and-reference-types-value)
 
-চলুন একটু উদাহরণের মাধ্যমে বিস্তারিত বুঝিঃ
+Let's understand in detail with an example:
 
 ```jsx
 const [x, setX] = useState(0);
 ```
 
-এখানে স্টেট ভ্যারিএবল `x` এর ভ্যালু হিসেবে `0` রাখা হয়েছে, `0` হলো একটি প্রিমিটিভ ভ্যালু।
+Here, the value of the state variable `x` has been set to `0`, which is a primitive value.
 
 ```jsx
 setX(5);
 ```
 
-এখানে `setX` করে স্টেট ভ্যারিএবল `x` এর ভ্যালু `5` করা হয়েছে । এখানে `x` এর ভ্যালু `0` কে কিন্তু চেঞ্জ করা হয়নি,কেননা এটা হলো একটা প্রিমটিভ ভ্যালু যা কখনো চেঞ্জ করা যায়না বা `read-only` বরং `5` যা একটি নতুন ভ্যালু, তা দিয়ে আগের ভ্যালুকে রিপ্লেস করা হয়েছে ।
+Here, the value of the state variable `x` has been set to `5` using `setX`. Here, the value of `x`, which is `0`, hasn't been changed, because it's a primitive value that can never be changed or is `read-only`. Rather, the previous value has been replaced with `5`, which is a new value.
 
-কিন্তু যখন আমাদের স্টেট এর ভ্যালু এমন অবজেক্ট হবে,
+But when our state value will be an object like this,
 
 ```jsx
 const [position, setPosition] = useState({ x: 0, y: 0 });
 ```
 
-যদিও এটা টেকনিকালি `position.x = 5;` এভাবে পরিবর্তন করা সম্ভব কিন্তু এটা করলে তা মেইন অবজেক্ট কে মিউটেড করা হয়। যা রিয়াক্ট কখনওই রিকমেন্ড করেনা। **আপনাকে অবশ্যই স্টেট চেঞ্জ করার সময় সম্পুর্ন নতুন ভ্যালু বা নতুন অবজেক্ট দিয়ে আগের ভ্যালুকে রিপ্লেস করে দিতে হবে।**
+Although it's technically possible to change it like `position.x = 5;`, doing so mutates the main object. This is never recommended by React. **You must always replace the previous value with a completely new value or a new object when changing the state.**
 
-তাহলে কিভাবে করবো চলুন জেনে নেই।
+So how do we do it? Let's find out.
 
-### (Treat state as read-only) রিয়াক্টের স্টেটকে `read-only` চিন্তা করতে হবে।
+### (Treat state as read-only) React's state should be thought of as `read-only`.
 
 ```jsx filename="App.js" showLineNumbers
 import { useState } from "react";
@@ -75,9 +75,9 @@ export default function MovingDot() {
 }
 ```
 
-উপরের কোড এ একটা পয়েন্টার বানানো হয়েছে যা মাউস মুভ করার সাথে সাথে মাউসকে ফলো করে মুভ করার কথা। কিন্তু কোডটা রান করলে দেখা যাবে কোডটা কাজ করছেনা।
+In the code above, a pointer has been created that should follow and move with the mouse as it moves. But if you run the code, you'll see it's not working.
 
-কাজ করছেনা কারণ কোডের এই অংশে একটু ভুল আছে।
+It's not working because there's a mistake in this part of the code:
 
 ```jsx
     onPointerMove={e => {
@@ -86,9 +86,9 @@ export default function MovingDot() {
     }}
 ```
 
-এখানে `onPointerMove` `event listener` এ স্টেট ভ্যারিয়েবল `position` এর ভ্যালু একবার স্ক্রিনে রেন্ডার হয়ে যাওয়ার পর আবার সেই ভ্যালুকেই সরাসরি পরিবর্তন করা হয়েছে, এজন্যই কাজ করছেনা। কেননা চেঞ্জটা কোন `setter function` এ করা হচ্ছেনা, তাই রিয়েক্ট জানতেই পারছেনা যে স্টেট এর ভ্যালু চেঞ্জ হয়েছে এবং তাকে রি-রেন্ডার করতে হবে।
+Here, in the `onPointerMove` `event listener`, the value of the state variable `position` is being directly changed after it has been rendered on the screen once, which is why it's not working. Because the change isn't being made in a `setter function`, React doesn't even know that the state value has changed and that it needs to re-render.
 
-এক্ষেত্রে এটা চেঞ্জ করতে হলে `setter function` এর ভিতরে চেঞ্জ করতে হবে যাতে ভ্যালু চেঞ্জ হলেই রি-রেন্ডার ট্রিগার হয়ে যায়।
+In this case, to change it, it needs to be changed inside the `setter function` so that the re-render is triggered as soon as the value changes.
 
 ```jsx
 onPointerMove((e) => {
@@ -99,19 +99,19 @@ onPointerMove((e) => {
 });
 ```
 
-খেয়াল করে দেখেন, এখানে কিন্তু আগের `position` অবজেক্ট এর কোন ভ্যালুকে চেঞ্জ করা হয়নি,সম্পুর্ন নতুন একটা অবজেক্ট বানিয়ে আগের অবজেক্ট কে রিপ্লেস করে দেয়া হয়েছে।
+Notice that here, no value of the previous `position` object has been changed; a completely new object has been created and the previous object has been replaced.
 
 <Callout type="info" emoji="📔">
-**লোকাল মিউটেশন হলে সেটা ঠিক আছে।**
+**Local mutations are fine.**
 
-এভাবে কোড করা যাবেনা,যা স্টেটের বর্তমান অবজেক্ট `position` কেই সরাসরি চেঞ্জ করে।
+You can't code like this, which directly changes the current state object `position`:
 
 ```jsx
 position.x = e.clientX;
 position.y = e.clientY;
 ```
 
-কিন্তু যদি এভাবে কোড করি, যাতে আমরা সম্পুর্ন নতুন একটা অবজেক্ট বানিয়ে আগের স্টেট ভ্যালুর অবজেক্ট কে রিপ্লেস করে দেই,তাহলে সেটা সম্পুর্নভাবে ঠিক আছে।
+But if you code like this, where you create a completely new object and replace the previous state value's object, then it's perfectly fine:
 
 ```jsx
     setPosition((e)=>{
@@ -120,7 +120,7 @@ position.y = e.clientY;
     })
 ```
 
-আবার একটা লোকাল অবজেক্ট ভ্যারিয়েবল বানিয়ে সেটা দিয়েও চেঞ্জ করতে পারি, যেমনঃ
+You can also create a local object variable and use it to change:
 
 ```jsx
 const nextPosition = {};
@@ -130,25 +130,25 @@ nextPosition.y = e.clientY;
 setPosition(nextPosition);
 ```
 
-এভাবে করলেও ঠিক আছে কেননা এখানে স্টেট ভ্যারিএবল এর `position` অবজেক্ট কে মডিফাই করা হচ্ছেনা, এখানে একটা নতুন অবজেক্ট বানিয়ে স্টেট এর আগের ভ্যালুকে রিপ্লেস করা হচ্ছে।
+Doing it this way is also fine because the state variable's `position` object isn't being modified; a new object is being created and replacing the previous value of the state.
 
-মিউটেশন তখনই প্রব্লেম যখন আপনি কোন স্টেট এর এক্সিস্টীং অবজেক্টে সরাসরি পরিবর্তন করছেন, তা নাহলে আপনি লোকাল ভেরিয়েবল পরিবর্তন করতে পারেন,এতে কোন সমস্যা নাই
+Mutation is only a problem when you're directly changing an existing object of a state. Otherwise, you can change local variables; there's no problem with that.
 
 </Callout>
 
 ### Copying objects with the spread syntax
 
-আগের উদাহরণে আমরা যেমন দেখলাম যে যখনি আমরা স্টেট এর অবজেক্ট ভ্যালু পরিবর্তন করবো তখন আমাদের একটা নতুন অবজেক্ট স্টেটে দিতে হবে। তার মানে আমাদের প্রতিবার একটা করে ফ্রেশ অবজেক্ট বানাতে হচ্ছে।
+As we saw in the previous example, when we change a state's object value, we need to give a new object to the state. That means we need to create a fresh object each time.
 
-কিন্তু আমাদের অবজেক্ট যদি অনেক বড় হয় তাহলে যখনি স্টেট আপডেট করতে চাইবো তখনি যদি এত বড় অবজেক্ট নতুন করে লিখতে যাই তাহলে সেটা একটা সমস্যা এবং এতে ভুল হওয়ার সম্ভাবনা বেশি থাকে।
+But if our object is very large, then every time we want to update the state, if we have to write such a large object from scratch, it becomes a problem and there's a greater chance of errors.
 
-এক্ষেত্রে আমরা আগের অবজেক্ট এর একটা কপি বানিয়ে নিয়ে শুধুমাত্র যেই যেই ভ্যালু পরিবর্তন করতে চাই,সেগুলো পরিবর্তন করে দিলেইতো ঝামেলা শেষ।
+In this case, we can make a copy of the previous object and only change the values we want to change, and the trouble is over.
 
-এই কাজটা করতেই জাভাস্ক্রিপ্ট এর `... spread` অপারেটর আমাদের হেল্প করে থাকে। `... spread` অপারেটর ব্যাবহার করে আমরা আগের অবজেক্ট এর একটা `Shallow` কপি বানিয়ে নিতে পারি। তবে মনে রাখতে হবে `... spread` অপারেটর নেস্টেড অবজেক্ট এর ক্ষেত্রে শুধুমাত্র এক লেবেল কপি করে। যদি ডিপলি কপি করতে চাই তাহলে `... spread` অপারেটর একাধিকবার ব্যাবহার করতে হবে।
+JavaScript's `... spread` operator helps us do this. Using the `... spread` operator, we can create a `Shallow` copy of the previous object. However, remember that the `... spread` operator only copies one level in the case of nested objects. If we want to copy deeply, we need to use the `... spread` operator multiple times.
 
-`Shallow Copy` এবং `Deep Copy` সম্পর্কে আরও বিস্তারিত জানতে [এই লিঙ্ক এ ক্লিক করুন](https://reactive-accelarator.vercel.app/javascript-guidebook/javascript-refresher#shallow-copy-vs-deep-copy)
+To learn more about `Shallow Copy` and `Deep Copy`, [click on this link](https://reactive-accelarator.vercel.app/javascript-guidebook/javascript-refresher#shallow-copy-vs-deep-copy)
 
-ধরুন আমাদের এই অবজেক্ট স্টেট ভ্যারিয়বলের `firstName` প্রপার্টির ভ্যালু চেঞ্জ করা লাগবে।
+Let's say we need to change the value of the `firstName` property of this object state variable.
 
 ```jsx
 const [person, setPerson] = useState({
@@ -158,7 +158,7 @@ const [person, setPerson] = useState({
 });
 ```
 
-তাহলে আমরা এভাবে করতেই পারিঃ
+Then we can do it like this:
 
 ```jsx
 setPerson({
@@ -168,20 +168,20 @@ setPerson({
 });
 ```
 
-এটা খুব ভালোভাবেই কাজ করবে। কিন্তু এতে আমাদের একই জিনিস বার বার লেখা লাগছে,
+This will work very well. But it requires us to write the same thing over and over again.
 
-কিন্তু যদি আমরা `...spread` অপারেটর ব্যাবহার করি তাহলে আমরা আরও সহজে এভাবে লিখতে পারি।
+But if we use the `...spread` operator, we can write it more easily like this:
 
 ```jsx
 setPerson({
-  ...person, // এখানে আমাদের আগের অবজেক্টের সকল ডাটা কপি হয়ে নতুন অবজেক্ট এর প্রপার্টি হিসেবে বসে গেছে।
-  firstName: "Shahadat Hussain Ripon", // এখানে আমরা প্রপার্টির ভ্যালু চেঞ্জ করছি
+  ...person, // Here all the data from our previous object has been copied and set as properties of the new object.
+  firstName: "Shahadat Hussain Ripon", // Here we are changing the property value
 });
 ```
 
-### (Updating a nested object) কিভাবে নেস্টেড অবজেক্টকে স্টেট এ আপডেট করতে হয়?
+### (Updating a nested object) How to update a nested object in state?
 
-ধরুন আমাদের স্টেট এর স্ট্রাকচার এমনঃ
+Let's say our state structure is like this:
 
 ```jsx
 const [person, setPerson] = useState({
@@ -194,9 +194,9 @@ const [person, setPerson] = useState({
 });
 ```
 
-এবং আমরা `person.artwork.city` এর ভ্যালু আপডেট করতে চাই।
+And we want to update the value of `person.artwork.city`.
 
-তাহলে আমরা এভাবে করতে পারি।
+Then we can do it like this:
 
 ```jsx
 const changedArtwork = { ...person.artwork, city: "Narayangonj" };
@@ -204,14 +204,14 @@ const changedPerson = { ...person, artwork: changedArtwork };
 setPerson(changedPerson);
 ```
 
-অথবা যদি আমরা একটা সিঙ্গেল ফাংশন কলের ভিতরেই চেঞ্জ করতে চাই, তাহলে এভাবে করতে পারি,
+Or if we want to make the change within a single function call, we can do it like this:
 
 ```jsx
 setPerson({
-  ...person, // আগের অবজেক্ট এর সমস্ত ফিল্ড কপি করা হয়েছে
+  ...person, // All fields of the previous object have been copied
   artwork: {
-    ...person.artwork, // আগের অবজেক্ট এর artwork ফিল্ডের সমস্ত ডাটা কপি করা হয়েছে
-    city: "Narayangonj", // প্রপার্টির ভ্যালু পরিবর্তন করা হয়েছে
+    ...person.artwork, // All data of the artwork field of the previous object has been copied
+    city: "Narayangonj", // The property value has been changed
   },
 });
 ```
@@ -219,7 +219,7 @@ setPerson({
 <Callout
     type='info'
     emoji='📔'>
-    **সত্যি হলো যে অবজেক্ট কখনই নেস্টেড নয়।**
+    **The truth is that objects are never nested.**
 
 ```jsx
 let obj = {
@@ -232,7 +232,7 @@ let obj = {
 };
 ```
 
-এই অবজেক্টটাকে এভাবে দেখে মনে হচ্ছে এটা নেস্টেড,কিন্তু সত্যিটা হলো যে যখন আমাদের কোড এক্সিকিউট হবে,তখন আসলে নেস্টেড অবজেক্টের কোন অস্তিত্ব নেই। তখন আসলে এটা দুইটা অবজেক্ট হয়ে যাবে।
+Looking at this object, it seems nested, but the truth is that when our code executes, there's no such thing as a nested object. It then actually becomes two objects.
 
 ```jsx
 let obj1 = {
@@ -247,7 +247,7 @@ let obj2 = {
 };
 ```
 
-তারপর হয়তো একটা অবজেক্ট এর রেফারেন্স নিয়ে অন্য আরেকটা অবজেক্ট তৈরি হতে পারে, এভাবেঃ
+Then perhaps another object can be created with a reference to one object, like this:
 
 ```jsx
 let obj1 = {
@@ -267,19 +267,19 @@ let obj3 = {
 };
 ```
 
-এমন অবস্থায় আপনি যদি `obj1` এ কোন চেঞ্জ করেন তাহলে রেফারেন্স ভ্যালু হউয়ার কারনে `obj3` তে গিয়েও সেই চেঞ্জটা এফেক্ট করবে।
+In such a case, if you make any changes to `obj1`, then because it's a reference value, that change will also affect `obj3`.
 
 </Callout>
 
-### (Write concise update logic with Immer) ইমার এর মাধ্যমে নিশ্চিন্তে নেস্টেড অবজেক্ট পরিবর্তন করা।
+### (Write concise update logic with Immer) Changing nested objects worry-free with Immer.
 
-আমরা স্টেট এর নেস্টেড অবজেক্টগুলোকে খুব সহজে ,কোন কিছু চিন্তা ভাবনা ছাড়াই পরিবর্তন করতে চাইলে রিয়াক্ট একটা থার্ড পার্টি প্যাকেজ রিকমেন্ড করে `Immer`নামে।
+If we want to change nested objects in state very easily, without any worry, React recommends a third-party package called `Immer`.
 
-আমরা চাইলে `Immer` ব্যাবহার করেও আমাদের কমপ্লেক্স ন্যাস্টেড অবেজক্ট স্টেট গুলো খুব সহজেই পরিবর্তন করতে পারি।
+We can also use `Immer` to very easily change our complex nested object states if we want.
 
-`Immer` আমাদেরকে `draft` নামে একটা স্পেশাল অবজেক্ট দেয়,যেটা আগের কমপ্লেক্স অবজেক্ট এর একটা `Proxy` অবজেক্ট বানিয়ে নেয়, এবং আমরা কি কি পরিবর্তন করি তা সে খুঁজে বের করে, আগের অবজেক্ট কে ইমিউটিভলি আপডেট করে দেয়। এক্ষেত্রে `Mutation` এর ব্যাপারটা `Immer`নিজে ম্যানেজ করে বলে আমাদের টেনশন নিতে হয়না।
+`Immer` gives us a special object called `draft`, which creates a `Proxy` object of the previous complex object, and finds out what changes we make, and immutably updates the previous object. In this case, we don't have to worry about the issue of `Mutation` because `Immer` manages it itself.
 
-### `Immer` কিভাবে ব্যাবহার করতে হয়।
+### How to use `Immer`
 
 <Steps>
 ### install `Immer` package
@@ -296,13 +296,13 @@ import { useImmer } from "use-immer";
 
 ### change `useState` to `useImmer`
 
-`useState` কে চেঞ্জ করে `useImmer` হবে
+`useState` will be changed to `useImmer`
 
 ```jsx
 import { useImmer } from "use-immer";
 
-const [person, setPerson] = useState({}); // এই লাইনটিকে চেঞ্জ করতে হবে
-const [person, updatePerson] = useImmer({}); // এভাবে স্টেট ডিফাইন করতে হবে।
+const [person, setPerson] = useState({}); // This line needs to be changed
+const [person, updatePerson] = useImmer({}); // Define state like this
 ```
 
 ### Update state like below
@@ -330,4 +330,4 @@ updateImmer((draft) => {
 
 </Steps>
 
-এভাবে করলে হয়তো মনে হতে পারে আমরা রিয়াক্টের রুলস ব্রেক করছি,কিন্তু না আসলে আমরা এখানে `draft` কে মিউটেড করলেও, আন্ডার দ্যা হুড, `Immer` নিজে আমাদের স্টেট টা ইমিউটিভলি আপডেট করছে।
+Doing it this way might seem like we're breaking React's rules, but no, actually when we're mutating the `draft` here, under the hood, `Immer` itself is immutably updating our state.

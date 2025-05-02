@@ -1,25 +1,25 @@
-## DOM কি আসলেই স্লো?
+## Is DOM Really Slow?
 
-নাহ, ডম কখনোই স্লো না । আসলে যদি ভালোভাবে কোড করা হয় তাহলে ডম যেকোন কিছুর থেকে ফাস্ট। কিন্তু বর্তমান বিশ্বে ওয়েব অ্যাপ্লিকেশনগুলো অনেক বেশি ইন্টারেক্টিভ,তাই যখনই ইউজার কোন ইন্টারেকশন করে তখন ব্রাউজারকে আবার তা নতুন করে পুরো ওয়েবসাইটটা রি-পেইন্ট করতে হয়। এইরকম যখন অনেকগুলো রিয়াকশনের কারনে ব্রাউজারকে বার বার রি পেইন্ট করতে হয় তখন সেই রি-পেইন্টিং প্রসেসটা স্লো হয়ে যায়,মুলত ডম কিন্তু স্লো নয় ।
+No, DOM is never slow. In fact, if coded properly, DOM is faster than anything else. But in today's world, web applications are highly interactive, so whenever a user interacts with them, the browser needs to repaint the entire website. When the browser has to repeatedly repaint due to many reactions, that repainting process becomes slow, but fundamentally, the DOM itself is not slow.
 
-## ব্রাউজার কিভাবে DOM রেন্ডার করে ?
+## How Does the Browser Render DOM?
 
 ![DOM Tree](../../../../public/DOM.png)
 
-আমরা দেখতে পাচ্ছি যে উপরে একটা গ্রাফ এর মাদ্ধমে ব্রাউজার এর রেন্ডারিং প্রসেস দেখানো হয়েছে । এখানে আমরা কি দেখতে পাচ্ছি ? আমরা দেখতে পাচ্ছি যে, যখন ব্রাউজার কোন `HTML` `CSS` ফাইল পায়,তখন সেই ফাইলটা একটা পারসিং এর মদ্ধে দিয়ে নিয়ে যায়, এক্ষেত্রে `HTML` এর জন্য `HTML PARSER` ও `CSS` এর জন্য `CSS PERSER` ব্যাবহার হয়। এসব পারসার দিয়ে পারসিং এর পর ব্রাউসার `HTML` দিয়ে একটা `DOM TREE` বানায় এর `CSS` দিয়ে `CSSOM` নামে একটা `STYLE RULES` বানায় , এবং `DOM TREE` ও `STYLE RULES` একসাথে ATTACH হয়ে একটা `RENDER TREE` বানায়। এই `RENDER TREE` ব্রাউসারে একটা `LAYOUT` ফেস এর মদ্ধে দিয়ে যায়। এই `LAYOUT` ফেস এ `DOM TREE` টা ব্রাউসার এর কোথায় রেন্ডার হবে তার একটা CORDINATE রেডি হয়ে যায় । এবং ফাইনালি ব্রাউজার তার PAINTING মেকানিজম এর মাদ্ধমে তা ব্রাউসারে পেইন্ট করে দেয় এবং আমরা ফাইনাল আউটপুট দেখতে পাই।
+We can see that the browser's rendering process is shown through a graph above. What do we see here? We see that when a browser receives `HTML` and `CSS` files, it processes them through parsing, using `HTML PARSER` for `HTML` and `CSS PARSER` for `CSS`. After parsing, the browser creates a `DOM TREE` from the `HTML` and creates `STYLE RULES` called `CSSOM` from the `CSS`. The `DOM TREE` and `STYLE RULES` are then attached together to create a `RENDER TREE`. This `RENDER TREE` goes through a `LAYOUT` phase in the browser. In this `LAYOUT` phase, the coordinates of where the `DOM TREE` will be rendered in the browser are prepared. Finally, the browser paints it in the browser through its PAINTING mechanism, and we see the final output.
 
-## ভার্চুয়াল ডম কি ? কিভাবে ভার্চুয়াল ডম কাজ করে?
+## What is Virtual DOM? How Does Virtual DOM Work?
 
-ভার্চুয়াল ডম রিয়াক্ট এর একটা ফান্ডামেন্টাল বিষয় । রিয়াক্ট এর ভিত্তিটাই মূলত এই ভার্চুয়াল ডম ।
+Virtual DOM is a fundamental aspect of React. The foundation of React is primarily this Virtual DOM.
 
-ব্রাউজারের রি-পেন্টিং প্রসেসটা এপ্লিকেশনকে স্লো ডাউন করে দেয়, এই সমস্যা এড়ানোর জন্য আমরা কি করতে পারি ভাবুনতো। আমরা মূলত দুইটা ভাবে এটার সমাধান করতে পারি :
+The browser's repainting process slows down the application. To avoid this problem, what can we do? We can solve this in two ways:
 
--   আমরা ব্যাচ আপডেট করতে পারি,
--   আমরা ডম ম্যানুপুলেশন কম করতে পারি।
+-   We can batch update,
+-   We can minimize DOM manipulation.
 
-রিয়াক্ট তার ভার্চুয়াল ডমের মাদ্ধমে সেই কাজটাই করে । রিয়াক্ট একেবারে মিনিমাম ডম ম্যানুপুলেশন করে ।
+React does exactly that through its Virtual DOM. React performs minimal DOM manipulation.
 
-![Vertual DOM](../../../../public/dif.png)
+![Virtual DOM](../../../../public/dif.png)
 
-যখন এপ্লিকেশনে কোন ইউজার কোন ইন্টারেকশন করে তখন যদি `UI` তে কোন চেঞ্জ করতে হয় তখন রিয়াক্ট সরাসরি `HTML` এর `DOM TREE` টাকে চেঞ্জ করে দেয়না। যখনি `UI` তে কোন চেঞ্জ আসে,রিয়াক্ট তার ভার্চুয়াল `DOM` এর সাহায্যে `UI` এর একটা রেপ্লিকা বা কপি বানিয়ে নেয় । তারপর রিয়াক্ট তার একটা নিজস্ব বানানো এলগরিদম `Diffng` বা `Reconciliation` এলগরিদম এর মাদ্ধমে চেক করে যে `UI` এর ঠিক কোন জায়গায় চেঞ্জ হয়েছে । এতে করে পুরো ওয়েবসাইটটা রি-রেন্ডার না করে শুধুমাত্র যেই অংশে পরিবর্তন হয়েছে,সেই অংশটুকু `DOM` এ আপডেট করে দেয়। এতে করে রিয়াক্ট মিনিমাম ডম অপারেশনের মাদ্ধমে এপ্লিকেশনএর পার্ফমেন্স ইম্প্রুভ করে ।
+When a user interacts with the application and if there's a need to change the `UI`, React doesn't directly change the `DOM TREE` of the `HTML`. Whenever there's a change in the `UI`, React creates a replica or copy of the `UI` with the help of its Virtual `DOM`. Then React checks exactly where the change has occurred in the `UI` using its custom algorithm called `Diffing` or `Reconciliation`. This allows it to update only the part that has changed in the `DOM` without re-rendering the entire website. This way, React improves application performance through minimal DOM operations.
 

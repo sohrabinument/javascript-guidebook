@@ -1,20 +1,20 @@
 ### Removing Effect Dependencies
 
-যখনি আপনি কোন ইফেক্ট ডিক্লেয়ার করবেন,তখন `linter` অটোমেটিক ভেরিফাই করবে যে আপনি সকল রিয়াক্টিভ ভ্যালু তার ডিপেন্ডেন্সি অ্যারেতে এড করেছেন, কিন্তু কখনো কখনো যদি আপনি অপ্রয়োজনীয় ডিপেন্ডেন্সি এড করেন, এটা আপনার এপ্লিকেশনে বাগ সৃষ্টি করতে পারে ।
+Whenever you declare an effect, the `linter` will automatically verify that you've added all reactive values to its dependency array. However, sometimes if you add unnecessary dependencies, it can create bugs in your application.
 
-এই লেসনে আমরা জানবো কিভাবে আমরা ইফেক্টের ডিপেন্ডেন্সি থেকে অপ্রয়োজনীয় ডিপেন্ডেন্সি বাদ দিতে পারি।
+In this lesson, we'll learn how to remove unnecessary dependencies from effect dependencies.
 
 #### Dependencies should match the code
 
-যখনি কোন ইফেক্ট লিখবেন, আপনি ইফেক্টের মাধ্যমে কি করতে চান তার শুধু স্টার্ট আর স্টপ লিখবেন, তারপর যদি আপনি ইফেক্টর ডিপেন্ডেন্সি ইম্পটি রাখলে `linter` আপনাকে প্রয়োজনীয় ডিপেন্ডেন্সিগুলো অটো সাজেস্ট করবে। আপনাকে শুধু সেই সাজেশন অনুযায়ী ডিপেন্ডেন্সিগুলো ডিপেন্ডেন্সি অ্যারেতে লিখে দিতে হবে।
+Whenever you write an effect, you should only write the start and stop of what you want to do with the effect. Then if you leave the effect's dependencies empty, the `linter` will auto-suggest the necessary dependencies. You just need to add those dependencies to the dependency array according to the suggestion.
 
-অর্থাৎ আপনাকে ইফেক্টের ডিপেন্ডেন্সি নিয়ে কোন চিন্তা করতে হবেনা, প্রয়োজনীয় ডিপেন্ডেন্সিগুলো `linter`ই আপনাকে বলে দিবে।
+In other words, you don't need to worry about the effect's dependencies; the `linter` will tell you the necessary dependencies.
 
-#### To remove a dependency, prove that it’s not a dependency
+#### To remove a dependency, prove that it's not a dependency
 
-যেহেতু আপনাকে ইফেক্টের ডিপেন্ডেন্সিগুলো আপনাকে সিলেক্ট করতে হবেনা, প্রয়োজনীয় ডিপেন্ডেন্সিগুলো `linter`ই আপনাকে বলে দিবে। তাই যদি এমন হয় যে এমন কোন ডিপেন্ডেন্সি `linter` আপনাকে সাজেস্ট করছে ডিপেন্ডেন্সিতে এড করতে কিন্তু আপনি সিওর জানেন যে সেটা কখনো চেঞ্জ হবেনা, আর তাই আপনি সেটা ডিপেন্ডেন্সিতে দিতে চান না, তাহলে রিয়াক্টকে এটা কোডের মাধ্যমে বুঝাবেন যে এটা কখনো চেঞ্জ হবেনা। কিন্তু আপনি কিন্তু এমন ক্ষেত্রে কখনই `linter` কে সাপ্রেস করবেন না।
+Since you don't have to select the effect's dependencies yourself (the `linter` will tell you the necessary dependencies), if it happens that the `linter` is suggesting you add a dependency that you're sure will never change, and therefore you don't want to add it to the dependencies, then you need to show React through code that it will never change. But in such cases, you should never suppress the `linter`.
 
-ধরুন আপানার কোড এমন ,
+Let's say your code is like this:
 
 ```jsx
 const serverUrl = "https://localhost:1234";
@@ -30,7 +30,7 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-এক্ষত্রে `linter` আপনাকে সাজেস্ট করবে `roomId` কে ডিপেন্ডেন্সিতে এড করার জন্য। কিন্তু আপনি জানেন যে `roomId` কখনোই চেঞ্জ হবেনা। আর তাই আপনি হয়তো `roomId` কে ডিপেন্ডেন্সি থেকে বাদ দিলেন,
+In this case, the `linter` will suggest adding `roomId` to the dependencies. But you know that `roomId` will never change. So you might remove `roomId` from the dependencies:
 
 ```jsx
 const serverUrl = "https://localhost:1234";
@@ -45,7 +45,7 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-তখনি দেখবেন `linter` আপনাকে ওয়ার্নিং দেবে, আর তাই আপনি হয়তো ওয়ার্নিং থেকে বাচার জন্য `linter` কে এভাবে সাপ্রেস করে দিলেন।
+Then you'll see the `linter` giving you a warning, and to avoid this warning, you might suppress the `linter` like this:
 
 ```jsx
 const serverUrl = "https://localhost:1234";
@@ -61,7 +61,7 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-এটা কখনই করবেন না, কারণ এতে আপনার কম্পোনেন্টে বাগ তৈরি হবে, এবং পরে আর কখনই এই কম্পোনেন্টে `linter` সাজেশন দিবেনা, আর তাই হয়তো আপনি কোন প্রয়োজনীয় ডিপেন্ডেন্সি মিস করে যেতে পারেন, এতে আপনার কম্পনেন্টের বিহেবিয়ার চেঞ্জ হয়ে যাবে। তাই আপনি যদি একদম শিওর হন যে, `roomId` কখনই চেঞ্জ হবেনা,তাহলে আপনাকে রিয়াক্টকে বুঝাতে হবে যে `roomId` কখনই চেঞ্জ হবেনা। আর এটা করার জন্য আপনি `roomId` কে কম্পোনেন্টের বাহিরে নিয়ে স্ট্যাটিক ভাবে লিখে রাখতে পারেন।
+Never do this, because it will create bugs in your component, and the `linter` will never give suggestions for this component again. As a result, you might miss some necessary dependencies, which will change your component's behavior. So if you're absolutely sure that `roomId` will never change, you need to make React understand that `roomId` will never change. To do this, you can take `roomId` outside the component and write it statically.
 
 ```jsx
 const serverUrl = "https://localhost:1234";
@@ -77,5 +77,5 @@ function ChatRoom() {
 }
 ```
 
-মনে রাখবেন ডিপেন্ডেন্সি থেকে কোন কিছু বাদ দিতে চাইলে কখনওই `linter` কে সাপ্রেস করবেন না । বরং আপনি কোড চেঞ্জ করবেন। কোড অনুযায়ী ডিপেন্ডেন্সি ম্যাচ করবে।
+Remember, if you want to remove something from dependencies, never suppress the `linter`. Instead, change your code. The dependencies should match the code.
 

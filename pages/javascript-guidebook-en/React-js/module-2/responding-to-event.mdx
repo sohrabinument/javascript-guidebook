@@ -1,81 +1,81 @@
 import { Callout, Steps } from "nextra/components";
 
-রিয়াক্ট আমাদের ইভেন্ট হ্যন্ডেল করার সিস্টেম দিয়ে দিয়েছে। ইভেন্ট হ্যান্ডেলার হলো মূলত যখন কোন ইভেন্ট ট্রিগার হয়, যেমন ঃ ক্লিক,হভার,ফোকাস এসব।
+React has given us a system to handle events. Event handlers are essentially activated when an event is triggered, such as clicks, hovers, focus, etc.
 
 ### Adding Event Handler to JSX
 
-রিয়াক্টে আমরা দুটি স্টেপে `Event Handler` এড করতে পারিঃ
+We can add an `Event Handler` in React in two steps:
 
 <Steps>
-    ### হ্যান্ডেলার ফাংশন ডিক্লেয়ার করা এবং লজিক এড করাঃ
-     প্রথমত একটা হ্যান্ডেলার ফাংশন ডিক্লেয়ার করতে হবে এবং এতে লজিক ইমপ্লিমেন্ট করতে হবে।
-      ধরুন, একটা `button` এ ক্লিক করলে আমরা দেখাতে চাই যে "বাটনে ক্লিক করা হয়েছে" সেক্ষেত্রে আমাদের হ্যান্ডেলার ফাংশন ও লজিক হবে এমনঃ
+    ### Declare a handler function and add logic:
+     First, we need to declare a handler function and implement logic in it.
+      For example, if we want to show "Button has been clicked" when a `button` is clicked, our handler function and logic would be as follows:
 
         ```jsx filename="Button.jsx"
         export default function Button(){
 
-            function handleClick(){ // এখনে handleClick নামে একটা হ্যন্ডেলার ফাংশন ডিক্লেয়ার করা হয়েছে এবং তার ভিতরে লজিক ইমপ্লিমেন্ট করা হয়েছে।
-                alert("বাটনে ক্লিক করা হয়েছে");
+            function handleClick(){ // Here a handler function named handleClick is declared and logic is implemented inside it.
+                alert("Button has been clicked");
             }
 
         }
 
         ```
-    ### হ্যান্ডেলার ফাংশনটি বাটনে এড করাঃ
-        এরপর হ্যান্ডেলার ফাংশনটি `button` এলিমেন্টে এড করতে হবেঃ
+    ### Add the handler function to the button:
+        Then we need to add the handler function to the `button` element:
 
         ```jsx filename="Button.jsx"
         export default function Button(){
 
             function handleClick(){
-                alert("বাটনে ক্লিক করা হয়েছে");
+                alert("Button has been clicked");
             }
 
-        return <button onClick={handleClick}>Click Me</button> // এখনে বাটনের onClick এ হ্যান্ডেলার ফাংশনটি এড করা হয়েছে।
+        return <button onClick={handleClick}>Click Me</button> // Here the handler function is added to the onClick of the button.
 
         }
       ```
 
 </Steps>
 
-**এছাড়াও আমরা `JSX` এর ইনলাইনেও `Event Handler` ফাংশন এড করতে পারি ।**
+**We can also add `Event Handler` functions inline in `JSX`.**
 
-যেমনঃ
+For example:
 
         ```jsx filename="Button.jsx"
         export default function Button(){
 
         return <button onClick={ function handleClick(){
-                alert("বাটনে ক্লিক করা হয়েছে");
-            }}>Click Me</button> // এখনে বাটনের onClick এ হ্যান্ডেলার ফাংশনটি এড করা হয়েছে।
+                alert("Button has been clicked");
+            }}>Click Me</button> // Here the handler function is added to the onClick of the button.
 
         }
       ```
 
-অথবা আরও ছোট করেও লিখতে পারি `Arrow Function` এর সিনট্যাক্সেঃ
+Or we can write it even more concisely using the `Arrow Function` syntax:
 
 ```jsx filename="Button.jsx"
 export default function Button() {
     return (
         <button
             onClick={() => {
-                alert("বাটনে ক্লিক করা হয়েছে");
+                alert("Button has been clicked");
             }}>
             Click Me
         </button>
-    ); // এখনে বাটনের onClick এ হ্যান্ডেলার ফাংশনটি এড করা হয়েছে।
+    ); // Here the handler function is added to the onClick of the button.
 }
 ```
 
-এখানে একটি ফাংশন ডিফাইন করা হয়েছে `handleClick` নামে এবং তা `button` এলিমেন্টে `as a props` পাস করা হয়েছে । `handleClick` ফাংশনটি একটা `event handler` ফাংশন।
+Here, a function named `handleClick` is defined and passed to the `button` element `as a props`. The `handleClick` function is an `event handler` function.
 
 <Callout
     type='warning'
     emoji='💡'>
-    - 👉 ইভেন্ট হ্যান্ডেলার ফাংশনগুলো কম্পোনেন্ট এর ভিতরে ডিফাইন করতে হয় ।
+    - 👉 Event handler functions must be defined inside the component.
 
-    - 👉 কনভেনশন অনুযায়ী `event handler`এর নামগুলোর শুরুতে `handle` এবং তারপর
-    `event name` দিয়ে লিখতে হয়। যেমনঃ`handleClick` `handleMouseEnter`
+    - 👉 By convention, the names of `event handler`s should start with `handle` followed by
+    the `event name`. Examples: `handleClick`, `handleMouseEnter`,
     `handleMouseLeave`
 
 </Callout>
@@ -86,33 +86,33 @@ export default function Button() {
     type='info'
           emoji='📍'>
 
-    ইভেন্ট হ্যান্ডেলার ফাংশনগুলো কম্পোনেন্ট এর ভিতরে পাস করতে হবে, **অবশ্যই শুধুমাত্র পাস করা লাগবে, কল করা যাবেনা**
-    যেমনঃ
+    Event handler functions need to be passed inside the component, **you must only pass them, not call them**
+    For example:
 
-     |✅ শুধুমাত্র পাস করা হয়েছে | ❌ সরাসরি কল করা হয়েছে |
+     |✅ Only passed | ❌ Directly called |
     |:------------------:|:----------------:|
     |`<button onClick={handleClick}</button>` | `<button onClick={handleClick()}</button>` |
 
-    এই দুইটা সিস্টেমের মাঝে খুব ভালো একটা পার্থক্য আছে।
+    There's a very important difference between these two systems.
 
-    -  শুধুমাত্র পাস করা `<button onClick={handleClick}</button>` মানে হলো - রিয়াক্ট কে বলা যে আমি তোমাকে একটা ইভেন্ট হ্যান্ডেলার দিয়ে দিলাম,তুমি এটা মনে রেখো যে যখনি ওই ইভেন্ট টা ঘটবে তখনই তুমি ফাংশন টা কল করে দিও।
-    এক্ষেত্রে যেমন `Click` ইভেন্ট হ্যান্ডেলার ব্যাবহার করা হয়েছে,তার মানে হলো যখন `Click` হবে ঠিক তখনি ফাংশনটা কল হবে এবং আউটপুট দেখা যাবে ।
+    - Just passing it `<button onClick={handleClick}</button>` means - telling React that I've given you an event handler, remember it and call the function whenever that event occurs.
+    In this case, a `Click` event handler is used, which means when a `Click` happens, only then will the function be called and the output will be seen.
 
-    - কিন্তু সরাসরি কল করে দেয়া `<button onClick={handleClick()}</button>` মানে হলোঃ কম্পোনেন্ট রেন্ডার হওয়ার সাথে সাথেই অটোমেটিক ফাংশন কল হয়ে যাবে , এতে ক্লিক হউয়ার জন্য ওয়েট করবেনা । এতে করে যদি কখনো কোন ফাংশনের দ্বারা `State` ম্যানেজ করা হয়ে থাকে, তখন বার বার `State` চেঞ্জ হতে থাকবে আর কম্পোনেন্ট রি-রেন্ডার হতে থাকবে। এটা এপ্লিকেশন একটা `infinte` লুপে পড়ে যাবে।
+    - But directly calling it `<button onClick={handleClick()}</button>` means: the function will be automatically called as soon as the component renders, it won't wait for the click to happen. If a function manages `State` in this way, then the `State` will keep changing and the component will keep re-rendering. This will put the application in an `infinite` loop.
 
-    ইনলাইনে ফাংশন ডিফাইন করার ক্ষেত্রেও এই একই বিষয় টা খেয়াল রাখতে হয়। যদিও সেখানে শুদুমাত্র আমরা ফাংশনের ডেফিনেশন টাই লিখি ফাংশনটা কল করে দেইনা। তবে `IIFE-(immediately invoked function expression)` সাথে সাথেই কল হয়ে যায় বলে আমরা ইনলাইনে `IIFE-(immediately invoked function expression)` লিখতে পারবোনা।
+    The same thing needs to be considered when defining functions inline. Although we only write the function definition there and don't call the function. However, since `IIFE-(immediately invoked function expression)` gets called immediately, we cannot write `IIFE-(immediately invoked function expression)` inline.
 
 </Callout>
 
 ### Reading Props in Event Handler
 
-ইভেন্ট হ্যান্ডেলারগুলো যেহেতু কম্পোনেন্টের ভিতরে লেখা হয় তাই কম্পোনেন্টের যেসব প্রপস আছে তা `event handler function`গুলো সরাসরি এক্সেস করতে পারে ।
+Since event handlers are written inside components, the `event handler function`s can directly access any props the component has.
 
 ### Pass Event Handler to Child Components as Props
 
-কখনো কখনো আমাদের প্যারেন্ট কম্পোনেন্ট থেকে চাইল্ড কম্পোনেন্ট এর ইভেন্ট কে ম্যানেজ করা লাগে। সেই ক্ষেত্রে প্যারেন্ট কম্পোনেন্টে `event handler function` ডিফাইন করে তা প্রপস আকারে চাইল্ড কম্পোনেন্টে পাস করা যায়।
+Sometimes we need to manage events of child components from parent components. In that case, we can define an `event handler function` in the parent component and pass it as props to the child component.
 
-চলুন একটু বিস্তারিত বুঝিঃ
+Let's understand in detail:
 
 ```jsx filename="App.jsx"
 export default function App() {
@@ -129,21 +129,21 @@ export default function MovieCard({ onPlay }) {
 }
 ```
 
-এখানে `App` কম্পোনেন্ট একটি প্যারেন্ট কম্পোনেন্ট এবং এর চাইল্ড হিসেবে রয়েছে একটা `MovieCard` কম্পোনেন্ট। এবং মুভিকার্ড কম্পোনেন্ট এ একটা প্রপ্স পাস করা হয়েছে `onPlay` নামে। এই `onPlay` প্রপস এর মাধ্যমে মূলত `handlePlay` নামক একটা ইভেন্ট হ্যান্ডেলার পাস করা হয়েছে ।
+Here, `App` is a parent component and it has a child component named `MovieCard`. A prop named `onPlay` is passed to the MovieCard component. Through this `onPlay` prop, an event handler named `handlePlay` is passed.
 
-চাইল্ড কম্পোনেন্ট `MovieCard` সেই প্রপস টাকে রিসিভ করেছে এবং বাটনের `onClick` এ তা ট্রিগার করা হয়েছে।
+The child component `MovieCard` receives that prop and triggers it in the `onClick` of the button.
 
-তার মানে হলো চাইল্ড কম্পোনেন্ট `MovieCard` এর বাটনে ক্লিক হলে কোন হ্যন্ডেলার ফাংশন কল হবে তা আমরা প্যারেন্ট কম্পোনেন্টেই ডিফাইন করতে পারি এবং তা প্রপস আকারে পাঠাতে পারি ।
+This means that we can define which handler function will be called when the button of the child component `MovieCard` is clicked in the parent component itself and can send it as props.
 
 ### Naming Conventions of event handler props
 
 <Callout
     type='warning'
     emoji='💡'>
-    - 👉 ইভেন্ট হ্যান্ডেলার প্রপস এর নামের শুরুতে `on` দিয়ে শুরু করতে হয়।
-    - 👉 যেসব রিসার্ভড কিওয়ার্ড আছে যেমনঃ `onClick`,`onHover` এসব শুধুমাত্র `html` এর নেটিভ ইলিমেন্টে ব্যাবহার করা উচিত।
+    - 👉 The names of event handler props should start with `on`.
+    - 👉 Reserved keywords like `onClick`, `onHover` should only be used with native `html` elements.
 
-    - 👉 `on`দিয়ে শুরু করে তারপর প্রসঙ্গত যেকোন নামেই ব্যাবহার করা যায়। যেমনঃ `onClick` এর পরিবর্তে `onSmash` ব্যাবহার করা যায় ।
+    - 👉 Starting with `on`, any relevant name can be used. For example, `onSmash` can be used instead of `onClick`.
 
 </Callout>
 

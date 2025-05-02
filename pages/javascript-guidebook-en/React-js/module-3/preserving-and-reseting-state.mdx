@@ -2,23 +2,23 @@ import { Callout } from "nextra/components";
 
 ### Preserving and Resetting State
 
-রিয়াক্টের স্টেটগুলো তার কম্পোনেন্টের মধ্যে `isolated` থাকে, এবং রিয়াক্ট তার কম্পোনেন্টগুলোকে যখন রেন্ডার করে তখন সে তার কম্পোনেন্টগুলোকে তার রেন্ডার ট্রি তে কম্পোনেন্টগুলোর স্টেট সহ মনে রাখে, যাতে যখন প্রয়োজন সে চাইলে স্টেট রিসেট করতে পারে, অথবা চাইলে স্টেট রিসেট করতে পারে।
+React states remain `isolated` within their components, and when React renders its components, it remembers them along with their states in its render tree, so that it can reset or preserve the state when needed.
 
-রিয়াক্ট কখন স্টেট প্রিসার্ভ করে আর কখন স্টেটগুলো রিসেট করে ফেলে,তা বিস্তারিত জেনে নেওয়া যাকঃ
+Let's learn in detail when React preserves state and when it resets them:
 
-**রিয়াক্ট মূলত তিনটা রুলস মানেঃ**
+**React follows three main rules:**
 
-👉**1.State is tied to a position in the render tree (রিয়াক্টের স্টেটগুলো কম্পোনেটের পজিশনের সাথে যুক্ত থাকে)**
+👉**1.State is tied to a position in the render tree**
 
-👉**2.Same component at the same position preserves state (সেম কম্পোনেন্ট সেম পজিশনে স্টেট ধরে রাখে)**
+👉**2.Same component at the same position preserves state**
 
-👉**3.Different components at the same position reset state (একই পজিশনে আলাদা আলাদা কম্পোনেন্ট আসলে স্টেট রিসেট হয়ে যায়)**
+👉**3.Different components at the same position reset state**
 
 ### State is tied to a position in the render tree
 
-রিয়াক্ট তার কম্পোনেন্টগুলোকে রেন্ডার করার পর সকল কম্পোনেন্ট গুলোকে একটা ট্রি আকারে চিন্তা করে, এবং ট্রি এর প্রতিটা আলাদা আলাদা পজিশনে যেসব কম্পোনেন্ট গুলো আছে সেগুলোকেও সে সেই পজিশনের সাথে যুক্ত রাখে।
+After rendering its components, React thinks of all components in a tree structure, and it keeps the components at each different position in the tree tied to that position.
 
-মানে হলো রিয়াক্টের রেন্ডার ট্রি এর আলাদা আলাদা পজিশনে যদি একই কম্পোনেন্ট রি-ইউজ করা হয়, তাতে কিন্তু আলাদা আলাদা পজিশন হউয়ার কারনে প্রতিটা পজিশনের কম্পোনেটের স্টেট টাও আলাদা হয়। এবং সেই কারণেই একটায় স্টেট চেঞ্জ করলেও অন্যটায় স্টেট চেঞ্জ হয়না।
+This means that if the same component is reused in different positions of React's render tree, the state of each component's position is different due to the different positions. And that's why changing the state in one doesn't change the state in the other.
 
 ```jsx filename= "App.jsx"
 import { useState } from "react";
@@ -54,7 +54,7 @@ function Counter() {
 }
 ```
 
-উপরে একটা কাউন্টার কম্পোনেন্ট কে দুইবার রি-ইউজ করা হয়েছে,
+Above, a counter component has been reused twice,
 
 ```jsx
 export default function App() {
@@ -68,15 +68,19 @@ export default function App() {
 }
 ```
 
-একানে একই কম্পোনেট দুইবার ব্যাবহার করা হলেও দুইটা কিন্তু দুই পজিশনে আছে, আমরা যদি উপরের কোডটার UI দেখি তাহলে এমন দেখতে পাবো
+Even though the same component is used twice here, they are in two different positions. If we look at the UI of the code above, we'll see something like this:
 
-![counters](../../../../public/UISTATES/counters.png) এখানে দেখা যাচ্ছে দুইটা একই কম্পোনেট পাশাপাশি বসে আছে, পাশাপাশি বসে থাকলেও এই কম্পোনেট দুইটার রেন্ডার ট্রি-রিপ্রেজেটেশন হলো এমনঃ
+![counters](../../../../public/UISTATES/counters.png)
 
-![reacttree](../../../../public/UISTATES/reacttree.png) এখন তাহলে পরিষ্কার বুঝা যাচ্ছে যে, যদিও দুইটা একই কম্পোনেট কিন্তু রিয়াক্টের ট্রি তে তাদের পজিশন আলাদা আলাদা। আর এজন্যই একটা কম্পোনেন্টে স্টেট চেঞ্জ করলেও অন্য কম্পোনেন্টে কোন ধরনের কোন স্টেট পরিবর্তন হয়না। এজন্যই বলা হয় **`State is tied to a position`**
+Here we can see two identical components side by side, and even though they're side by side, the render tree representation of these components looks like this:
 
-আমরা এটা আরও ভালো করে বুঝতে পারবো যদি নিচের উদাহরণগুলো একটু দেখি।
+![reacttree](../../../../public/UISTATES/reacttree.png)
 
-চলুন একটা চেকবক্স এড করি,যাতে আমরা চাইলে দ্বিতীয় কাউন্টার কম্পোনেন্টকে চাইলে রেন্ডার করতে পারি আবার চাইলে রিমুভ করে দিতে পারি।
+Now it's clear that although they are the same component, their positions in React's tree are different. And that's why changing the state in one component doesn't change the state in the other component. That's why it's said **`State is tied to a position`**
+
+We can understand this better if we look at the examples below.
+
+Let's add a checkbox so that we can render or remove the second counter component if we want.
 
 ```jsx filename="App.jsx"
 import { useState } from "react";
@@ -122,31 +126,33 @@ function Counter() {
 }
 ```
 
-আউটপুট:
+Output:
 
-![updated](../../../../public/UISTATES/updatedCounterB.png) এখানে আমরা দুইটা কাউন্টারের সাথে একটা চেকবক্স দেখতে পাচ্ছি, আমরা কাউন্টারের স্টেট গুলো আপডেট করতে পারছি এবং চেকবক্স এ চাপ দিয়ে আনচেক করে দিলে দ্বিতীয় কাউন্টারটি রিমুভ হয়ে যাচ্ছে, এবং আবার চেক করলে চলে আসছে।
+![updated](../../../../public/UISTATES/updatedCounterB.png)
+
+Here we see two counters with a checkbox. We can update the states of the counters, and by clicking on the checkbox and unchecking it, the second counter is removed. And when checked again, it returns.
 
 ![unchecked](../../../../public/UISTATES/unchecked.png)
 
 ![empty](../../../../public/UISTATES/emptyCounter.png)
 
-কিন্তু খেয়াল করুন দ্বিতীয়বার যখন কম্পোনেন্টটি ফেরত আসলো তখন কিন্তু তার স্টেট রিসেট হয়ে গেছে, তাহলে এটা কেন হলো ?
+But notice that when the component returned for the second time, its state was reset. So why did this happen?
 
-এটা এজন্য হলো যে, যখন চেকবক্স আনচেক করা হয়েছে তখন কম্পনেন্টটি তার পজিশন থেকে সমস্ত স্টেট সহ ডিলিট হয়ে গেছে, তাই দ্বিতীয়বার যখন আবার ফেরত আনা হচ্ছে তখন সে সম্পুর্ন নতুন কম্পোনেন্ট হয় আসছে।
+This happened because when the checkbox was unchecked, the component was deleted from its position along with all its states. So when it's brought back for the second time, it comes as a completely new component.
 
-একানে রেন্ডার ট্রি তে যা ঘটছে তা হলোঃ
+What's happening in the render tree here is:
 
 ![deleted](../../../../public/UISTATES/deleted.png)
 
 ![added](../../../../public/UISTATES/added.png)
 
-অর্থাৎ কম্পোনেট ট্রি থেকে রিমুভ হয়ে গেলে ট্রি স্ট্রাকচার টা পরিবর্তন হয়ে যাচ্ছে, তাই কম্পোনেন্টের সকল স্টেট ডেস্ট্রয় হয়ে যাচ্ছে।
+That is, when the component is removed from the tree, the tree structure changes, so all the states of the component are destroyed.
 
-**সুতরাং কোন কম্পোনেন্ট যতক্ষণ তার নিজ পজিশনে বসে থাকে ততক্ষণ রিয়াক্ট স্টেট কে ধরে রাখে, যদি সেটি তার পজিশন থেকে রিমুভ হয়ে যায়,তাহলে স্টেট ও রিসেট হয় যায়।**
+**So as long as a component stays in its position, React preserves the state. If it's removed from its position, the state is reset.**
 
 ### Same component at the same position preserves state
 
-একই কম্পোনেট যতক্ষণ তার একই পজিশনে বসে থাকবে ততক্ষণ সে তার নিজস্ব স্টেট ধরে রাখবে। যদি এমনও হয় যে আপনি প্যারেন্ট কম্পোনেন্ট থেকে কোন স্টেট চেঞ্জ করছেন বা কন্ডীশনালি কিছু করছেন তবুও সেই কম্পোনেন্ট যতক্ষন তার নিজস্ব পজিশনে বসে থাকবে,ততক্ষণ সে তার লোকাল স্টেট ধরে রাখবে।
+As long as the same component stays in the same position, it will maintain its own state. Even if you're changing some state from the parent component or doing something conditionally, as long as that component stays in its own position, it will keep its local state.
 
 ```jsx filename="App.jsx"
 import { useState } from "react";
@@ -194,7 +200,7 @@ function Counter({ isFancy }) {
 }
 ```
 
-উপরের এই কোডে একটা কাউন্টার কম্পোনেন্টকে একটা কন্ডিশন দিয়ে রেন্ডার করা হয়েছে,
+In the code above, a counter component is rendered with a condition,
 
 ```jsx
 const [isFancy, setIsFancy] = useState(false);
@@ -202,25 +208,21 @@ const [isFancy, setIsFancy] = useState(false);
 isFancy ? <Counter isFancy={true} /> : <Counter isFancy={false} />;
 ```
 
-এখানে দেখা যাচ্ছে যে একটি `isFancy` স্টেট এর উপর বেস করে এখানে কন্ডিশনালি কম্পোনেন্ট কে রেন্ডার করা হয়েছে, এবং একটা চেকবক্স রাখা হয়েছে যেখানে ক্লিক করলে `isFancy` এই স্টেট টার ভ্যালু চেঞ্জ হয়।
+Here we can see that the component is conditionally rendered based on an `isFancy` state, and there's a checkbox where clicking changes the value of this `isFancy` state.
 
-এখন স্বাভাবিকভাবে মনে হতে পারে যখন চেকবক্স এ ক্লিক করা হবে তখন আগের কম্পোনেন্ট রিমুভ হয়ে নতুন কম্পোনেন্ট আসবে এবং তার স্টেট রিসেট হয়ে যাবে।
+Now naturally one might think that when the checkbox is clicked, the previous component will be removed and a new component will come, and its state will be reset.
 
-কিন্তু না, তা হবেনা । কেননা কন্ডিশনালি প্রপ্স চেঞ্জ হলেও একই কাউন্টার কম্পোনেন্ট কিন্তু রেন্ডার ট্রি এর একই পজিশনে আছে। তাই তার স্টেট রিসেট হবেনা।
+But no, that won't happen. Because even though the conditional props change, the same counter component is still at the same position in the render tree. So its state won't be reset.
 
 <Callout
     type='warning'
     emoji='📔'>
-    আমরা যখন পজিশনের কথা বলছি,মনে রাখতে হবে এটা হলো রিয়াক্ট এর রেন্ডার ট্রি। এটা
-    কিন্তু `JSX` ট্রি নয়। যতক্ষণ পর্যন্ত রিয়াক্ট এর রেন্ডার ট্রি-তে কোন পরিবর্তন
-    না হবে ততক্ষণ সে কম্পোনেন্টগুলোর স্টেট ধরে রাখবে, যদি কোন কম্পোনেন্ট রিয়াক্ট
-    এর রেন্ডার ট্রি থেকে রিমুভ হয় বা কোনকারনে ওই পজিশনে অন্য কোন কম্পোনেন্ট বসে
-    তাহলে সেই কম্পোনেন্টের স্টেট রিসেট হয়ে যাবে।
+    When we talk about position, remember that this is React's render tree. It's not the `JSX` tree. As long as there's no change in React's render tree, it will maintain the states of the components. If a component is removed from React's render tree or for some reason another component sits at that position, then that component's state will be reset.
 </Callout>
 
 ### Different components at the same position reset state
 
-একই পজিশনে যদি আগের রেন্ডারে যেই কম্পোনেন্ট ছিল, পরের রেন্ডারে সেই কম্পোনেন্ট না থাকে, বা পরের রেন্ডারে ওই পজিশনে অন্য কোন কম্পোনেন্ট বসে তাহলে রিয়াক্ট স্টেট রিসেট করে দেয়।
+If the component that was in a position in the previous render is not there in the next render, or if another component sits at that position in the next render, then React resets the state.
 
 ```jsx
 import { useState } from "react";
@@ -265,7 +267,7 @@ function Counter() {
 }
 ```
 
-এখানে খেয়াল করলে দেখবেন যে,
+Here if you notice,
 
 ```jsx {1,4}
     const [isPaused, setIsPaused] = useState(false);
@@ -285,7 +287,7 @@ function Counter() {
         </div>
 ```
 
-এখানে কন্ডিশনালি একই পজিশনে দুইটা কম্পোনেন্ট দেখানো হচ্ছে, যখন চেকবক্স এ ক্লিক করা হচ্ছে তখন কাউন্টার কম্পোনেন্ট এর পজিশনে একটা `<p>...</p>` ট্যাগ বসছে, যখনি `<p>...</p>` ট্যাগ বসছে,তখনি দ্বিতীয় রেন্ডারে রিয়াক্ট তার রেন্ডার ট্রি এর ওই পজিশনে আর কাউন্টারকে পাচ্চেনা,তাই কাউন্টার কম্পোনেন্ট রিমুভ হওয়ার সাথে সাথে তার স্টেট সহ রিসেট হয়ে যাচ্ছে। তাই পরেরবার আবার যখন চেকবক্স আনচেক করে কাউন্টার কম্পোনেন্ট আবার আনা হচ্ছে, তখন সে একটা ফ্রেশ কম্পোনেন্ট হিসেবে আসছে।
+Here two components are conditionally shown at the same position. When the checkbox is clicked, a `<p>...</p>` tag sits at the position of the counter component. As soon as the `<p>...</p>` tag sits, React doesn't find the counter in that position of its render tree in the second render, so the counter component is reset along with its state. So when the checkbox is unchecked again and the counter component is brought back, it comes as a fresh component.
 
-**সর্বশেষে মোট কথা হলো যদি একটা রেন্ডার থেকে পরবর্তি রেন্ডারে কম্পোনেন্টগুলোর স্টেট ধরে রাখতে হয়, তাহলে রেন্ডার ট্রি এর স্ট্রাকচার দুইটা রেন্ডারেই সেম থাকতে হবে।**
+**In conclusion, if the state of components needs to be maintained from one render to the next, the structure of the render tree must remain the same in both renders.**
 

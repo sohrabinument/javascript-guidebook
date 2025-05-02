@@ -1,27 +1,27 @@
 ### Performance Optimization
 
-এই লেসনে আমরা রিয়াক্টের দুইটা গুরুত্বপূর্ন পার্ফরমেন্স অপটিমাইজেশন হুক এবং একটি API নিয়ে কথা বলবো।
+In this lesson, we'll discuss two important performance optimization hooks and one API in React.
 
 #### API
 
--   `memo` - কম্পোনেন্টকে মেমোয়াইজ করার জন্য।
+-   `memo` - For memoizing components.
 
 #### Hooks
 
--   `useCallback` - কলব্যাক ফাংশনের ডেফিনেশনকে মেমোয়াইজ করার জন্য। (যখন প্রপ্স আকারে কোন ফাংশনকে পাঠানো হয়,সেই ফাংশনকে মেমোয়াইজ করার জন্য।)
--   `useMemo` - ফাংশনের রেজাল্টকে মেমোয়াইজ করার জন্য।
+-   `useCallback` - For memoizing function definitions. (Used when passing functions as props.)
+-   `useMemo` - For memoizing function results.
 
 #### `memo`
 
-**আমরা জানি যে,আমাদের কম্পোনেন্ট তিনটি কাড়নে রি-রেন্ডার নেয়**
+**We know that our components re-render for three reasons:**
 
-1. **Props Change হলে,**
-2. **State Change হলে এবং**
-3. **Parent Components Re-Render হলে**
+1. **When Props Change,**
+2. **When State Changes, and**
+3. **When Parent Components Re-Render**
 
-**প্রথম দুইটি ক্ষেত্রে আমাদের কম্পোনেন্ট রি-রেন্ডার হলে আমাদের কিছুই করার নাই, কিন্তু যদি তৃতীয় কারনে বা প্যারেন্ট কম্পোনেন্ট এর রি-রেন্ডার হওয়ার কারনে যখন চাইল্ড কম্পোনেন্ট গুলো রি-রেন্ডার হয় তখন যদি আমাদের প্রয়োজন হয় তাহলে আমরা সেটা চাইলে ফিক্স করতে পারি।**
+**In the first two cases, when our component re-renders, there's nothing we need to do. But if the third case occurs, when child components re-render due to parent component re-rendering, we can fix this if necessary.**
 
-**যদি এমন হয় যে আমাদের কম্পোনেন্টের কোন কোডব্লক অপ্রয়োজনীয় রেন্ডার নিচ্ছে এবং এতে পার্ফমরমেন্সের খুব বেশি লক্ষণীয় প্রভাব ফেলছে, এবং যদি সেটা একান্তই ফিক্স করতে হয় তাহলে আমরা Component এর রি-রেন্ডার আটকানো বা Component কে মেমোয়াইজ করার জন্য ব্যাবহার করতে পারি `memo` API**
+**If a code block in our component is rendering unnecessarily and it's significantly affecting performance, and we absolutely need to fix it, we can use the `memo` API to prevent component re-rendering or memoize the component.**
 
 **Usage**
 
@@ -41,9 +41,9 @@ const MyComponent = () => {
 export default MyComponent;
 ```
 
-আমদের এই কম্পোনেন্ট টা শুধুমাত্র একটা টেক্সট স্ক্রিনে প্রিন্ট করছে, আর কিছুই করেনা। কিন্তু এর প্যারেন্ট কম্পোনেন্ট এ হয়তো কোন স্টেট চেঞ্জের কারনে বার বার রি-রেন্ডার হচ্ছে। আমরা জানি প্যেরেন্ট কম্পোনেন্ট এ কোন স্টেট চেঞ্জ হলে তার নিচের পুরো ট্রি টাই রি-রেন্ডার হয়।
+This component just displays text on the screen and doesn't do anything else. But its parent component might be re-rendering frequently due to state changes. We know that when a parent component's state changes, its entire component tree re-renders.
 
-ধরেন `MyComponent` টা একটা অনেক বড় কম্পোনেন্ট এবং এটা অনেক হেভি কাজ করছে, আর তাই প্রতিবার প্যারেন্ট এর স্টেট চেঞ্জ এর কারনে আপনি এই কম্পোনেন্ট কে রি-রেন্ডার করাতে চান না। এসব ক্ষেত্রে কোন কম্পোনেন্ট এর রি-রেন্ডার আটকানোর জন্য আমরা নিচের উপায়ে `memo` ব্যাবহার করতে পারি।
+Let's say `MyComponent` is a very large component doing heavy work, and you don't want it to re-render every time the parent's state changes. In such cases, we can use `memo` in the following way to prevent component re-rendering:
 
 ```jsx
 import { memo } from "react";
@@ -82,15 +82,15 @@ export default memoizedMyComponent;
 
 #### `useCallback`
 
-ধরুন আপনার কোন একটা প্যারেন্ট কম্পোনেন্ট থেকে আপনি কোন একটা চাইল্ড কম্পোনেন্টে প্রপ্স হিসেবে কোন একটা ফাংশন পাঠিয়েছেন। এবং সেই চাইল্ড কম্পোনেন্ট কে আপনি হয়তো `memo` দিয়ে রি-রেন্ডারিং আটকাতে চাচ্ছেন। কিন্তু আপনি দেখবেন যে `memo` ব্যাবহার করার পরও সেই কম্পোনেন্ট টা রি-রেন্ডার হচ্ছে।
+Let's say you're passing a function as a prop from a parent component to a child component. And you're trying to prevent re-rendering of that child component using `memo`. But you'll notice that the component still re-renders even after using `memo`.
 
-এর কারণ হলো সেই চাইল্ড কম্পোনেন্টটা তার প্যারামিটারে একটা ফাংশন রিসিভ করছে।
+The reason is that the child component is receiving a function in its parameters.
 
-**জাভাস্ক্রিপ্টে প্রতিটা ফাংশন এক একেকটা অবজেক্ট। তাই প্রতিবার রি-রেন্ডারে সেই ফাংশনগুলো সেম নামে হওয়া সত্ত্বেও প্রতিটা রেন্ডারে নতুন নতুন অবজেক্ট রেফারেন্স হিসেবে আসবে। তাই প্যারামিটারে প্রতিবার নতুন নতুন প্রপ্স ভ্যালু আসার কারনে কম্পোনেন্ট `memo` দিয়ে wrap করে দেওয়ার পরও রি-রেন্ডার হবে।**
+**In JavaScript, each function is an object. So in each re-render, even though the functions have the same name, they will come as new object references in each render. Thus, because new prop values are coming into the parameters each time, the component will re-render even after being wrapped with `memo`.**
 
-এটার সমাধান করার জন্য প্রপ্স আকারে পাঠানোর আগে কলব্যাক ফাংশনগুলোকে `useCallback` দিয়ে মেমোয়াইজড করতে হবে, যাতে প্রতিটা রেন্ডারে ফাংশনগুলো cached হয় থাকে।
+To solve this, we need to memoize the callback functions using `useCallback` before passing them as props, so that the functions remain cached across renders.
 
-অর্থাৎ কোন ফাংশনের বডি কে cached বা মেমোয়াইজড করার জন্য `useCallback` ব্যবহার করা হয়
+In other words, `useCallback` is used to cache or memoize a function body.
 
 **Usage**
 
@@ -112,7 +112,7 @@ const App = () => {
 export default App;
 ```
 
-উপরের কোডের উদাহরণে `somethingFunction` কে প্রপ্স হিসেবে `MyComponent` এ পাঠানো হয়েছে তাই আমরা যদি `MyComponent` কে `memo` wrap করেও দেই,তবুও এটা রি-রেন্ডার নিবে। এটা কে আমরা ফিক্স করার জন্য `somethingFunction` কে `useCallback` হুক দিয়ে cached করবো।
+In the example above, `somethingFunction` is passed as a prop to `MyComponent`, so even if we wrap `MyComponent` with `memo`, it will still re-render. To fix this, we'll cache `somethingFunction` using the `useCallback` hook.
 
 ```jsx
 import React, { useCallback } from "react";
@@ -132,13 +132,13 @@ const App = () => {
 export default App;
 ```
 
-`useCallback` হুক তার প্রথম প্যারামিটার হিসেবে সেই ফাংশনটাকে নিবে যেটাকে মেমোয়াইজ করতে চান আরে `useEffect` এর মতো দ্বিতীয় প্যারেমিটারে একটা ডিপেন্ডেন্সি অ্যারে নেয়, এবং ডিপেন্ডেন্সি চেঞ্জ হলেই নতুন করে রান হয় বা রিয়াক্ট করে।
+The `useCallback` hook takes the function you want to memoize as its first parameter, and like `useEffect`, it takes a dependency array as its second parameter. It only re-runs or reacts when the dependencies change.
 
 #### `useMemo`
 
-আমাদের কোম্পনেন্টে যদি এমন কোন ফাংশন থাকে যাতে অনেক কমপ্লেক্স কেলকুলেশন থাকে যা অনেক কস্টলি এবং আমরা চাই কম্পোনেন্ট রি-রেন্ডার হলেই যেন সেই কস্টলি কেলকুলেশন টা বার বার না হয়। যদি নতুন করে কেলকুলেশন করার প্রয়োজন না পরে তাহলে যেন প্রতিবার রি-রেন্ডারে আগেরবার করা কেলকুলেটেট রেজাল্ট টাকেই রিটার্ন করে, তাহলে এক্ষেত্রে আমাদের সেই রেজাল্টটাকে cached করতে হবে।
+If our component has a function with complex calculations that are costly, and we don't want these costly calculations to run every time the component re-renders, we can cache the result. If there's no need for a new calculation, it can return the previously calculated result in each re-render. In this case, we need to cache that result.
 
-কোন ফাংশনের রেজাল্টটাকে cached করার জন্য ব্যাবহার করা হয় `useMemo` হুক।
+The `useMemo` hook is used to cache a function's result.
 
 -   Reference
 
@@ -150,7 +150,7 @@ export default App;
 
 `**useMemo(calculateValue, dependencies)**`
 
-`useMemo` হলো রিয়াক্টের একটা হুক, অন্য সকল হুকের মতো `useMemo` কেও কম্পোনেন্ট অথবা অন্য কাস্টম হুকের একদম টপ লেভেলে কল করতে হবে। কখনও কম্পোনেন্টের রিটার্নের ভিতর বা অন্য কোন কলব্যাক ফাংশনের ভিতর এমনকি কোন কন্ডিশনাল কোডব্লকের ভিতরেও কল করা যাবেনা।
+`useMemo` is a React hook. Like all other hooks, `useMemo` must be called at the top level of a component or another custom hook. It should never be called inside a component's return, inside another callback function, or even inside a conditional code block.
 
 ```jsx
 import { useMemo } from "react";
@@ -190,7 +190,7 @@ const App = () => {
 export default App;
 ```
 
-উপরের কোডে একটা কমপ্লেক্স কেলকুলেশন আছে `complexCalculation` ফাংশনের ভিতর, আমরা ওই কেলকুলেশন এর রেজাল্টটাকে cached করবো।
+In the code above, there's a complex calculation inside the `complexCalculation` function. We'll cache the result of this calculation.
 
 ```jsx
 import React, { useCallback, useMemo } from "react";
@@ -215,7 +215,7 @@ const App = () => {
 export default App;
 ```
 
-`useMemo` হুক তার ভিতরে কল হওয়া ফাংশনটার আউটপুট কে রিটার্ন করবে,এমন নয় যে সে ফাংশনটা রিটার্ন করবে। তার মানে হলো `useMemo`কে যেই ভ্যারিয়েবলে এসাইন করা হবে,তার কাছে `useMemo` হুক এর ভিতরের ফাংশন যেই ভ্যালূটা রিটার্ন করবে, ভ্যারিয়েবলের কাছে সেই আউটপুটটা থাকবে।
+The `useMemo` hook will return the output of the function that's called inside it, not the function itself. This means that the variable to which `useMemo` is assigned will contain the output of the function inside the `useMemo` hook.
 
-`useMemo` হুক `useCallback` এবং `useEffect` এর মতো দ্বিতীয় প্যারেমিটারে একটা ডিপেন্ডেন্সি অ্যারে নেয়, এবং ডিপেন্ডেন্সি চেঞ্জ হলেই শুধুমাত্র ভিতরের ফাংশনটা নতুন করে রান হয় এবং নতুন আউটপুট রিটার্ন করে।
+Like `useCallback` and `useEffect`, the `useMemo` hook takes a dependency array as its second parameter. Only when the dependencies change does the function inside run again and return a new output.
 

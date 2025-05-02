@@ -4,11 +4,11 @@ import { Callout } from "nextra/components";
 
 ## What are `Components`?
 
-`Component` is one of the core concepts of React. It is called the building block of UI. Each part of the UI code that can be reused repeatedly can be considered a component. Even a small button can be a component.
+`Component` is one of the core concepts in React. It is often called the building block of UI. Each part of the UI code that can be reused repeatedly can be considered a component. Even a small button can be a component.
 
-React helps us write our markup in small reusable code blocks, each block being a component.
+React helps us write our markup in small, reusable code blocks, where each block is a component.
 
-However, there are some rules for creating components, which are shown below.
+However, there are some rules for creating components that are shown below.
 
 ## How to create a React `Component`?
 
@@ -32,7 +32,7 @@ export default function Profile() {
 <Steps>
     ### Export the component
 
-    Use `export default` to make a component reusable, so we can `import` the component in other files.
+    Use `export default` to make a component reusable, so that we can `import` and use the component in other files.
 
     ### Define the function
     After `export default`, define a named function.
@@ -46,7 +46,7 @@ export default function Profile() {
 
     ### Add markup inside the function
 
-    Return markup in `JSX (Javascript XML)` syntax inside the function.
+    Return markup using `JSX (Javascript XML)` syntax inside the function.
 
     ```javascript showLineNumbers {2}
     export default function Profile() {
@@ -67,9 +67,9 @@ export default function Profile() {
 
 </Steps>
 
-## How to use a component:
+## How to use components:
 
-After creating a component, it can be used inside another component in the same file or by `importing` the component in another file.
+After creating a component, it can be used within another component in the same file or imported into another file to be used there.
 
 Example:
 
@@ -89,7 +89,7 @@ export default function Gallery() {
 
 ## Rules to follow when nesting components:
 
-**`Rule 1` - If a component is very small and won't be reused, it can be written and used in the same file. But if the component is large, has more `interactivity`, and needs to be reused in different places, then components should be created in separate files.**
+**`Rule 1` - If a component is very small and won't be reused, it can be written and used in the same file. But if the component is large, has more `interactivity`, and needs to be reused in various places, then it should be created in separate files.**
 
-**`Rule 2` - You can nest one component inside another component, but you can't nest one function definition inside a component.**
+**`Rule 2` - You can nest one component inside another component, but you cannot nest another function definition inside a component.**
 
