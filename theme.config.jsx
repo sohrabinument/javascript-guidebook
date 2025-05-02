@@ -36,7 +36,8 @@ export default {
   ),
   search: {
     placeholder: "Search documentation...",
-  },
+    emptyResult: "No results found. Try different keywords.",
+  },  
   feedback: {
     content: null,
   },

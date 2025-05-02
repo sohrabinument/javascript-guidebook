@@ -5,19 +5,7 @@ import {
 
 import nextra from "nextra";
 /** @type {import('next').NextConfig} */
-const config = {
-  images: {
-    domains: ["img.icons8.com"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "img.icons8.com",
-        pathname: "/**",
-      },
-    ],
-    unoptimized: false,
-  },
-};
+const config = {};
 
 const withNextra = nextra({
   theme: "nextra-theme-docs",
