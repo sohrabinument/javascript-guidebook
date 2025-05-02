@@ -1,23 +1,23 @@
 import { Callout } from "nextra/components"
 
-**Nextjs দুইভাবে ইন্সটল করা যায়, ১। অটোমেটিক ইন্সটল ২। ম্যানুয়াল ইন্সটল। আমরা এখানে অটোমেটিক ইন্সটল প্রসেস টা দেখবো, কেননা এটাই Nextjs রেকমেন্ড করে। যদি আপনি ম্যানুয়াল ইন্সটল সম্পর্কে জানতে চান,তাহলে [এখানে ক্লিক করুন](https://nextjs.org/docs/14/getting-started/installation#manual-installation)**
+**Next.js can be installed in two ways: 1. Automatic installation 2. Manual installation. Here we'll look at the automatic installation process, as this is what Next.js recommends. If you want to learn about manual installation, then [click here](https://nextjs.org/docs/14/getting-started/installation#manual-installation)**
 
 ## Installation
 
-**অটোমেটিক ইনস্টলেশন**  
-Next.js অ্যাপ তৈরি করার সহজ এবং অটোমেটিক পদ্ধতি হলো `create-next-app` ব্যবহার করা। এটি  সবকিছু অটোমেটিক সেটআপ করে দেয়। Nextjs দিয়ে একটি প্রজেক্ট তৈরি করতে নিচের প্রসেসগুলো ফলো করতে হয়। 
+**Automatic Installation**  
+The easiest and automatic method to create a Next.js app is to use `create-next-app`. It automatically sets up everything. To create a project with Next.js, follow the processes below.
 
 
-**টার্মিনালে নিচের কমান্ডটি দিয়ে নতুন এপ্লিকেশন ইন্সটল শুরু করতে হয়**  
+**Start installing the new application by entering the following command in the terminal**  
 ```bash filename="Terminal" 
 npx create-next-app@latest  
 ```
 <Callout type="info" emoji="ℹ️">
-`npx create-next-app` এরপরে `@latest` দিলে সবসময় লেটেস্ট ভার্সন ইন্সটল হবে। যেহেতু বর্তমানে Next Js এর 15 version রিলিজ হয়েছে, তাই এক্ষেত্রেও Next Js এর 15 version ইন্সটল হবে। কিন্তু যদি কোন স্পেসিফিক ভার্সন ইন্সটল করার প্রয়োজন হয় তাহলে `npx create-next-app` এরপরে `@versionNumber eg: @14` দিতে হয়
+Using `@latest` after `npx create-next-app` will always install the latest version. Since Next.js version 15 has been released currently, in this case too, Next.js version 15 will be installed. But if you need to install a specific version, you should add the version number after `npx create-next-app`, e.g. `@14`
 </Callout>
 
 
-ইনস্টলেশন চলাকালীন, আপনাকে কিছু প্রশ্ন করা হবে:  
+During installation, you will be asked some questions:  
 
 ```plaintext  filename="Terminal" 
 What is your project named? my-app  
@@ -30,8 +30,8 @@ Would you like to customize the default import alias (@/*)? No / Yes
 What import alias would you like configured? @/*  
 ```  
 
-এই প্রশ্নগুলোর উত্তর দেওয়ার পর, `create-next-app` আপনার প্রজেক্ট নাম অনুযায়ী একটি ফোল্ডার তৈরি করবে এবং প্রয়োজনীয় সব ডিপেনডেন্সি ইনস্টল করবে।  
+After answering these questions, `create-next-app` will create a folder based on your project name and install all the necessary dependencies.  
 
-### **গুরুত্বপূর্ণ তথ্য:**  
-- Next.js এখন ডিফল্টভাবে TypeScript, ESLint, এবং Tailwind CSS কনফিগারেশন নিয়ে আসে।  
-- আপনি চাইলে রুট ডিরেক্টরিতে `src` ডিরেক্টরি ব্যবহার করতে পারেন, যাতে আপনার অ্যাপ্লিকেশনের কোড এবং কনফিগারেশন ফাইল আলাদা থাকে।
+### **Important information:**  
+- Next.js now comes with default configurations for TypeScript, ESLint, and Tailwind CSS.  
+- You can optionally use the `src` directory in the root directory, so that your application code and configuration files are separate.

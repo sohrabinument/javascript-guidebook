@@ -2,19 +2,19 @@ import { Steps } from "nextra/components";
 
 import { Callout } from "nextra/components";
 
-## `Components` কি ?
+## What are `Components`?
 
-`Component` হলো রিয়াক্টের কোর কনসেপ্টগুলোর মধ্যে একটি । এটিকে UI বানানোর বিল্ডিং ব্লক বলা হয়ে থাকে । UI এর প্রতিটা অংশের কোড, যা বার বার রি-ইউজ করা যায় সেগুলোকে একেকটা কম্পোনেন্ট বলা যায়। একটি ছোট বাটনও একটা কম্পোনেট হতে পারে ।
+`Component` is one of the core concepts of React. It is called the building block of UI. Each part of the UI code that can be reused repeatedly can be considered a component. Even a small button can be a component.
 
-রিয়াক্ট আমাদের মার্কাপ গুলোকে ছোট ছোট রি-ইউজেবল কোড ব্লকে এ লিখতে সাহায্য করে,যার একেকটি ব্লক হলো একেকটি কম্পোনেন্ট।
+React helps us write our markup in small reusable code blocks, each block being a component.
 
-তবে কম্পোনেন্ট বানানোর জন্য কিছু নিয়ম রয়েছে যা নিচে দেখানো হয়েছে।
+However, there are some rules for creating components, which are shown below.
 
-## কিভাবে একটি রিয়াক্ট `Component` বানাতে হয় ?
+## How to create a React `Component`?
 
-রিয়াক্ট কম্পোনেট হলো একটি জাভাস্ক্রিপ্ট ফাংশন। যাতে আমাদের মার্কাপের সাথে জাভাস্ক্রিপ্টের সংমিশ্রণ থাকে।
+A React component is a JavaScript function that combines markup with JavaScript.
 
-**রিয়াক্ট কম্পোনেন্টের সিনট্যাক্স**
+**React Component Syntax**
 
 ```javascript showLineNumbers filename="profile.jsx"
 export default function Profile() {
@@ -27,35 +27,34 @@ export default function Profile() {
 }
 ```
 
-**একটি কম্পোনেন্ট বানাতে যেসব স্টেপ ফলো করতে হয়,তা হলোঃ**
+**Steps to follow when creating a component:**
 
 <Steps>
-    ### কম্পোনেন্টকে এক্সপোর্ট করা
+    ### Export the component
 
-    `export default` ব্যাবহার করে একটা কম্পোনেন্টকে রি-ইউজেবল করতে হয়, যাতে আমরা অন্য ফাইলে কম্পোনেন্টটিকে `import`
-    করে ব্যাবহার করতে পারি।
+    Use `export default` to make a component reusable, so we can `import` the component in other files.
 
-    ### ফাংশন ডিফাইন করা
-    `export default` এর পর একটা নেমড ফাংশন ডিফাইন করতে হয়।
+    ### Define the function
+    After `export default`, define a named function.
     ```javascript showlineNumbers
         export default function Profile(){}
     ```
 
     <Callout type="warning" emoji='💡'>
-        `React Component` বানাতে হলে অবশ্যই ফাংশনের নামের প্রথম অক্ষর `Capital later` এ লিখতে হবে,নাহলে তা কাজ করবেনা।
+        When creating a `React Component`, you must write the first letter of the function name with a `Capital letter`, otherwise it won't work.
     </Callout>
 
-    ### ফাংশনের ভিতরে মার্কাপ যুক্ত করা
+    ### Add markup inside the function
 
-    ফাংশনের ভিতরে `JSX (Javascript XML)` সিনট্যাক্সে মার্কাপ রিটার্ন করতে হয়।
+    Return markup in `JSX (Javascript XML)` syntax inside the function.
 
     ```javascript showLineNumbers {2}
     export default function Profile() {
         return img src="https://i.imgur.com/MK3eW3As.jpg" alt="Katherine Johnson" />
     }
     ```
-    **`return Statement` যদি এক লাইনের বেশি লিখতে হয় তাহলে `()` এর ভিতরে লিখতে হয়**
-    উদাহরণঃ
+    **If the `return statement` needs to be written in more than one line, it must be written inside `()`**
+    Example:
       ```javascript showLineNumbers filename="Profile.jsx" {2-6}
     export default function Profile() {
         return (
@@ -68,11 +67,11 @@ export default function Profile() {
 
 </Steps>
 
-## কম্পোনেট কিভাবে ব্যাবহার করতে হয়ঃ
+## How to use a component:
 
-একটা কম্পোনেন্ট বানানোর পর সেম ফাইলে অন্য আরেকটা কম্পোনেন্ট এর ভিতরে অথবা চাইলে অন্য ফাইলে কম্পোনেন্ট `import` করে ব্যাবহার করা যায়।
+After creating a component, it can be used inside another component in the same file or by `importing` the component in another file.
 
-উদাহরনঃ
+Example:
 
 ```javascript showLineNumbers filename="Gallery.jsx"
 import Profile from "Profile";
@@ -88,9 +87,9 @@ export default function Gallery() {
 }
 ```
 
-## কম্পোনেন্ট নেস্টিং করার ক্ষেত্রে যেসব রুলস মানতে হয়ঃ
+## Rules to follow when nesting components:
 
-**`Rules:1` - যদি এমন কম্পোনেন্ট হয়,যেটা খুব ছোট এবং রি-ইউজ হবেনা সেটা চাইলে একই ফাইলে লেখা যায়,এবং ব্যাবহার করা যায়। কিন্তু যদি কম্পোনেন্ট অনেক বড় হয় এবং `interactivity` বেশি হয়, এবং বিভিন্ন জায়গায় রি-ইউজ করতে হয় তাহলে আলাদা আলাদা ফাইলে কম্পোনেন্ট বানাতে হবে।**
+**`Rule 1` - If a component is very small and won't be reused, it can be written and used in the same file. But if the component is large, has more `interactivity`, and needs to be reused in different places, then components should be created in separate files.**
 
-**`Rules:2` - একটা কম্পোনেন্ট এর ভিতর আরেকটা কম্পোনেন্টকে নেস্টেড করা যাবে,কিন্তু একটা কম্পোনেট এর ভিতর অন্য আরেকটা ফাংশন ডেফিনেশন নেস্টেড করা যাবেনা।**
+**`Rule 2` - You can nest one component inside another component, but you can't nest one function definition inside a component.**
 
