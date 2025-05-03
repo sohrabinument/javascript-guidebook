@@ -1,0 +1,100 @@
+# Example with Vanilla JavaScript
+
+Let's build a simple product cart feature using Vanilla JavaScript to understand how we manage state and UI updates without React.
+
+## The Product Cart Example
+
+Here's a simple product card with an "Add to Cart" button. When clicked, it updates the total price.
+
+### HTML Structure
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shopping Cart - Vanilla JS</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-slate-900 text-slate-400 flex items-center justify-center h-screen px-10">
+        <div class="shadow-md rounded-lg bg-slate-800 border-slate-700">
+            <a href="#">
+                <img
+                    class="rounded-t-lg"
+                    src="https://dummyimage.com/680X400/087ea4/ffffff.png&text=Product"
+                    alt="product image"
+                />
+            </a>
+            <div class="px-5 py-5">
+                <div class="flex items-center justify-between mt-5">
+                    <a href="#">
+                        <h3 class="font-semibold text-xl tracking-tight">
+                            Reactive Accelerator Course
+                        </h3>
+                    </a>
+                    <span id="total" class="text-xl font-medium text-teal-500">
+                        Total: ৳ 0
+                    </span>
+                </div>
+                <div class="flex items-center justify-between mt-5">
+                    <span id="price" class="text-2xl font-bold text-slate-300">
+                        ৳ 5000
+                    </span>
+                    <button
+                        id="button"
+                        class="text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-[#087ea4] hover:bg-[#087ea4]/[.8] focus:ring-[#087ea4]/[.5]"
+                    >
+                        Add to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+```
+
+### JavaScript Implementation
+
+```javascript
+// Get DOM elements
+const button = document.getElementById("button");
+const price = document.getElementById("price");
+const total = document.getElementById("total");
+
+// State management
+const productPrice = 5000;
+let totalPrice = 0;
+
+// Initialize UI
+price.innerText = `৳ ${productPrice}`;
+total.innerText = "Total: ৳ 0";
+
+// Event handling
+button.addEventListener("click", () => {
+    totalPrice += productPrice;
+    total.innerText = `Total: ৳ ${totalPrice}`;
+});
+```
+
+## How This Works
+
+1. **DOM Selection**: We select elements using `getElementById`
+2. **State Management**: We use simple variables to track the price
+3. **Event Handling**: We add a click event listener to the button
+4. **UI Updates**: We manually update the DOM when state changes
+
+## Key Points to Notice
+
+- We manually select DOM elements
+- State is managed with simple variables
+- UI updates are done manually
+- The code is straightforward for this simple example
+
+While this works for a simple case, this approach has several limitations when building more complex applications. In the next section, we'll explore the problems with this Vanilla JavaScript approach and how React helps solve them.
+
+---
+
+**Next Steps:**
+- [Problems in Vanilla JavaScript](/javascript-guidebook-en/React-js/LWS-Module-1/problem-in-vanilla-js)
+- [Why React?](/javascript-guidebook-en/React-js/LWS-Module-1/why-react)

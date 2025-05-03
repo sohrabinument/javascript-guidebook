@@ -1,0 +1,197 @@
+# Vanilla JavaScript এর সমস্যা
+
+Vanilla JavaScript ব্যবহার করে বড় অ্যাপ্লিকেশন তৈরি করার সময় বেশ কিছু চ্যালেঞ্জ দেখা দেয়। এই বিভাগে আমরা সেই সমস্যাগুলি নিয়ে আলোচনা করব।
+
+## 1. ম্যানুয়াল DOM ম্যানিপুলেশন
+
+Vanilla JavaScript এ, DOM এলিমেন্টগুলি ম্যানুয়ালি আপডেট করতে হয়:
+
+```javascript
+// DOM এলিমেন্ট সিলেক্ট করা
+const element = document.getElementById("myElement");
+
+// স্টেট পরিবর্তন
+let count = 0;
+
+// UI আপডেট করার জন্য ফাংশন
+function updateUI() {
+  element.textContent = `Count: ${count}`;
+}
+
+// ইভেন্ট হ্যান্ডলার
+button.addEventListener("click", () => {
+  count++;
+  updateUI(); // ম্যানুয়ালি UI আপডেট করতে হয়
+});
+```
+
+**সমস্যা:**
+
+- প্রতিটি স্টেট পরিবর্তনের জন্য UI ম্যানুয়ালি আপডেট করতে হয়
+- ভুলে UI আপডেট করা হলে বাগ তৈরি হতে পারে
+- কোড জটিল এবং রক্ষণাবেক্ষণ কঠিন হয়ে পড়ে
+
+## 2. স্টেট ম্যানেজমেন্ট
+
+বড় অ্যাপ্লিকেশনে স্টেট ম্যানেজ করা কঠিন হয়ে পড়ে:
+
+```javascript
+// গ্লোবাল স্টেট
+let user = {
+  name: "",
+  email: "",
+  cart: [],
+  orders: [],
+};
+
+// স্টেট আপডেট ফাংশন
+function updateUser(newData) {
+  user = { ...user, ...newData };
+  updateUI(); // UI আপডেট করতে হয়
+}
+
+// স্টেট সিঙ্ক্রোনাইজেশন
+function addToCart(product) {
+  user.cart.push(product);
+  updateCartUI();
+  updateTotal();
+  updateCheckoutButton();
+}
+```
+
+**সমস্যা:**
+
+- স্টেট সিঙ্ক্রোনাইজেশন কঠিন
+- স্টেট পরিবর্তন ট্র্যাক করা কঠিন
+- সাইড ইফেক্ট ম্যানেজ করা কঠিন
+
+## 3. ইভেন্ট হ্যান্ডলিং
+
+বহু ইভেন্ট হ্যান্ডলার ম্যানেজ করা কঠিন:
+
+```javascript
+// মাল্টিপল ইভেন্ট হ্যান্ডলার
+button1.addEventListener("click", handleClick1);
+button2.addEventListener("click", handleClick2);
+form.addEventListener("submit", handleSubmit);
+window.addEventListener("resize", handleResize);
+
+// ইভেন্ট হ্যান্ডলার রিমুভ করা
+function cleanup() {
+  button1.removeEventListener("click", handleClick1);
+  button2.removeEventListener("click", handleClick2);
+  // ... আরও অনেক
+}
+```
+
+**সমস্যা:**
+
+- মেমরি লিক হতে পারে
+- ইভেন্ট হ্যান্ডলার ক্লিনআপ কঠিন
+- ইভেন্ট ডেলিগেশন জটিল
+
+## 4. কোড অর্গানাইজেশন
+
+বড় অ্যাপ্লিকেশনে কোড অর্গানাইজ করা কঠিন:
+
+```javascript
+// সব কোড একটি ফাইলে
+const user = {
+  /* ... */
+};
+const cart = {
+  /* ... */
+};
+const products = {
+  /* ... */
+};
+const orders = {
+  /* ... */
+};
+
+// মিক্সড রেসপনসিবিলিটি
+function handleUserAction() {
+  // UI আপডেট
+  // API কল
+  // স্টেট আপডেট
+  // ডাটা ভ্যালিডেশন
+  // এরর হ্যান্ডলিং
+}
+```
+
+**সমস্যা:**
+
+- কোড রিইউজ করা কঠিন
+- টেস্টিং কঠিন
+- টিম কলাবরেশন কঠিন
+
+## 5. পারফরম্যান্স ইস্যু
+
+DOM অপারেশন পারফরম্যান্স প্রভাবিত করে:
+
+```javascript
+// অদক্ষ DOM অপারেশন
+function updateList(items) {
+  const list = document.getElementById("list");
+  list.innerHTML = ""; // পুরো লিস্ট মুছে ফেলা
+
+  items.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    list.appendChild(li); // প্রতিটি আইটেম যোগ করা
+  });
+}
+```
+
+**সমস্যা:**
+
+- অপ্রয়োজনীয় DOM আপডেট
+- রিপেইন্ট এবং রিফ্লো বেশি
+- পারফরম্যান্স ডিগ্রেডেশন
+
+## 6. স্কেলিং সমস্যা
+
+অ্যাপ্লিকেশন বড় হওয়ার সাথে সাথে সমস্যা বাড়ে:
+
+```javascript
+// স্টেট ডিপেন্ডেন্সি
+function updateUI() {
+  if (user.loggedIn) {
+    updateHeader();
+    updateSidebar();
+    updateContent();
+    updateFooter();
+  }
+
+  if (cart.items.length > 0) {
+    updateCartIcon();
+    updateCheckoutButton();
+  }
+
+  // ... আরও অনেক কন্ডিশন
+}
+```
+
+**সমস্যা:**
+
+- কোড স্প্যাগেটি হয়ে যায়
+- বাগ খুঁজে পাওয়া কঠিন
+- নতুন ফিচার যোগ করা কঠিন
+
+## উপসংহার
+
+Vanilla JavaScript এ এই সমস্যাগুলি সমাধানের জন্য React তৈরি করা হয়েছে। React:
+
+- ডিক্লারেটিভ UI প্রোগ্রামিং অফার করে
+- কম্পোনেন্ট-ভিত্তিক আর্কিটেকচার প্রদান করে
+- ভার্চুয়াল DOM ব্যবহার করে পারফরম্যান্স অপটিমাইজ করে
+- স্টেট ম্যানেজমেন্ট সহজ করে
+
+পরবর্তী বিভাগে আমরা দেখব কিভাবে React এই সমস্যাগুলি সমাধান করে।
+
+---
+
+**পরবর্তী ধাপ:**
+
+- [React কিভাবে সমস্যা সমাধান করে](/javascript-guidebook-bn/React-js/module-01/how-react-solve-the-problem)
+- [React এর সুবিধা](/javascript-guidebook-bn/React-js/module-01/benefites-of-react)
