@@ -1,10 +1,10 @@
 import { Callout, Steps } from "nextra/components";
 
-##  Image Upload with Next.js with Drag and Drop and Image Preview
+##  Image Upload with Next.js with Drag and Drop and Image Preview
 
-নেক্সট জে.এস এ কিভাবে ইমেজ আপলোড করতে হয় এবং কিভাবে ড্রাগ এন্ড ড্রপ ফিচার ইমপ্লিমেন্ট করে ইমেজ আপলোড এবং প্রিভিঊ দেখা যায় তা নিয়ে নিচে আলোচনা করা হলো।
+Below is a discussion on how to implement image upload with drag and drop features and image preview in Next.js.
 
-এই জন্য আমারা নিচে একটা বেসিক ফর্ম এর কোড নিয়ে কাজ করবো।
+We'll be working with the basic form code below.
 
 ```jsx filename="app.jsx"
 import { Camera, Upload } from "lucide-react";
@@ -105,14 +105,14 @@ export default App;
 ![image uploader](../../../public/image-uploader--.jpg)
 
 
-আমাদের উপড়ের কোডে আমরা একটা বেসিক ফর্ম দেখতে পাচ্ছি,যেখানে একটা ইমেজ আপলোড করার ফিল্ড আছে,এবং এখানে যাতে ইমেজ ড্রাগ করে পেস্ট করা যায় তেমন করে ডিজাইন করা আছে। এবং তার নিচে প্রিভিও শো করার জন্য একটা প্রিভিউ সেকশন আছে।
+In the code above, we can see a basic form with an image upload field designed to allow drag and drop functionality. There's also a preview section below to show the uploaded image.
 
-তাহলে চলুন এবার আমরা স্টেপ বাই স্টেপ জেনে নেই আমরা কিভাবে ইমেজ আপলোড করবো এবং সেটার প্রিভিঊ দেখতে পাবো। সেই সাথে আমরা যেন ইমেজ ড্রাগ করে আপলোড করতে পারি সেটা দেখবো।
+Now, let's learn step by step how we can upload images, see their previews, and implement the drag and drop feature.
 
 <Steps>
   ### Upload image by click 
 
-    প্রথমে চলেন আমরা ক্লিক করে ইমেজ আপলোডের অপশন বানাই। এজন্য আমাদেরকে `<input type='file'>` এ একটা `onChange` ইভেন্ট হেন্ডেলার এড করা লাগবে যাতে আমারা ক্লিক করে ইমেজ আপলোড করলে সেই ইভেন্ট টাকে ধরে ইমেজ নিয়ে কাজ করতে পারি।
+    First, let's create the option to upload an image by clicking. For this, we need to add an `onChange` event handler to the `<input type='file'>` so that we can capture the event when an image is uploaded by clicking and work with that image.
 
     ```jsx {2,9-16}
             <div
@@ -142,15 +142,15 @@ export default App;
     
     ```
 
- এই কোডে আমরা ডিজাইনটা সুন্দর করার জন্য ডিফল্ট ফাইল ইনপুটটাকে হাইড করে একটা ডিভ এর সাথে `ref` ব্যবহার করে কানেক্ট করেছি এবং সেই ডিভ এ ক্লিক করলে যাতে `<input type='file'>`  ক্লিক হয় তার জন্য ডিভ এর `onClick` এ 
+ In this code, we've hidden the default file input for better design and connected it to a div using a `ref`. We've added an `onClick` event to the div:
 ```jsx
 
   onClick={() => fileInputRef.current?.click()}
 
 ``` 
-ব্যাবহার করেছি। এতে আমরা যখনি ডিভ এ ক্লিক করছি তখন আমাদের ফাইল আপলোডার টা ক্লিক হয়ে যাচ্ছে।
+This way, when we click on the div, our file uploader gets clicked.
 
-তারপর আমরা 
+Then we've added an event handler `handleImageChange` to the `<input type='file'>` to capture the event:
 ```jsx {2}
       <input
          onChange={handleImageChange}
@@ -162,9 +162,8 @@ export default App;
      />
 
 ```
- `<input type='file'>` এ একটা ইভেন্ট হেন্ডেলার `handleImageChange` এড করেছি যাতে আমরা ইভেন্টটাকে ধরতে পারি।
 
- তাহলে এবার এই ইভেন্ট হ্যান্ডেলার নিয়ে কাজ করা যাক।
+Now let's work with this event handler:
 
  ```js
      const handleImageChange = (e) => {
@@ -177,12 +176,12 @@ export default App;
  
  ```
 
-এই হেন্ডেলার এ আমরা `e.target.files?.[0]` দিয়ে আমারা যেই ফাইলটাকে আপলোড করেছি সেটাকে ধরেছি এবং `setFormData((prev) => ({ ...prev, image: file }));` দিয়ে আমারা ফাইলটাকে স্টেট এ স্টোর করেছি যাতে আমরা এই ফাইলটাকে পরবর্তি সময়ে সার্ভারে পাঠাতে পারি।
+In this handler, we use `e.target.files?.[0]` to get the file we've uploaded and store it in the state with `setFormData((prev) => ({ ...prev, image: file }));` so that we can send this file to the server later.
 
 
 ### Show Preview of Uploaded Image
 
-এই পর্যায়ে আমরা আমাদের আপলোড করা ইমেজের প্রিভিও শো করাবো। প্রিভিঊ শো করানোর জন্য আমরা নিচে একটা প্রিভিও সেকশন নিয়েছি এবং স্টেট এর মাধ্যমে সেখানে ইমেজ এর সোর্স সেট করছি।
+At this stage, we'll show a preview of our uploaded image. For the preview, we've created a preview section below and set the image source through state.
 
 ```jsx
     const [imagePreview, setImagePreview] = useState(null);
@@ -205,7 +204,7 @@ export default App;
 
 ```
 
-এবারে আমরা যেই ফাইলটাকে ধরেছিলাম ইভেন্ট হেন্ডেলারের মাধ্যমে সেই ইভেন্ট হেন্ডেলারে ফাইলটাকে আমারা জাভাস্ক্রিপ্ট এর নেটিভ `FileReader()`API দিয়ে একটা `bese64 encoaded image file` বানাবো এবং সেটা `imagePreview` স্টেট এ সেট করে দিবো।
+Now we'll use JavaScript's native `FileReader()` API to create a `base64 encoded image file` from the captured file in our event handler and set it in the `imagePreview` state.
 
  ```js {7-11}
      const handleImageChange = (e) => {
@@ -215,18 +214,18 @@ export default App;
             setFormData((prev) => ({ ...prev, image: file }));
 
             const reader = new FileReader(); // FileReader() API instance create
-            reader.readAsDataUrl(file) // read file as data URL
-            reader.onLoadend = ()=>{ // reader callback
+            reader.readAsDataURL(file) // read file as data URL
+            reader.onloadend = ()=>{ // reader callback
                 setImagePreview(reader.result) // set data url in state
             }
         }
     };
  
  ```
-তাহলেই স্টেট থেকে URL এর মাধ্যমে আমাদের প্রিভিঊ সেকশনের ইমেজের প্রিভিঊ দেখা যাবে।
+This will display the image preview in our preview section using the URL from the state.
 
 ### Upload image by Drag and Drop
- ড্রাগ এন্ড ড্রপ করে ইমেজ আপলোড কড়ার জন্য আমাদেরকে দুইটা ইভেন্ট হেণ্ডেলার নিয়ে কাজ করতে হবে `onDragOver`,`onDrop`
+To upload images via drag and drop, we need to work with two event handlers: `onDragOver` and `onDrop`.
 ```jsx
  <div
     onDragOver={(e) => {
@@ -240,42 +239,42 @@ export default App;
 </div>
                 
 ```
-আমরা যেই ডিভ এ ইমেজ কে ড্রাগ করে ড্রপ করতে চাই সেই ডিভ এ
+On the div where we want to drag and drop the image, we add these two events and handlers:
  `onDragOver={(e) => {
         e.preventDefault();
         e.stopPropagation();
     }}
 onDrop={handleImageDrop}`
- এই দুইটা ইভেন্ট এবং হেন্ডেলার এড করবো। মনে রাখতে হবে আমারা `onDragOver` হেন্ডেলার কে ` e.preventDefault();
-        e.stopPropagation();` করে নিবো। নাহলে আমরা যখন ইমেজ কে ওই ডিভ এর উপর দিয়ে ড্রাগ করে নিয়ে যাবো, তখনি ব্রাঊজার ইমেজটাকে ওপেন করে ফেলবে। আর `onDrop` ইভেন্ট হেন্ডেলার `handleImageDrop` দিয়ে আমরা ফাইলটাকে ধরে ম্যনেজ করাবো।
+
+Remember, we must use `e.preventDefault()` and `e.stopPropagation()` in the `onDragOver` handler. Otherwise, when we drag an image over the div, the browser will open the image immediately. We'll use the `handleImageDrop` event handler to capture and manage the file.
 
 ```jsx
 function handleImageDrop(e){
-
-    const file = e.dataTransfer.files?.[0]
+    e.preventDefault();
+    const file = e.dataTransfer.files?.[0];
     if(file && file.type.startsWith("image/")){
-    setFormData((prev) => ({ ...prev, image: file }));
-
+        setFormData((prev) => ({ ...prev, image: file }));
+    }
 }
 
 ```
-তাহলেই আমাদের ইমেজ আপলোড হয়ে যাবে এবং আমরা সেটা স্টেট এ রেখে দিয়েছি।
+This will upload our image and store it in the state.
 
 
 ### Show Image Preview by Drag and Drop
 
-এখানেও আমাদের আগের প্রসেসেই কাজ করতে হবে,যেমনটা নিয়ে দেয়া আছে।
+Here we need to use the same process as before:
 ```jsx
 function handleImageDrop(e){
-
-    const file = e.dataTransfer.files?.[0]
+    e.preventDefault();
+    const file = e.dataTransfer.files?.[0];
     if(file && file.type.startsWith("image/")){
-    setFormData((prev) => ({ ...prev, image: file }));
+        setFormData((prev) => ({ ...prev, image: file }));
 
-    const reader = new FileReader();
-    reader.readAsDataUrl(file);
-    reader.onLoadend = ()=>{
-        setImagePreview(reader.result)
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = ()=>{
+            setImagePreview(reader.result);
         }
     }
 }

@@ -1,10 +1,10 @@
-স্টেট ভেরিয়েবল নরমাল জাবাস্ক্রিপ্ট ভেরিয়েবলের মতো মনে হলেও এটা মোটেও জাবাস্ক্রিপটের নরমাল ভেরিয়েবল এর মতো কাজ করেনা। চলুন বিস্তারিত জেনে নেয়া যাক।
+Although state variables look like normal JavaScript variables, they don't work like normal JavaScript variables at all. Let's learn about this in detail.
 
 ### Rendering takes a snapshot in time:
 
-এর মানে হলো রিয়াক্ট তার প্রতিটা রেন্ডারে একটা করে `snapshot` নেয়। এবং তা মনে রাখে। যখনি কোন স্টেট এর ভ্যালু চেঞ্জ হয় তখন রিয়াক্ট কম্পোনেন্টকে রি-রেন্ডার করে এবং পরের রেন্ডারে গিয়ে তার ভ্যালু আপডেট হয়। তার মানে হলো আমরা নরমাল ভেরিয়েবল এ যেমন কোন ভ্যালু চেঞ্জ করলে পরের লাইনেই তা এক্সেস করতে পারি কিন্তু রিয়াক্টে তা পারিনা,কেননা রিয়াক্ট ইনপ্লেস ভ্যালু চেঞ্জ করেনা। ভ্যালুটা চেঞ্জ হয় তার পরের রেন্ডারে।
+This means that React takes a `snapshot` of each render and remembers it. Whenever a state value changes, React re-renders the component and the value is updated in the next render. This means that unlike normal variables where we can change a value and access it in the next line, we can't do that in React because React doesn't change values in place. The value changes in the next render.
 
-একটা উদাহরণের মাধ্যমে বুঝা যাকঃ
+Let's understand with an example:
 
 ```jsx filename="App.jsx" showLineNumbers
 import { useState } from "react";
@@ -20,11 +20,11 @@ export default function App() {
 }
 ```
 
-উপরের কোডটার কনসলে আউটপুট কত আশার কথা? স্বাভাবিক ভাবে দেখলে মনে হয় যে আউটপুত `6`আসার কথা। কিন্তু না , এখানে আউটপুট আসবে `1`। কারণ রিয়াক্ট তার স্টেট চেঞ্জ হলেই ডিরেক্ট ভ্যালু চেঞ্জ করে দেয়না, তাই সেই ভ্যালুটা পরের লাইনগুলোতে এক্সেস করা যায়না।
+What output should we expect in the console for the code above? Normally, one might think that the output should be `6`. But no, the output here will be `1`. This is because React doesn't directly change the value when its state changes, so that value can't be accessed in the subsequent lines.
 
-যেই হেন্ডেলার ফাংশনে `setter function` কল করা হয়েছে সেই হেন্ডেলার এর পুরো কোডটা এক্সিকিউট হয়ে যাওয়ার পর রি-রেন্ডার ট্রিগার হয় এবং পরের রেন্ডারে আপডেটেড ভ্যালু পাওয়া যায়।
+The entire code of the handler function where the `setter function` is called executes completely before a re-render is triggered, and the updated value is available in the next render.
 
-আরেকটা উদাহরণ যদি আমারা দেখিঃ
+Let's look at another example:
 
 ```jsx filename="App.jsx" showLineNumbers
 import { useState } from "react";
@@ -48,11 +48,11 @@ export default function Counter() {
 }
 ```
 
-এখানে একটা বাটনে তিনবার `setter function` কল করা হয়েছে এবং তিনবার স্টেট এর ভ্যালু আপডেট করা হয়েছে। এই কোডটা রান করে আমরা যদি বাটনে ক্লিক করি তাহলে আউটপুট কত আসার কথা- `3`?
+Here, the `setter function` is called three times in a button and the state value is updated three times. If we run this code and click the button, what should the output be - `3`?
 
-কিন্তু না আউটপুট আসবে `1` ।
+But no, the output will be `1`.
 
-যেহেতু স্টেট শুধুমাত্র পরের রেন্ডারে চেঞ্জ হয় তাই প্রথম রেন্ডারে স্টেট এর ভ্যালু ছিল `0`। তাই প্রথম রেন্ডারে তিনবার `setter function` কল হলেও তিনবার এ সে স্টেটের ইনিশিয়াল ভ্যালু পাবে `0`। আর তাই `নাম্বার` এর আউটপুট আসবে `1`
+Since the state only changes in the next render, the value of the state in the first render was `0`. So even though the `setter function` is called three times in the first render, it will get the initial value of the state, which is `0`, all three times. And that's why the output of `number` will be `1`.
 
 ```jsx filename="App.jsx" showLineNumbers
 <button
@@ -65,13 +65,13 @@ export default function Counter() {
 </button>
 ```
 
-এখানে যেটা হচ্ছে প্রথম রেন্ডারে প্রথমবার যখন `setNumber(number + 1)` করা হচ্ছে তখন আসলে `0 + 1 = 1` করা হচ্ছে যা পরের রেন্ডারে আউটপুটে আসবে,
+What's happening here is that in the first render, when `setNumber(number + 1)` is first called, it's actually doing `0 + 1 = 1`, which will appear in the output in the next render.
 
-কিন্তু পরের রেন্ডারে যাওয়ার আগে আরও দুইবার `setNumber(number + 1)` করা হয়েছে,
+But before going to the next render, `setNumber(number + 1)` is called two more times.
 
-তার মানে তখনও কিন্তু `0 + 1 = 1` ই করা হচ্ছে ।
+That means it's still doing `0 + 1 = 1`.
 
-তারমানে শেষবার যখন `setNumber(number + 1)` করা হয়েছে, তখন কিন্তু `0 + 1 = 1` ই করা হয়েছে এবং স্টেট তার মেমরিতে `1` নিয়েই পরের রেন্ডার ট্রিগার করেছে এবং আউটপুটে `1` প্রিন্ট হয়েছে ।
+So when `setNumber(number + 1)` is called for the last time, it's still doing `0 + 1 = 1`, and the state triggers the next render with `1` in its memory, and `1` is printed in the output.
 
 ```jsx filename="App.jsx" showLineNumbers
 <button
@@ -84,7 +84,7 @@ export default function Counter() {
 </button>
 ```
 
-আবার যদি কোডটা এমন হয়ঃ
+Now if the code is like this:
 
 ```jsx filename="App.jsx" showLineNumbers
 export default function Counter() {
@@ -107,11 +107,11 @@ export default function Counter() {
 }
 ```
 
-এখানে বাটনে নাম্বারের স্টেট চেঞ্জ করা হয়েছে এবং একটা `setTimeout()` কল করা হয়েছে ৩ সেকেন্ডের জন্য। এবং তাতে নাম্বার এর ভ্যালুটা এলার্টে নেয়া হয়েছে।
+Here, the state of the number is changed in the button and a `setTimeout()` is called for 3 seconds. And the value of the number is taken in an alert.
 
-এখানেও হয়তো মনে হতে পারে যে নাম্বার এর ভ্যালু এলার্টে `5` আসবে,কেননা যতক্ষণে ৩ সেকেন্ড টাইমার শেষ হবে ততক্ষণে স্টেট রি-রেন্ডার হয়ে যাবে এবং আমরা এলার্টে আপডেটেড ভ্যালু পাবো ।
+Here, too, one might think that the value of the number in the alert will be `5`, because by the time the 3-second timer ends, the state will have re-rendered and we will get the updated value in the alert.
 
-কিন্তু না এখানেও ব্যাপারটাকে `snapshot` হিসেবে চিন্তা করতে হবে, এখানে `timeOut` টা তিন সেকেন্ড পরে হলেও যখন টাইমআউট শুরু হয়েছে তখন কিন্তু সে `number` এর ভ্যালু `0` নিয়েই গিয়েছে, তাই টাইমার যতই নিয়ে যাক প্রথম রেন্ডারে সে তাই পাবে যেটা তার ইনিশিয়াল ভ্যালু।
+But no, here too we have to think of it as a `snapshot`. Here, even though the `timeout` happens after three seconds, when the timeout started, it took the value of `number` as `0`, so no matter how long the timer takes, it will get the same thing in the first render, which is its initial value.
 
-**অর্থাৎ রিয়াক্টের একটা রেন্ডারে কখনই সরাসরি ভ্যালু চেঞ্জ হয়না, বরং স্টেট চেঞ্জ হলে একটা রি-রেন্ডার ট্রিগার হয় এবং পরের রেন্ডারে গিয়ে তার আপডেটেড ভ্যালু পাওয়া যায়।**
+**In other words, the value never changes directly in a React render. Rather, when the state changes, a re-render is triggered, and the updated value is available in the next render.**
 

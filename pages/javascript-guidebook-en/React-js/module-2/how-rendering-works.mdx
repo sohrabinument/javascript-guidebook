@@ -1,47 +1,47 @@
 import { Steps } from "nextra/components";
 
-রিয়াক্ট এপ্লিকেশনে আমরা ব্রাউজার স্ক্রিনে যা কিছু দেখি তার সবকিছুই রিয়াক্টের দ্বারা রেন্ডার হয়ে আসতে হয় ।
+Everything we see on the browser screen in a React application must be rendered by React.
 
-### রেন্ডার এবং কমিট
+### Render and Commit
 
-এই যে স্ক্রিনে আমরা `UI` দেখতে পাই তা রিয়াক্টের তিনটা প্রসেসের পর স্ক্রিনে ভিসিবল হয় । চলুন তাহলে জেনে নেই রিয়াক্টের রেন্ডারিং এর এই তিনটা প্রসেস কি আর কিভাবে কাজ করে ।
+What we see as `UI` on the screen becomes visible after three processes in React. Let's learn what these three processes of React rendering are and how they work.
 
-1. **Trigering a render:**
+1. **Triggering a render:**
 2. **Rendering the component:**
-3. **Commiting to the DOM:**
+3. **Committing to the DOM:**
 
 <Steps>
- ### Trigger a render (ট্রিগারিং স্টেপ):
+ ### Trigger a render (Triggering step):
 
-মূলত দুইটা করনে রিয়াক্টের `render` মেথডটা কল হয় বা রেন্ডারিং ট্রিগার হয়ঃ
+There are mainly two reasons why React's `render` method is called or rendering is triggered:
 
-1. **ইনিশিয়াল রেন্ডার (initial render):** একদম সর্বপ্রথম যখন এপ্লিকেশন রান হয় তখন রিয়াক্ট `HTML` এর একটা `root` এলিমেন্টের ভিতর রিয়াক্টের সমস্ত কম্পোনেন্টকে রেন্ডার করে দেয় তার `React.render()` মেথডটাকে কল করার মাধ্যমে ।
+1. **Initial render:** When the application runs for the very first time, React renders all of its components inside an `HTML` `root` element by calling its `React.render()` method.
 
-2. **যখন কোন স্টেট আপডেট হয় (Re-render when state update):** প্রথমবার সমস্ত কম্পোনেন্ট `UI` তে এসে যাওয়ার পর, যখন কোন কম্পোনেন্টের ভিতরে কোন স্টেট চেঞ্জ হয় তখন রিয়াক্ট অটেমেটিক ভাবে তার `render()` মেথডকে কল করে বা রি-রেন্ডার ট্রিগার হয় ।
+2. **Re-render when state updates:** After all components have appeared in the `UI` for the first time, when a state changes within a component, React automatically calls its `render()` method or a re-render is triggered.
 
-### React render your component (রেন্ডারিং স্টেপ):
+### React renders your component (Rendering step):
 
-যখন রিয়াক্টের রেন্ডারিং টা ট্রিগার হয় তখন রিয়াক্ট তার কম্পোনেন্টগুলোকে কল করে। যাতে সে বুঝতে পারে কোথায় পরিবর্তনটা হয়েছে।
+When React's rendering is triggered, React calls its components. This helps it understand where the change has occurred.
 
--   **এক্ষেত্রে প্রথম রেন্ডারে রিয়াক্ট তার রুট (root) কম্পোনেন্টকে কল করে**
+-   **In the case of the first render, React calls its root component**
 
--   **পরবর্তি সময়ে রি-রেন্ডার ট্রিগার হলে যেই কম্পোনেন্ট থেকে রি-রেন্ডার ট্রিগার হয়েছে সেই কম্পোনেন্টকে কল করে এবং তার প্রথম রেন্ডারের যে `Render Tree` তার একটা `snapshot` নিয়ে রাখে এবং পরবর্তি রেন্ডারেরে একটা `snapshot` নিয়ে তার ভার্চুয়াল ডম এ `Diffing` এলগরিদমের মাধ্যমে কেলকুলেট করে যে কোথায় পরিবর্তন হয়েছে । তারপর সে নেক্সট স্টেপে চলে যায় কমিট করার জন্য ।**
+-   **In subsequent times, when a re-render is triggered, it calls the component from which the re-render was triggered and takes a `snapshot` of the `Render Tree` from the first render, and takes a `snapshot` of the subsequent render. It then calculates where the change has occurred through the `Diffing` algorithm in its virtual DOM. After that, it moves to the next step for committing.**
 
-**রেন্ডারিং প্রসেসটা রিকারসিভলি হয়ে থাকে, তার মানে হলো রিয়াক্ট রেন্ডারিং এ যেই কম্পোনেন্টকে কল করেছে তার ভিতর যদি নেস্টেড আরও কোন কম্পোনেন্ট থাকে সেগুলাও রি-রেন্ডার হয়**
+**The rendering process happens recursively, meaning if there are any nested components inside the component that React called for rendering, those will also be re-rendered**
 
-### React Commits changes to the DOM (কমিটিং স্টেপ):
+### React Commits changes to the DOM (Committing step):
 
-কমিটিং ফেজে এসে রিয়াক্ট `DOM` মডিফাই করে । এক্ষেত্রে,
+In the committing phase, React modifies the `DOM`. In this case,
 
--   **প্রথম রেন্ডারে রিয়াক্ট `DOM` এর `appendChild()` কল করে সমস্ত `DOM Nodes`গুলোকে রুট এলিমেটে এড করে দেয়**
+-   **In the first render, React calls `appendChild()` of the `DOM` to add all `DOM Nodes` to the root element**
 
--   **রি-রেন্ডারের ক্ষেত্রে রিয়াক্ট তার ভার্চুয়াল ডম এ যেই অংশটুকুর পরিবর্তন ডিটেক্ট করতে পারে শুধুমাত্র সেই অংশটুকু `DOM`এ চেঞ্জ করে দেয়**
+-   **In the case of re-renders, React only changes the part of the `DOM` where it could detect changes in its virtual DOM**
 
-**প্রথমবার রেন্ডার হয়ে যাওয়ার পর রিয়াক্ট শুধু তখনি `DOM` এ চেঞ্জ করে যখন সে দেখতে পারে আগের রেন্ডার এবং পরের রেন্ডারে কোন পার্থক্য আছে। যেই সকল কম্পোনেন্টে কোন প্রকার চেঞ্জ দেখা যায়না রিয়াক্ট সেই সকল কম্পোনেন্টে হাত ই দেয়না।**
+**After the first render, React only changes the `DOM` when it can see a difference between the previous render and the next render. React doesn't touch any components where no changes are detected.**
 
 </Steps>
 
-### সবশেষে ব্রাউজার পেইন্ট হয়ঃ
+### Finally, the browser paints:
 
-রেন্ডারিং এবং কমিট হয়ে যাওয়ার পর যখন রিয়াক্ট তার `DOM` টাকে আপডেট করে ফেলে,তখন সে `Updated DOM`টা ব্রাউজারকে দিয়ে দেয়। এবং ব্রাউজার তা স্ক্রিনে রি-পেইন্ট করে দেয়।
+After rendering and committing, when React has updated its `DOM`, it gives the `Updated DOM` to the browser. And the browser re-paints it on the screen.
 

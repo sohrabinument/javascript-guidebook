@@ -6,7 +6,7 @@ import { Callout } from "nextra/components";
 
 ### Primitive
 
-প্রিমিটিভ এর বাংলা অর্থ হলো `আদিম`। জাভাস্ক্রিপ্টে যেসব DATATYPE আছে যেমনঃ
+The Bengali meaning of primitive is `ancient` or `original`. The DATATYPES in JavaScript include:
 
 -   String
 -   Number
@@ -16,105 +16,105 @@ import { Callout } from "nextra/components";
 -   Undefined
 -   Symbol
 
-এইগুলো হলো জাভাস্ক্রিপ্টের মূল বা একক। এগুলো ব্যাবহার করে অন্যান্য ডাটা বানানো হয়। এগুলোকে বলা হয় প্রিমিটিভ ডাটা বা ভ্যালু ।
+These are the core or basic elements of JavaScript. Other data types are built using these. These are called primitive data or values.
 
 ### References
 
-জাভাস্ক্রিপ্টের `Array` এবং `Object` কে বলা হয় রেফারেন্স টাইপ ডাটা বা ভ্যালু ।
+JavaScript's `Array` and `Object` are called reference type data or values.
 
-### প্রিমিটিভ এবং রেফারেন্স টাইপ ডাটার পার্থক্যঃ
+### Differences between Primitive and Reference type data:
 
-প্রিমিটিভ এবং রেফারেন্স টাইপ ডাটার মধ্যে মূল যেই পার্থক্য রয়েছে তা হলো এর ডাটার বিহেবিয়ার নিয়ে। যেমন নিচে উদাহরণের মাধ্যমে বুঝানো হলোঃ
+The main difference between primitive and reference type data is in their behavior. As shown in the examples below:
 
 ### Primitive
 
 ![Primitive](../../public/primitive.png)
 
-প্রিমিটিভ ডাটা শুধুমাত্র ভ্যালুটা শেয়ার করে। ডাটার রেফারেন্স শেয়ার করেনা।
+Primitive data only shares the value. It does not share the reference of the data.
 
 ### Reference
 
 ![Reference](../../public/ref1.png)
 
-এখানে `a` কে যখন `b` দ্বারা রি-এসাইন করা হয়েছে তখন স্বাভাবিক ভাবেই আ এর ভ্যালু চেঞ্জ হয়ে `b` এর যেই ভ্যালু ছিল তা হয়ে গিয়েছে। কিন্তু নিচে যখন `b` এর ভ্যালু চেঞ্জ করা হয়েছে সেই চেঞ্জটা `a` তেও এসে প্রভাব ফেলেছে এবং `a` সহ চেঞ্জ হয়ে গেছে। কারণ এখানে `a` তে যখন `b` এসাইন করা হয়েছিল তখন `a` তে `b` এর রেফারেন্স সহ চলে গেছিল,তাই যেকোন একটা কে চেঞ্জ করলেই দুইটাই চেঞ্জ হয়ে যাচ্ছে।
+Here, when `a` is reassigned with `b`, naturally the value of `a` changes to whatever value `b` had. But below, when the value of `b` is changed, that change also affects `a` and changes it too. This is because when `b` was assigned to `a`, the reference of `b` also went to `a`, so changing either one changes both.
 
-এখানে যেই বিষয়টা হয়েছে তা হলোঃ
+What happened here is:
 
 ![Reference](../../public/ref2.png)
 
-`a` আর `b` যখন ডিফাইন করা হয়েছে তখন মেমরিতে দুইটা `Array` এলোকেটেড করা হয়েছে এবং `Array` দুটি তাদের যেই `Variables` এর নাম `a` এবং `b` তার দিয়ে পয়েন্ট করে আছে। কিন্তু যখন `a = b` করা হয়েছে তখন দুইটা পয়েন্টার এক হয়ে `b` এর ভ্যালু থেকে `a` আর `b` এর দিকে পয়েন্ট হয়ে গেছে। তাই এখন `a` অথবা `b` যেইটাই চেঞ্জ করা হউক না কেন তা দুইটাকেই চেঞ্জ করবে।
+When `a` and `b` were defined, two `Arrays` were allocated in memory, and these `Arrays` are pointed to by the variable names `a` and `b`. But when `a = b` was done, both pointers became one, pointing from the value of `b` to both `a` and `b`. So now, changing either `a` or `b` will change both.
 
-এটাই হলো `primitives` আর `References` ভ্যালুর মধ্যে মূল পার্থক্য ।
+This is the main difference between `primitives` and `References` values.
 
 ## Shallow Copy Vs Deep Copy
 
-জাভাস্ক্রিপ্টে "শ্যালো কপি" (Shallow Copy) এবং "ডিপ কপি" (Deep Copy) হল দুটি আলাদা প্রক্রিয়া যেগুলো ব্যবহার করে একটি `Object` বা `Array`'র কপি তৈরি করা হয়। তবে এদের মধ্যে বড় পার্থক্য হচ্ছে কিভাবে ডেটা কপি করা হয়। নিচে প্রতিটি কনসেপ্ট বিস্তারিতভাবে ব্যাখ্যা করছি:
+In JavaScript, "Shallow Copy" and "Deep Copy" are two different processes used to create a copy of an `Object` or `Array`. The big difference between them is in how the data is copied. Below, I explain each concept in detail:
 
-### শ্যালো কপি (Shallow Copy)
+### Shallow Copy
 
-শ্যালো কপিতে কেবলমাত্র অবজেক্টের প্রথম লেভেলের ভ্যালুগুলি কপি করা হয়। এর মানে হলো, যদি অবজেক্ট বা আরে'র মধ্যে নেস্টেড অবজেক্ট থাকে, তাহলে সেগুলি রেফারেন্স হিসেবে কপি হয়। অর্থাৎ, নেস্টেড অবজেক্ট বা আরে'র জন্য একটি রেফারেন্স তৈরি হয়, নতুন অবজেক্টে একই ডেটা শেয়ার করে।
+In a shallow copy, only the first level values of the object are copied. This means that if the object or array contains nested objects, they are copied as references. In other words, a reference is created for nested objects or arrays, sharing the same data in the new object.
 
-#### উদাহরণ:
+#### Example:
 
 ```javascript showlineNumbers
 let originalArray = [1, 2, { a: 3, b: 4 }];
 
-// শ্যালো কপি তৈরি করা
+// Creating a shallow copy
 let shallowCopy = [...originalArray];
 
 console.log(shallowCopy); // [1, 2, { a: 3, b: 4 }]
 
-// নেস্টেড অবজেক্ট পরিবর্তন করা
+// Changing the nested object
 shallowCopy[2].a = 10;
 
 console.log(originalArray); // [1, 2, { a: 10, b: 4 }]
-console.log(shallowCopy); // [1, 2, { a: 10, b: 4 }] // নেস্টেড অবজেক্ট রেফারেন্স একারে কপি হওয়ার কারনে কপি ডাটাতে চেঞ্জ করলেও তা মেইন ডাটাকেও চেঞ্জ করে দিয়েছে।
+console.log(shallowCopy); // [1, 2, { a: 10, b: 4 }] // Because the nested object was copied as a reference, changes to the copy also change the main data.
 ```
 
-এই উদাহরণে দেখা যাচ্ছে যে, `originalArray` এবং `shallowCopy` একই নেস্টেড অবজেক্ট শেয়ার করছে। যখন `shallowCopy[2].a` পরিবর্তন করা হয়, তখন মূল অবজেক্টেও পরিবর্তন ঘটে। এটি শ্যালো কপির একটি সীমাবদ্ধতা।
+In this example, we can see that `originalArray` and `shallowCopy` share the same nested object. When `shallowCopy[2].a` is changed, the change also occurs in the original object. This is a limitation of shallow copying.
 
-#### শ্যালো কপি তৈরি করার পদ্ধতি:
+#### Methods for creating a Shallow Copy:
 
 -   Spread Operator: `let copy = [...array];`
 
-### ডিপ কপি (Deep Copy)
+### Deep Copy
 
-ডিপ কপিতে একটি অবজেক্টের প্রতিটি লেভেলের কপি তৈরি করা হয়, এমনকি নেস্টেড অবজেক্টেরও আলাদা কপি করা হয়। এর ফলে মূল অবজেক্টের কোনো পরিবর্তন নতুন কপি অবজেক্টকে প্রভাবিত করে না এবং বিপরীতও ঘটে না।
+In a deep copy, a copy of every level of an object is created, including nested objects. As a result, changes to the original object do not affect the new copy object, and vice versa.
 
-#### উদাহরণ:
+#### Example:
 
 ```javascript showlineNumbers
 let originalArray = [1, 2, { a: 3, b: 4 }];
 
-// ডিপ কপি তৈরি করা (JSON পদ্ধতি ব্যবহার করে)
+// Creating a deep copy (using JSON method)
 let deepCopy = JSON.parse(JSON.stringify(originalArray));
 
 console.log(deepCopy); // [1, 2, { a: 3, b: 4 }]
 
-// নেস্টেড অবজেক্ট পরিবর্তন করা
+// Changing the nested object
 deepCopy[2].a = 10;
 
 console.log(originalArray); // [1, 2, { a: 3, b: 4 }]
 console.log(deepCopy); // [1, 2, { a: 10, b: 4 }]
 ```
 
-এখানে দেখা যাচ্ছে যে, `deepCopy[2].a` পরিবর্তন করার পরেও `originalArray` এর নেস্টেড অবজেক্ট অপরিবর্তিত রয়েছে। কারণ, ডিপ কপিতে নেস্টেড অবজেক্টের নতুন কপি তৈরি হয়।
+Here we can see that after changing `deepCopy[2].a`, the nested object in `originalArray` remains unchanged. This is because in a deep copy, a new copy of the nested object is created.
 
-#### ডিপ কপি তৈরি করার পদ্ধতি:
+#### Methods for creating a Deep Copy:
 
--   1.  `JSON.parse(JSON.stringify(obj))`: সহজ পদ্ধতি, তবে ফাংশন ও undefined হ্যান্ডেল করতে পারে না।
+-   1.  `JSON.parse(JSON.stringify(obj))`: A simple method, but it cannot handle functions and undefined.
 
--   2. Lodash লাইব্রেরির cloneDeep মেথড Lodash একটি জনপ্রিয় জাভাস্ক্রিপ্ট লাইব্রেরি, যা অনেক ধরনের ইউটিলিটি ফাংশন সরবরাহ করে। cloneDeep হল একটি বিশেষ মেথড যা ডিপ কপি তৈরি করতে পারে।
+-   2. Lodash library's cloneDeep method. Lodash is a popular JavaScript library that provides many utility functions. cloneDeep is a special method that can create deep copies.
 
-উদাহরণ:
+Example:
 
-প্রথমে lodash ইনস্টল করতে হবে:
+First, install lodash:
 
 ```bash
  npm i --save lodash
 ```
 
-তারপর
+Then:
 
 ```javascript showlineNumbers
 const _ = require("lodash");
@@ -129,33 +129,33 @@ console.log(originalObject); // { a: 1, b: { c: 2, d: 3 } }
 console.log(deepCopiedObject); // { a: 1, b: { c: 10, d: 3 } }
 ```
 
-**Lodash এর cloneDeep মেথড সমস্ত ডেটা টাইপ এবং নেস্টেড অবজেক্ট সঠিকভাবে হ্যান্ডেল করতে পারে। এটি ফাংশন, তারিখ, Map, Set এবং অন্যান্য জটিল ডেটা স্ট্রাকচার হ্যান্ডেল করার ক্ষেত্রে খুবই কার্যকর।**
+**The cloneDeep method of Lodash can properly handle all data types and nested objects. It is very effective for handling functions, dates, Maps, Sets, and other complex data structures.**
 
-### শ্যালো কপি বনাম ডিপ কপি পার্থক্য:
+### Differences between Shallow Copy and Deep Copy:
 
-| **শ্যালো কপি** | **ডিপ কপি** |
+| **Shallow Copy** | **Deep Copy** |
 | --- | --- |
-| শুধুমাত্র প্রথম লেভেলের কপি করে। | প্রতিটি লেভেলের জন্য নতুন কপি তৈরি করে। |
-| নেস্টেড অবজেক্টগুলো রেফারেন্স হিসেবে কপি হয়। | নেস্টেড অবজেক্টগুলোর সম্পূর্ণ নতুন কপি হয়। |
+| Copies only the first level. | Creates a new copy for each level. |
+| Nested objects are copied as references. | Complete new copies are made of nested objects. |
 
-এই দুই ধরনের কপির মধ্যে পার্থক্য নির্ভর করে আপনার প্রয়োজনের উপর।
+The difference between these two types of copies depends on your needs.
 
 # Advanced JavaScript
 
-## `this` এর ব্যাবহার। কোথায় এবং কিভাবে ।
+## Using `this`. Where and how.
 
 ### Implicit Binding
 
-**`👉রুলসঃ` দেখতে হবে যে,ফাংশন কল হয়েছে কোথায়, যেখানে কল হয়েছে তার সামনে কি কোন ডট আছে কিনা,যদি থাকে তাহলে তার সামনে কি আছে। যদি কিছু থাকে তাহলে সেটাই হলো `this` । এক্ষেত্রে এক্সেপ্সন হলো `this` শুধু নরমাল ফাংশনেই কাজ করবে। কিন্তু `Arrow` ফাংশন `this` বলে কিছু চিনবেনা।**
+**`👉Rule:` You need to check where the function was called, whether there is a dot before where it was called, and what is in front of the dot. If there is something, that is the `this`. In this case, the exception is that `this` will only work in a normal function. But an `Arrow` function will not recognize `this`.**
 
-উদাহরণঃ
+Example:
 
 ```javascript showlineNumbers
 let player = {
     name: "Mashrafe",
     age: 38,
     printPlayerName: function () {
-        console.log(this.name); // এখানে this দিয়ে `player` অবজেক্টটাকে পয়েন্ট করা হয়েছে।
+        console.log(this.name); // Here `this` points to the `player` object.
     },
 };
 
@@ -166,11 +166,11 @@ player.printPlayerName();
 
 #### .call()
 
-**👉 কখনও কখনও বাহিরের কোন ফাংশনকে অন্য কোন অবজেক্ট দিয়ে কল করার প্রয়োজন হয় । সেক্ষেত্রে সিনট্যাক্স হয় এরকমঃ**
+**👉 Sometimes you need to call an external function with another object. In this case, the syntax is like this:**
 
 ```javascript showlineNumbers
 function printName() {
-    // এটা একটা গ্লোবাল ফাংশন
+    // This is a global function
     console.log(this.name);
 }
 let player = {
@@ -178,14 +178,14 @@ let player = {
     age: 33,
 };
 
-printName.call(player); // এই গ্লোবাল ফাংশনটাকে `player` অবজেক্ট দিয়ে `.call()` করা হয়েছে ।
+printName.call(player); // This global function is `.call()`'ed with the `player` object.
 ```
 
-**এক্ষেত্রে `.call()` এর ভিতরে যা পাস করা হয়, `this` সেটাকেই পয়েন্ট করে। এক্ষেত্রে explicitly বলে দেয়া হচ্ছে যে `this` কি হবে ।**
+**In this case, what is passed inside `.call()`, `this` points to that. In this case, it is explicitly stated what `this` will be.**
 
 #### .apply()
 
-**👉 `.apply()` আর `.call()` একই কাজ করে। সবকিছুই সেম। তবে`.apply()` তার second parameter এ `Array` নিতে পারে । যেখানে `.call()` `Array` নিতে পারেনা।**
+**👉 `.apply()` and `.call()` do the same thing. Everything is the same. However, `.apply()` can take an `Array` as its second parameter. Whereas `.call()` cannot take an `Array`.**
 
 ```javascript showlineNumbers
 function printPlayerName() {
@@ -206,9 +206,9 @@ printPlayerName.apply(mashrafe, vertue);
 
 #### .bind()
 
-**👉 `.bind()` ও `.call()` এর মতোই সেম কাজ করে। তবে পার্থক্য হলো `.bind()` ফাংশনটিকে সরাসরি কল না করে দিয়ে ফাংশনের একটা নতুন ইন্সটেন্স রিটার্ন করে। এবং সেই ইন্সটেন্সকে যেই ভেরিয়েবলে রাখা হয় সেই ভেরিয়েবল দ্বারা কল করতে হয়।**
+**👉 `.bind()` also does the same job as `.call()`. However, the difference is that `.bind()` does not call the function directly but returns a new instance of the function. And that instance needs to be called by the variable in which it is stored.**
 
-উদাহরনঃ
+Example:
 
 ```javascript showlineNumbers
 function printAPlayerName() {
@@ -224,32 +224,31 @@ let printFunction = printAPlayerName.bind(bdPlayer);
 printFunction();
 ```
 
-# JS Itarator
+# JS Iterator
 
-## `Itarables` কি ?
+## What are `Iterables`?
 
-`Itarables` বলতে মূলত সেই সমস্ত জিনিস বা অবজেক্ট কে বোঝায়,যেগুলোর মধ্যে দিয়ে লুপ `eg: for...of` করে স্টেপ বাই স্টেপ যাওয়া যায়। যেমনঃ `Array`,`String`,`Map`,`Set`
+`Iterables` essentially refers to all those things or objects that can be looped through (e.g., using `for...of`) step by step. For example: `Array`, `String`, `Map`, `Set`.
 
-টেকনিক্যালি বললে, যেসব অবজেক্টের প্রোটোটাইপের ভিতরে `symbol.itarator` প্রপার্টি রয়েছে সেটাই `itarable` `symbol.itarator` এর মাধ্যমেই জাভাস্ক্রিপ্ট ডিফাইন করে যে, কোনটা `itarable` আর কোনটা নয় ।
+Technically speaking, any object that has the `symbol.iterator` property in its prototype is an `iterable`. JavaScript defines what is `iterable` and what is not through `symbol.iterator`.
 
 <Callout
     type='warning'
     emoji='💡'>
-    `Map`,`Set` বলতে এখানে জাভাস্ক্রিপ্ট এর `Map` `Set` ডাটা স্ট্রাকচার কে
-    বুঝানো হয়েছে
+    `Map` and `Set` here refer to JavaScript's `Map` and `Set` data structures
 </Callout>
 
-## itarator বলতে কি বুঝায় ?
+## What is an iterator?
 
-`itarable` অবজেক্টকে যার দ্বারা `itarate` করা যায়,সেটাই হলো `itarator`
+An `iterator` is what allows you to iterate through an `iterable` object.
 
-## `itarating` বলতে কি বুঝায় ?
+## What is `iterating`?
 
-`itarating` বলতে মূলত `Itarables` অবজেক্টগুলোকে লুপ করে স্টেপ বাই স্টেপ যাওয়ার যেই প্রসেস সেটাকে বুঝায় । যখন `itarate` করা হয় তখন সেটা হলো `itarating`
+`Iterating` essentially refers to the process of looping through `Iterable` objects step by step. When you `iterate`, that is `iterating`.
 
-## `Array` কে `itarate` করা ।
+## Iterating an `Array`.
 
-```javascript showLineNumbers filename="itarate.js" copy
+```javascript showLineNumbers filename="iterate.js" copy
 const arr = [1, 2, 3, 4, 5, 6, 7];
 for (item of arr) {
     console.log(item);
@@ -257,9 +256,9 @@ for (item of arr) {
 //Output: 1 2 3 4 5 6 7
 ```
 
-## `String` কে `itarate` করা ।
+## Iterating a `String`.
 
-```javascript showLineNumbers filename="itarate.js" copy
+```javascript showLineNumbers filename="iterate.js" copy
 const str = "Bangladesh";
 for (character of str) {
     console.log(character);
@@ -268,7 +267,7 @@ for (character of str) {
 // Output : B a n g l a d e s h
 ```
 
-# Asyncronus JavaScript
+# Asynchronous JavaScript
 
-জাভাস্ক্রিপ্ট হলো সিঙ্গেল থ্রেডেড প্রোগ্রামিং ল্যাঙ্গুয়েজ
+JavaScript is a single-threaded programming language
 

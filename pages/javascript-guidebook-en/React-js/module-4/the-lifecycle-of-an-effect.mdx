@@ -1,16 +1,16 @@
 ### The lifecycle of an Effect
 
-রিয়াক্টের প্রতিটা কম্পনেন্ট সেম লাইফ সাইকেলের ভিতর দিয়ে যায়,
+Every React component goes through the same lifecycle:
 
--   **মাউন্টঃ** কম্পোনেন্ট প্রথমে মাউন্ট হয় এবং স্ক্রিনে ভিজিবল হয়।
--   **আপডেটঃ** প্রপ বা স্টেট চেঞ্জ এর উপর ভিত্ত করে কম্পোনেন্ট আপডেট হয়।
--   **আনমাউন্টঃ** যখন স্ক্রিন থেকে রিমোভ করা হয় বা ইউজার নেভিগেট করে অন্য পেজে যায় তখন কম্পোনেন্ট আনমাউণ্ট হয়।
+-   **Mount:** The component first mounts and becomes visible on the screen.
+-   **Update:** The component updates based on changes in props or state.
+-   **Unmount:** The component unmounts when it's removed from the screen or when the user navigates to another page.
 
-রিয়াক্টের কম্পোনেন্টের ক্ষেত্রে এভাবে ভাবলে ঠিক আছে, কিন্তু ইফেক্টের লাইফসাইকেল কিন্তু এভাবে নয়। প্রতিটা ইফেক্ট কম্পোনেন্টের লাইফসাইকেল থেকে আলাদা। ইফেক্ট কম্পোনেন্টের স্টেট বা প্রপ এর সাথে এক্সটারনাল সার্ভারের `Syncronize` করে থাকে, তাই যখনি আমাদের কোড চেঞ্জ হতে থাকে তখন `Syncronization` টাও একাধিকবার দরকার হয়।
+This is fine when thinking about React components, but the lifecycle of an Effect is different. Each Effect is separate from the component's lifecycle. Effects synchronize the component's state or props with an external server, so whenever our code changes, this synchronization may be needed multiple times.
 
-চলুন একটু উদাহরণের মাধ্যমে বুঝি,
+Let's understand this with an example:
 
-ধরে নেই আমাদের এই কোড একটা এক্সটারনাল চ্যাট সার্ভারের সাথে কানেক্ট করে।
+Let's say our code connects to an external chat server.
 
 ```jsx
 const serverUrl = "https://localhost:1234";
@@ -27,7 +27,7 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-এখানে ইফেক্টের বডিতে বলা হয়েছে কিভাবে চ্যাট সার্ভারের সাথে কানেকশন ঘটাবে,
+Here, the effect body specifies how to establish a connection with the chat server:
 
 ```jsx {2-3}
 // ...
@@ -39,7 +39,7 @@ return () => {
 // ...
 ```
 
-আর এখানে ক্লিন-আপের মধ্যে বলা হয়েছে কিভাবে কানেকশন স্টপ করবে,
+And in the cleanup, it specifies how to stop the connection:
 
 ```jsx {4-6}
 // ...
@@ -51,15 +51,15 @@ return () => {
 // ...
 ```
 
-সাধারণভাবেই আপনি ভাবতে পারেন যে এখানে যখন কম্পোনেন্ট মাউট হবে তখন ইফেক্টের মাধ্যমে কানেশন স্টার্ট হবে এবং যদি কম্পোনেন্ট আনমাউন্ট হয় তাহলে কানেকশন স্টপ হয়ে যাবে।
+You might assume that when the component mounts, the connection will start via the effect, and when the component unmounts, the connection will stop.
 
-কিন্তু এখানেই কিন্তু সবকিছু শেষ না, আমদের কম্পোনেন্ট মাউন্ট থাকা অবস্থায় আমাদের আরও একাধিকবার সার্ভারের সাথে `Syncronization` দরকার হতে পারে।
+But this isn't the end of the story. While the component is mounted, we may need to synchronize with the server multiple times.
 
-#### Why synchronization may need to happen more than once (কেন একাধিকবার `Syncronization` দরকার হবে ?)
+#### Why synchronization may need to happen more than once
 
-মনে করুন `ChatRoom` কম্পোনেন্ট তার প্রপ্স হিসেবে একটা `roomId` নেয় এবং যখনি `roomId` চেঞ্জ হয় তখনি কম্পোনেন্ট কে নতুন নতুন চ্যাটরুমের সাথে কানেক্টেড করতে হয়। ধরে নেন `roomId` গুলো ইউজার কোন সিলেক্ট অপশন থেকে সিলেক্ট করতে পারবে,
+Let's say the `ChatRoom` component takes a `roomId` as a prop, and whenever the `roomId` changes, the component needs to connect to a new chatroom. Assume the user can select `roomId` from a selection option.
 
-এখন ধরুন প্রথমবার ইউজার সিলেক্ট অপশন থেকে `General` সিলেক্ট করলো এবং তাতে প্রথমে UI তে `General` চ্যাটরুম টা ভিজিবল হলো।
+Now suppose the user first selects "General" from the selection option, and the "General" chatroom becomes visible in the UI.
 
 ```jsx
 const serverUrl = "https://localhost:1234";
@@ -70,13 +70,13 @@ function ChatRoom({ roomId /* "general" */ }) {
 }
 ```
 
-তারপর ইফেক্ট জেনারেল রুমের সাথে কানেকশন স্টার্ট করলো। এর মধ্যেই আবার ইউজার `Travel` চ্যাটরুম সিলেক্ট করলো এবং তাতে স্টেট চেঞ্জ হলো এবং প্রপ হিসেবে একটা নতুন `roomId` আসলো, এতে প্রথমে UI তে `Travel` চ্যাটরুম দেখানো হবে।
+Then the effect starts a connection with the general room. In the meantime, the user selects the "Travel" chatroom, which changes the state and brings in a new `roomId` as a prop. This will first show the "Travel" chatroom in the UI.
 
-কিন্তু এখনও কিন্তু আমাদের ইফেক্ট `General` চ্যাট সার্ভারের সাথেই কানেক্টেড হয়ে আছে, তাহলে এবার এখানে কিন্তু ইফেক্টকে `re-Syncronize` হতে হবে এবং `general` চ্যাট সার্ভার থেকে ডিসকানেন্ট হয়ে `Travel` চ্যাট সার্ভারের সাথে কানেক্ট হতে হবে।
+But our effect is still connected to the "General" chat server. So now the effect needs to re-synchronize and disconnect from the "General" chat server to connect to the "Travel" chat server.
 
-#### How React re-synchronizes your Effect (রিয়াক্ট কিভাবে ইফেক্ট কে `re-Syncronize` করে)
+#### How React re-synchronizes your Effect
 
-ইফেক্ট তার ডিপেন্ডেন্সি হিসেবে একটা Array আকারে কিছু রিয়াক্টিভ ভ্যালু নেয়, যেগুলো চেঞ্জ হলে রিয়াক্ট নিজেই ডিসিশন নেয় তাকে কি করতে হবে। যখন স্টেট চেঞ্জ এর কারনে কম্পোনেন্ট রি-রেন্ডার হয় এবং নতুন ভ্যালু পায়, তখন কম্পোনেন্ট প্রথমে UI তে আপডেট হয়, তারপর ইফেক্ট রান হয়। ইফেক্ট রান হউয়ার আগে সে চেক করে তার ডীপেন্ডেসি Array-এর কোন ভ্যালু সেকেন্ড রেন্ডারে চেঞ্জ হয়েছে কিনা, যদি চেঞ্জ হয় তাহলে সে প্রথমে প্রথম রেন্ডারের `Syncronization` টা স্টপ করে দেয়, এবং তারপর আবার নতুন করে ইফেক্ট রান করে।
+The effect takes an array of reactive values as its dependency. When these values change, React decides what to do. When the component re-renders due to a state change and receives new values, the component first updates in the UI, then the effect runs. Before running the effect, it checks if any value in the dependency array has changed in the second render. If it has changed, it first stops the synchronization from the first render, and then runs the effect again.
 
 ```jsx
 const serverUrl = "https://localhost:1234";
@@ -93,10 +93,10 @@ function ChatRoom({ roomId }) {
 }
 ```
 
-#### রিয়াক্টের ইফেক্টের লাইফসাইকেলের চিত্রঃ
+#### Lifecycle of React Effects:
 
 ![Effect Lifecycle of react](../../../../public/hookimages/UseEffect-lifecycle.png)
 
-### Each Effect represents a separate synchronization process (আলাদা আলাদা ইফেক্ট আলাদা আলাদা `Syncronization` কে রিপ্রেজেন্ট করে)
+### Each Effect represents a separate synchronization process
 
-একই সাথে রিলেটেড ফিচারগুলো আমরা একটা ইফেক্টে ম্যানেজ করতে পারি, কিন্তু যদি এমন হয় যে আমাদের আলাদা আলাদা ফিচার ইমপ্লিমেন্ট করা লাগবে তাহলে আমরা আলাদা আলাদা ইফেক্টে সেগুলো ম্যানেজ করতে পারি।
+We can manage related features in a single effect, but if we need to implement separate features, we can manage them in separate effects.

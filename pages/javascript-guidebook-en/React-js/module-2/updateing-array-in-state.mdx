@@ -1,23 +1,23 @@
-**জাভাস্ক্রিপ্টে `Array` মিউটেড করা যায়, কিন্তু যখন আপনি `Array` কে রিয়াক্টের কোন স্টেট ভ্যারিয়েবল এর ভ্যালু হিসেবে স্টোর করবেন তখন অবশ্যই আপনাকে ভাবতে হবে যে - `Array` কেও মিউটেড করা যায়না। যখনি কোন স্টেট ভ্যারিয়েবলের ভ্যালু `Array` থাকবে,তখন তা আপডেট করতে হলে অবশ্যই সম্পুর্ন নতুন `Array` অথবা আগের `Array` এর কপি বানিয়ে সেখানে ভ্যালু আপডেট করে তারপর স্টেট এর আপডেটেড ভ্যালু হিসেবে সেট করতে হবে।**
+**In JavaScript, `Arrays` can be mutated, but when you store an `Array` as the value of a React state variable, you must think that the `Array` cannot be mutated either. Whenever a state variable's value is an `Array`, to update it, you must always create a completely new `Array` or make a copy of the previous `Array`, update the value there, and then set it as the updated value of the state.**
 
-### (Updating arrays without mutation) - কিভাবে মিউটেশন ছাড়া `Array` আপডেট করতে পারি।
+### (Updating arrays without mutation) - How to update an `Array` without mutation.
 
-জাভাস্ক্রিপ্টে `Array` হলো একধরনের অবজেক্ট। রিয়াক্টের স্টেট হিসেবে `Array` কেও সবসময় `read-only` মনে করতে হবে। তাই আপনি কখনওই `arr[0]= "something"` এভাবে সরাসরি রি-এসাইন করতে পারবেন না। এবং এছাড়াও বেশ কিছু `Array` মেথড আছে যা পুরাতন `Array` কে মিউটেড করে যেমন: `push` ,`pop`,`shift`,`unshift`,`splice`,`sort`,`reverse`,`arr[i]` এইগুলো রিয়াক্টের স্টেট আপডেট করার জন্য ব্যাবহার করা উচিত নয়।
+In JavaScript, `Array` is a type of object. In React's state, `Array` should always be considered `read-only`. So you can never directly reassign like `arr[0]= "something"`. And there are also several `Array` methods that mutate the old `Array` such as: `push`, `pop`, `shift`, `unshift`, `splice`, `sort`, `reverse`, `arr[i]`. These should not be used to update React's state.
 
-চলুন জেনে নেই রিয়াক্ট এর স্টেট আপডেট করা জন্য `Array` ডাটা আপডেট করতে কোন কোন মেথডগুলো ব্যাবহার করা যাবে আর কোনগুলো ব্যাবহার করা উচিত নয়।
+Let's learn which methods can be used to update `Array` data for updating React's state and which ones should not be used.
 
-| ব্যাবহারের কারণ                | ❌ - পুরাতন `Array` কে মিউটেড করে | ✅ যেগুলো নতুন `Arry` রিটার্ন করে                                                    |
-| ------------------------------ | --------------------------------- | ------------------------------------------------------------------------------------ |
-| এড করা (Adding in Array)       | `push`, `unshift`                 | `concat`, `[...sprade,]`, `array.with()`                                             |
-| বাদ দেয়া (Removing from Array) | `pop`, `shift`, `splice`          | `filter`, `slice`, `toSpliced`                                                       |
-| রিপ্লেস করা (Replac in Array)  | `splice`, `arr[0]="something"`    | `map`, `toSpliced`                                                                   |
-| সর্টিং করা (Sort in Array)     | `sort`, `reverse`                 | প্রথমে পুরাতন `Array` কপি করে নিয়ে `sort` বা `reverse` করা, `toSorted`, `toReversed` |
+| Purpose                  | ❌ - Mutates the old `Array` | ✅ Returns a new `Arry`                                              |
+| ------------------------ | ---------------------------- | -------------------------------------------------------------------- |
+| Adding in Array          | `push`, `unshift`            | `concat`, `[...sprade,]`, `array.with()`                             |
+| Removing from Array      | `pop`, `shift`, `splice`     | `filter`, `slice`, `toSpliced`                                       |
+| Replacing in Array       | `splice`, `arr[0]="something"` | `map`, `toSpliced`                                                  |
+| Sorting in Array         | `sort`, `reverse`            | First copy the old `Array` then `sort` or `reverse`, `toSorted`, `toReversed` |
 
-#### (Adding to an Array) `Array` তে এলিমেন্ট এড করা ।
+#### (Adding to an Array) Adding elements to an `Array`.
 
 **avoid `push()` , use `concat` or `[...spread]`**
 
-`Array` তে কোনকিছু এড করতে হলে স্বাভাবিকভাবে `push()` মেথড ব্যাবহার করা যায়,কিন্তু `push()` মেথড মেইন `Array` কে মিউটেড করে ফেলে। তাই রিয়াক্টের স্টেট আপডেট করার সময় `push()` মেথড ব্যাবহার না করে `concat` অথবা `[...spread]` ব্যাবহার করে `Array` তে আইটেম এড করা উচিত।
+Normally, the `push()` method can be used to add something to an `Array`, but the `push()` method mutates the main `Array`. So when updating React's state, instead of using the `push()` method, use `concat` or `[...spread]` to add items to the `Array`.
 
 ```jsx filename="App.jsx" showLineNumbers
 let nextId = 0
@@ -28,9 +28,9 @@ setArtists([
 ]);
 ```
 
-#### (Removing from an array) `Array` থেকে এলিমেন্ট রিমুভ করা।
+#### (Removing from an array) Removing elements from an `Array`.
 
-**avoid `pop`,`unshift` use `filter` or `slice` or `toSpliced`** `Array` থেকে কোন কিছু বাদ দিতে হলে সবচেয়ে সহজ উপায় হলো `filter` ব্যাবহার করা। `filter` মেথড মেইন `Array` তে হাত দেয়না, বরং একটা নতুন `Array` রিটার্ন করে।
+**avoid `pop`,`unshift` use `filter` or `slice` or `toSpliced`** The easiest way to remove something from an `Array` is to use `filter`. The `filter` method doesn't touch the main `Array`; rather, it returns a new `Array`.
 
 ```jsx filename="App.jsx" showLineNumbers
 let nextId = 0
@@ -39,23 +39,23 @@ const filteredData = artists.filter((item)=> item.id !== 2)
 setArtists(filteredData)
 ```
 
-#### (Transforming an array) `Array` কে পরিবর্তন করা।
+#### (Transforming an array) Transforming an `Array`.
 
-যদি `Array`এর কোন আইটেমের মদ্ধ্যে কোনকিছু পরিবর্তন করতে হয় তাহলে `map()` ব্যাবহার করে করা উচিত। `map()` মেইন `Array` কে পরিবর্তন করেনা বরং একটি নতুন `Array` রিটার্ন করে।
+If you need to change something within an `Array` item, you should use `map()`. `map()` doesn't change the main `Array` but returns a new `Array`.
 
-`map()` দিয়ে একটা `Array` এর প্রতিটা আইটেমের ভিতর দিয়ে `itareate` করে কন্ডিশনলি যেখানে পরিবর্তন করা প্রয়োজন,সেখানে পরিবর্তন করা যায়।
+With `map()`, you can `iterate` through each item in an `Array` and conditionally make changes where needed.
 
-#### (Replacing items in an array ) `Array` এর মধ্য থেকে কোন আইটেমকে রিপ্লেস করা ।
+#### (Replacing items in an array) Replacing items in an `Array`.
 
-যদি `Array`এর কোন আইটেমের মদ্ধ্যে থেকে কোন আইটেম কে রিপ্লেস করতে হয় তাহলে `map()` ব্যাবহার করে করা উচিত।
+If you need to replace an item in an `Array`, you should use `map()`.
 
-`map()` দিয়ে একটা `Array` এর প্রতিটা আইটেমের ভিতর দিয়ে `itareate` করে কন্ডিশনলি যেই আইটেম টি রিপ্লেস করা প্রয়োজন,সেটি রিপ্লেস করা যায়।
+With `map()`, you can `iterate` through each item in an `Array` and conditionally replace the item that needs to be replaced.
 
-#### (Inserting into an array) `Array` এর কোন পজিশনে আইটেম ইনসার্ট করা।
+#### (Inserting into an array) Inserting items at a position in an `Array`.
 
-`Array` এর কোন নির্দিষ্ট পজিশনে কোন আইটেম এড করতে চাইলে `slice` অথবা `toSpliced` ব্যাবহার করা যেতে পারে। `toSpliced` ECMA SCRIPT 2023 এর নতুন ফিচার। এটি মেইন `Array` কে পরিবর্তন করেনা এবং নতুন `Array` রিটার্ন করে।
+To add an item at a specific position in an `Array`, you can use `slice` or `toSpliced`. `toSpliced` is a new feature in ECMA SCRIPT 2023. It doesn't change the main `Array` and returns a new `Array`.
 
-**`slice()` মেথড ব্যাবহার করে ইনসার্টঃ**
+**Inserting using the `slice()` method:**
 
 ```jsx filename="App.jsx" showLineNumbers
 import { useState } from "react";
@@ -72,13 +72,13 @@ export default function List() {
   const [artists, setArtists] = useState(initialArtists);
 
   function handleClick() {
-    const insertAt = 1; // কোন পজিশনে ইনসার্ট হবে সেই নাম্বার
+    const insertAt = 1; // The position number where insertion will happen
     const nextArtists = [
-      // ইনসার্ট পজিশনের আগের আইটেমগুলো
+      // Items before the insert position
       ...artists.slice(0, insertAt),
-      // নতুন আইটেম
+      // New item
       { id: nextId++, name: name },
-      // বাকি আইটেমগুলো ইনসার্ট পজিশনের পর
+      // The rest of the items after the insert position
       ...artists.slice(insertAt),
     ];
     setArtists(nextArtists);
@@ -102,7 +102,7 @@ export default function List() {
 
 ---
 
-**`toSpliced()` মেথড ব্যাবহার করে ইনসার্টঃ**
+**Inserting using the `toSpliced()` method:**
 
 ```jsx filename="App.jsx" showLineNumbers
 import { useState } from "react";
@@ -119,10 +119,10 @@ export default function List() {
   const [artists, setArtists] = useState(initialArtists);
 
   function handleClick() {
-    const insertAt = 1; // কোন পজিশনে ইনসার্ট হবে সেই নাম্বার
+    const insertAt = 1; // The position number where insertion will happen
 
     const nextArtists = artists.toSpliced(insertAt, {
-      // নতুন আইটেম এড করে নতুন অ্যারে রিটার্ন করবে
+      // Will add new item and return a new array
       id: nextId++,
       name: "Something",
     });
@@ -145,9 +145,9 @@ export default function List() {
 }
 ```
 
-#### (sort or reverse in array) - সর্ট অথবা রিভার্স করা ।
+#### (sort or reverse in array) - Sorting or reversing.
 
-`Array` কে সরাসরি `sort` অথবা `reverse` মেথড ব্যাবহার সর্ট অথবা রিভার্স করতে গেলে তা মেইন `Array` পরিবর্তন করে দেয়। তাই সরাসরি `sort` অথবা `reverse` ব্যাবহার না করে প্রথমে `[...spread]` সিনট্যাক্স ব্যাবহার করে `spread` করে নিতে হয়।
+Directly using the `sort` or `reverse` method to sort or reverse an `Array` changes the main `Array`. So instead of directly using `sort` or `reverse`, you first need to use the `[...spread]` syntax to spread it.
 
 ```jsx filename="App.jsx" showLineNumbers
 import { useState } from "react";
@@ -180,13 +180,13 @@ export default function List() {
 }
 ```
 
-এখানে একটা বিষয় মাথায় রাখতে হবে তা হলো,`[...spread]` সিনট্যাক্স শুধুমাত্র প্রথম লেবেলের কপি বানায়, উপরের উদাহরণ অনুযায়ী যদি শুধুমাত্র অবজেক্টগুলোর অর্ডার টা সর্ট বা রিভার্স করা হয়,তাহলে এই পদ্ধতি ঠিক আছে, কিন্তু যদি `Array` এর ভিতরের অবজেক্টগুলোকে কোনকিছু করা লাগতো,তাহলে কিন্তু এইভাবে শুধু একবার `[...spread]` করলে চলবেনা।
+It's important to keep in mind that the `[...spread]` syntax only creates a copy of the first level. According to the example above, if only the order of the objects is being sorted or reversed, this method is fine, but if you needed to do something to the objects inside the `Array`, then just doing `[...spread]` once wouldn't be enough.
 
-#### (Updating objects inside an Array) - `Array` ভিতরের অবজেক্টকে আপডেট করা ।
+#### (Updating objects inside an Array) - Updating objects inside an `Array`.
 
-যখনি আমদের Array`ভিতরের অবজেক্টকে আপডেট করতে হবে তখন আমরা`map()` ব্যাবহার করে সেটা করতে পারি।
+When we need to update objects inside an Array, we can do it using `map()`.
 
-যেহেতু `map()` `Array`র প্রতিটা আইটেমের ভিতর দিয়ে `itarate` করে এবং প্রতি `itaration` এ একেকটা আইটেম রিটার্ন করে, তাহলে `map()` ব্যাবহার করে কন্ডিশনালি যেকোন আইটেমকে পরিবর্তন করা যেতে পারে।
+Since `map()` `iterates` through each item in the `Array` and returns an item for each `iteration`, we can conditionally change any item using `map()`.
 
 ```jsx filename="App.jsx" showLineNumbers
 import { useState } from "react";
@@ -263,24 +263,24 @@ function ItemList({ artworks, onToggle }) {
 }
 ```
 
-#### (Write concise update logic with Immer) - `Immer` এর সাহায্যে খুব সহজে `Array` অপারেশন চালানো।
+#### (Write concise update logic with Immer) - Running `Array` operations easily with the help of `Immer`.
 
-আমরা যদি মিউটেশন নিয়ে এতো টেনশন না করতে চাই,তাহলে আমরা [Immer](https://www.npmjs.com/package/immer) ব্যাবহার করে খুব সহজেই আমাদের সকল ধরনের `Array` অপারেশন করতে পারি। `Immer` কিভাবে ব্যাবহার করতে হয় তা স্টেপ বাই স্টেপ জানতে **[এখানে ক্লিক করুন](https://reactive-accelarator.vercel.app/javascript-guidebook/React-js/module-2/updating-object-in-state#immer-%E0%A6%95%E0%A6%BF%E0%A6%AD%E0%A6%BE%E0%A6%AC%E0%A7%87-%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%AC%E0%A6%B9%E0%A6%BE%E0%A6%B0-%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87-%E0%A6%B9%E0%A7%9F)**
+If we don't want to worry so much about mutation, we can use [Immer](https://www.npmjs.com/package/immer) to easily perform all kinds of `Array` operations. To learn step by step how to use `Immer`, **[click here](https://reactive-accelarator.vercel.app/javascript-guidebook/React-js/module-2/updating-object-in-state#immer-%E0%A6%95%E0%A6%BF%E0%A6%AD%E0%A6%BE%E0%A6%AC%E0%A7%87-%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%AC%E0%A6%B9%E0%A6%BE%E0%A6%B0-%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87-%E0%A6%B9%E0%A7%9F)**
 
-### ECMA SCRIPT 2023 (ES-2023) এর চারটি স্পেশাল `Array` মেথডঃ
+### Four special `Array` methods of ECMA SCRIPT 2023 (ES-2023):
 
-ECMA SCRIPT 2023 (ES-2023) এর চারটি স্পেশাল `Array` মেথড দিয়ে আমরা খুব সহজেই মেইন `Array`কে `Mutatate`না করেই বিভিন্ন `Array`অপারেশন চালাতে পারি।
+With the four special `Array` methods of ECMA SCRIPT 2023 (ES-2023), we can easily run various `Array` operations without `Mutating` the main `Array`.
 
 1. toSpliced()
 2. toReversed()
 3. toSorted()
 4. with()
 
-#### toSpliced() মেথডঃ
+#### toSpliced() method:
 
-`Array.prototype.toSpliced()` মেথডের মাধ্যমে `Array` এর যেকোন পজিশনে যেকোন আইটেম এড করতে পারি বা ডিলিট করতে পারি। এবং এটা মেইন `Array`তে হাত দেয়না। উদাহরনঃ
+Using the `Array.prototype.toSpliced()` method, we can add or delete any item at any position in an `Array`. And it doesn't touch the main `Array`. Example:
 
-**`splice()` ব্যাবহার করে উদাহরণ যা মেইন Array কে পরিবর্তন করে।**
+**Example using `splice()` which changes the main Array.**
 
 ```javascript
 const arr = ["a", "b", "c", "d", "e"];
@@ -289,11 +289,11 @@ console.log(arr);
 console.log(arr2);
 
 //Output:
-["a", "b", "x", "y"]; // মেইন Array পরিবর্তন হয়ে গেছে
+["a", "b", "x", "y"]; // Main Array has been changed
 ["c", "d", "e"];
 ```
 
-**`toSpliced()` ব্যাবহার করে উদাহরণ যা মেইন Array কে পরিবর্তন করেনা।**
+**Example using `toSpliced()` which does not change the main Array.**
 
 ```javascript
 const arr = ["a", "b", "c", "d", "e"];
@@ -302,15 +302,15 @@ console.log(arr);
 console.log(arr2);
 
 //Output:
-["a", "b", "c", "d", "e"]; // মেইন Array অপরিবর্তিত রয়েছে।
-["a", "b", "x", "y"]; // নতুন Array রিটার্ন হয়েছে
+["a", "b", "c", "d", "e"]; // Main Array remains unchanged.
+["a", "b", "x", "y"]; // A new Array is returned
 ```
 
-#### toReversed() মেথডঃ
+#### toReversed() method:
 
-`Array.prototype.toReversed()` মেথডের মাধ্যমে `Array`কে রিভার্স করা যায়, এতে মেইন `Array` অপরিবর্তিত থাকে।
+The `Array.prototype.toReversed()` method can be used to reverse an `Array`, keeping the main `Array` unchanged.
 
-**`reverse()` ব্যাবহার করে উদাহরণ যা মেইন Array কে পরিবর্তন করে।**
+**Example using `reverse()` which changes the main Array.**
 
 ```javascript
 const arr = ["a", "b", "c", "d", "e"];
@@ -319,11 +319,11 @@ console.log(arr);
 console.log(arr2);
 
 //Output:
-["e", "d", "c", "b", "a"]; // মেইন Array পরিবর্তন হয়ে গেছে
+["e", "d", "c", "b", "a"]; // Main Array has been changed
 ["e", "d", "c", "b", "a"];
 ```
 
-**`toReversed()` ব্যাবহার করে উদাহরণ যা মেইন Array কে পরিবর্তন করেনা।**
+**Example using `toReversed()` which does not change the main Array.**
 
 ```javascript
 const arr = ["a", "b", "c", "d", "e"];
@@ -333,15 +333,15 @@ console.log(arr2);
 
 //Output:
 
-["a", "b", "c", "d", "e"]; // মেইন Array অপরিবর্তিত রয়েছে।
-["e", "d", "c", "b", "a"]; // নতুন Array রিটার্ন হয়েছে
+["a", "b", "c", "d", "e"]; // Main Array remains unchanged.
+["e", "d", "c", "b", "a"]; // A new Array is returned
 ```
 
-#### toSorted() মেথডঃ
+#### toSorted() method:
 
-`Array.prototype.toSorted()` মেইন `Array` কে পরিবর্তন না করে `Array` কে `sort` করার জন্য ব্যাবহার করা যায়।
+`Array.prototype.toSorted()` can be used to `sort` an `Array` without changing the main `Array`.
 
-**`sort()` ব্যাবহার করে উদাহরণ যা মেইন Array কে পরিবর্তন করে।**
+**Example using `sort()` which changes the main Array.**
 
 ```javascript
 const arr = ["a", "d", "c", "f", "e"];
@@ -350,11 +350,11 @@ console.log(arr);
 console.log(arr2);
 
 //Output:
-["a", "c", "d", "e", "f"]; // মেইন Array পরিবর্তন হয়ে গেছে
+["a", "c", "d", "e", "f"]; // Main Array has been changed
 ["a", "c", "d", "e", "f"];
 ```
 
-**`toSorted()` ব্যাবহার করে উদাহরণ যা মেইন Array কে পরিবর্তন করেনা।**
+**Example using `toSorted()` which does not change the main Array.**
 
 ```javascript
 const arr = ["a", "d", "c", "f", "e"];
@@ -363,15 +363,15 @@ console.log(arr);
 console.log(arr2);
 
 //Output:
-["a", "d", "c", "f", "e"]; // মেইন Array অপরিবর্তিত রয়েছে।
-["a", "c", "d", "e", "f"]; // নতুন Array রিটার্ন হয়েছে
+["a", "d", "c", "f", "e"]; // Main Array remains unchanged.
+["a", "c", "d", "e", "f"]; // A new Array is returned
 ```
 
-#### with() মেথডঃ
+#### with() method:
 
-`Array.prototype.with()` মেথডের মাধ্যমে `Array`র নির্দিষ্ট পজিশনে কোন ভ্যালুকে অন্য একটি ভ্যালু দিয়ে পরিবর্তন করে নতুন `Array` রিটার্ন করে।
+The `Array.prototype.with()` method returns a new `Array` by changing a value at a specific position in the `Array` with another value.
 
-**উদাহরণঃ**
+**Example:**
 
 ```javascript
 const arr = ["a", "d", "c", "f", "e"];
@@ -380,6 +380,6 @@ console.log(arr);
 console.log(arr2);
 
 //Output:
-["a", "d", "c", "f", "e"]; // মেইন Array অপরিবর্তিত রয়েছে।
-["a", "b", "c", "f", "e"]; // নতুন Array রিটার্ন হয়েছে
+["a", "d", "c", "f", "e"]; // Main Array remains unchanged.
+["a", "b", "c", "f", "e"]; // A new Array is returned
 ```

@@ -1,30 +1,30 @@
 import { Callout, Steps } from "nextra/components";
 
-# গিট এবং গিটহাব
+# Git and GitHub
 
-## গিট কি ?
+## What is Git?
 
-গিট হলো একটি `ভার্সন কনট্রোল` টুল।
+Git is a `version control` tool.
 
-ভার্সন কনট্রোল কি ?
+What is version control?
 
-ধরুন আপনি আপনার কম্পিউটার এ কোন ডকুমেন্ট লিখছেন,সেখানে হয়তো আজ কিছু লিখছেন আবার হয়তো অন্যদিন কিছু লিখছেন। এভাবে হয়তো আপনার কখনও মনে হলো যে আপনি গত দুইদিন যা লিখেছেন তা হয়তো সঠিক নয়, আপনি তা ডিলিট করে আবার দুই দিন আগে যা লিখেছেন সেই অবস্থায় ফিরত যেতে চান। এক্ষেত্র আপনাকে যেটা করা লাগবে তা হলো এই দুইদিনের সমস্ত লিখা মুছে ফেলতে হবে। এখন এই অবস্থায় আপনার যদি মনে না থাকে যে আপানর ঠিক কোন পর্যন্ত মুছা উচিত বা দুইদিন আগে ঠিক কতটুকু লেখা হয়েছিলো,তখন আপনি কি করবেন? ঠিক এই কাজটায় গিট হেল্প করে থাকে। গিট কোন ফাইলের প্রতিটা চেঞ্জেস গুলোকে মনিটরিং করে বা ট্র্যাক রাখে এবং প্রতিটা চেঞ্জেস গুলোকে ভার্সনাইজ করে। যাতে আপনি যেকোন সময় যেকোনো ভার্সনে সুইচ করতে পারেন ।
+Imagine you're writing a document on your computer, writing something today and something else on another day. At some point, you might feel that what you wrote in the last two days is not correct, and you want to delete it and go back to the state of two days ago. In this case, you would need to delete all of what you wrote in these two days. Now, if you can't remember exactly how much to delete or how much was written two days ago, what would you do? This is where Git helps. Git monitors or tracks every change in a file and versions each change. This allows you to switch to any version at any time.
 
-## গিটের কিছু প্রয়োজনীয় কমান্ড যা আমাদের গিটের লোকাল রিপজিটরিতে ফাইল ম্যানেজ করতে প্রয়োজন হবে।
+## Some essential Git commands that we'll need to manage files in our local Git repository.
 
-1. **গিট ইনিশিয়ালাইজ করা**
+1. **Initialize Git**
 
 ```bash
  git init
 ```
 
-2. **গিট এর স্ট্যাটাস চেক করা**
+2. **Check Git status**
 
 ```bash
 git status
 ```
 
-3. **ফাইলকে গিটের ট্রাক করার জন্য স্টেজ এ উঠানো**
+3. **Stage files for Git tracking**
 
 ```bash
 git add <filename> //For stage any specific file
@@ -34,13 +34,13 @@ or
 git add .  // if you want to add all files in the current working directory
 ```
 
-4. **কমিট করা**
+4. **Commit changes**
 
 ```bash
 git commit -m "<commit massage>"
 ```
 
-5. **গিট লগ চেক করা**
+5. **Check Git log**
 
 ```bash
 git log
@@ -48,85 +48,85 @@ or
 git log --oneline
 ```
 
-6. **একটা কমিট থেকে অন্য কমিটের অবস্থায় ফিরে যাওয়া**
+6. **Go back from one commit state to another**
 
 ```bash
 git reset --hard <commit id>
 ```
 
-7. **গিটের প্রতিটা চেঞ্জের রেফারেন্স সহ লগ দেখার জন্য**
+7. **View Git log with references for each change**
 
 ```bash
 git reflog
 ```
 
-8. **গিটের ট্র্যাক থেকে কোন ফাইল রিমূভ করা**
+8. **Remove a file from Git tracking**
 
 ```bash
 git rm <filename>
 ```
 
-9. **ব্রাঞ্চ তৈরী করা**
+9. **Create a branch**
 
 ```bash
 git branch <branch name eg: bugfix/fixname >
 ```
 
-10. **ব্রাঞ্চ লিস্ট দেখা**
+10. **View branch list**
 
 ```bash
 git branch --list
 ```
 
-11. **এক ব্রাঞ্চ থেকে অন্য ব্রাঞ্চ এ সুইচ করা**
+11. **Switch from one branch to another**
 
 ```bash
 git switch <branch name >
 ```
 
-12. **এক ব্রাঞ্চের কোড অন্য ব্রাঞ্চে মার্জ করা**
+12. **Merge code from one branch to another**
 
   <Callout type='warning' emoji="💡">
-    এক্ষেত্রে যেই ব্রাঞ্চে অন্য ব্রাঞ্চের কোড আনতে হবে,প্রথমে `git switch <branchname>` করে প্রথমে সেই ব্রাঞ্চে যেতে হবে। তারপর কমান্ড দিতে হবে।
+    In this case, to bring code from another branch into the branch you want, first use `git switch <branchname>` to go to that branch. Then enter the command.
 </Callout>
 
 ```bash
 git merge <branch name >
 ```
 
-13. **গিট থেকে ব্রাঞ্চ ডিলিট করা**
+13. **Delete a branch from Git**
 
 ```bash
 git branch -d <branch name >
 ```
 
-14. **ব্রাঞ্চ নেম পরিবর্তন করতে চাইলে**
+14. **Change branch name**
 
- <Callout type='warning' emoji="💡"> এক্ষেত্রে যেই ব্রাঞ্চের নাম পরিবর্তন করতে হবে আমাদেরকে প্রথমে `git switch <branchname>` করে প্রথমে সেই ব্রাঞ্চে যেতে হবে। তারপর কমান্ড দিতে হবে। </Callout>
+ <Callout type='warning' emoji="💡"> In this case, to change the name of a branch, first use `git switch <branchname>` to go to that branch. Then enter the command. </Callout>
 
 ```bash
 git branch -m <updated branch name >
 ```
 
-15. **গিট স্ট্যাস করা (আনকমিটেড কাজ গিটের ড্রাফট এ সেভ রাখা)**
+15. **Stash Git changes (save uncommitted work in Git draft)**
 
 ```bash
 git stash
 ```
 
-16. **গিট স্ট্যাস লিস্ট চেক করা**
+16. **Check stash list**
 
 ```bash
 git stash list
 ```
 
-17. **গিটের স্ট্যাস এ কি কি সেভ রাখা হয়েছিল তা দেখতে**
+17. **See what was saved in Git stash**
 
 ```bash
 git stash show -p
 ```
 
-18. **গিটের স্ট্যাস এপ্লাই করার জন্য**
+18. **Apply Git stash**
 
 ```bash
 git stash apply <statsh id>
@@ -134,15 +134,15 @@ or
 git stash pop
 ```
 
-19. কোন ফাইল ভুলবশত গিটে এড করে ফেললে বা কমিট করার পর যদি মনে হয় ফাইলটা গিট থেকে ইগনোর করতে হবে তাহলে:
+19. If you accidentally add a file to Git or realize after committing that you want to ignore it from Git:
 
 <Steps>
 
-### ১ম স্টেপঃ
+### Step 1:
 
-একটা .gitignore ফাইল বানাতে হবে এবং তাতে উক্ত ফাইলের নাম এড করা লাগবে ।
+Create a .gitignore file and add the name of that file to it.
 
-### ২য় স্টেপঃ
+### Step 2:
 
 ```bash
 git rm --cached <filename>
@@ -150,10 +150,10 @@ git rm --cached <filename>
 
 </Steps>
 
-20. গিটহাব বা রিমোট রিপোজিটরিতে ফাইল এড করা বা পুশ করার জন্যঃ
+20. To add or push files to GitHub or a remote repository:
 
 <Steps>
-### ১ম স্টেপঃ
+### Step 1:
 
 ```bash
 git remote add <origin name eg: orgin or something > <github repository link>
@@ -163,7 +163,7 @@ example:
 
 `git remote add origin git@github.com:Deveripon/reactive-accelarator.git`
 
-### ২য় স্টেপঃ
+### Step 2:
 
 ```bash
 git push -u <origin name> <branch name>
@@ -175,7 +175,7 @@ example:
 
 </Steps>
 
-21. রিমোট রিপোজিটরি থেকে পুল করা
+21. Pull from remote repository
 
 ```bash
 git pull

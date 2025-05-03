@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 const LanguageContext = createContext({
   language: "bn",
   setLanguage: () => null,
-  mounted: false
+  mounted: false,
 });
 
 export function LanguageProvider({ children }) {
@@ -29,15 +29,36 @@ export function LanguageProvider({ children }) {
     language,
     setLanguage: (newLang) => {
       if (!mounted) return;
-      
+
       setLanguage(newLang);
-      const newPath = newLang === "en" 
-        ? "/javascript-guidebook-en"
-        : "/javascript-guidebook-bn";
-      
-      router.push(newPath);
+
+      // Determine the current path and maintain it when switching languages
+      if (pathname) {
+        let newPath;
+        if (newLang === "en") {
+          newPath = pathname.replace(
+            "javascript-guidebook-bn",
+            "javascript-guidebook-en"
+          );
+        } else {
+          newPath = pathname.replace(
+            "javascript-guidebook-en",
+            "javascript-guidebook-bn"
+          );
+        }
+
+        // If no replacement happened (e.g., we're at root), use the default path
+        if (newPath === pathname) {
+          newPath =
+            newLang === "en"
+              ? "/javascript-guidebook-en"
+              : "/javascript-guidebook-bn";
+        }
+
+        router.push(newPath);
+      }
     },
-    mounted
+    mounted,
   };
 
   return (
@@ -53,4 +74,4 @@ export function useLanguage() {
     throw new Error("useLanguage must be used within a LanguageProvider");
   }
   return context;
-} 
+}

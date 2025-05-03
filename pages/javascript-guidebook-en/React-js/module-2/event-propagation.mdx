@@ -1,18 +1,18 @@
-### ইভেন্ট ডেলিগেশন (event deligation) কি ?
+### What is Event Delegation?
 
-ইভেন্ট ডেলিগেশন হলো একাধিক এলিমেন্টের জন্য একটাই ইভেন্ট লিসেনার রাখা এবং নতুন কোন এলিমেন্ট যুক্ত হলেও যেন লিসেনার কাজ করে ।
+Event delegation is maintaining a single event listener for multiple elements and ensuring that the listener works even when new elements are added.
 
-ইভেন্ট ডেলিগেশন হলো এমন একটা টেকনিক যা মূলত দুইটা জিনিসে ফোকাস করেঃ-
+Event delegation is a technique that primarily focuses on two things:
 
-1. **একাধিক এলিমেন্টের জন্য একটাই ইভেন্ট লিসেনার থাকবে ।**
+1. **Having a single event listener for multiple elements.**
 
-2. **যদি কখনো নতুন এলিমেন্ট যুক্ত হয় তাতেও যেন ইভেন্ট লিসেনার ঠিকঠাক ভাবে কাজ করে।**
+2. **Ensuring the event listener works properly even when new elements are added.**
 
-ধরুন আমাদের একটি প্রোডাক্টের ডাটার লিস্ট আছে যা `API` থেকে আসতেছে। এবং আমরা চাই এই প্রতিটা ডাটার জন্য এমন একটা ফাংশনালিটি বানাতে যাতে প্রতিটা ডাটার নামে উপর ক্লিক করলেই সেই ডাটার নামের পিছনে একটা ব্যাকগ্রাউন্ড কালার যুক্ত হবে।
+Let's say we have a list of product data coming from an `API`. And we want to create a functionality for each of these data items so that when we click on any data name, a background color will be added behind that data name.
 
-এখন বিষয়টি এমন ভাবে করতে পারি যে আমরা প্রতিটা আইটেমকে ধরে ধরে তাতে ইভেন্ট লিসেনার লাগিয়ে কাজ করতে পারি। এতে হয়তো একটা সমাধান হতে পারে, কিন্তু যেহেতু ডাটাগুলো `API` থেকে আসছে তাই আমরা জানিনা হয়তো ডাটার সংখ্যা চেঞ্জ হয়ে যেতে পারে,বা ডাটা বারতে পারে। তখন কি প্রতিটা বারতি ডাটার জন্য আমরা প্রতিবার ইভেন্ট লিসেনার এড করবো ? এটা কখনই সম্ভব না। তাছাড়া প্রতিটা এলিমেন্টের জন্য আলাদা আলাদা লিসেনার এড করতে গেলেও ব্যাপারটা `messy` হয়ে যাবে। তাহলে উপায় ? উপায় হলো **ইভেন্ট ডেলিগেশন টেকনিক**
+We could approach this by attaching an event listener to each item individually. This might be one solution, but since the data is coming from an `API`, we don't know if the number of data items might change or increase. Should we add an event listener for each additional data item every time? This is never feasible. Besides, adding separate listeners for each element would make things `messy`. So what's the solution? The solution is the **event delegation technique**.
 
-চলুন জেনে নেই সেটা কিভাবে করেঃ
+Let's learn how to do this:
 
 ```jsx filename="index.html" showLineNumbers
 <div class='list-of-item'>
@@ -25,7 +25,7 @@
 </div>
 ```
 
-উপরের এই লিস্ট অফ আইটেমগুলোতে আমরা ইভেন্ট ডেলিগেশন টেকনিক এপ্লাই করবো। এতে আমাদের **`item` গুলোর প্যারেন্ট এলিমেন্ট `ul` এ গিয়ে ইভেন্ট লিসেনার এড করা লাগবে। যাতে আমরা একটা লিসেনার দিয়েই সমস্ত `item`গুলোকে ধরতে পারি।**
+We will apply the event delegation technique to this list of items. For this, we need to **add the event listener to the parent element `ul` of these `item`s. This way, we can handle all the `item`s with just one listener.**
 
 ```javascript filename="index.js" showLineNumbers
 const list = document.getElimentById("list");
@@ -34,15 +34,15 @@ list.addEventListener("click", (e) => {
 });
 ```
 
-এখানে আমরা `item`গুলোর প্যারেন্ট এলিমেন্ট `ul`এ ইভেন্ট লিসেনার এড করেছি এবং প্রতিবার ক্লিক এ `e.target` করে যেটাতে ক্লিক করা হয়েছে সেটাতে ব্যাকগ্রাউন্ড কালার এড করেছি। এর মাধ্যমেই আমরা ইভেন্ট ডেলিগেশন করে ফেলেছি। মানে আমরা ইভেন্টটাকে প্যারেন্টের কাছে ডেলিগেট করেছি।
+Here, we've added an event listener to the parent element `ul` of the `item`s, and each time on click, we use `e.target` to add a background color to what was clicked. This is how we've implemented event delegation. It means we've delegated the event to the parent.
 
-এখন কথা হলো যে, এতে তো `ul` এর এরিয়াতে ক্লিক পড়লে `ul` এও ব্যকগ্রাউণ্ড কালার চেঞ্জ হয়ে যাবে।
+Now the question is, if the click lands in the `ul` area, the background color will also change for the `ul`.
 
-সেক্ষেত্রে আমাদের হেল্প করবে `html DOM` এর `element.matches()` মেথড।
+In that case, the `element.matches()` method of `html DOM` will help us.
 
-`element.matches()`মেথড `string` হিসেবে একটা ভ্যালু নেয় এবং তা ম্যাচ করে দেখে যে এলিমেন্টের সাথে ম্যাচ করেছে কিনা, এবং `Boolean` ভ্যালু রিটার্ন করে।
+The `element.matches()` method takes a value as a `string` and checks if it matches with the element, returning a `Boolean` value.
 
-তাহলে আমরা এভাবে করতে পারিঃ
+So we can do it this way:
 
 ```javascript filename="index.js" showLineNumbers
 const list = document.getElimentById("list");
@@ -54,23 +54,23 @@ list.addEventListener("click", (e) => {
 });
 ```
 
-এভাবে করলে দেখবেন যদি লিস্ট এ নতুন আইটেম যুক্তও হয় তবুও এই একটা লিসেনারই ঠিকঠাক ভাবে কাজ করবে।
+By doing it this way, you'll see that even if new items are added to the list, this single listener will work properly.
 
-এটাকেই মূলত **ইভেন্ট ডেলিগেশন** বলা হয়ে থাকে।
+This is primarily what's called **event delegation**.
 
 ---
 
-### ইভেন্ট প্রপাগেশন (event propagation) কি ?
+### What is Event Propagation?
 
-প্রপাগেশন শব্দের বাংলা অর্থ হলো বিস্তার করা বা প্রসারণ করা বা চলাচল করা।
+The Bengali meaning of the word propagation is to spread, expand, or circulate.
 
-ইভেন্ট প্রপাগেশন হলো জাভাস্ক্রিপ্টের একটা টার্ম । মূলত ইভেন্ট প্রপাগেশন বলতে বুঝায়, যে যদি কোন নেস্টেড এলিমেন্ট থাকে এবং তার প্রতিটা এলিমেন্টেই একটা করে ইভেন্ড লিসেনার এড করা থাকে,তখন যদি একদম ভিতরের কোন এলিমেন্ট ইভেন্টটা ট্রিগার করা হয় তখন আসলে কি ঘটবে?
+Event propagation is a term in JavaScript. Essentially, event propagation refers to what happens when there are nested elements and each element has an event listener attached, and when an event is triggered on the innermost element, what actually happens?
 
-যেমনঃ
+For example:
 
 ![Propagation](../../../../public/Propagation.svg)
 
-উপরের ছবিতে আমরা তিনটা নেস্টেড এলিমেন্ট দেখতে পাচ্ছি যার প্রতিটাতেই ইভেন্ট লিসেনার এড করা আছে। এবং লিসেনার গুলো এলিমেন্টগুলোতে ক্লিক করলে ট্রিগার হবে।
+In the image above, we can see three nested elements, each with an event listener added. These listeners will be triggered when the elements are clicked.
 
 ```jsx filename="index.html" showLineNumbers
 <div class='main'>
@@ -94,9 +94,9 @@ function listener() {
 }
 ```
 
-এখন যদি আমরা `button` এলিমেন্টে ক্লিক করবো তাহলে আমরা দেখতে পাবো প্রতিটা লিসেনার এ কল হয়ে গেছে এবং কনসল এ তিনটার আউটপুট এসেছে । এইযে একটা ব্যাপার যে ক্লিক করলাম একটাতে আর লিসেনার কল হয়ে গেল তিনটাই, এই ব্যাপারটাকেই বলা হয় `event Propagation`। মানে ইভেন্টগুলো বাকিদের মাঝেও ছড়িয়ে গেছে।
+Now, if we click on the `button` element, we'll see that all the listeners have been called and the output of all three has appeared in the console. This phenomenon where we clicked on one element but all listeners were called is what's known as `event Propagation`. It means the events have spread among the others.
 
-### ইভেন্ট বাবলিং (Bubbling) কি ?
+### What is Event Bubbling?
 
 ```jsx filename="index.js" showLineNumbers
 const main = document.querySelector(".main");
@@ -112,17 +112,17 @@ function listener() {
 }
 ```
 
-আউটপুটঃ
+Output:
 
 ![console output](../../../../public/output.png)
 
-উপরের কোডটার আউটপুট দেখলে আমরা বুঝতে পারবো যে প্রথমে `button` তারপর `parent` এবং সবশেষে `main` এলিমেন্টে ইভেন্ট লিসেনার ট্রিগার হয়েছে, তার মানে হলো প্রপাগেশন ভিতর থেকে শুরু হয়ে বাহিরের দিয়ে যায়। এটাই হলো প্রোপাগেশন এর ডিফল্ট বিহেবিয়ার। এই যে ভিতর থেকে শুরু হলে বাহিরের দিয়ে ছড়িয়ে যাওয়ার ব্যাপারটাকে অনেকটা বাবল এর মতো চিন্তা করা হয়, তাই একে বলা হয় **ইভেন্ট বাবলিং (event bubbling)**
+Looking at the output of the code above, we can understand that first the `button`, then the `parent`, and finally the `main` element's event listener was triggered. This means propagation starts from the inside and goes outward. This is the default behavior of propagation. This phenomenon of spreading from the inside to the outside is thought of like a bubble, hence it's called **event bubbling**.
 
-### ইভেন্ট কেপচারিং বা ট্রিকলিং (capturing or trickling) কি ?
+### What is Event Capturing or Trickling?
 
-আমরা ইভেন্ট প্রপাগেশনের ডিফল্ট বিহেবিয়ার জানলাম যে প্রপাগেশন ভিতর থেকে শুরু হয়ে বাহিরের দিকে ছড়ায়, কিন্তু আমরা চাইলে এটাকে চেঞ্জ করতে পারি, আমরা চাইলে এটাকে পরিবর্তন করে বাহির থেকে শুরু করে ভিতর দিকে নিতে পারি।
+We've learned the default behavior of event propagation, which is that propagation starts from the inside and spreads outward. But we can change this if we want; we can modify it to go from the outside starting inward.
 
-তারজন্য আমাদের ইভেন্ট লিসেনার এর তৃতীয় প্যারামিটার এ `{capture:true}` করে দিতে হয়। ডিফল্টভাবে `{capture:false}` করা থাকে।
+To do this, we need to set the third parameter of the event listener to `{capture:true}`. By default, it's set to `{capture:false}`.
 
 ```jsx filename="index.js" showLineNumbers
 const main = document.querySelector(".main");
@@ -138,26 +138,26 @@ function listener() {
 }
 ```
 
-আউটপুটঃ
+Output:
 
 ![Capturing](../../../../public/capturetrue.png)
 
-এইযে আমরা প্রপাগেশনকে `capture` করে এর ডিরেকশন চেঞ্জ করলাম এটাকে বলা হয় **ইভেন্ট কেপচারিং বা ট্রিকলিং (capturing or trickling)**।
+This way of `capturing` propagation and changing its direction is called **event capturing or trickling**.
 
 ### Propagation in React
 
-রিয়াক্টে সকল ইভেন্ট ই প্রপাগেট হয়,শুধুমাত্র `onScroll` ইভেন্ট ছাড়া ।
+All events in React propagate, except for the `onScroll` event.
 
-### কিভাবে রিয়াক্টে প্রপাগেশন স্টপ করতে হয় ?
+### How to stop propagation in React?
 
-রিয়াক্টে প্রপাগেশন স্টপ করার জন্য `event handler` এর ভিতরে `e.stopPropagation()` মেথড কল করে দিতে হয় ।
+To stop propagation in React, you need to call the `e.stopPropagation()` method inside the `event handler`.
 
 ```jsx filename="App.jsx" showLineNumbers
 function Button({ onClick, children }) {
     return (
         <button
             onClick={(e) => {
-                e.stopPropagation(); // এখানে প্রপাগেশন স্টপ করা হয়েছে
+                e.stopPropagation(); // Propagation is stopped here
                 onClick();
             }}>
             {children}
@@ -166,7 +166,7 @@ function Button({ onClick, children }) {
 }
 
 export default function Toolbar() {
-    // এই কম্পোনেন্টে তিনটা এলিমেট আছে নেস্টেড ভাবে এবং প্রতিটা এলিমেন্টেই ইভেন্ট হ্যান্ডেলার এড করা আছে। তার মানে ডিফল্ট ভাবে এখানে প্রপাগেশন হবে ।
+    // This component has three elements nested, and each element has an event handler added. This means propagation will happen by default.
     return (
         <div
             className='Toolbar'
@@ -182,9 +182,9 @@ export default function Toolbar() {
 
 ### Preventing the default behavior
 
-আমরা যখন কোন ফর্ম এর সাবমিট বাটনে ক্লিক করি,তখন ফর্মের ডিফল্ট বিহেবিয়ার হলো ফর্মটা সাবমিট হউয়ার সাথে সাথে ব্রাউজারে পেজটাও রিলোড হয়।
+When we click the submit button of a form, the default behavior of the form is that along with the form being submitted, the page also reloads in the browser.
 
-আমরা যদি এই ডিফল্ট বিহেবিয়ার কে বন্ধ করতে চাই, তাহলে আমরা `e.preventDefault()` মেথড কল করে দিতে পারি।
+If we want to stop this default behavior, we can call the `e.preventDefault()` method.
 
 ```jsx filename="App.js" showLineNumbers
 export default function Signup() {

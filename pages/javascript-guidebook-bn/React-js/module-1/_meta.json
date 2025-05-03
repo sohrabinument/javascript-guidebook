@@ -1,15 +1,14 @@
 {
-    "introduction-to-react": "1.1 - Introduction to React",
-    "React-installation-and-development-environment-setup": "1.2 - React-installation-and-development-environment-setup",
-    "vertual-dom": "1.3 - How React Works: Virtual Dom",
-    "basics-of-react-component": "1.4 - Basics of React Component: Your First Component",
-    "component-export-import": "1.5 - Basics of React Component: Importing & Exporting Components",
-    "jsx-markup": "1.6 - Basics of JSX: React's Markup - Writing Markup with JSX",
-    "javascript-in-jsx": "1.7 - Basics of JSX: React's Markup - JavaScript in JSX with Curly Braces",
-    "understanding-props": "1.8 - Understanding Props - Passing Props to a Component",
-    "conditional-renderaing": "1.9 - Conditional Rendering",
-    "rendering-list": "1.10 - Rendering Lists",
-    "pure-components": "1.11 - Pure Components: Keeping Components Pure",
-    "your-ui-as-a-tree": "1.12 - Your UI as a Tree"
+  "introduction-to-react": "১.১ - রিয়্যাক্ট পরিচিতি",
+  "React-installation-and-development-environment-setup": "১.২ - রিয়্যাক্ট ইনস্টলেশন এবং ডেভেলপমেন্ট এনভায়রনমেন্ট সেটআপ",
+  "vertual-dom": "১.৩ - রিয়্যাক্ট কীভাবে কাজ করে: ভার্চুয়াল DOM",
+  "basics-of-react-component": "১.৪ - রিয়্যাক্ট কম্পোনেন্টের বুনিয়াদি: আপনার প্রথম কম্পোনেন্ট",
+  "component-export-import": "১.৫ - রিয়্যাক্ট কম্পোনেন্টের বুনিয়াদি: কম্পোনেন্ট ইম্পোর্ট এবং এক্সপোর্ট করা",
+  "jsx-markup": "১.৬ - JSX এর বুনিয়াদি: রিয়্যাক্টের মার্কআপ - JSX দিয়ে মার্কআপ লেখা",
+  "javascript-in-jsx": "১.৭ - JSX এর বুনিয়াদি: রিয়্যাক্টের মার্কআপ - JSX-এ কার্লি ব্রেসে জাভাস্ক্রিপ্ট ব্যবহার",
+  "understanding-props": "১.৮ - প্রপস বোঝা: একটি কম্পোনেন্টে প্রপস পাঠানো",
+  "conditional-renderaing": "১.৯ - শর্তসাপেক্ষ রেন্ডারিং",
+  "rendering-list": "১.১০ - তালিকা রেন্ডার করা",
+  "pure-components": "১.১১ - পিওর কম্পোনেন্ট: কম্পোনেন্টকে বিশুদ্ধ রাখা",
+  "your-ui-as-a-tree": "১.১২ - আপনার UI একটি ট্রি হিসেবে"
 }
-

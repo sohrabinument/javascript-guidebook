@@ -1,8 +1,8 @@
 ### Resetting state at the same position
 
-**আমরা জানি কোন কম্পনেন্ট একই পজিশনে যতক্ষণ থাকবে ততক্ষণ রিয়াক্ট তার স্টেট ধরে রাখবে।**
+**We know that as long as a component stays in the same position, React will maintain its state.**
 
-কিন্তু যদি আমাদের এমন প্রয়োজন হয় যে আমরা একই পজিশনে কম্পনেন্টের স্টেট রিসেট করবো। তাহলে দুইটা উপায়ে আমরা সেটা করতে পারিঃ
+But if we need to reset a component's state at the same position, we can do it in two ways:
 
 1.  Rendering a component in different positions
 2.  Give each component an explicit identity with `key`
@@ -54,12 +54,12 @@ function Counter({ person }) {
 }
 ```
 
-এখানে একটা কম্পোনেন্টে প্লেয়ারের স্কোর কাউন্ট করা হচ্ছে, আমরা যখন `Add One` বাটনে চাপ দিয়ে স্কোর বারাচ্ছি,তখন স্কোর এর স্টেট চেঞ্জ হচ্ছে, আবার আমরা নিচে একটা বাটন রেখেছি `Next Player` নামে, এবং আমরা চাইছি যে বাটনে চাপ দিলে প্লেয়ার এর নাম চেঞ্জ হবে এবং স্কোরটা রিসেট হয়ে যাবে। কিন্তু এখানে সেটা হচ্ছেনা, কারণ হলো এখানে একই পজিশনে কাউন্টার কম্পোনেন্ট তার পজিশনে ধরে রেখছে,তাই স্টেট রিসেট হচ্ছে।
+Here, a component is counting a player's score. When we press the `Add One` button to increase the score, the score state changes. We also have a button at the bottom named `Next Player`, and we want the player's name to change when this button is pressed and the score to be reset. But that's not happening here because the counter component is maintaining its position, so the state isn't being reset.
 
-কিন্তু যদি আমরা কোডটা এভাবে লিখি,
+But if we write the code this way,
 
 ```jsx
-// প্রথম কোড যা স্টেট ধরে রাখবে
+// First code that will maintain state
 {
     isPlayerA ? <Counter person='Taylor' /> : <Counter person='Sarah' />;
 }
@@ -67,24 +67,24 @@ function Counter({ person }) {
 
 ```jsx
 {
-    isPlayerA && <Counter person='Taylor' />; // এখানে যদি isPlayerA না হয় তাহলে এই পজিশনে null রিটার্ন হবে
+    isPlayerA && <Counter person='Taylor' />; // Here if isPlayerA is false, null will be returned at this position
 }
 {
-    !isPlayerA && <Counter person='Sarah' />; // এখানে যদি isPlayerA হয় তাহলে এই পজিশনে null রিটার্ন হবে
+    !isPlayerA && <Counter person='Sarah' />; // Here if isPlayerA is true, null will be returned at this position
 }
 ```
 
-একানে রেন্ডার ট্রি-এর স্ট্রাকচার টা হয় এমনঃ ![reset state](../../../../public/UISTATES/resetstate.png)
+The render tree structure becomes like this: ![reset state](../../../../public/UISTATES/resetstate.png)
 
-তাহলে দেখা যাচ্ছে যে `isPlayerA` না হয় তাহলে নিচের কম্পোনেন্ট রেন্ডার হবে। এখানে কিন্তু দুইটা কম্পোনেন্ট দুইটা আলাদা পজিশনে আছে, কেননা একটা যদি `true` না হয় সেই পজিশনে কিন্তু একটা `null` রিটার্ন হয়, এবং অন্য কম্পোনেন্ট টা আলাদা একটা পজিশনে রেন্ডার হয়।
+So we can see that if `isPlayerA` is false, the component below will render. Here, the two components are in two different positions, because if one is not `true`, a `null` is returned at that position, and the other component is rendered at a different position.
 
 #### Resetting state with a `key`
 
-আরেকটা সবচাইতে এফিসিয়েন্ট উপায় হলো `key` প্রপ্স ব্যাবহার করা, আমরা লিস্ট রেন্ডার করার সময় `key`প্রপ্স এর সাথে পরিচিত হয়েছিলাম,
+Another most efficient way is to use the `key` prop. We became familiar with the `key` prop when rendering lists.
 
-`key` প্রপ্স শুধুমাত্র লিস্ট রেন্ডারিং এর জন্য ব্যবহার হয়না। `key` প্রপ্স এর মানে হলো সেই কম্পোনেন্টকে রিয়াক্টের কাছে একটা আলাদা কম্পোনেন্ট হিসেবে রিপ্রেজেন্ট করা।
+The `key` prop is not only used for list rendering. The meaning of the `key` prop is to represent that component as a separate component to React.
 
-তাই আমরা যদি আগের মতো করেই কোড করি এবং শুধু স্টেটগুলো রিসেট করতে চাই তাহলে আমরা এভাবে `key` প্রপ্স ব্যাবহার করতে পারি।
+So if we want to code the same way as before and just reset the states, we can use the `key` prop like this.
 
 ```jsx
 {
@@ -102,5 +102,5 @@ function Counter({ person }) {
 }
 ```
 
-এখানে `key` প্রপ্স এর মানে হলো একই পজিশনে দুইটা সম্পুর্ন আলাদা কম্পোনেন্ট ।
+Here, the meaning of the `key` prop is two completely different components at the same position.
 

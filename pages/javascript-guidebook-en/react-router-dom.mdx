@@ -4,25 +4,25 @@ import { Steps } from "nextra/components";
 
 #### Setup React Project
 
-প্রথমে একটা রিয়াক্ট প্রজেক্ট সেটআপ করতে হবে, রিয়াক্ট প্রজেক্ট Vite দিয়ে সেটআপ করার জন্য নিচের কমান্ড ব্যবাহার করতে হবে, এবং তারপর প্রম্পট গুলো ফলো করে প্রজেক্ট সেটআপ করা লাগবে।
+First, you need to set up a React project. To set up a React project using Vite, use the command below and follow the prompts to set up the project.
 
 ```bash
     npx create-vite@latest
 ```
 
-তারপর, স্ক্রিনে আসা প্রম্পট গুলো ফলো করতে হবে।
+Then, follow the prompts that appear on screen.
 
-অথবা আরও একটু সর্টকাট আছে সেটা হলো এই কমান্ড ব্যাবহার করা,
+Or, there's a shortcut which is to use this command:
 
 ```bash
 npm create vite@latest your-project-name -- --template react
 ```
 
-তারপর, স্ক্রিনে আসা প্রম্পট গুলো ফলো করতে হবে।
+Then, follow the prompts that appear on screen.
 
 #### Add React Router Dom to Project
 
-রিয়াক্ট প্রজেক্টে `React Router Dom` সেটআপ করতে নিচের কমান্ড দিতে হবে।
+To set up `React Router Dom` in a React project, enter the command below.
 
 ```bash
 npm install react-router-dom
@@ -30,13 +30,13 @@ npm install react-router-dom
 
 #### Adding A Router
 
-প্রথমে একটি ব্রাউজার রাউটার তৈরি করতে হবে এবং আমাদের প্রথম রুট কনফিগার করতে হবে। এটি আমাদের ওয়েব অ্যাপের জন্য ক্লায়েন্ট সাইড রাউটিং এনাবল করবে। একটি `browser router` বানানো এবং তা কনফিগার করে আমাদের এপ্লিকেশনে রাউটিং এনাবল করতে হলে নিচের স্টেপ ফলো করতে হবে।
+First, we need to create a browser router and configure our first route. This will enable client-side routing for our web app. To create a `browser router` and configure it to enable routing in our application, follow the steps below.
 
 <Steps>
 
-### একটি ব্রাউজার রাউটার তৈরি করা।
+### Create a browser router.
 
-এজন্য আমাদেরকে `Main.jsx` ফাইলে এসে `react-router-dom` থেকে `createBrowserRouter` নামে একটি হুক ইম্পোর্ট করতে হবে এবং সেখানে নিচের মতো করে `browser router` বানাতে হবে।
+For this, we need to go to the `Main.jsx` file and import a hook called `createBrowserRouter` from `react-router-dom`, and then create a `browser router` like this:
 
 ```jsx filename="main.jsx" {3, 6-11}
 import { StrictMode } from "react";
@@ -58,9 +58,9 @@ createRoot(document.getElementById("root")).render(
 );
 ```
 
-### তৈরি করা ব্রাউজার রাউটার টাকে পুরো এপ্লিকেশনের প্রভাইড করে দেওয়া।
+### Provide the browser router to the entire application.
 
-এজন্য আমাদেরকে `react-router-dom` থেকে `RouterProvider` নামে একটি কনটেক্সট প্রভাইডার ইম্পোর্ট করতে হবে এবং সেখানে নিচের মতো করে `browser router` টাকে প্রভাইড করতে হবে।
+For this, we need to import a context provider called `RouterProvider` from `react-router-dom` and provide the `browser router` as shown below:
 
 ```jsx filename="main.jsx" {3, 6-11 , 15}
 import { StrictMode } from "react";
@@ -84,15 +84,15 @@ createRoot(document.getElementById("root")).render(
 
 </Steps>
 
-তাহলেই আমাদের Router সেটআপ করা শেষ এবং আমরা ব্রাউজারে আমাদের প্রথম রাউট টা দেখতে পাবো এবং সেখানে শুধুমাত্র `Home Page` এই টেক্সটটা দেখতে পাবো।
+That completes our Router setup, and we will see our first route in the browser, which will display just the `Home Page` text.
 
 ### The Root Route / Home Page Route
 
-আমরা আমাদের এপ্লিকেশনে একটা `/` রাউট দেখতে পাচ্ছি যেখানে শুধুমাত্র `Home Page` এই টেক্সটটা দেখতে পাচ্ছি। এবার আমরা একটা `Home Page` বা মেইন লে-আউট সেটআপ করবো।
+We can see a `/` route in our application where we only see the `Home Page` text. Now we'll set up a `Home Page` or main layout.
 
-সেজন্য প্রথমে আমাদেরকে `Home Page` বা মেইন লে-আউট এর জন্য আমাদের নিজস্ব কম্পোনেন্ট বানাতে হবে। যেহেতু এইটা `/` রাউট, তাই আমরা এর নাম দিতে পারি `Root`
+For this, we first need to create our own component for the `Home Page` or main layout. Since this is the `/` route, we can name it `Root`.
 
-তারপর আমরা আমদের সেই `Root` লে-আউট টাকে আমাদের `/` রাউটারে ব্যাবহার করবো।
+Then we'll use that `Root` layout in our `/` router.
 
 ```jsx filename="main.jsx" {5,10}
 import { StrictMode } from "react";
@@ -115,13 +115,13 @@ createRoot(document.getElementById("root")).render(
 );
 ```
 
-তাহলেই আমরা এবার আমার `/` রাউটে আমাদের `Root` লে-আউট এর সবকিছু দেখতে পাবো।
+Now we'll see everything from our `Root` layout in our `/` route.
 
 ### Handling Not Found Errors
 
-এখন আমাদের এপ্লিকেশনে শুধুমাত্র একটাই রাউট আছে `/` রাউট। আমরা যদি এখন `URL` এ অন্য কোন রাউট দেই, তাহলে আমরা একটা ইরর পেজ দেখতে পাবো। কিন্তু সেটা `react-router-dom` এর নিজস্ব ডিজাইন, কিন্তু আমরা এই ইররটাকে আমাদের নিজস্ব ইরর পেজ দিয়ে ম্যানেজ করতে চাই,
+Currently, our application has only one route, the `/` route. If we enter any other route in the `URL`, we'll see an error page. But that's `react-router-dom`'s own design. If we want to manage this error with our own error page,
 
-তারজন্য আমাদের প্রথমে একটা `ErrorPage` বানাতে হবে এবং সেটা রাউটারের `errorElement` হিসেবে সেট করতে হবে।
+We first need to create an `ErrorPage` and set it as the `errorElement` for the router.
 
 ```jsx filename="main.jsx" {5,12}
 import { StrictMode } from "react";
@@ -146,9 +146,9 @@ createRoot(document.getElementById("root")).render(
 );
 ```
 
-তাহলেই এবার আমাদের UI তে আমাদের বানানো ইরর পেজ দেখতে পাবো
+Now we'll see our custom error page in our UI.
 
-ইরর পেজে আমরা `react-router-dom` থেকে `useRouterError` নামে একটা হুক ইম্পোর্ট করে ইররের ডিটেইলস দেখতে পারি।
+In the error page, we can import a hook called `useRouterError` from `react-router-dom` to see error details.
 
 ```jsx filename="ErrorPage.jsx" {1,4,11}
 import { useRouteError } from "react-router-dom";
@@ -170,7 +170,7 @@ export default function ErrorPage() {
 
 ### Add More Route
 
-আমাদের এপ্লিকেশনে এখন একটাই রাউট আছে `/`। এবার আমরা চাইলে আমাদের যতগুলো রাউট প্রয়োজন হবে ততগুলা রাউট এড করতে পারি। এজন্য আমাদের যেই রাউট লাগবে সেই রাউটের জন্য প্রয়োজনীয় `JSX`টা বানিয়ে নিতে হবে । তারপর `browser router`এর অ্যারেতে অবজেক্ট আকারে সেই রাউটের `path` এবং তার `element` ডিফাইন করে দিতে হবে।
+Our application currently has only one route, `/`. Now we can add as many routes as we need. For this, we need to create the necessary `JSX` for each route we need. Then we need to define the `path` and `element` for that route as an object in the `browser router` array.
 
 ```jsx filename="main.jsx" {5,15-18}
 import { StrictMode } from "react";
@@ -200,11 +200,11 @@ createRoot(document.getElementById("root")).render(
 );
 ```
 
-খেয়াল করুন, আমরা এখানে `path: "/contacts/:contactId"` দিয়েছি। এখানে `/:contactId` মানে হলো ডাইনামিক রাউট। `/contacts` এর পর আমরা স্পেসিফিক কোন একটা আইডি এক্সেস করতে চাইলে এভবে ডাইনামিক রাউট সেগমেন্ট ব্যাবহার করতে পারি।
+Notice that we've used `path: "/contacts/:contactId"` here. The `/:contactId` means a dynamic route. If we want to access a specific ID after `/contacts`, we can use a dynamic route segment like this.
 
 ### Nested Routes
 
-আমরা যখন চাই যে, আমাদের এপ্লিকেশনে একটা `Root` লে-আউট থাকবে এবং সেই লে-আউটের কোন একটা স্পেসিফিক জায়গায় আমাদের অন্যন্য রাউটের কন্টেন্টগুলো ভিসিবল হবে,মানে পুরো এপ্লিকেশনের একটাই লে-আউট থাকবে এবং যখনি রাউট চেঞ্জ হবে শুধুমাত্র সেই রাউট স্পেসিফিক কন্টেন্টগুলো সেই লে-আউট ব্যাবহার করে লে-আউটের কোন একটা অংশে ভিজিবল হবে, তাহলে আমরা নেস্টেড রাউটিং করতে পারি। ধরে নেই আমরা আমদের `/contacts` রাউটটাকে নেস্টেড রাউট করতে চাচ্ছি। তাহলে আমরা এভাবে করতে পারি।
+When we want our application to have a `Root` layout and we want the content of our other routes to be visible in a specific place in that layout, meaning the entire application has a single layout and only route-specific content changes within that layout when the route changes, then we can do nested routing. Let's say we want to make our `/contacts` route a nested route. We can do it like this:
 
 ```jsx filename="main.jsx" {14-19}
 import { StrictMode } from "react";
@@ -236,9 +236,9 @@ createRoot(document.getElementById("root")).render(
 );
 ```
 
-এক্ষেত্রে আমাদের `Root` লে-আউটের `children` হিসেবে সেই রাউটটা ডিফাইন করতে হবে।
+In this case, we need to define that route as a `children` of the `Root` layout.
 
-এবং `Root` লে-আউটের যেই অংশে সেই লে-আউটের কন্টেন্টগুলো শো করাতে চাই তা ডিফাইন করার জন্য `react-router-dom` এর `<Outlet/>`নামক কম্পোনেন্ট ইম্পোর্ট করে সেইটা দিয়ে বুঝিয়ে দিতে হবে।
+And to define which part of the `Root` layout should show the content of those layouts, we need to import the `<Outlet/>` component from `react-router-dom` and use it to indicate where the content should appear.
 
 ```jsx filename="Root.jsx" {1,8}
 import { Outlet } from "react-router-dom";
@@ -257,7 +257,7 @@ export default function Root() {
 
 ### Client Side Routing
 
-এতক্ষণ আমদের সকল রাউট ঠিকঠাক কাজ করছিলো,কিন্তু খেয়াল করলে দেখা যাবে যে, যখনি আমরা রাউটিং করছি,তখন আমাদের এপ্লিকেশনের পেজগুলো রিলোড নিচ্ছে, এটা কিন্তু রিয়াক্ট এপ্লিকেশনের বিহেবিয়ার না। তাই আমরা এটাকে `Client Side Routing` করতে চাইলে আমাদের `<a/>` ট্যাগের পরিবর্তে `react-router-dom` এর `<Link to=""/>` কম্পোনেন্ট ব্যাবহার করতে হবে এর `href` এর পরিবর্তে `to` ব্যাবহার করতে হবে।
+So far, all our routes have been working fine, but if you notice, whenever we navigate, our application's pages reload. This is not the behavior of a React application. So if we want to make it `Client Side Routing`, we need to use the `<Link to=""/>` component from `react-router-dom` instead of the `<a/>` tag, and use `to` instead of `href`.
 
 ```jsx filename="Root.jsx" {1,12,15}
 import { Outlet, Link } from "react-router-dom";
@@ -288,4 +288,4 @@ export default function Root() {
 
 
 
-**আমরা চেষ্টা করছি খুব দ্রুত পুরো ডকুমেন্টটিকে আপডেট করতে**
+**We are trying to update the entire documentation as quickly as possible**
