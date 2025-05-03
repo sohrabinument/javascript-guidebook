@@ -1,0 +1,156 @@
+import { Callout } from "nextra/components";
+
+# রিয়্যাক্ট ডেভেলপমেন্ট এনভায়রনমেন্ট সেটআপ
+
+এই অংশে আমরা শিখব কীভাবে Vite ব্যবহার করে আধুনিক রিয়্যাক্ট ডেভেলপমেন্ট এনভায়রনমেন্ট সেটআপ করতে হয়। Vite একটি বিল্ড টুল, যা দ্রুত এবং সহজ ডেভেলপমেন্ট এক্সপেরিয়েন্স দেয়।
+
+## প্রয়োজনীয়তা
+
+শুরু করার আগে, আপনার কম্পিউটারে নিচের সফটওয়্যারগুলো ইনস্টল করা আছে কিনা নিশ্চিত করুন:
+
+- [Node.js](https://nodejs.org/) (ভার্সন ১৬ বা তার বেশি)
+- একটি কোড এডিটর (আমরা [VS Code](https://code.visualstudio.com/) সাজেস্ট করি)
+- npm বা yarn প্যাকেজ ম্যানেজার
+
+## Vite দিয়ে নতুন রিয়্যাক্ট প্রজেক্ট তৈরি
+
+Vite দিয়ে খুব সহজেই নতুন রিয়্যাক্ট প্রজেক্ট তৈরি করা যায়। নিচের ধাপগুলো অনুসরণ করুন:
+
+১. টার্মিনাল ওপেন করে নিচের কমান্ডটি চালান:
+
+```bash
+npm create vite@latest my-react-app -- --template react
+```
+
+২. প্রজেক্ট ফোল্ডারে যান:
+
+```bash
+cd my-react-app
+```
+
+৩. ডিপেন্ডেন্সি ইনস্টল করুন:
+
+```bash
+npm install
+```
+
+৪. ডেভেলপমেন্ট সার্ভার চালু করুন:
+
+```bash
+npm run dev
+```
+
+আপনার রিয়্যাক্ট অ্যাপ্লিকেশনটি `http://localhost:5173` এ চলবে।
+
+## প্রজেক্ট স্ট্রাকচার
+
+প্রজেক্ট তৈরি হলে নিচের মতো ফোল্ডার স্ট্রাকচার পাবেন:
+
+```
+my-react-app/
+├── node_modules/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── .gitignore
+├── index.html
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+## গুরুত্বপূর্ণ ফাইলসমূহ
+
+- `src/main.jsx`: আপনার রিয়্যাক্ট অ্যাপ্লিকেশনের এন্ট্রি পয়েন্ট
+- `src/App.jsx`: মূল App কম্পোনেন্ট
+- `vite.config.js`: Vite কনফিগারেশন ফাইল
+- `index.html`: এইচটিএমএল টেমপ্লেট
+
+## অতিরিক্ত ডিপেন্ডেন্সি ইনস্টল
+
+সম্পূর্ণ রিয়্যাক্ট ডেভেলপমেন্ট এনভায়রনমেন্টের জন্য নিচের প্যাকেজগুলো ইনস্টল করতে পারেন:
+
+```bash
+npm install react-router-dom @reduxjs/toolkit react-redux axios
+```
+
+## VS Code এক্সটেনশন
+
+ডেভেলপমেন্ট এক্সপেরিয়েন্স আরও ভালো করতে নিচের VS Code এক্সটেনশনগুলো ইনস্টল করতে পারেন:
+
+- ESLint
+- Prettier
+- React Developer Tools
+- JavaScript (ES6) code snippets
+
+## সাজেস্টেড VS Code সেটিংস
+
+আপনি চাইলে নিচের সেটিংস কপি করে আপনার `.vscode/settings.json` ফাইলে রাখতে পারেন। আপনার প্রয়োজন অনুযায়ী পরিবর্তন করতে পারবেন:
+
+```json
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.tslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "eslint.run": "onSave",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "path-autocomplete.extensionOnImport": true,
+  "path-autocomplete.excludedItems": {
+    "*/.js": {
+      "when": "**"
+    },
+    "*/.jsx": {
+      "when": "**"
+    }
+  },
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": false
+}
+```
+
+## VS Code স্নিপেট
+
+নিচের স্নিপেটটি VS Code-এর `snippets` সেটিংসে (যেমন, `javascript.json` বা `javascriptreact.json`) যোগ করলে দ্রুত রিয়্যাক্ট ফাংশনাল কম্পোনেন্ট তৈরি করতে পারবেন:
+
+```json
+{
+  "React component": {
+    "prefix": "rfc",
+    "body": [
+      "export default function $1(){",
+      "    return (",
+      "        $2",
+      "    );",
+      "}"
+    ],
+    "description": "React functional component"
+  }
+}
+```
+
+## দরকারি রিসোর্স
+
+- [Vite ডকুমেন্টেশন](https://vitejs.dev/guide/)
+- [React ডকুমেন্টেশন](https://react.dev/)
+- [VS Code এক্সটেনশন](https://code.visualstudio.com/docs/editor/extension-marketplace)
+
+## পরবর্তী ধাপ
+
+এখন আপনার ডেভেলপমেন্ট এনভায়রনমেন্ট প্রস্তুত। এখন আপনি:
+
+- নিজের রিয়্যাক্ট কম্পোনেন্ট তৈরি করতে পারেন
+- React Router দিয়ে রাউটিং সেটআপ করতে পারেন
+- Redux দিয়ে স্টেট ম্যানেজমেন্ট করতে পারেন
+- CSS modules বা CSS-in-JS দিয়ে স্টাইলিং করতে পারেন
+
+নিয়মিত ডিপেন্ডেন্সি আপডেট করুন এবং রিয়্যাক্টের বেস্ট প্র্যাকটিস অনুসরণ করুন।

@@ -1,8 +1,8 @@
 {
-    "what-is-react": "1.1 - React কি?",
-    "example-with-vanilla-js": "1.2 - Vanilla JavaScript এর উদাহরণ",
-    "problem-in-vanilla-js": "1.3 - Vanilla JavaScript এর সমস্যা",
-    "why-react": "1.4 - কেন React?",
-    "how-react-solve-the-problem": "1.5 - React কিভাবে সমস্যা সমাধান করে",
-    "benefits-of-react": "1.6 - React এর সুবিধা"
+    "what-is-react": "১.১ - রিয়্যাক্ট কি?",
+    "example-with-vanilla-js": "১.২ - ভ্যানিলা জাভাস্ক্রিপ্টের উদাহরণ",
+    "problem-in-vanilla-js": "১.৩ - ভ্যানিলা জাভাস্ক্রিপ্টের সমস্যা",
+    "why-react": "১.৪ - কেন রিয়্যাক্ট?",
+    "how-react-solve-the-problem": "১.৫ - রিয়্যাক্ট কিভাবে সমস্যা সমাধান করে",
+    "benefits-of-react": "১.৬ - রিয়্যাক্টের সুবিধা"
 }

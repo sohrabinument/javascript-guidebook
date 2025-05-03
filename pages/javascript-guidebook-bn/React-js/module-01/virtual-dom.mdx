@@ -1,0 +1,123 @@
+## DOM কি সত্যিই ধীর?
+
+না, DOM কখনোই ধীর নয়। আসলে, সঠিকভাবে কোড করলে DOM অন্য যেকোনো কিছুর চেয়ে দ্রুত। কিন্তু আজকের ওয়েব অ্যাপ্লিকেশনগুলো অনেক বেশি ইন্টারঅ্যাকটিভ, তাই যখনই কোনো ইউজার ইন্টারঅ্যাক্ট করে, ব্রাউজারকে পুরো ওয়েবসাইট আবার রেন্ডার করতে হয়। যখন বারবার রেন্ডার করতে হয়, তখন সেই রেন্ডারিং প্রক্রিয়া ধীর হয়ে যায়, কিন্তু মূলত DOM নিজে ধীর নয়।
+
+## ব্রাউজার কিভাবে DOM রেন্ডার করে?
+
+![Dom Rendering](/dom-rendering.png)
+
+উপরের গ্রাফে আমরা ব্রাউজারের রেন্ডারিং প্রক্রিয়া দেখতে পাচ্ছি। এখানে কী দেখা যাচ্ছে? যখন ব্রাউজার `HTML` এবং `CSS` ফাইল পায়, তখন সেগুলোকে পার্সিং করে—`HTML` এর জন্য `HTML PARSER` এবং `CSS` এর জন্য `CSS PARSER` ব্যবহার করে। পার্সিংয়ের পরে, ব্রাউজার `HTML` থেকে একটি `DOM TREE` এবং `CSS` থেকে `STYLE RULES` (যাকে `CSSOM` বলে) তৈরি করে। এরপর `DOM TREE` এবং `STYLE RULES` একসাথে যুক্ত হয়ে `RENDER TREE` তৈরি হয়। এই `RENDER TREE` ব্রাউজারে `LAYOUT` ফেজের মধ্য দিয়ে যায়, যেখানে DOM কোথায় রেন্ডার হবে তার কো-অর্ডিনেট নির্ধারণ হয়। শেষে ব্রাউজার তার PAINTING মেকানিজম দিয়ে এটি রেন্ডার করে এবং আমরা চূড়ান্ত আউটপুট দেখি।
+
+## ভ্যানিলা JS বনাম React: DOM Repaint উদাহরণ
+
+চলুন দেখি, কিভাবে ভ্যানিলা জাভাস্ক্রিপ্ট এবং React-এ DOM repaint হয়, একটি সাধারণ উদাহরণ দিয়ে—ফল যোগ করা।
+
+### ভ্যানিলা জাভাস্ক্রিপ্ট উদাহরণ
+
+```js
+Array.prototype.myPush = function (...a) {
+  this.push(a[0]);
+  init();
+};
+
+const display = document.getElementById("fruits");
+const button = document.querySelector("#button");
+
+let fruits = ["mango", "guava", "apple", "oragne"];
+
+const init = function () {
+  document.getElementById("fruits").innerHTML = "";
+  fruits.sort().forEach((fruit) => {
+    let item = document.createElement("li");
+    item.textContent = fruit;
+    document.getElementById("fruits").appendChild(item);
+  });
+};
+
+const addItem = function () {
+  fruits.myPush(document.getElementById("input").value);
+};
+
+init();
+```
+
+**HTML:**
+
+```html
+<ul id="fruits"></ul>
+<input type="text" id="input" />
+<button id="button" onclick="addItem()">Add Item</button>
+```
+
+**ব্যাখ্যা:**
+
+- যখনই আপনি একটি ফল যোগ করেন, পুরো তালিকাটি ক্লিয়ার হয়ে আবার নতুন করে তৈরি হয়। অর্থাৎ, পুরো তালিকার জন্য DOM আবার রেন্ডার হয়, যদিও শুধু একটি আইটেম যোগ হয়েছে।
+- এখানে কাস্টম `myPush` মেথড ব্যবহার করা হয়েছে নতুন ফল যোগ করতে এবং তালিকা রেন্ডার করতে।
+
+### জাভাস্ক্রিপ্টে প্রোটোটাইপ কী?
+
+জাভাস্ক্রিপ্টে প্রতিটি অবজেক্টের একটি প্রোটোটাইপ থাকে। প্রোটোটাইপ নিজেও একটি অবজেক্ট। সব জাভাস্ক্রিপ্ট অবজেক্ট তাদের প্রোটোটাইপ থেকে প্রপার্টি ও মেথড ইনহেরিট করে। আপনি চাইলে বিল্ট-ইন অবজেক্ট (যেমন Array) এর প্রোটোটাইপে নতুন মেথড যোগ করতে পারেন। উপরের উদাহরণে, আমরা Array প্রোটোটাইপে `myPush` মেথড যোগ করেছি, তাই সব Array-ই এটি ব্যবহার করতে পারবে।
+
+**নোট:** প্রোডাকশন কোডে বিল্ট-ইন প্রোটোটাইপ পরিবর্তন করা সাধারণত নিরুৎসাহিত করা হয়, তবে শেখার জন্য বা পরীক্ষার জন্য এটি উপকারী।
+
+---
+
+## Virtual DOM কী? কিভাবে Virtual DOM কাজ করে?
+
+Virtual DOM হচ্ছে React-এর একটি মৌলিক দিক। React-এর ভিত্তি মূলত এই Virtual DOM।
+
+ব্রাউজারের repainting প্রক্রিয়া অ্যাপ্লিকেশনকে ধীর করে দেয়। এই সমস্যা এড়াতে আমরা দুইভাবে সমাধান করতে পারি:
+
+- আমরা batch update করতে পারি,
+- আমরা DOM manipulation কমাতে পারি।
+
+React ঠিক সেটাই করে Virtual DOM-এর মাধ্যমে। React খুবই কম DOM manipulation করে।
+
+### React উদাহরণ
+
+```jsx
+const Fruits = () => {
+  const [fruit, setFruit] = React.useState("");
+  const [fruits, setFruits] = React.useState([
+    "mango",
+    "guava",
+    "apple",
+    "oragne",
+  ]);
+
+  return (
+    <div className="container">
+      <ul id="fruits">
+        {fruits.sort().map((fruit, index) => (
+          <li key={index}>{fruit}</li>
+        ))}
+      </ul>
+      <br />
+      <p>
+        <input
+          type="text"
+          value={fruit}
+          onChange={(e) => setFruit(e.target.value)}
+        />
+      </p>
+      <button onClick={() => setFruits([...fruits, fruit])}>Add Item</button>
+    </div>
+  );
+};
+
+ReactDOM.render(<Fruits />, document.getElementById("root"));
+```
+
+**ব্যাখ্যা:**
+
+- React তার Virtual DOM ব্যবহার করে পরিবর্তন ট্র্যাক করে। যখন আপনি একটি ফল যোগ করেন, React শুধুমাত্র পরিবর্তিত অংশ (নতুন আইটেম) আপডেট করে, পুরো তালিকা নয়।
+- এতে আপডেট আরও কার্যকর হয় এবং পারফরম্যান্স বাড়ে, বিশেষ করে বড় তালিকা বা জটিল UI-তে।
+
+![Virtual DOM](/dif.png)
+
+যখন ইউজার অ্যাপ্লিকেশনের সাথে ইন্টারঅ্যাক্ট করে এবং UI-তে পরিবর্তন দরকার হয়, React সরাসরি HTML-এর DOM TREE পরিবর্তন করে না। UI-তে পরিবর্তন হলে, React তার Virtual DOM-এর সাহায্যে UI-এর একটি কপি তৈরি করে। এরপর React তার Diffing বা Reconciliation অ্যালগরিদম ব্যবহার করে দেখে ঠিক কোথায় পরিবর্তন হয়েছে। এতে করে শুধুমাত্র পরিবর্তিত অংশ DOM-এ আপডেট হয়, পুরো ওয়েবসাইট আবার রেন্ডার হয় না। এভাবে React খুব কম DOM অপারেশন করে পারফরম্যান্স বাড়ায়।
+
+## সারাংশ: Virtual DOM কেন গুরুত্বপূর্ণ
+
+- ভ্যানিলা JS-এ সরাসরি DOM manipulation বাড়ার সাথে সাথে অপ্রয়োজনীয় repaint এবং পারফরম্যান্স সমস্যা তৈরি করতে পারে।
+- React-এর Virtual DOM নিশ্চিত করে শুধুমাত্র প্রয়োজনীয় অংশই আপডেট হয়, ফলে অ্যাপ্লিকেশন দ্রুত এবং আরও কার্যকর হয়।
