@@ -1,6 +1,6 @@
 import "@/app/globals.css";
-import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/providers/LanguageProvider";
+import { ThemeProvider } from "next-themes";
 
 function MyApp({ Component, pageProps }) {
   return (

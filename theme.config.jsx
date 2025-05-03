@@ -1,6 +1,6 @@
-import { LanguageSwitcher } from "./components/LanguageSwitcher";
-import { useRouter } from "next/router";
 import "@/styles/custom.css";
+import { useRouter } from "next/router";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
 
 const Logo = () => {
   const { asPath } = useRouter();
@@ -37,7 +37,7 @@ export default {
   search: {
     placeholder: "Search documentation...",
     emptyResult: "No results found. Try different keywords.",
-  },  
+  },
   feedback: {
     content: null,
   },
