@@ -5,5 +5,6 @@
     "basics-of-react-component": "1.4 - Basics of React Component: Your First Component",
     "importing-and-exporting-component": "1.5 - Basic of React Component: Importing And Exporting Component",
     "writing-markup-with-jsx": "1.6 - Basics of JSX: Writing Markup with JSX",
-    "writing-markup-with-jsx-curlybraces": "1.7 - Basics of JSX: JavaScript in JSX with Curly Braces"
+    "writing-markup-with-jsx-curlybraces": "1.7 - Basics of JSX: JavaScript in JSX with Curly Braces",
+    "understanding-props": "1.8 - Understanding Props - Passing Props to a Component"
 }

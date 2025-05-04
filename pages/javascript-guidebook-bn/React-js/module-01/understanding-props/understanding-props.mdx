@@ -1,0 +1,105 @@
+# React-এ Props বোঝা
+
+## Props কী?
+
+Props (properties-এর সংক্ষিপ্ত রূপ) হলো React কম্পোনেন্টগুলোর মধ্যে ডেটা আদান-প্রদানের উপায়। এগুলোর মাধ্যমে প্যারেন্ট কম্পোনেন্ট থেকে চাইল্ড কম্পোনেন্টে ডেটা পাঠানো যায়, ঠিক যেমন ফাংশনে আর্গুমেন্ট পাঠানো হয়।
+
+---
+
+## কম্পোনেন্টে Props পাঠানো
+
+JSX-এ অ্যাট্রিবিউট হিসেবে props পাঠানো যায়:
+
+```jsx
+function Avatar(props) {
+  return <img src={props.src} alt={props.alt} />;
+}
+
+function Profile() {
+  return <Avatar src="avatar.png" alt="Profile picture" />;
+}
+```
+
+এখানে, `Profile` কম্পোনেন্ট `Avatar`-এ `src` ও `alt` props পাঠাচ্ছে।
+
+---
+
+## কম্পোনেন্টে Props পড়া
+
+ফাংশনের প্যারামিটারে props অ্যাক্সেস করা যায়:
+
+```jsx
+function Avatar({ src, alt }) {
+  return <img src={src} alt={alt} />;
+}
+```
+
+এটিকে "destructuring" বলা হয় এবং কোড আরও পরিষ্কার হয়।
+
+---
+
+## ডিফল্ট Props
+
+Destructuring-এর সময় ডিফল্ট ভ্যালু নির্ধারণ করা যায়:
+
+```jsx
+function Avatar({ src, alt = "User avatar" }) {
+  return <img src={src} alt={alt} />;
+}
+```
+
+যদি `alt` না দেওয়া হয়, তাহলে এটি "User avatar" হবে।
+
+---
+
+## Props শুধুমাত্র পড়ার জন্য
+
+Props চাইল্ড কম্পোনেন্ট থেকে পরিবর্তন করা যায় না। পরিবর্তন করতে চাইলে প্যারেন্ট কম্পোনেন্টে পরিবর্তন করে নতুন ভ্যালু props হিসেবে পাঠাতে হবে।
+
+---
+
+## Props ফরওয়ার্ড করা
+
+এক কম্পোনেন্ট থেকে আরেক কম্পোনেন্টে সব props ফরওয়ার্ড করতে spread syntax ব্যবহার করা যায়:
+
+```jsx
+function Profile(props) {
+  return <Avatar {...props} />;
+}
+```
+
+এটি ব্যবহারে সতর্ক থাকুন, কারণ এতে কোড কম স্পষ্ট হতে পারে।
+
+---
+
+## JSX-এ Children পাঠানো
+
+একটি কম্পোনেন্টের মধ্যে অন্য কম্পোনেন্ট বা এলিমেন্ট নেস্ট করা যায়। এই নেস্টেড কনটেন্ট `children` prop হিসেবে পাওয়া যায়:
+
+```jsx
+function Card({ children }) {
+  return <div className="card">{children}</div>;
+}
+
+function Profile() {
+  return (
+    <Card>
+      <Avatar src="avatar.png" alt="Profile" />
+    </Card>
+  );
+}
+```
+
+---
+
+## মূল পয়েন্ট
+- Props দিয়ে প্যারেন্ট থেকে চাইল্ড কম্পোনেন্টে ডেটা পাঠানো যায়।
+- Props চাইল্ড কম্পোনেন্টে শুধুমাত্র পড়ার জন্য।
+- Props-এর ডিফল্ট ভ্যালু নির্ধারণ করা যায়।
+- Spread syntax দিয়ে props ফরওয়ার্ড করা যায়।
+- `children` prop দিয়ে কম্পোনেন্টের মধ্যে কনটেন্ট নেস্ট করা যায়।
+
+---
+
+## রেফারেন্স
+- [React Docs: Passing Props to a Component](https://react.dev/learn/passing-props-to-a-component)

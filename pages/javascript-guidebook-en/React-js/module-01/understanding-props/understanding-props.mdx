@@ -1,0 +1,105 @@
+# Understanding Props in React
+
+## What are Props?
+
+Props (short for "properties") are the way React components communicate with each other. They let you pass data from a parent component to a child component, similar to how you pass arguments to a function.
+
+---
+
+## Passing Props to a Component
+
+You can pass props to a component by adding them as attributes in JSX:
+
+```jsx
+function Avatar(props) {
+  return <img src={props.src} alt={props.alt} />;
+}
+
+function Profile() {
+  return <Avatar src="avatar.png" alt="Profile picture" />;
+}
+```
+
+Here, `Profile` passes `src` and `alt` props to `Avatar`.
+
+---
+
+## Reading Props in a Component
+
+You can access props in the function parameter:
+
+```jsx
+function Avatar({ src, alt }) {
+  return <img src={src} alt={alt} />;
+}
+```
+
+This is called "destructuring" and makes your code cleaner.
+
+---
+
+## Default Props
+
+You can specify a default value for a prop using destructuring:
+
+```jsx
+function Avatar({ src, alt = "User avatar" }) {
+  return <img src={src} alt={alt} />;
+}
+```
+
+If `alt` is not provided, it will default to "User avatar".
+
+---
+
+## Props are Read-Only
+
+Props cannot be changed by the child component. If you want to change a value, you must do it in the parent and pass the new value down as a prop.
+
+---
+
+## Forwarding Props
+
+You can forward all props from one component to another using the spread syntax:
+
+```jsx
+function Profile(props) {
+  return <Avatar {...props} />;
+}
+```
+
+Use this with care, as it can make your code less explicit.
+
+---
+
+## Passing JSX as Children
+
+You can nest components or elements inside another component. The nested content is available as the `children` prop:
+
+```jsx
+function Card({ children }) {
+  return <div className="card">{children}</div>;
+}
+
+function Profile() {
+  return (
+    <Card>
+      <Avatar src="avatar.png" alt="Profile" />
+    </Card>
+  );
+}
+```
+
+---
+
+## Key Points
+- Props let you pass data from parent to child components.
+- Props are read-only in the child.
+- You can set default values for props.
+- You can forward props using the spread syntax.
+- The `children` prop lets you nest content inside components.
+
+---
+
+## References
+- [React Docs: Passing Props to a Component](https://react.dev/learn/passing-props-to-a-component)
