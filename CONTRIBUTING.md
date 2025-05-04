@@ -147,7 +147,4 @@ function sum(a, b) {
 ---
 
 <div align="center">
-
-Thank you for contributing to JavaScript GuideBook! 🎉
-
 </div>
