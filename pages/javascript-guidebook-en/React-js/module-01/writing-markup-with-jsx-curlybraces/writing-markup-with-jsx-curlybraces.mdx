@@ -1,0 +1,76 @@
+# JavaScript in JSX with Curly Braces
+
+## Introduction
+
+JSX lets you write HTML-like markup inside JavaScript files. Sometimes, you need to add JavaScript logic or reference dynamic values inside your markup. In these cases, you can use curly braces `{}` in JSX to "open a window" to JavaScript.
+
+---
+
+## Where can you use curly braces in JSX?
+
+1. **Inside tag content:**
+   ```jsx
+   <h1>{name} is a great teacher</h1>
+   ```
+   Here, `{name}` is a JavaScript variable.
+
+2. **As attribute values:**
+   ```jsx
+   <img src={avatarUrl} alt={description} />
+   ```
+   You can use any JavaScript expression inside the curly braces.
+
+---
+
+## What can you put inside curly braces?
+- Variables
+- Function calls
+- Expressions (e.g., `{count + 1}`)
+- Objects (e.g., for inline styles)
+
+**Example:**
+```jsx
+const name = 'Hedy Lamarr';
+const avatar = 'https://i.imgur.com/yXOvdOSs.jpg';
+const style = { color: 'blue', backgroundColor: 'lightgray' };
+
+function Profile() {
+  return (
+    <div style={style}>
+      <h1>{name}'s Profile</h1>
+      <img src={avatar} alt={name} />
+    </div>
+  );
+}
+```
+
+---
+
+## Rules for using curly braces in JSX
+
+1. **You can only use curly braces in two places:**
+   - As text content inside a JSX tag: `<h1>{name}</h1>`
+   - As an attribute value: `<img src={avatar} />`
+
+2. **You cannot use curly braces for tag names:**
+   - ❌ `<{tag}>Hello</{tag}>` is invalid.
+
+3. **String attributes vs. JavaScript expressions:**
+   - `src="avatar.png"` passes a string.
+   - `src={avatar}` passes the value of the variable `avatar`.
+
+4. **For objects (like inline styles), use double curly braces:**
+   - `<div style={{ color: 'red' }}></div>`
+   - The outer `{}` is for JSX, the inner `{}` is for the JavaScript object.
+
+---
+
+## Common mistakes
+- Using curly braces for tag names.
+- Using quotes and curly braces together: `src="{avatar}"` (this passes the string `"{avatar}"`, not the variable).
+- Forgetting to close tags.
+
+---
+
+## References
+- [React Docs: JavaScript in JSX with Curly Braces](https://react.dev/learn/javascript-in-jsx-with-curly-braces)

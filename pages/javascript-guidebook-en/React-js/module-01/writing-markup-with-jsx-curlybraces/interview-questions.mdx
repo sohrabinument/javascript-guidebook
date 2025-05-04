@@ -1,0 +1,42 @@
+# Interview Questions: JavaScript in JSX with Curly Braces
+
+## Basic
+
+**Q1: Why do we use curly braces `{}` in JSX?**  
+A: Curly braces let you embed JavaScript expressions, variables, or function calls inside JSX markup.
+
+**Q2: Where can you use curly braces in JSX?**  
+A: Inside tag content (e.g., `<h1>{name}</h1>`) and as attribute values (e.g., `<img src={avatar} />`).
+
+---
+
+## Intermediate
+
+**Q3: What is the difference between `src="avatar.png"` and `src={avatar}` in JSX?**  
+A: `src="avatar.png"` passes the string "avatar.png" as the value, while `src={avatar}` passes the value of the JavaScript variable `avatar`.
+
+**Q4: How do you use an object for inline styles in JSX?**  
+A: Use double curly braces: `<div style={{ color: 'red' }}></div>`. The outer braces are for JSX, the inner braces are for the JavaScript object.
+
+---
+
+## Advanced / Scenario-based
+
+**Q5: Is the following JSX valid? Why or why not?**
+```jsx
+<{tag}>Hello</{tag}>
+```
+A: Invalid. You cannot use curly braces to define tag names in JSX.
+
+**Q6: What will happen if you write `<img src="{avatar}" />` in JSX?**  
+A: It will pass the string `"{avatar}"` as the value, not the variable. You should use `src={avatar}` instead.
+
+**Q7: Can you use a function call inside curly braces in JSX? Give an example.**  
+A: Yes. Example: `<h1>{formatName(user)}</h1>`
+
+**Q8: What is the output of the following code?
+```jsx
+const count = 5;
+return <p>{count + 1}</p>;
+```
+A: It will render `<p>6</p>` because the expression inside the curly braces is evaluated.
