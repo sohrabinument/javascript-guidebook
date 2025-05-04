@@ -1,0 +1,122 @@
+# রিয়্যাক্টে কম্পোনেন্ট ইম্পোর্ট ও এক্সপোর্ট করা
+
+রিয়্যাক্টের কম্পোনেন্ট সিস্টেমের শক্তি হলো আপনি আপনার UI-কে ছোট ছোট পুনঃব্যবহারযোগ্য অংশে ভাগ করতে পারেন। অ্যাপ বড় হলে, কম্পোনেন্টগুলো আলাদা ফাইলে রেখে ইম্পোর্ট/এক্সপোর্ট করা সহজ ও কার্যকর।
+
+## কেন কম্পোনেন্ট আলাদা ফাইলে রাখবেন?
+
+- **সংগঠন:** কোড খুঁজে পাওয়া ও রক্ষণাবেক্ষণ সহজ হয়।
+- **পুনঃব্যবহারযোগ্যতা:** একই কম্পোনেন্ট একাধিক জায়গায় ব্যবহার করা যায়।
+- **স্কেলেবিলিটি:** বড় অ্যাপ সহজে ম্যানেজ করা যায়।
+
+## কম্পোনেন্ট এক্সপোর্ট করার উপায়
+
+কম্পোনেন্ট এক্সপোর্ট করার দুটি প্রধান উপায় আছে:
+
+### ১. ডিফল্ট এক্সপোর্ট
+
+যদি একটি ফাইলে শুধু একটি প্রধান কম্পোনেন্ট থাকে, তাহলে `export default` ব্যবহার করুন।
+
+```jsx
+// Profile.js
+export default function Profile() {
+  return <img src="https://i.imgur.com/MK3eW3Am.jpg" alt="Katherine Johnson" />;
+}
+```
+
+### ২. নেমড এক্সপোর্ট
+
+একই ফাইলে একাধিক কম্পোনেন্ট এক্সপোর্ট করতে চাইলে `export` (default ছাড়া) ব্যবহার করুন।
+
+```jsx
+// Gallery.js
+export function Profile() {
+  return <img src="https://i.imgur.com/MK3eW3Am.jpg" alt="Katherine Johnson" />;
+}
+
+export function Gallery() {
+  return (
+    <section>
+      <h1>অসাধারণ বিজ্ঞানীরা</h1>
+      <Profile />
+      <Profile />
+      <Profile />
+    </section>
+  );
+}
+```
+
+## কম্পোনেন্ট ইম্পোর্ট করার নিয়ম
+
+কীভাবে ইম্পোর্ট করবেন, তা নির্ভর করে কীভাবে এক্সপোর্ট করেছেন তার ওপর:
+
+### ডিফল্ট এক্সপোর্ট ইম্পোর্ট
+
+```jsx
+import Profile from './Profile';
+```
+
+### নেমড এক্সপোর্ট ইম্পোর্ট
+
+```jsx
+import { Profile, Gallery } from './Gallery';
+```
+
+> **নোট:** প্রতি ফাইলে শুধু একটি ডিফল্ট এক্সপোর্ট থাকতে পারে, কিন্তু যত খুশি নেমড এক্সপোর্ট রাখা যায়।
+
+## ডিফল্ট ও নেমড এক্সপোর্ট একসাথে ব্যবহার
+
+একই ফাইলে দুটোই রাখা যায়, তবে ইম্পোর্ট করার সময় সঠিক সিনট্যাক্স ব্যবহার করতে হবে:
+
+```jsx
+// Gallery.js
+export function Profile() { /* ... */ }
+export default function Gallery() { /* ... */ }
+
+// App.js
+import Gallery, { Profile } from './Gallery';
+```
+
+## সেরা চর্চা
+
+- প্রতিটি ফাইলে প্রধান কম্পোনেন্টের জন্য ডিফল্ট এক্সপোর্ট ব্যবহার করুন।
+- হেল্পার বা অতিরিক্ত কম্পোনেন্টের জন্য নেমড এক্সপোর্ট ব্যবহার করুন।
+- কম্পোনেন্ট ও ফাইলের নাম অর্থবহ রাখুন।
+- এক্সপোর্ট/ইম্পোর্ট স্টাইলে ধারাবাহিকতা বজায় রাখুন।
+
+## উদাহরণ: কম্পোনেন্ট ভাগ করা
+
+ধরা যাক, আপনার কাছে `Gallery` ও `Profile` নামে দুটি কম্পোনেন্ট আছে। এগুলো আলাদা ফাইলে রাখতে পারেন:
+
+**Profile.js**
+```jsx
+export default function Profile() {
+  return <img src="https://i.imgur.com/MK3eW3Am.jpg" alt="Katherine Johnson" />;
+}
+```
+
+**Gallery.js**
+```jsx
+import Profile from './Profile';
+
+export default function Gallery() {
+  return (
+    <section>
+      <h1>অসাধারণ বিজ্ঞানীরা</h1>
+      <Profile />
+      <Profile />
+      <Profile />
+    </section>
+  );
+}
+```
+
+**App.js**
+```jsx
+import Gallery from './Gallery';
+
+export default function App() {
+  return <Gallery />;
+}
+```
+
+আরো জানতে দেখুন: [React অফিসিয়াল ডকুমেন্টেশন: কম্পোনেন্ট ইম্পোর্ট ও এক্সপোর্ট](https://react.dev/learn/importing-and-exporting-components)
