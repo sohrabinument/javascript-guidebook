@@ -6,17 +6,7 @@ import {
 import nextra from "nextra";
 /** @type {import('next').NextConfig} */
 
-const redirects = async () => [
-  {
-    source: "/",
-    destination: "/javascript-guidebook-bn",
-    permanent: false,
-  },
-];
-
-const config = {
-  redirects,
-};
+const config = {};
 
 const withNextra = nextra({
   theme: "nextra-theme-docs",
