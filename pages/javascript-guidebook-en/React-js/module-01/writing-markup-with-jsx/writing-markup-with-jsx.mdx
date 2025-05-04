@@ -1,0 +1,92 @@
+# Writing Markup with JSX
+
+## What is JSX?
+
+JSX (JavaScript XML) is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file. It makes writing UI components in React more intuitive and readable.
+
+## Why use JSX in React?
+
+- **Combines markup and logic:** JSX allows you to write markup and rendering logic together in components, keeping related code in one place.
+- **Familiar syntax:** JSX looks similar to HTML, making it easier for web developers to learn and use.
+- **Dynamic content:** You can embed JavaScript expressions inside JSX using curly braces `{}`.
+
+## How is JSX different from HTML?
+
+- **JSX is not HTML:** It's a syntax extension that gets compiled to JavaScript.
+- **Stricter rules:** JSX requires all tags to be closed, and you must use camelCase for most attribute names (e.g., `className` instead of `class`).
+
+## Basic Example
+
+```jsx
+function Welcome() {
+  return <h1>Hello, world!</h1>;
+}
+```
+
+## Embedding JavaScript in JSX
+
+You can use curly braces `{}` to embed JavaScript expressions:
+
+```jsx
+const name = "Hedy Lamarr";
+const element = <h1>Hello, {name}!</h1>;
+```
+
+## Common JSX Rules
+
+1. **Return a single root element:**  
+   Wrap multiple elements in a parent tag or use a React Fragment (`<>...</>`).
+
+   ```jsx
+   return (
+     <>
+       <h1>Title</h1>
+       <p>Description</p>
+     </>
+   );
+   ```
+
+2. **Close all tags:**  
+   Self-closing tags like `<img />` must be closed.
+
+   ```jsx
+   <img src="image.png" alt="desc" />
+   ```
+
+3. **Use camelCase for attributes:**  
+   - `className` instead of `class`
+   - `htmlFor` instead of `for`
+
+   ```jsx
+   <div className="container"></div>
+   ```
+
+## Converting HTML to JSX
+
+- Change `class` to `className`
+- Close all tags
+- Use camelCase for attributes
+
+**Example:**
+
+HTML:
+```html
+<div class="intro">
+  <h1>Welcome!</h1>
+</div>
+```
+
+JSX:
+```jsx
+<div className="intro">
+  <h1>Welcome!</h1>
+</div>
+```
+
+## Pro Tip
+
+If you have a lot of HTML to convert, use an [online JSX converter](https://transform.tools/html-to-jsx).
+
+## References
+
+- [React Docs: Writing Markup with JSX](https://react.dev/learn/writing-markup-with-jsx)

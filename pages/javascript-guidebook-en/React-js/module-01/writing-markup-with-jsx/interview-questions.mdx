@@ -1,0 +1,47 @@
+# Interview Questions: Writing Markup with JSX
+
+## Basic
+
+**Q1: What is JSX?**  
+A: JSX is a syntax extension for JavaScript that allows you to write HTML-like markup in React components.
+
+**Q2: Why do we use JSX in React?**  
+A: JSX makes it easier to write and visualize the UI structure, and allows combining markup with rendering logic.
+
+**Q3: Can you write React components without JSX?**  
+A: Yes, you can use `React.createElement`, but JSX is more concise and readable.
+
+---
+
+## Intermediate
+
+**Q4: What are some differences between HTML and JSX?**  
+A: In JSX, you must use `className` instead of `class`, close all tags, and use camelCase for most attributes.
+
+**Q5: How do you embed JavaScript expressions in JSX?**  
+A: By wrapping the expression in curly braces `{}`.
+
+---
+
+## Advanced / Scenario-based
+
+**Q6: What will happen if you return multiple JSX elements without a parent wrapper?**  
+A: React will throw an error. You must wrap them in a parent element or a Fragment (`<>...</>`).
+
+**Q7: Convert the following HTML to valid JSX:**
+```html
+<p class="info">Hello <b>World</b></p>
+```
+A:
+```jsx
+<p className="info">Hello <b>World</b></p>
+```
+
+**Q8: Why does React require camelCase for some attributes in JSX?**  
+A: Because JSX is compiled to JavaScript, and JavaScript object keys are case-sensitive and cannot use reserved words like `class`.
+
+**Q9: What is a Fragment in JSX and when would you use it?**  
+A: A Fragment (`<>...</>`) lets you group multiple elements without adding extra nodes to the DOM. Use it when you need to return multiple elements from a component without an extra wrapper.
+
+**Q10: What are some common pitfalls when converting HTML to JSX?**  
+A: Forgetting to close tags, using `class` instead of `className`, not using camelCase for attributes, and returning multiple elements without a parent wrapper.
