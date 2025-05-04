@@ -4,7 +4,7 @@ No, DOM is never slow. In fact, if coded properly, DOM is faster than anything e
 
 ## How Does the Browser Render DOM?
 
-![Dom Rendering](../../../../public/dom-rendering.png)
+![Dom Rendering](/dom-rendering.png)
 
 We can see that the browser's rendering process is shown through a graph above. What do we see here? We see that when a browser receives `HTML` and `CSS` files, it processes them through parsing, using `HTML PARSER` for `HTML` and `CSS PARSER` for `CSS`. After parsing, the browser creates a `DOM TREE` from the `HTML` and creates `STYLE RULES` called `CSSOM` from the `CSS`. The `DOM TREE` and `STYLE RULES` are then attached together to create a `RENDER TREE`. This `RENDER TREE` goes through a `LAYOUT` phase in the browser. In this `LAYOUT` phase, the coordinates of where the `DOM TREE` will be rendered in the browser are prepared. Finally, the browser paints it in the browser through its PAINTING mechanism, and we see the final output.
 
@@ -113,7 +113,7 @@ ReactDOM.render(<Fruits />, document.getElementById("root"));
 - React uses its Virtual DOM to track changes. When you add a fruit, React only updates the part of the DOM that changed (the new list item), not the entire list.
 - This makes updates more efficient and improves performance, especially for large lists or complex UIs.
 
-![Virtual DOM](../../../../public/dif.png)
+![Virtual DOM](/dif.png)
 
 When a user interacts with the application and if there's a need to change the `UI`, React doesn't directly change the `DOM TREE` of the `HTML`. Whenever there's a change in the `UI`, React creates a replica or copy of the `UI` with the help of its Virtual `DOM`. Then React checks exactly where the change has occurred in the `UI` using its custom algorithm called `Diffing` or `Reconciliation`. This allows it to update only the part that has changed in the `DOM` without re-rendering the entire website. This way, React improves application performance through minimal DOM operations.
 
