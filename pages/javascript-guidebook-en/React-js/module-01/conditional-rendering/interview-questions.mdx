@@ -1,0 +1,41 @@
+# Interview Questions and Answers: Conditional Rendering in React
+
+1. **What is conditional rendering in React?**  
+   **Answer:**  
+   Conditional rendering in React is the process of displaying different UI elements or components based on certain conditions, such as state or props. It allows you to control what gets rendered to the DOM depending on logic in your application.
+
+2. **How can you implement conditional rendering in JSX?**  
+   **Answer:**  
+   You can implement conditional rendering in JSX using JavaScript expressions like if/else statements, the ternary operator (`condition ? expr1 : expr2`), and the logical AND (`&&`) operator. For example:  
+   ```jsx
+   {isLoggedIn ? <Dashboard /> : <Login />}
+   ```
+
+3. **What is the difference between using if/else and the ternary operator in React components?**  
+   **Answer:**  
+   The if/else statement is used outside of JSX to decide which JSX to return, while the ternary operator can be used directly inside JSX expressions. The ternary operator is more concise and is suitable for inline conditional rendering.
+
+4. **How does the logical AND (`&&`) operator work for conditional rendering in React?**  
+   **Answer:**  
+   The logical AND (`&&`) operator renders the right-hand side expression only if the left-hand side condition is true. If the condition is false, nothing is rendered. For example:  
+   ```jsx
+   {hasUnread && <p>You have unread messages!</p>}
+   ```
+
+5. **Can you return `null` from a React component? What does it do?**  
+   **Answer:**  
+   Yes, you can return `null` from a React component. When you do so, nothing is rendered to the DOM for that component.
+
+6. **What are some best practices for keeping conditional rendering code readable?**  
+   **Answer:**  
+   - Use the ternary operator for simple conditions.
+   - Use if/else or assign JSX to variables for more complex logic.
+   - Avoid deeply nested ternary operators.
+   - Extract complex conditional logic into separate functions or components.
+
+7. **How would you render a component only if a list is not empty?**  
+   **Answer:**  
+   You can use the logical AND (`&&`) operator to render a component only if a list has items:  
+   ```jsx
+   {items.length > 0 && <ItemList items={items} />}
+   ```

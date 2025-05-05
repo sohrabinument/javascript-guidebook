@@ -1,0 +1,83 @@
+# Conditional Rendering in React
+
+## Introduction
+
+Conditional rendering in React means displaying different UI elements or components based on certain conditions. This is similar to how you use conditions (like if/else) in JavaScript, but here you use them inside JSX to control what gets rendered.
+
+## Common Ways to Do Conditional Rendering
+
+### 1. Using if/else Statements
+
+You can use if/else statements inside your component to decide what to return:
+
+```jsx
+function Greeting({ isLoggedIn }) {
+  if (isLoggedIn) {
+    return <h1>Welcome back!</h1>;
+  }
+  return <h1>Please sign in.</h1>;
+}
+```
+
+### 2. Using the Ternary Operator
+
+The ternary operator is a concise way to render content based on a condition:
+
+```jsx
+function Greeting({ isLoggedIn }) {
+  return (
+    <div>
+      {isLoggedIn ? <h1>Welcome back!</h1> : <h1>Please sign in.</h1>}
+    </div>
+  );
+}
+```
+
+### 3. Using Logical AND (&&) Operator
+
+If you want to render something only when a condition is true, you can use the `&&` operator:
+
+```jsx
+function Notification({ hasUnread }) {
+  return (
+    <div>
+      {hasUnread && <p>You have unread messages!</p>}
+    </div>
+  );
+}
+```
+
+### 4. Assigning JSX to a Variable
+
+For more complex conditions, you can assign JSX to a variable and use it in your return statement:
+
+```jsx
+function UserStatus({ isOnline }) {
+  let status;
+  if (isOnline) {
+    status = <span className="online">Online</span>;
+  } else {
+    status = <span className="offline">Offline</span>;
+  }
+  return <div>User is: {status}</div>;
+}
+```
+
+## Best Practices
+
+- Use the ternary operator for simple conditions.
+- Use if/else or variables for more complex logic to keep your JSX clean.
+- Avoid deeply nested ternary operators as they can make your code hard to read.
+
+## Example from Official Docs
+
+```jsx
+function Item({ name, isPacked }) {
+  return (
+    <li className="item">
+      {isPacked ? <del>{name + ' ✅'}</del> : name}
+    </li>
+  );
+}
+```
+[See more on the official React docs](https://react.dev/learn/conditional-rendering)
