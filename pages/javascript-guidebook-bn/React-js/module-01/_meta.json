@@ -7,5 +7,6 @@
     "writing-markup-with-jsx": "১.৬ - JSX এর বুনিয়াদি: রিয়্যাক্টের মার্কআপ - JSX দিয়ে মার্কআপ লেখা",
     "writing-markup-with-jsx-curlybraces": "১.৭ - JSX এর বুনিয়াদি: রিয়্যাক্টের মার্কআপ - JSX-এ কার্লি ব্রেসে জাভাস্ক্রিপ্ট ব্যবহার",
     "understanding-props": "১.৮ - প্রপস বোঝা: একটি কম্পোনেন্টে প্রপস পাঠানো",
-    "conditional-rendering": "১.৯ - শর্তসাপেক্ষ রেন্ডারিং"
+    "conditional-rendering": "১.৯ - শর্তসাপেক্ষ রেন্ডারিং",
+    "rendering-list": "১.১০ - তালিকা রেন্ডার করা"
 }

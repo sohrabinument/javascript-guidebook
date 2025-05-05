@@ -1,0 +1,83 @@
+# React-এ লিস্ট রেন্ডারিং
+
+## পরিচিতি
+
+React-এ প্রায়ই আপনাকে ডেটার একটি কালেকশন থেকে একাধিক একই ধরনের কম্পোনেন্ট দেখাতে হয়। সাধারণত JavaScript-এর `map()` এবং `filter()` মেথড ব্যবহার করে ডেটার অ্যারে থেকে কম্পোনেন্টের অ্যারে তৈরি করা হয়।
+
+## অ্যারে থেকে ডেটা রেন্ডার করা
+
+ধরা যাক, আপনার কাছে কিছু মানুষের একটি লিস্ট আছে যেটা আপনি দেখাতে চান:
+
+```jsx
+const people = [
+  'Creola Katherine Johnson: mathematician',
+  'Mario José Molina-Pasquel Henríquez: chemist',
+  'Mohammad Abdus Salam: physicist',
+  'Percy Lavon Julian: chemist',
+  'Subrahmanyan Chandrasekhar: astrophysicist'
+];
+
+export default function List() {
+  const listItems = people.map(person => <li>{person}</li>);
+  return <ul>{listItems}</ul>;
+}
+```
+
+## আইটেম ফিল্টার করা
+
+`filter()` মেথড ব্যবহার করে নির্দিষ্ট কিছু আইটেম দেখাতে পারেন। যেমন, শুধু chemist-দের দেখাতে চাইলে:
+
+```jsx
+const people = [
+  { id: 0, name: 'Creola Katherine Johnson', profession: 'mathematician' },
+  { id: 1, name: 'Mario José Molina-Pasquel Henríquez', profession: 'chemist' },
+  { id: 2, name: 'Mohammad Abdus Salam', profession: 'physicist' },
+  { id: 3, name: 'Percy Lavon Julian', profession: 'chemist' },
+  { id: 4, name: 'Subrahmanyan Chandrasekhar', profession: 'astrophysicist' }
+];
+
+export default function ChemistList() {
+  const chemists = people.filter(person => person.profession === 'chemist');
+  const listItems = chemists.map(person => <li key={person.id}>{person.name}</li>);
+  return <ul>{listItems}</ul>;
+}
+```
+
+## লিস্ট আইটেমের জন্য `key` ব্যবহার
+
+লিস্ট রেন্ডার করার সময়, প্রতিটি চাইল্ডের জন্য একটি ইউনিক `key` প্রপ থাকা উচিত:
+
+```jsx
+const listItems = people.map(person =>
+  <li key={person.id}>{person.name}</li>
+);
+```
+
+**কেন key ব্যবহার করবেন?**  
+Key React-কে জানায় কোন আইটেম পরিবর্তিত হয়েছে, যোগ হয়েছে বা মুছে গেছে। এতে React পারফরম্যান্স বাড়াতে পারে এবং UI ডেটার সাথে সঠিকভাবে সিঙ্ক রাখতে পারে।
+
+**key ব্যবহারের বেস্ট প্র্যাকটিস:**
+- ডেটা থেকে ইউনিক ও স্থিতিশীল আইডেন্টিফায়ার (যেমন ID) ব্যবহার করুন।
+- অ্যারে ইনডেক্স key হিসেবে ব্যবহার এড়িয়ে চলুন, বিশেষ করে যদি লিস্টে আইটেম যোগ/বিয়োগ বা অর্ডার পরিবর্তন হতে পারে।
+
+## একাধিক এলিমেন্ট রেন্ডার করা
+
+প্রতি আইটেমের জন্য একাধিক এলিমেন্ট রেন্ডার করতে চাইলে `<React.Fragment>` বা `<>...</>` ব্যবহার করতে পারেন এবং key দিতে পারেন:
+
+```jsx
+import { Fragment } from 'react';
+
+const listItems = people.map(person =>
+  <Fragment key={person.id}>
+    <h2>{person.name}</h2>
+    <p>{person.profession}</p>
+  </Fragment>
+);
+```
+
+## সারসংক্ষেপ
+
+- `map()` ব্যবহার করে ডেটার অ্যারে থেকে কম্পোনেন্টের অ্যারে তৈরি করুন।
+- `filter()` ব্যবহার করে নির্দিষ্ট আইটেম দেখান।
+- প্রতিটি লিস্ট আইটেমের জন্য ইউনিক `key` দিন।
+- অ্যারে ইনডেক্স key হিসেবে ব্যবহার করবেন না।
