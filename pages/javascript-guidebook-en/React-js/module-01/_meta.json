@@ -9,5 +9,6 @@
   "understanding-props": "1.8 - Understanding Props - Passing Props to a Component",
   "conditional-rendering": "1.9 - Conditional Rendering",
   "rendering-list": "1.10 - Rendering Lists",
-  "pure-components": "1.11 - Pure Components: Keeping Components Pure"
+  "pure-components": "1.11 - Pure Components: Keeping Components Pure",
+  "your-ui-as-a-tree": "1.12 - Your UI as a Tree"
 }
