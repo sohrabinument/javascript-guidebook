@@ -1,0 +1,553 @@
+# Interview Questions: Pure Components in React
+
+This guide contains common interview questions about Pure Components in React, from basic to advanced. Each question includes a straightforward answer to help you prepare for interviews.
+
+## 🌱 Beginner Questions
+
+### Q1: What is a pure component in React, in simple terms?
+
+**Answer:**
+A pure component is like a reliable calculator - give it the same inputs, and it always gives the same output. In React, this means:
+
+1. If you pass the same props and state to a component, it will always render the same UI
+2. It doesn't change anything outside itself (no side effects)
+
+Think of it as a predictable recipe - same ingredients always make the same dish.
+
+### Q2: What makes a function "pure"?
+
+**Answer:**
+A pure function:
+
+- ✅ Always returns the same output when given the same input
+- ✅ Doesn't change anything outside itself
+- ✅ Doesn't modify the data passed to it
+- ✅ Doesn't depend on external factors that might change
+
+```javascript
+// Pure function example
+function add(a, b) {
+  return a + b; // Always the same result for same inputs
+}
+
+// Impure function example
+let total = 0;
+function addToTotal(num) {
+  total += num; // Modifies external variable!
+  return total; // Result depends on previous calls
+}
+```
+
+### Q3: Why are pure components so important in React?
+
+**Answer:**
+Pure components are important because they:
+
+1. **Make your code reliable** - They behave consistently, so your UI is predictable
+2. **Improve performance** - React can optimize and skip re-renders for components it knows are pure
+3. **Support server rendering** - Pure components work the same on server and client
+4. **Enable advanced features** - Features like concurrent rendering need pure components
+5. **Make testing easier** - Pure components are easier to test since they're predictable
+
+## 💻 Practical Examples
+
+### Q4: What's the difference between `React.PureComponent` and `React.memo`?
+
+**Answer:**
+Both help with performance by avoiding unnecessary renders, but:
+
+| Feature           | React.PureComponent                                                                 | React.memo                                                          |
+| ----------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Component Type    | For class components                                                                | For function components                                             |
+| How it works      | Automatically implements `shouldComponentUpdate` with shallow prop/state comparison | Memoizes the component based on props                               |
+| Custom comparison | Not available                                                                       | Available as second argument                                        |
+| When it helps     | When your component renders the same output for same props/state                    | When your function component renders the same output for same props |
+
+```jsx
+// PureComponent example (class)
+class UserProfile extends React.PureComponent {
+  render() {
+    return <div>{this.props.name}</div>;
+  }
+}
+
+// React.memo example (function)
+const UserProfile = React.memo(function UserProfile({ name }) {
+  return <div>{name}</div>;
+});
+
+// React.memo with custom comparison
+const UserProfile = React.memo(
+  function UserProfile({ user }) {
+    return <div>{user.name}</div>;
+  },
+  (prevProps, nextProps) => {
+    // Only re-render if the name changed
+    return prevProps.user.name === nextProps.user.name;
+  }
+);
+```
+
+### Q5: This clock component isn't pure. How would you fix it?
+
+```jsx
+function Clock() {
+  // Get the current time
+  const currentTime = new Date();
+
+  // Directly manipulates the DOM! Bad!
+  if (currentTime.getHours() < 12) {
+    document.getElementById("clock").className = "morning";
+  } else {
+    document.getElementById("clock").className = "afternoon";
+  }
+
+  return <h1 id="clock">{currentTime.toLocaleTimeString()}</h1>;
+}
+```
+
+**Answer:**
+The component is impure because it directly manipulates the DOM with `document.getElementById`. Here's a pure version that lets React handle the DOM updates:
+
+```jsx
+function Clock() {
+  // Get the current time
+  const currentTime = new Date();
+
+  // Determine class based on time
+  const className = currentTime.getHours() < 12 ? "morning" : "afternoon";
+
+  // Let React handle the DOM by using props
+  return <h1 className={className}>{currentTime.toLocaleTimeString()}</h1>;
+}
+```
+
+### Q6: Is this component pure? If not, how would you fix it?
+
+```jsx
+// Global array outside component
+const userHistory = [];
+
+function UserList({ newUser }) {
+  // Add new user to history if provided
+  if (newUser) {
+    userHistory.push(newUser);
+  }
+
+  return (
+    <ul>
+      {userHistory.map((user, i) => (
+        <li key={i}>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+**Answer:**
+No, this component is not pure for two main reasons:
+
+1. It modifies a global array (`userHistory`) that exists outside the component
+2. It gives different outputs based on previous renders (since `userHistory` keeps growing)
+
+Here's a pure version:
+
+```jsx
+function UserList({ users, newUser }) {
+  // Create a new array without modifying anything external
+  const displayUsers = newUser ? [...users, newUser] : users;
+
+  return (
+    <ul>
+      {displayUsers.map((user, i) => (
+        <li key={i}>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+// Usage
+<UserList users={existingUsers} newUser={latestUser} />;
+```
+
+## 🚀 Intermediate Concepts
+
+### Q7: What is "local mutation" and why is it okay in React components?
+
+**Answer:**
+Local mutation means creating and changing variables that:
+
+- Were created during the current render
+- Don't exist outside the component
+- Won't affect future renders
+
+This is completely fine because these changes are isolated to the current render and won't cause unexpected behavior.
+
+```jsx
+function ProcessList({ items }) {
+  // ✅ OK: This array is created fresh during this render
+  const processed = [];
+
+  // ✅ OK: We're only modifying the array we just created
+  for (const item of items) {
+    processed.push(<li key={item.id}>{item.name.toUpperCase()}</li>);
+  }
+
+  return <ul>{processed}</ul>;
+}
+```
+
+Think of it like making temporary scratch calculations while solving a math problem - you can freely make notes that you'll throw away when you're done.
+
+### Q8: How does React's StrictMode help find impure components?
+
+**Answer:**
+StrictMode is like a detective for finding impure components. It works by:
+
+1. **Double-rendering** your components during development
+2. **Double-invoking** effects, event handlers, and other functions
+
+If your components are pure, calling them twice shouldn't cause any problems since they always produce the same output for the same input. But impure components will behave strangely when called twice, making it obvious that something's wrong.
+
+For example, if your component updates a counter variable during render:
+
+- First render: counter = 1
+- Second render (StrictMode): counter = 2 (oops, not the same output!)
+
+This helps you find and fix these issues before they cause bugs in production.
+
+### Q9: Where should I put side effects in my React components?
+
+**Answer:**
+Side effects (like API calls, DOM manipulation, subscriptions) should go in these places:
+
+1. **Event Handlers** (Best option when possible)
+
+   ```jsx
+   function SaveButton() {
+     function handleClick() {
+       // ✅ Side effect in event handler
+       saveData();
+       showToast("Saved!");
+     }
+
+     return <button onClick={handleClick}>Save</button>;
+   }
+   ```
+
+2. **useEffect Hook** (For effects that need to run after render)
+
+   ```jsx
+   function ProfilePage({ userId }) {
+     const [userData, setUserData] = useState(null);
+
+     // ✅ Side effect in useEffect
+     useEffect(() => {
+       fetchUserData(userId).then((data) => setUserData(data));
+     }, [userId]);
+
+     // ...
+   }
+   ```
+
+3. **Custom Hooks** (For reusable effect logic)
+
+   ```jsx
+   // Custom hook with contained side effects
+   function useUserData(userId) {
+     const [data, setData] = useState(null);
+
+     useEffect(() => {
+       fetchUserData(userId).then((data) => setData(data));
+     }, [userId]);
+
+     return data;
+   }
+   ```
+
+The key rule: **Never put side effects directly in your component body** (the render phase).
+
+### Q10: How can I optimize this component to prevent unnecessary re-renders?
+
+```jsx
+function ExpensiveChart({ data, config }) {
+  // This calculation is expensive!
+  const processedData = processData(data);
+
+  return (
+    <div>
+      <Chart data={processedData} config={config} />
+      <OtherComponents />
+    </div>
+  );
+}
+```
+
+**Answer:**
+Since this component is pure, we can optimize it in two ways:
+
+1. Use `React.memo` to prevent re-renders when props haven't changed:
+
+   ```jsx
+   const ExpensiveChart = React.memo(function ExpensiveChart({ data, config }) {
+     const processedData = processData(data);
+
+     return (
+       <div>
+         <Chart data={processedData} config={config} />
+         <OtherComponents />
+       </div>
+     );
+   });
+   ```
+
+2. Use `useMemo` to cache the expensive calculation:
+
+   ```jsx
+   const ExpensiveChart = React.memo(function ExpensiveChart({ data, config }) {
+     // Only recalculate when data changes
+     const processedData = useMemo(() => {
+       return processData(data);
+     }, [data]);
+
+     return (
+       <div>
+         <Chart data={processedData} config={config} />
+         <OtherComponents />
+       </div>
+     );
+   });
+   ```
+
+This ensures that:
+
+- The component only re-renders when its props actually change
+- The expensive calculation only runs when the data changes
+
+## 🔍 Advanced Topics
+
+### Q11: What common mistakes make components impure?
+
+**Answer:**
+Watch out for these common impurities in components:
+
+1. **Modifying props**
+
+   ```jsx
+   function ProfileCard({ user }) {
+     user.lastSeen = Date.now(); // ❌ Never modify props!
+     // ...
+   }
+   ```
+
+2. **Changing pre-existing variables**
+
+   ```jsx
+   let count = 0;
+   function Counter() {
+     count++; // ❌ Modifying external state!
+     // ...
+   }
+   ```
+
+3. **Direct DOM manipulation**
+
+   ```jsx
+   function Header() {
+     document.title = "New Page"; // ❌ Direct DOM manipulation
+     // ...
+   }
+   ```
+
+4. **API calls during render**
+
+   ```jsx
+   function UserData({ id }) {
+     const data = fetchUserData(id); // ❌ API call during render!
+     // ...
+   }
+   ```
+
+5. **Random values in render**
+
+   ```jsx
+   function RandomGreeting() {
+     // ❌ Different output each render!
+     const greeting = Math.random() > 0.5 ? "Hello" : "Hi";
+     // ...
+   }
+   ```
+
+6. **Date/time in render without props**
+
+   ```jsx
+   function Clock() {
+     // ❌ Different every render!
+     return <div>{new Date().toLocaleTimeString()}</div>;
+   }
+   ```
+
+7. **Reading from global state**
+   ```jsx
+   function ThemeButton() {
+     // ❌ Reading from global outside React
+     return <button className={globalTheme}>Click me</button>;
+   }
+   ```
+
+### Q12: How would you fix this impure weather component?
+
+```jsx
+function WeatherWidget() {
+  const [temperature, setTemperature] = useState(null);
+
+  // Problem: API call during render!
+  if (temperature === null) {
+    // This runs during rendering!
+    fetch("https://weather-api.example/current")
+      .then((res) => res.json())
+      .then((data) => {
+        setTemperature(data.temperature);
+      });
+    return <div>Loading weather...</div>;
+  }
+
+  return <div>Current temperature: {temperature}°C</div>;
+}
+```
+
+**Answer:**
+The component is impure because it makes an API call during render. Here's a fixed version:
+
+```jsx
+function WeatherWidget() {
+  const [temperature, setTemperature] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // ✅ Move side effect to useEffect
+  useEffect(() => {
+    // Now the fetch happens after render, not during
+    fetch("https://weather-api.example/current")
+      .then((res) => res.json())
+      .then((data) => {
+        setTemperature(data.temperature);
+        setIsLoading(false);
+      });
+  }, []); // Empty array means run once after first render
+
+  if (isLoading) {
+    return <div>Loading weather...</div>;
+  }
+
+  return <div>Current temperature: {temperature}°C</div>;
+}
+```
+
+### Q13: Why is "referential equality" important when working with pure components?
+
+**Answer:**
+Referential equality is about whether two variables point to the exact same object in memory (using `===`).
+
+This matters for pure components because React uses `===` to check if props have changed:
+
+```jsx
+// Parent component
+function Parent() {
+  // ❌ Problem: Creates a new array every render
+  const items = [1, 2, 3];
+
+  // This passes a new array reference each time
+  return <PureChildList items={items} />;
+}
+
+// Even if using React.memo
+const PureChildList = React.memo(function ChildList({ items }) {
+  // Will re-render every time Parent renders!
+  // Because items is always a new array reference
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+});
+```
+
+Solution: Use techniques that preserve referential equality unless content actually changes:
+
+```jsx
+function Parent() {
+  // ✅ Create array once, reuse same reference
+  const items = useMemo(() => [1, 2, 3], []);
+
+  // OR for functions
+  const handleClick = useCallback(() => {
+    console.log("Clicked!");
+  }, []);
+
+  return <PureChildList items={items} onClick={handleClick} />;
+}
+```
+
+This ensures pure child components only re-render when their inputs genuinely change.
+
+### Q14: What is "idempotence" and how does it relate to React components?
+
+**Answer:**
+Idempotence means you can apply an operation multiple times and get the same result as if you'd applied it once.
+
+In React, this means a component should produce the same UI output no matter how many times it renders with the same props and state.
+
+This is important because React might render your components multiple times:
+
+- During development with StrictMode
+- When pausing and resuming rendering in Concurrent Mode
+- When prioritizing urgent updates
+
+Pure components are naturally idempotent because they:
+
+- Don't depend on how many times they've been called
+- Don't change external state during render
+- Always produce the same output for the same input
+
+Think of it this way: if you press "=" on a calculator multiple times after an operation, you should get the same result each time - that's idempotence.
+
+### Q15: How do pure components benefit React's reconciliation process?
+
+**Answer:**
+React's reconciliation process (how it figures out what DOM updates to make) works best with pure components:
+
+1. **Performance optimization**: React can safely skip re-rendering pure components when their inputs haven't changed
+
+   ```jsx
+   // React can skip re-rendering PureSection if title hasn't changed
+   <PureSection title="About Us" />
+   ```
+
+2. **Predictable updates**: Since pure components always return the same output for the same inputs, React can reliably predict what they'll render
+
+3. **Memoization**: React.memo and PureComponent can safely cache results since pure components are predictable
+
+   ```jsx
+   // Works correctly because ExpensiveComponent is pure
+   const MemoizedExpensive = React.memo(ExpensiveComponent);
+   ```
+
+4. **Concurrency**: React can pause, restart, or abort rendering for pure components without visual glitches
+
+5. **Time-slicing**: React can spread rendering work over multiple frames for better responsiveness, which requires components to be pure
+
+The entire React model works on the assumption that rendering is a pure operation that doesn't cause side effects.
+
+## 📝 Interview Tips
+
+When answering questions about pure components:
+
+1. First explain the concept in simple terms (deterministic, no side effects)
+2. Mention practical benefits (predictability, performance, testing)
+3. If showing code examples, clearly highlight what makes something pure or impure
+4. Discuss where side effects belong instead (event handlers, useEffect)
+5. Connect the concept to other React features (memoization, StrictMode, concurrent rendering)
+
+React's architecture is built around component purity, so demonstrating your understanding of this concept shows you grasp the core principles behind React's design.
