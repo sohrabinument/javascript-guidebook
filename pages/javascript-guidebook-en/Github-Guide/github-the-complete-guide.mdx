@@ -1,0 +1,784 @@
+import { Callout } from "nextra/components";
+import Image from "next/image";
+
+# Git & GitHub: The Complete Guide 🚀
+
+![Git Workflow](../../../public/git-workflow.gif)
+
+## What is Git? Why Use Version Control?
+
+Git is a **version control system**. Imagine you are writing a story in a notebook. Every day, you write something new. But what if you want to go back to what you wrote two days ago? Git is like a magic notebook that lets you go back to any page, see what you changed, and even lets your friends help you write!
+
+<Callout type="info">
+  <b>Analogy:</b> Git is like a time machine for your code. You can travel back,
+  see who changed what, and never lose your work.
+</Callout>
+
+---
+
+## What is a Repository?
+
+A **repository** (or "repo") is like a special folder where Git keeps track of all your files and their changes. Think of it as a magical box that remembers everything you put in it and every change you make!
+
+---
+
+## Installing Git
+
+**Step 1:**  
+Go to [git-scm.com/downloads](https://git-scm.com/downloads) and download Git for your computer.
+
+**Step 2:**  
+Open the file you downloaded and follow the instructions to install Git.
+
+---
+
+## Essential Git Commands (Beginner to Advanced)
+
+### 1. Initialize Git
+
+<Callout type="info">
+  <b>What does this do?</b>
+  This command tells Git to start watching your folder. It's like turning on the
+  "time machine" for your project!
+</Callout>
+
+```bash
+git init
+```
+
+Now your folder is a Git repository. You can start tracking changes, saving versions, and collaborating with others.
+
+---
+
+### 2. Check Git status
+
+<Callout type="info">
+  <b>Why use this?</b>
+  This command shows you what files have changed, which are staged, and which are
+  not. It's like checking your homework list before submitting!
+</Callout>
+
+```bash
+git status
+```
+
+---
+
+### 3. Stage files for Git tracking
+
+<Callout type="info">
+  <b>What does staging mean?</b>
+  Staging is like putting your homework in your backpack before handing it in. Only
+  staged files will be included in your next commit!
+</Callout>
+
+```bash
+git add <filename>      # Stage a specific file
+git add --all           # Stage all files
+git add .               # Stage all files in the current directory
+```
+
+---
+
+### 4. Commit changes
+
+<Callout type="info">
+  <b>What is a commit?</b>A commit is like saving a checkpoint in a video game.
+  You can always go back to it!
+</Callout>
+
+```bash
+git commit -m "Your message"
+```
+
+Write a message that describes what you changed, like "Add new chapter" or "Fix typo in introduction".
+
+---
+
+### 5. Check Git log
+
+<Callout type="info">
+  <b>Why check the log?</b>
+  The log shows you all the save points (commits) in your project. It's like flipping
+  through your diary to see what you did each day!
+</Callout>
+
+```bash
+git log
+# or for a shorter view:
+git log --oneline
+```
+
+---
+
+### 6. Go back from one commit state to another
+
+<Callout type="warning">
+  <b>Be careful!</b> This can change your project to an earlier state. Make sure
+  you really want to go back!
+</Callout>
+
+```bash
+git reset --hard <commit id>
+```
+
+You can find the commit id from `git log`.
+
+---
+
+### 7. View Git log with references for each change
+
+<Callout type="info">
+  <b>What is reflog?</b>
+  Reflog shows you all the moves you've made in your project, even the ones you might
+  have undone!
+</Callout>
+
+```bash
+git reflog
+```
+
+---
+
+### 8. Remove a file from Git tracking
+
+<Callout type="info">
+  <b>Why remove a file?</b>
+  If you added something by mistake, you can tell Git to stop tracking it.
+</Callout>
+
+```bash
+git rm <filename>
+```
+
+---
+
+### 9. Create a branch
+
+<Callout type="info">
+  <b>What is a branch?</b>A branch is like a parallel universe for your project.
+  You can try new things without changing your main work!
+</Callout>
+
+```bash
+git branch <branch name>
+```
+
+---
+
+### 10. View branch list
+
+```bash
+git branch --list
+```
+
+---
+
+### 11. Switch from one branch to another
+
+```bash
+git switch <branch name>
+```
+
+---
+
+### 12. Merge code from one branch to another
+
+<Callout type="warning" emoji="💡">
+  To bring code from another branch into the branch you want, first use `git switch <branchname>` to go to that branch. Then enter the command below.
+</Callout>
+
+```bash
+git merge <branch name>
+```
+
+---
+
+### 13. Delete a Branch from Git (All Methods, When & Why)
+
+There are several ways to delete a branch, depending on whether it's local (on your computer) or remote (on GitHub).
+
+#### Delete a Local Branch
+
+```bash
+git branch -d branch-name
+```
+
+- The `-d` flag means "delete". This will only delete the branch if it has been fully merged (safe delete).
+
+**Force delete (if not merged):**
+
+```bash
+git branch -D branch-name
+```
+
+- The `-D` flag means "delete anyway". Use this if you are sure you don't need the branch's changes.
+
+**When and Why?**
+
+- Delete a branch after you've merged its changes into your main branch (like `main` or `master`).
+- Clean up old branches to keep your project tidy.
+- Only force delete if you are sure you don't need the work in that branch.
+
+#### Delete a Remote Branch (on GitHub)
+
+```bash
+git push origin --delete branch-name
+```
+
+- This tells GitHub to remove the branch from the remote repository.
+
+**When and Why?**
+
+- After merging a pull request, delete the remote branch to keep your GitHub repo clean.
+- Prevents confusion and accidental work on old branches.
+
+---
+
+### 14. Change branch name
+
+<Callout type="warning" emoji="💡">
+  To change the name of a branch, first use `git switch <branchname>` to go to that branch. Then enter the command below.
+</Callout>
+
+```bash
+git branch -m <updated branch name>
+```
+
+---
+
+### 15. Stash Git changes (save uncommitted work in Git draft)
+
+<Callout type="info">
+  <b>What is stashing?</b>
+  Stashing is like putting your work in a drawer for later, so you can work on something
+  else!
+</Callout>
+
+```bash
+git stash
+```
+
+---
+
+### 16. Check stash list
+
+```bash
+git stash list
+```
+
+---
+
+### 17. See what was saved in Git stash
+
+```bash
+git stash show -p
+```
+
+---
+
+### 18. Apply Git stash
+
+```bash
+git stash apply <stash id>
+# or to apply and remove from stash:
+git stash pop
+```
+
+---
+
+### 19. If you accidentally add a file to Git or realize after committing that you want to ignore it from Git:
+
+**Step 1:**  
+Create a .gitignore file and add the name of that file to it.
+
+**Step 2:**
+
+```bash
+git rm --cached <filename>
+```
+
+---
+
+### 20. To add or push files to GitHub or a remote repository:
+
+**Step 1:**
+
+```bash
+git remote add <origin name> <github repository link>
+```
+
+Example:  
+`git remote add origin git@github.com:YourUsername/your-repo.git`
+
+**Step 2:**
+
+```bash
+git push -u <origin name> <branch name>
+```
+
+Example:  
+`git push -u origin main`
+
+---
+
+### 21. Pull from remote repository
+
+```bash
+git pull
+```
+
+---
+
+### 22. Fetch from remote repository (see changes without merging)
+
+```bash
+git fetch
+```
+
+---
+
+## What is GitHub?
+
+GitHub is like a giant library where you can keep your Git projects online, share them with friends, and work together. It's also a place to show off your work and get help from others!
+
+![GitHub Collaboration](https://docs.github.com/assets/images/help/repository/repo-create.png)
+
+---
+
+## Understanding Commits, Branches, and History
+
+- **Commit:** A snapshot of your project at a point in time. Like a save point in a game.
+- **Branch:** A parallel version of your project. Imagine a choose-your-own-adventure book!
+- **History:** The record of all commits and branches. You can always look back and see what happened.
+
+---
+
+## Branching & Merging (Explained Visually)
+
+<Callout type="info">
+  Branches let you try new ideas without breaking your main project. If you mess
+  up, just go back to the main branch!
+</Callout>
+
+---
+
+## Resolving Merge Conflicts (Step by Step, Explained Clearly)
+
+When you work with others or even just on different branches, sometimes two people (or two branches) change the same part of a file. When you try to merge those changes, Git doesn't know which version to keep. This is called a **merge conflict**.
+
+### What is a Merge Conflict?
+
+A merge conflict happens when Git can't automatically figure out how to combine changes from two branches. For example, if you and your friend both edit the same line in a file, Git will ask you to decide which version to keep.
+
+---
+
+### How to Know You Have a Merge Conflict
+
+- When you run `git merge branch-name`, Git will stop and show a message like:
+  > CONFLICT (content): Merge conflict in filename.txt
+- Your terminal will say: "Automatic merge failed; fix conflicts and then commit the result."
+- If you run `git status`, you'll see files marked as "Unmerged".
+
+---
+
+### How to Fix a Merge Conflict (Step by Step)
+
+1. **Try to merge:**
+
+   ```bash
+   git merge branch-name
+   ```
+
+   - If there's a conflict, Git will tell you which files are affected.
+
+2. **Open the conflicted file(s):**
+
+   - Open the file in your code editor. You'll see special markers like this:
+     ```
+     <<<<<<< HEAD
+     Your changes (from the branch you're on)
+     =======
+     Their changes (from the branch you're merging in)
+     >>>>>>> branch-name
+     ```
+   - Everything between `<<<<<<< HEAD` and `=======` is your version.
+   - Everything between `=======` and `>>>>>>> branch-name` is the other branch's version.
+
+3. **Decide what to keep:**
+
+   - Read both versions. Decide if you want to keep your changes, their changes, or a mix of both.
+   - Edit the file so it looks the way you want.
+   - **Remove all the conflict markers** (`<<<<<<<`, `=======`, `>>>>>>>`).
+
+   **Example:**
+   Before:
+
+   ```
+   <<<<<<< HEAD
+   Hello, world!
+   =======
+   Hello, Git!
+   >>>>>>> feature-branch
+   ```
+
+   After (if you want both):
+
+   ```
+   Hello, world!
+   Hello, Git!
+   ```
+
+   Or (if you want just one):
+
+   ```
+   Hello, world!
+   ```
+
+4. **Mark the conflict as resolved:**
+
+   - Save the file.
+   - Tell Git you've fixed the conflict:
+     ```bash
+     git add filename.txt
+     ```
+
+5. **Complete the merge:**
+   - If all conflicts are resolved, finish the merge:
+     ```bash
+     git commit
+     ```
+   - Git may auto-create a commit message for you. You can edit it or just save and close.
+
+---
+
+### Tips for Beginners
+
+- **Take your time:** Read both versions carefully. If you're not sure, ask a teammate or check the project's history.
+- **Use your code editor:** Most editors (like VS Code) highlight conflicts and make it easy to choose which changes to keep.
+- **Test your code:** After resolving conflicts, run your project to make sure everything works as expected.
+- **Don't panic!** Merge conflicts are normal and happen to everyone. The more you practice, the easier they get.
+
+<Callout type="info">
+  Merge conflicts are like two people writing on the same page. You just need to
+  decide what the final story should say!
+</Callout>
+
+---
+
+## Rebase & Squash Explained
+
+### What is Rebase?
+
+**Rebase** moves your branch to the tip of another branch, replaying your changes as if they happened last. It creates a cleaner, linear history.
+
+**Command:**
+
+```bash
+git switch your-feature-branch
+git rebase main
+```
+
+- This takes your changes and puts them "on top" of the latest `main` branch.
+
+**When to use?**
+
+- Before merging your feature branch, rebase to make sure you have the latest changes from `main`.
+- Makes the project history easier to read.
+
+<Callout type="warning">
+  Don't rebase shared branches unless everyone knows, because it rewrites
+  history. Use rebase for your own feature branches before merging.
+</Callout>
+
+### What is Squash?
+
+**Squash** means combining several commits into one. This is useful for cleaning up your commit history before merging.
+
+**Command:**
+
+```bash
+git rebase -i HEAD~3
+```
+
+- This opens an editor. Change `pick` to `squash` for the commits you want to combine.
+
+#### What does `HEAD~3` mean?
+
+- `HEAD` means the latest commit on your current branch.
+- `~3` means "go back 3 commits from HEAD."
+- So, `HEAD~3` tells Git to show you the last 3 commits (not including the current one) for editing.
+
+#### How to use it (Step by Step):
+
+1. Decide how many commits you want to squash (for example, the last 3).
+2. Run:
+   ```bash
+   git rebase -i HEAD~3
+   ```
+3. An editor will open with a list of your last 3 commits. It will look like this:
+   ```
+   pick a1b2c3d Commit message 1
+   pick b2c3d4e Commit message 2
+   pick c3d4e5f Commit message 3
+   ```
+4. Change `pick` to `squash` (or just `s`) for the commits you want to combine into the one above it:
+   ```
+   pick a1b2c3d Commit message 1
+   squash b2c3d4e Commit message 2
+   squash c3d4e5f Commit message 3
+   ```
+5. Save and close the editor. Git will ask you to write a new commit message for the squashed commit.
+6. Save and close again. Now your 3 commits are combined into one!
+
+**When to use?**
+
+- Before merging a feature branch, squash your "work in progress" commits into one clear commit.
+
+<Callout type="info">
+  Squashing makes your project history cleaner and easier to understand for
+  everyone!
+</Callout>
+
+---
+
+## Using Multiple GitHub Accounts on One PC (Step by Step, Visual Guide)
+
+Managing multiple GitHub accounts (like personal and work) on one computer is possible! Here's a clear, step-by-step guide anyone can follow.
+
+---
+
+### Step 1: Create SSH Keys for All Accounts
+
+First, open your terminal and make sure you are in your `.ssh` folder:
+
+- On Windows: `cd %USERPROFILE%\.ssh`
+- On Mac/Linux: `cd ~/.ssh`
+
+#### Generate a new SSH key for each account
+
+For each GitHub account, run:
+
+```bash
+ssh-keygen -t ed25519 -C "your-email@example.com"
+```
+
+- When prompted for a file to save the key, use a unique name (e.g., `id_ed25519_personal` or `id_ed25519_work`).
+- Press Enter to accept the location, then set a passphrase (or leave blank).
+
+You should now see your new key files in the `.ssh` folder, e.g.:
+
+- `id_ed25519_personal` and `id_ed25519_personal.pub`
+- `id_ed25519_work` and `id_ed25519_work.pub`
+
+---
+
+### Step 2: Add SSH Key to Each GitHub Account
+
+Copy the public key to your clipboard:
+
+- On Mac:
+  ```bash
+  pbcopy < ~/.ssh/id_ed25519_personal.pub
+  ```
+- On Windows:
+  ```bash
+  cat ~/.ssh/id_ed25519_personal.pub | clip
+  ```
+- On Linux:
+  ```bash
+  xclip -sel clip < ~/.ssh/id_ed25519_personal.pub
+  ```
+
+Go to GitHub > Settings > SSH and GPG keys > New SSH key. Paste the key, give it a name, and save.
+
+Repeat for your other account, using the other public key file.
+
+---
+
+### Step 3: Add SSH Config File
+
+Create or edit the file `~/.ssh/config` (or `%USERPROFILE%\.ssh\config` on Windows). Add entries for each account:
+
+```bash
+# Personal GitHub
+Host github-personal
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_personal
+
+# Work GitHub
+Host github-work
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_work
+```
+
+- This tells SSH which key to use for each account.
+
+---
+
+### Step 4: Clone or Create Repos Using Different Accounts
+
+When cloning or adding remotes, use the correct host alias:
+
+- For personal:
+  ```bash
+  git clone git@github-personal:your-username/your-repo.git
+  ```
+- For work:
+  ```bash
+  git clone git@github-work:your-work-username/work-repo.git
+  ```
+
+Or, to change an existing remote:
+
+```bash
+git remote set-url origin git@github-personal:your-username/your-repo.git
+```
+
+---
+
+### Step 5: Set Git User Per Repository
+
+To make sure the correct GitHub user is used for each repo, set the user info in each repo:
+
+```bash
+git config user.name "Your Name"
+git config user.email "your-email@example.com"
+```
+
+---
+
+### Step 6: Test and Troubleshoot
+
+- Try pushing or pulling from each repo. If you get a permission error, check your SSH config and which key is being used.
+- If you see `Permission denied (publickey)`, make sure the correct key is added to GitHub and referenced in your config.
+- For errors like `no matching host key type found`, see [this StackOverflow answer](https://stackoverflow.com/questions/34620895/unable-to-negotiate-with-xx-xxx-xx-xxx-no-matching-host-key-type-found-their-of).
+
+---
+
+<Callout type="info">
+  You can manage as many GitHub accounts as you want—just repeat these steps for
+  each one, using a unique key and host alias!
+</Callout>
+
+---
+
+## Push, Pull, Fetch
+
+- **Push:** Upload your commits to GitHub. Like sending your homework to your teacher.
+- **Pull:** Download and merge changes from GitHub. Like getting the latest version of your group project.
+- **Fetch:** Download changes without merging. Like checking what your friends did, but not adding it to your work yet.
+
+| Command     | What it does                      |
+| ----------- | --------------------------------- |
+| `git push`  | Uploads your commits              |
+| `git pull`  | Fetches and merges remote changes |
+| `git fetch` | Only fetches, does not merge      |
+
+<Callout type="info">
+  Always pull before you push! This keeps your work up to date with your
+  friends.
+</Callout>
+
+---
+
+## Undoing Mistakes
+
+Everyone makes mistakes! Git lets you fix them easily.
+
+- **Undo the last commit (but keep your changes):**
+  ```bash
+  git reset --soft HEAD~1
+  ```
+- **Undo the last commit and remove changes:**
+  ```bash
+  git reset --hard HEAD~1
+  ```
+- **Unstage a file:**
+  ```bash
+  git reset <filename>
+  ```
+- **Restore a deleted file:**
+  ```bash
+  git checkout -- <filename>
+  ```
+
+<Callout type="info">
+  Don't panic! With Git, you can almost always go back and fix things.
+</Callout>
+
+---
+
+## Advanced Features
+
+- **Stashing:** Save changes temporarily if you need to switch tasks.
+  ```bash
+  git stash
+  git stash apply
+  ```
+- **Cherry-pick:** Apply a specific commit from one branch to another.
+  ```bash
+  git cherry-pick <commit-hash>
+  ```
+- **Tagging:** Mark special points in history (like releases).
+  ```bash
+  git tag v1.0.0
+  ```
+
+---
+
+## Common Mistakes and How to Fix Them
+
+- **Forgot to pull before pushing?**
+  - Run `git pull` and fix any conflicts, then push again.
+- **Pushed to the wrong branch?**
+  - Switch to the correct branch and push there.
+- **Accidentally deleted a file?**
+  - Use `git checkout -- <filename>` to get it back.
+
+<Callout type="warning">
+  If you're ever stuck, ask for help! Git is powerful, but everyone needs help
+  sometimes.
+</Callout>
+
+---
+
+## Best Practices
+
+<Callout type="info">
+  - Commit often, with clear messages (like "Add new story ending" or "Fix bug
+  in level 2"). - Use branches for features and fixes. - Pull before you push. -
+  Resolve conflicts carefully. - Don't be afraid to experiment—Git lets you undo
+  mistakes!
+</Callout>
+
+---
+
+## Glossary for Kids
+
+- **Repository (repo):** A special folder where Git tracks your files.
+- **Commit:** A save point for your project.
+- **Branch:** A different path or version of your project.
+- **Merge:** Bringing two branches together.
+- **Conflict:** When two people change the same thing.
+- **Rebase:** Moving your changes to the front of the line.
+- **Squash:** Combining several commits into one.
+- **Push:** Sending your work to GitHub.
+- **Pull:** Getting the latest work from GitHub.
+- **Fetch:** Checking for new work, but not adding it yet.
+- **Stash:** Temporarily saving your work.
+- **Tag:** A special label for a commit.
+
+---
+
+## More Resources
+
+- [Official Git Documentation](https://git-scm.com/doc)
+- [GitHub Docs](https://docs.github.com/en)
+- [Atlassian Git Tutorials](https://www.atlassian.com/git/tutorials)
+
+---
+
+**By following this guide, you'll be able to master Git and GitHub for any project—even if you're just 10 years old!**
