@@ -1,0 +1,81 @@
+### Removing Effect Dependencies
+
+Whenever you declare an effect, the `linter` will automatically verify that you've added all reactive values to its dependency array. However, sometimes if you add unnecessary dependencies, it can create bugs in your application.
+
+In this lesson, we'll learn how to remove unnecessary dependencies from effect dependencies.
+
+#### Dependencies should match the code
+
+Whenever you write an effect, you should only write the start and stop of what you want to do with the effect. Then if you leave the effect's dependencies empty, the `linter` will auto-suggest the necessary dependencies. You just need to add those dependencies to the dependency array according to the suggestion.
+
+In other words, you don't need to worry about the effect's dependencies; the `linter` will tell you the necessary dependencies.
+
+#### To remove a dependency, prove that it's not a dependency
+
+Since you don't have to select the effect's dependencies yourself (the `linter` will tell you the necessary dependencies), if it happens that the `linter` is suggesting you add a dependency that you're sure will never change, and therefore you don't want to add it to the dependencies, then you need to show React through code that it will never change. But in such cases, you should never suppress the `linter`.
+
+Let's say your code is like this:
+
+```jsx
+const serverUrl = "https://localhost:1234";
+
+function ChatRoom({ roomId }) {
+    // This is a reactive value
+    useEffect(() => {
+        const connection = createConnection(serverUrl, roomId); // This Effect reads that reactive value
+        connection.connect();
+        return () => connection.disconnect();
+    }, [roomId]); // ✅ So you must specify that reactive value as a dependency of your Effect
+    // ...
+}
+```
+
+In this case, the `linter` will suggest adding `roomId` to the dependencies. But you know that `roomId` will never change. So you might remove `roomId` from the dependencies:
+
+```jsx
+const serverUrl = "https://localhost:1234";
+
+function ChatRoom({ roomId }) {
+    useEffect(() => {
+        const connection = createConnection(serverUrl, roomId);
+        connection.connect();
+        return () => connection.disconnect();
+    }, []); // 🔴 React Hook useEffect has a missing dependency: 'roomId'
+    // ...
+}
+```
+
+Then you'll see the `linter` giving you a warning, and to avoid this warning, you might suppress the `linter` like this:
+
+```jsx
+const serverUrl = "https://localhost:1234";
+
+function ChatRoom({ roomId }) {
+    useEffect(() => {
+        const connection = createConnection(serverUrl, roomId);
+        connection.connect();
+        return () => connection.disconnect();
+        // eslint-ignore-next-line react-hooks/exhaustive-deps
+    }, []);
+    // ...
+}
+```
+
+Never do this, because it will create bugs in your component, and the `linter` will never give suggestions for this component again. As a result, you might miss some necessary dependencies, which will change your component's behavior. So if you're absolutely sure that `roomId` will never change, you need to make React understand that `roomId` will never change. To do this, you can take `roomId` outside the component and write it statically.
+
+```jsx
+const serverUrl = "https://localhost:1234";
+const roomId = "general";
+
+function ChatRoom() {
+    useEffect(() => {
+        const connection = createConnection(serverUrl, roomId);
+        connection.connect();
+        return () => connection.disconnect();
+    }, []);
+    // ...
+}
+```
+
+Remember, if you want to remove something from dependencies, never suppress the `linter`. Instead, change your code. The dependencies should match the code.
+

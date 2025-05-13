@@ -1,0 +1,178 @@
+import { Callout } from 'nextra/components';
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Updating Objects in State – The Fun, Easy Way! 🚀
+
+Welcome! If you ever felt confused about updating objects in React state, you're not alone. This guide is for you—especially if you think you're a "bad student." Let's make it so easy and fun that you'll want to read it again and again!
+
+---
+
+## 🎯 What You'll Learn
+- Why you shouldn't change objects in state directly
+- How to update objects the React way
+- How to update nested objects
+- What "immutability" means (in plain English!)
+- Pro tips and common mistakes
+
+---
+
+<Callout type="info">**Analogy:** Think of React state like a restaurant order. Once you hand your order to the chef, you can't change it. If you want something different, you have to place a new order!</Callout>
+
+---
+
+## 1. Why Can't I Just Change the Object? 🤔
+
+Let's say you have this:
+
+```jsx
+const [position, setPosition] = useState({ x: 0, y: 0 });
+```
+
+You might think you can do this:
+
+```jsx
+position.x = 5; // ❌
+```
+
+But React won't notice! It's like whispering your new order to yourself—the chef (React) never hears it, so nothing changes on your plate (UI).
+
+---
+
+## 2. The Right Way: Make a Copy, Then Update! 📝
+
+**Always create a new object and use the setter function.**
+
+```jsx
+setPosition({ x: 5, y: 10 }); // ✅
+```
+
+Or, if you want to keep the old values and just change one:
+
+```jsx
+setPosition({ ...position, x: 5 });
+```
+
+<Callout type="tip">**Pro Tip:** The <b>spread syntax</b> (`...`) copies all properties from the old object. Then you can override the ones you want to change!</Callout>
+
+---
+
+## 3. Step-by-Step: Moving a Dot Example 🎯
+
+Let's see a real example:
+
+```jsx
+import { useState } from 'react';
+
+export default function MovingDot() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  return (
+    <div
+      onPointerMove={e => {
+        setPosition({ x: e.clientX, y: e.clientY });
+      }}
+      style={{ position: 'relative', width: 300, height: 300, background: '#f0f0f0' }}
+    >
+      <div style={{
+        position: 'absolute',
+        backgroundColor: 'red',
+        borderRadius: '50%',
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        left: -10,
+        top: -10,
+        width: 20,
+        height: 20,
+      }} />
+    </div>
+  );
+}
+```
+
+Try moving your mouse over the area—the red dot follows you! If you had mutated the object directly, the dot wouldn't move.
+
+---
+
+## 4. Why Not Mutate? (A Quick Story) 📚
+
+Imagine you're writing your homework in pen. If you make a mistake and scribble over it, your teacher (React) won't know what changed. But if you use a new sheet for each draft, your teacher can see every change!
+
+- **Mutating state** = scribbling on the same paper (React can't see changes)
+- **Making a copy** = using a new sheet (React sees the new version)
+
+---
+
+## 5. Updating Nested Objects 🏗️
+
+What if your state looks like this?
+
+```jsx
+const [person, setPerson] = useState({
+  name: 'Niki',
+  artwork: {
+    title: 'Blue Nana',
+    city: 'Hamburg',
+    image: 'https://i.imgur.com/Sd1AgUOm.jpg',
+  }
+});
+```
+
+To update just the city:
+
+```jsx
+setPerson({
+  ...person,
+  artwork: {
+    ...person.artwork,
+    city: 'Lagos'
+  }
+});
+```
+
+<Callout type="warning">**Common Mistake:** If you only copy the top object, the nested object stays the same! Always copy each level you want to change.</Callout>
+
+---
+
+## 6. Pro Tips & Tricks 💡
+
+- **Never mutate state directly!**
+- Use the spread syntax (`...`) to copy objects
+- For deep updates, copy every level you change
+- For very complex state, try libraries like [Immer](https://immerjs.github.io/immer/)
+
+---
+
+## 7. Recap & Cheatsheet 📝
+
+- Treat state as **read-only**
+- To update, **make a copy** and set state to the new object
+- Use `{ ...oldObject, changedProp: newValue }`
+- For nested objects, copy each level
+
+---
+
+## 8. FAQ 🤓
+
+**Q: What happens if I mutate state directly?**
+A: React won't re-render, and you might get weird bugs!
+
+**Q: Why does React care about immutability?**
+A: It helps React know when to update the UI, makes debugging easier, and enables cool features like time travel and undo.
+
+**Q: Is it okay to mutate a brand new object before setting state?**
+A: Yes! As long as you don't mutate objects that are already in state.
+
+---
+
+<Callout type="info">
+  <b>Try it yourself:</b>
+  <ul>
+    <li>Make a form with a nested object in state</li>
+    <li>Try updating a nested property the wrong way (mutate directly)</li>
+    <li>Then try the right way (copy and update)</li>
+    <li>Notice the difference!</li>
+  </ul>
+</Callout>
+
+---
+
+> **🚀 Final Advice:** Don't be afraid of objects in state! Just remember: copy, then update. You got this!

@@ -1,0 +1,44 @@
+import { Steps } from "nextra/components";
+
+React automatically updates the DOM, so we don't normally need to manually modify the DOM. However, there may be certain use cases where we need to manipulate the DOM directly, such as focusing on an element, scrolling to an element's position, or measuring its size. React doesn't have built-in methods for these operations, so we can use `useRef` to directly modify the DOM.
+
+Let's see how we can manipulate the DOM using `useRef`:
+
+<Steps>
+### Import useref from react
+
+First, we need to import `useRef` from React.
+
+```jsx
+import { useState } from "react";
+```
+
+### declare a ref inside your component:
+
+Declare and initialize `ref` inside your component.
+
+```jsx
+const myRef = useRef(null);
+```
+
+### pass your ref as the `ref` attribute to the JSX tag
+
+Now we'll use `ref` as an attribute on the JSX tag of the DOM node we want to manipulate.
+
+```jsx
+<div ref={myRef}></div>
+<button onClick={handleChangeText}>Change Text</button>
+```
+
+### modify the dom node in event handler
+
+We can now perform any necessary manipulations on that DOM node inside an event handler.
+
+```jsx
+function handleChangeText() {
+    myRef.innerText = "This is a text passed by the ref";
+}
+```
+
+</Steps>
+

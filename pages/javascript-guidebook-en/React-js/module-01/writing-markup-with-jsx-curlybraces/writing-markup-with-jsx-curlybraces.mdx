@@ -1,0 +1,88 @@
+import { Callout } from "nextra/components";
+
+---
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="100" style={{ marginBottom: "1rem" }} />
+
+# 🟦 JavaScript in JSX with Curly Braces
+
+Welcome! JSX lets you mix JavaScript and markup, and curly braces `{}` are your magic window to dynamic content. Let's see how to use them like a pro! 🚀
+
+---
+
+## 🧐 Where can you use curly braces in JSX?
+
+1. **Inside tag content:**
+   ```jsx
+   <h1>{name} is a great teacher</h1>
+   ```
+   Here, `{name}` is a JavaScript variable.
+
+2. **As attribute values:**
+   ```jsx
+   <img src={avatarUrl} alt={description} />
+   ```
+   You can use any JavaScript expression inside the curly braces.
+
+---
+
+## 💡 What can you put inside curly braces?
+- Variables
+- Function calls
+- Expressions (e.g., `{count + 1}`)
+- Objects (e.g., for inline styles)
+
+**Example:**
+```jsx
+const name = 'Hedy Lamarr';
+const avatar = 'https://i.imgur.com/yXOvdOSs.jpg';
+const style = { color: 'blue', backgroundColor: 'lightgray' };
+
+function Profile() {
+  return (
+    <div style={style}>
+      <h1>{name}'s Profile</h1>
+      <img src={avatar} alt={name} />
+    </div>
+  );
+}
+```
+
+---
+
+## 📏 Rules for using curly braces in JSX
+
+1. **You can only use curly braces in two places:**
+   - As text content inside a JSX tag: `<h1>{name}</h1>`
+   - As an attribute value: `<img src={avatar} />`
+
+2. **You cannot use curly braces for tag names:**
+   - ❌ `<{tag}>Hello</{tag}>` is invalid.
+
+3. **String attributes vs. JavaScript expressions:**
+   - `src="avatar.png"` passes a string.
+   - `src={avatar}` passes the value of the variable `avatar`.
+
+4. **For objects (like inline styles), use double curly braces:**
+   - `<div style={{ color: 'red' }}></div>`
+   - The outer `{}` is for JSX, the inner `{}` is for the JavaScript object.
+
+---
+
+<Callout type="warning">
+  <b>Common mistakes:</b><br />
+  • Using curly braces for tag names.<br />
+  • Using quotes and curly braces together: <code>src="{'{avatar}'}"</code> (this passes the string <code>"{'{avatar}'}"</code>, not the variable).<br />
+  • Forgetting to close tags.
+</Callout>
+
+---
+
+## 📚 References
+- [React Docs: JavaScript in JSX with Curly Braces](https://react.dev/learn/javascript-in-jsx-with-curly-braces)
+
+---
+
+<Callout type="success">
+  Try using curly braces in your own JSX! The more you practice, the more natural it will feel. Happy coding! 🎉
+</Callout>

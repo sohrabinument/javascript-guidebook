@@ -1,0 +1,47 @@
+import { Steps } from "nextra/components";
+
+Everything we see on the browser screen in a React application must be rendered by React.
+
+### Render and Commit
+
+What we see as `UI` on the screen becomes visible after three processes in React. Let's learn what these three processes of React rendering are and how they work.
+
+1. **Triggering a render:**
+2. **Rendering the component:**
+3. **Committing to the DOM:**
+
+<Steps>
+ ### Trigger a render (Triggering step):
+
+There are mainly two reasons why React's `render` method is called or rendering is triggered:
+
+1. **Initial render:** When the application runs for the very first time, React renders all of its components inside an `HTML` `root` element by calling its `React.render()` method.
+
+2. **Re-render when state updates:** After all components have appeared in the `UI` for the first time, when a state changes within a component, React automatically calls its `render()` method or a re-render is triggered.
+
+### React renders your component (Rendering step):
+
+When React's rendering is triggered, React calls its components. This helps it understand where the change has occurred.
+
+-   **In the case of the first render, React calls its root component**
+
+-   **In subsequent times, when a re-render is triggered, it calls the component from which the re-render was triggered and takes a `snapshot` of the `Render Tree` from the first render, and takes a `snapshot` of the subsequent render. It then calculates where the change has occurred through the `Diffing` algorithm in its virtual DOM. After that, it moves to the next step for committing.**
+
+**The rendering process happens recursively, meaning if there are any nested components inside the component that React called for rendering, those will also be re-rendered**
+
+### React Commits changes to the DOM (Committing step):
+
+In the committing phase, React modifies the `DOM`. In this case,
+
+-   **In the first render, React calls `appendChild()` of the `DOM` to add all `DOM Nodes` to the root element**
+
+-   **In the case of re-renders, React only changes the part of the `DOM` where it could detect changes in its virtual DOM**
+
+**After the first render, React only changes the `DOM` when it can see a difference between the previous render and the next render. React doesn't touch any components where no changes are detected.**
+
+</Steps>
+
+### Finally, the browser paints:
+
+After rendering and committing, when React has updated its `DOM`, it gives the `Updated DOM` to the browser. And the browser re-paints it on the screen.
+

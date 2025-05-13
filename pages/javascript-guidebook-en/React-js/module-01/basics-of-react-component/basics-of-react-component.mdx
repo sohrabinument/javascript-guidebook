@@ -1,0 +1,103 @@
+import { Steps } from "nextra/components";
+import { Callout } from "nextra/components";
+
+---
+
+<img
+  src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+  alt="React Logo"
+  width="100"
+  style={{ marginBottom: "1rem" }}
+/>
+
+# 🧩 Basics of React Components
+
+Welcome! Components are the heart of React. They help you build UIs that are reusable, organized, and fun to work with. Let's dive in and see how you can master them! 🚀
+
+---
+
+## 🏗️ What is a React Component?
+
+A **component** is a reusable, self-contained piece of UI in React. Components are the building blocks of a React application—each part of your UI, from a button to an entire page, can be a component. Components help you break down complex interfaces into smaller, manageable, and reusable pieces.
+
+<Callout type="info">Think of components as LEGO blocks for your UI!</Callout>
+
+## 💡 Why Use Components?
+
+- **Reusability:** Write once, use anywhere in your app.
+- **Separation of Concerns:** Each component handles its own logic and UI.
+- **Maintainability:** Easier to update, debug, and test.
+
+## 🧑‍💻 Types of Components
+
+- **Function Components:** The most common and modern way to write components. They are JavaScript functions that return JSX.
+- **Class Components:** An older way, now less common, using ES6 classes.
+
+## ✨ Creating a Function Component
+
+```jsx
+export default function Profile() {
+  return (
+    <img
+      src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=400&h=400&q=80"
+      alt="Profile Example"
+    />
+  );
+}
+```
+
+<Callout type="success">
+  Pro Tip: Use Unsplash or Wikimedia for reliable image URLs in your demos!
+</Callout>
+
+**Key Points:**
+
+- The function name must start with a capital letter.
+- The function returns JSX (markup).
+- Use `export default` to make the component available for import elsewhere.
+
+---
+
+## 🧩 Using Components
+
+You can use a component inside another component just like a custom HTML tag:
+
+```jsx
+import Profile from "./Profile";
+
+export default function Gallery() {
+  return (
+    <section>
+      <h1>Amazing scientists</h1>
+      <Profile />
+      <Profile />
+      <Profile />
+    </section>
+  );
+}
+```
+
+---
+
+## 🏆 Best Practices & Rules
+
+<Callout type="warning">
+  Component names must start with a capital letter!
+</Callout>
+
+- **Return JSX from your component function.**
+- **Do not define another function inside a component (define helper functions outside or as separate components).**
+- **If a component is small and not reused, it can be defined in the same file. For larger or reusable components, use separate files.**
+
+---
+
+## ✅ Quick Recap & Next Steps
+
+- Components make your UI modular and reusable.
+- Always start component names with a capital letter.
+- Practice by building your own small components!
+
+<Callout type="info">
+  Want to test your knowledge? Check out the interview questions for this
+  section!
+</Callout>

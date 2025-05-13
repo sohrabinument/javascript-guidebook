@@ -1,0 +1,125 @@
+## What is Conditional Rendering?
+
+In React, we can display elements based on certain conditions. We can determine what to show and what not to show based on specific logic. This is called conditional rendering in React.
+
+We can perform conditional rendering in React in several ways:
+
+1. `if else statements`
+
+2. `condition ? true : false - Ternary Operator`
+
+3. `&& - Logical AND Operator`
+
+4. `|| - Logical OR operator`
+
+5. `?? - Nullish Coalescing operator`
+
+### `if else statements`
+
+If we have complex logic and need to render something based on that logic, we can do so using `if else statements`. In that case, we need to define the `if else statements` outside of `JSX`.
+
+**Example:**
+
+```javascript filename="PackingList.jsx" showLineNumbers
+function Item({ name, isPacked }) {
+    if (isPacked) {
+        return <li className='item'>{name} ✅</li>;
+    }
+    return <li className='item'>{name}</li>;
+}
+
+export default function PackingList() {
+    return (
+        <section>
+            <h1>Sally Ride's Packing List</h1>
+            <ul>
+                <Item
+                    isPacked={true}
+                    name='Space suit'
+                />
+                <Item
+                    isPacked={true}
+                    name='Helmet with a golden leaf'
+                />
+                <Item
+                    isPacked={false}
+                    name='Photo of Tam'
+                />
+            </ul>
+        </section>
+    );
+}
+```
+
+### `condition ? true : false - Ternary Operator`
+
+If our condition is not too complex and not nested more than 2-3 levels deep, we can easily use the `Ternary Operator` within our `JSX` for conditional rendering.
+
+**Example:**
+
+```javascript filename="Item.jsx" showLineNumbers
+function Item({ name, isPacked }) {
+    return <li className='item'>{isPacked ? name + " ✅" : name}</li>;
+}
+```
+
+### `&& - Logical AND Operator`
+
+If our condition is such that we want to render something when the condition is true and nothing when it's false, then we can use the `&& - Logical AND Operator` as a shortcut.
+
+```javascript filename="Item.jsx" showLineNumbers
+function Item({ name, isPacked }) {
+    return (
+        <li className='item'>
+            {name} {isPacked && "✅"}
+        </li>
+    );
+}
+```
+
+The logical `&&` means that if the value on the left side of `&&` is `truthy`, it returns the value on the right side, and if it's `falsy`, it returns nothing.
+
+```javascript showLineNumbers
+let logic = "true";
+logic && "Something to Render"; // Here, only if the value of logic is `truthy` will it return what's on the right side of `&&`, otherwise it will return nothing.
+```
+
+However, keep in mind that the data type on the left side of `&&` should not be a number, because if it's a number, it will return `0` as a `falsy` value.
+
+### `|| - Logical OR operator`
+
+Like the logical `&&`, we can also use the `|| - Logical OR operator` to do the same task.
+
+```javascript filename="Item.jsx" showLineNumbers
+function Item({ name, isPacked }) {
+    return (
+        <li className='item'>
+            {name} {isPacked || "✅"}
+        </li>
+    );
+}
+```
+
+However, the logical `||` means that it returns the value on the right side only if the value on the left side is `falsy` (`0`, `null`, `undefined`, `""`, `false`, `NaN`), otherwise it returns nothing.
+
+```javascript showLineNumbers
+let logic = "false";
+logic || "Something to Render"; // Here, only if the value of logic is `falsy` will it return what's on the right side of `||`, otherwise it returns nothing.
+```
+
+### `?? - Nullish Coalescing operator`
+
+If we want to do something when a dynamic value is `null` or `undefined`, we can use the `?? - Nullish Coalescing operator`.
+
+```javascript filename="Item.jsx" showLineNumbers
+function Item({ name, isPacked, data }) {
+    return (
+        data ?? (
+            <li className='item'>
+                {name} {isPacked || "✅"}
+            </li>
+        )
+    );
+}
+```
+

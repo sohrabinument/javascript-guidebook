@@ -1,0 +1,195 @@
+**In this part, we'll first discuss the `useRef` hook. In React, we can manage everything with state, but sometimes we might need to modify the `HTML DOM Element`, which we cannot manage with state even if we wanted to. In such cases, we'll need to manually modify the `DOM`. React has provided us with a hook called `useRef` for this purpose. However, we should remember that since we'll be using `useRef` outside of React's control, we cannot overuse it. In this lesson, we'll discuss in detail how to use `useRef` and in which cases we should use it:**
+
+### Referencing Values with Refs
+
+**When we want our component to hold a value, and even if we change it, our component won't re-render, in that case, we'll use `useRef`.**
+
+#### Adding a ref to your component (How to use `useRef` in a component)
+
+Let's see how we can use `useRef` in a component:
+
+-   **First, we need to import `useRef` from React**
+
+```jsx
+import { useRef } from "react";
+```
+
+-   **Then we need to call `useRef` in our component and provide an initial value**
+
+```jsx
+const ref = useRef(0);
+```
+
+Here we've given `ref` an initial value of 0. In this state, `ref` will return an object to us, and the `ref` object has a default property called `current`. We'll find the value of our `ref` inside that `current`. If we now `console.log(ref)`, we'll get an output like this:
+
+```js
+{
+    current: 0; // It's returning the initial value we provided.
+}
+```
+
+We can both `read` and `write` the value of this `ref.current`. That is, we can store a value in `ref.current`, change it, and use it, and React won't keep track of it, so it's called an `Escape Hatch`. However, one thing to keep in mind is that we cannot use the value of `ref.current` in React's render. In other words, we cannot display the value of `ref.current` in the UI.
+
+```jsx {5}
+import { useRef } from "react";
+
+export default function App() {
+    const ref = useRef("something");
+    return <h1>You are rendering {ref.current} </h1>; // Here the value of ref.current is being displayed in the UI in React rendering, this shouldn't be done.
+}
+```
+
+So what can we do? Let's see through an example.
+
+We'll have a simple button, and we'll show in an alert how many times we've clicked the button.
+
+```jsx {5}
+import { useRef } from "react";
+
+export default function App() {
+    const ref = useRef(0);
+
+    function handleCountClick() {
+        ref.current = ref.current + 1;
+        alert(`you clicked the button ${ref.current} times`);
+    }
+
+    return <button onClick={handleCountClick}>Click me to count</button>;
+}
+```
+
+Here, every time we click the button, it will show in the alert.
+
+If we pay a little attention to this component, we'll get a clear understanding of `useRef`.
+
+Notice:
+
+1. **The value of `ref.current` has been changed inside a handler.**
+2. **No `setter function` was called to change the value of `ref.current`**
+3. **Since no `setter function` was called, the component won't re-render**
+4. **Even though the component doesn't re-render, we can access the updated value immediately after changing the value of `ref`**
+5. **This means we can use `ref` like a `plain javascript object` here**
+6. **We haven't used the value of `ref.current` in any rendering of the component. We've only shown it in an alert.**
+
+These are the main points we need to remember when using `useRef`.
+
+#### Storing a Reference or values in ref (Storing a reference or value in ref)
+
+We can store a reference or value in the `current` property of `useRef`, and the component will retain that value even if React's state changes. In other words, we can use `ref` as a storage for the component that won't lose our stored data no matter how many times the component re-renders due to state changes.
+
+Let's understand this through an example. We'll create a Stop watch and show in the UI how much time has passed from when we start the Stop watch until we stop it:
+
+```jsx
+import { useState } from "react";
+
+export default function Stopwatch() {
+    const [startTime, setStartTime] = useState(null); // We're managing the time when we clicked the Start button with state
+    const [now, setNow] = useState(null); // We'll calculate how much time has passed since starting till now
+
+    function handleStart() {
+        // Here we started the counter
+        setStartTime(Date.now());
+        setNow(Date.now());
+
+        setInterval(() => {
+            // Every 10 milliseconds, we're updating the value of the Stop Watch with state
+            setNow(Date.now());
+        }, 10);
+    }
+
+    let secondsPassed = 0;
+    if (startTime != null && now != null) {
+        secondsPassed = (now - startTime) / 1000;
+    }
+
+    return (
+        <>
+            <h1>Time passed: {secondsPassed.toFixed(3)}</h1>
+            <button onClick={handleStart}>Start</button>
+        </>
+    );
+}
+```
+
+Now we need to stop our Stop Watch, and to do that, we need to `clear` the `interval` with `clearInterval(intervalReference)`. But to `clear` the `interval`, we need the reference to the `interval`, but here our `interval` is inside a `handler` function and it triggers re-rendering every 10 milliseconds, so we won't get the reference to that `interval` if we try to `clearInterval` normally. So the `useRef` hook will help us in this case.
+
+We'll store the reference to that `interval` inside `ref.current` and call `clearInterval` with it.
+
+**A question might arise here: why do we have to store the reference to the `interval` in `ref` in this situation? Why can't we store it in a JavaScript variable?**
+
+Look, we first set the `interval` inside a handler function called `handleStart`. Now if we store this `interval` in a variable inside this function, then when we want to `Stop` it, we won't be able to access that variable inside the `handleStop` function. Because the scope of that variable is only within the `handleStart` function. So naturally, we can't store it as a local variable of a function and then access it from inside another function.
+
+Also, if we declare an empty variable in the global scope and set the reference to the `interval` there, and try to access it inside the `handleStop` function, we couldn't do that either, because from the moment we start the Stop Watch, the component is re-rendering every 10 milliseconds, and in each re-render, the component runs completely fresh, so when we declare an empty variable, it will remain empty in each re-render, so if we use that variable inside the `handleStop` handler, our logic won't work because it will be empty each time.
+
+That's why we'll work with it in a reference. Because the reference is in our global scope, and what we set in the `{current}` property of the reference, the component can remember or retain no matter how many re-renders it takes.
+
+So in this situation, we'll use `ref` as a storage.
+
+**Since the IntervalId isn't used between renderings, we can use `useRef` to store the IntervalId.**
+
+```jsx
+import { useState, useRef } from "react";
+
+export default function Stopwatch() {
+    const ref = useRef(null);
+    const [startTime, setStartTime] = useState(null); // We're managing the time when we clicked the Start button with state
+    const [now, setNow] = useState(null); // We'll calculate how much time has passed since starting till now
+
+    function handleStart() {
+        // Here we started the counter
+        setStartTime(Date.now());
+        setNow(Date.now());
+
+        ref.current = setInterval(() => {
+            // Here the interval is stored in ref.current
+            // Every 10 milliseconds, we're updating the value of the Stop Watch with state
+            setNow(Date.now());
+        }, 10);
+    }
+    function handleStop() {
+        clearInterval(ref.current); // Here clearInterval() is called with the reference to that interval.
+    }
+
+    let secondsPassed = 0;
+    if (startTime != null && now != null) {
+        secondsPassed = (now - startTime) / 1000;
+    }
+
+    return (
+        <>
+            <h1>Time passed: {secondsPassed.toFixed(3)}</h1>
+            <button onClick={handleStart}>Start</button>
+            <button onClick={handleStop}>Stop</button>
+        </>
+    );
+}
+```
+
+#### Differences between refs and state (Differences between state and ref)
+
+React's `useState` and `useRef` are almost the same, but `useState` has a `setter function` through which the state is changed, but `useRef` doesn't have a `setter function`. Instead, it returns an object with a property called `current`, and the value of `ref` is changed by changing it.
+
+Let's look at the differences in more detail.
+
+| refs | state |
+| :-: | :-: |
+| `useRef` takes an initial value and returns an object, and that object has the initial value in a property called current | `useState` takes an initial value, and returns a `state` variable and a `setter function` |
+| Even if the value changes, `useRef` doesn't trigger a re-render. | It triggers a re-render as soon as the value is updated |
+| The value of `useRef` can be mutated at will. | The value of `useState`'s State cannot be mutated |
+| The `current` value of `useRef` cannot be used in the component's rendering | The value of state can be read at any time |
+
+#### When to use ref (When to use ref)
+
+Generally, we won't use `useRef` very much. But when we need to work with an external API outside of React's control and it won't have any effect on our component's rendering, we'll use `useRef`.
+
+1. **Storing timeout / interval Ids (For storing timeout IDs or interval IDs)**
+2. **Storing and manipulating DOM elements (For storing and modifying DOM elements)**
+3. **Storing other objects that aren't necessary to calculate the JSX (For storing any type of object that doesn't need to be rendered in JSX)**
+
+#### Best practices for refs
+
+We need to follow two principles very well for using `useRef`,
+
+1. **Treat refs as an escape hatch - In React, we need to use `ref` as an `escape hatch`. That is, we can use `useRef` when we're working with an external API of the browser.**
+2. **Don't read or write ref.current during rendering - We cannot use `useRef` in React's rendering**
+

@@ -1,0 +1,221 @@
+### Performance Optimization
+
+In this lesson, we'll discuss two important performance optimization hooks and one API in React.
+
+#### API
+
+-   `memo` - For memoizing components.
+
+#### Hooks
+
+-   `useCallback` - For memoizing function definitions. (Used when passing functions as props.)
+-   `useMemo` - For memoizing function results.
+
+#### `memo`
+
+**We know that our components re-render for three reasons:**
+
+1. **When Props Change,**
+2. **When State Changes, and**
+3. **When Parent Components Re-Render**
+
+**In the first two cases, when our component re-renders, there's nothing we need to do. But if the third case occurs, when child components re-render due to parent component re-rendering, we can fix this if necessary.**
+
+**If a code block in our component is rendering unnecessarily and it's significantly affecting performance, and we absolutely need to fix it, we can use the `memo` API to prevent component re-rendering or memoize the component.**
+
+**Usage**
+
+```jsx
+import React from "react";
+const MyComponent = () => {
+    return (
+        <div>
+            <h1>
+                Something that is re-rendering everytime due to its parents
+                state change
+            </h1>
+        </div>
+    );
+};
+
+export default MyComponent;
+```
+
+This component just displays text on the screen and doesn't do anything else. But its parent component might be re-rendering frequently due to state changes. We know that when a parent component's state changes, its entire component tree re-renders.
+
+Let's say `MyComponent` is a very large component doing heavy work, and you don't want it to re-render every time the parent's state changes. In such cases, we can use `memo` in the following way to prevent component re-rendering:
+
+```jsx
+import { memo } from "react";
+const MyComponent = () => {
+    return (
+        <div>
+            <h1>
+                Something that is re-rendering everytime due to its parents
+                state change
+            </h1>
+        </div>
+    );
+};
+
+export default memo(MyComponent);
+```
+
+// or
+
+```jsx
+import { memo } from "react";
+const MyComponent = () => {
+    return (
+        <div>
+            <h1>
+                Something that is re-rendering everytime due to its parents
+                state change
+            </h1>
+        </div>
+    );
+};
+
+const memoizedMyComponent = memo(MyComponent);
+export default memoizedMyComponent;
+```
+
+#### `useCallback`
+
+Let's say you're passing a function as a prop from a parent component to a child component. And you're trying to prevent re-rendering of that child component using `memo`. But you'll notice that the component still re-renders even after using `memo`.
+
+The reason is that the child component is receiving a function in its parameters.
+
+**In JavaScript, each function is an object. So in each re-render, even though the functions have the same name, they will come as new object references in each render. Thus, because new prop values are coming into the parameters each time, the component will re-render even after being wrapped with `memo`.**
+
+To solve this, we need to memoize the callback functions using `useCallback` before passing them as props, so that the functions remain cached across renders.
+
+In other words, `useCallback` is used to cache or memoize a function body.
+
+**Usage**
+
+```jsx
+import React from "react";
+
+const App = () => {
+    const somethingFunction = () => {
+        return; //something
+    };
+
+    return (
+        <div>
+            <MyComponent onChange={somethingFunction} />
+        </div>
+    );
+};
+
+export default App;
+```
+
+In the example above, `somethingFunction` is passed as a prop to `MyComponent`, so even if we wrap `MyComponent` with `memo`, it will still re-render. To fix this, we'll cache `somethingFunction` using the `useCallback` hook.
+
+```jsx
+import React, { useCallback } from "react";
+
+const App = () => {
+    const somethingFunction = useCallback(() => {
+        return; //something
+    }, []);
+
+    return (
+        <div>
+            <MyComponent onChange={somethingFunction} />
+        </div>
+    );
+};
+
+export default App;
+```
+
+The `useCallback` hook takes the function you want to memoize as its first parameter, and like `useEffect`, it takes a dependency array as its second parameter. It only re-runs or reacts when the dependencies change.
+
+#### `useMemo`
+
+If our component has a function with complex calculations that are costly, and we don't want these costly calculations to run every time the component re-renders, we can cache the result. If there's no need for a new calculation, it can return the previously calculated result in each re-render. In this case, we need to cache that result.
+
+The `useMemo` hook is used to cache a function's result.
+
+-   Reference
+
+    -   ```jsx
+        const cachedResuld = useMemo(calculateValue, dependencies);
+        ```
+
+### References:
+
+`**useMemo(calculateValue, dependencies)**`
+
+`useMemo` is a React hook. Like all other hooks, `useMemo` must be called at the top level of a component or another custom hook. It should never be called inside a component's return, inside another callback function, or even inside a conditional code block.
+
+```jsx
+import { useMemo } from "react";
+
+function TodoList({ todos, tab }) {
+    const visibleTodos = useMemo(() => filterTodos(todos, tab), [todos, tab]);
+    // ...
+}
+```
+
+**Usage**
+
+```jsx
+import React, { useCallback } from "react";
+
+const App = () => {
+    //complex calculation
+    const complexCalculation = () => {
+        let i = 0;
+        while (i < 10000000) {
+            i++;
+        }
+        return i % 2 === 0;
+    };
+
+    const somethingFunction = useCallback(() => {
+        return; //something
+    }, []);
+
+    return (
+        <div>
+            <MyComponent onChange={somethingFunction} />
+        </div>
+    );
+};
+
+export default App;
+```
+
+In the code above, there's a complex calculation inside the `complexCalculation` function. We'll cache the result of this calculation.
+
+```jsx
+import React, { useCallback, useMemo } from "react";
+
+const App = () => {
+    //complex calculation
+    const complexCalculation = useMemo(() => {
+        let i = 0;
+        while (i < 10000000) {
+            i++;
+        }
+        return i % 2 === 0;
+    }, []);
+
+    return (
+        <div>
+            <MyComponent />
+        </div>
+    );
+};
+
+export default App;
+```
+
+The `useMemo` hook will return the output of the function that's called inside it, not the function itself. This means that the variable to which `useMemo` is assigned will contain the output of the function inside the `useMemo` hook.
+
+Like `useCallback` and `useEffect`, the `useMemo` hook takes a dependency array as its second parameter. Only when the dependencies change does the function inside run again and return a new output.
+

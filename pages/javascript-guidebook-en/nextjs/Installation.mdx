@@ -1,0 +1,37 @@
+import { Callout } from "nextra/components"
+
+**Next.js can be installed in two ways: 1. Automatic installation 2. Manual installation. Here we'll look at the automatic installation process, as this is what Next.js recommends. If you want to learn about manual installation, then [click here](https://nextjs.org/docs/14/getting-started/installation#manual-installation)**
+
+## Installation
+
+**Automatic Installation**  
+The easiest and automatic method to create a Next.js app is to use `create-next-app`. It automatically sets up everything. To create a project with Next.js, follow the processes below.
+
+
+**Start installing the new application by entering the following command in the terminal**  
+```bash filename="Terminal" 
+npx create-next-app@latest  
+```
+<Callout type="info" emoji="ℹ️">
+Using `@latest` after `npx create-next-app` will always install the latest version. Since Next.js version 15 has been released currently, in this case too, Next.js version 15 will be installed. But if you need to install a specific version, you should add the version number after `npx create-next-app`, e.g. `@14`
+</Callout>
+
+
+During installation, you will be asked some questions:  
+
+```plaintext  filename="Terminal" 
+What is your project named? my-app  
+Would you like to use TypeScript? No / Yes  
+Would you like to use ESLint? No / Yes  
+Would you like to use Tailwind CSS? No / Yes  
+Would you like to use `src/` directory? No / Yes  
+Would you like to use App Router? (recommended) No / Yes  
+Would you like to customize the default import alias (@/*)? No / Yes  
+What import alias would you like configured? @/*  
+```  
+
+After answering these questions, `create-next-app` will create a folder based on your project name and install all the necessary dependencies.  
+
+### **Important information:**  
+- Next.js now comes with default configurations for TypeScript, ESLint, and Tailwind CSS.  
+- You can optionally use the `src` directory in the root directory, so that your application code and configuration files are separate.

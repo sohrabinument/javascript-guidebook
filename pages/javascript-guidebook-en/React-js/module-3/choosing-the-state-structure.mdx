@@ -1,0 +1,99 @@
+**When designing state in React, it's essential to keep in mind some principles that will allow us to manage states more beautifully and efficiently. Let's learn about these principles that we must keep in mind when structuring React state.**
+
+1. **Group Related State**
+2. **Avoid Contradictions in State**
+3. **Avoid Redundant State**
+4. **Avoid Duplication in State**
+5. **Avoid Deeply Nested State**
+
+### Group Related State
+
+If multiple states are related to each other, and when changing one requires changing the other, in that case, it's better to group those states as a single state. For example:
+
+```jsx
+const [x, setX] = useState(0);
+const [y, setY] = useState(0);
+```
+
+Here, two states named `x` and `y` have been created for making a custom cursor, and these states need to be updated as the mouse moves, meaning whenever the mouse moves, I need to change both the `x` and `y` states. In this case, instead of taking two separate states, we can take a single state named `position` and store `x` and `y` as an object.
+
+```jsx
+const [position, setPosition] = useState({ x: 0, y: 0 });
+```
+
+### Avoid Contradictions in State
+
+There may be many scenarios where you have two states, but these states can never be true or false at the same time. These states are called `Contradiction in State`. In such cases, we should never take two separate states, but rather manage both with a single state.
+
+For example, consider a light:
+
+A light has two states:
+
+1. Light on state (`isOn`)
+2. Light off state (`isOff`)
+
+```jsx
+const [isOn, setIsOn] = useState(true);
+const [isOff, setIsOff] = useState(true);
+```
+
+Can these two states ever both be `true` or both be `false` at the same time? Can a light be both on and off at the same time? No, that's never possible, and this is what's called a `Contradiction in State`. In such situations, we should take only one state, like:
+
+```jsx
+const [lightStatus, setLigthStatus] = useState("on");
+```
+
+This way, we can manage both states of the light with a single state.
+
+### Avoid Redundant State
+
+If we can calculate a state value from another state and use it, then we should work with that calculated state instead of creating a new state.
+
+**This is also called `Derived State`**
+
+-   **Derived State**: When a value can be `calculated` and used from another state's value, that `Calculated` variable is called a `Derived State`.
+
+Let's say we need to manage three states: `firstName`, `lastName`, and `fullName`. Our states would look like this:
+
+```jsx
+const [firstName, setFirstName] = useState("Shahadat");
+const [lastName, setLastName] = useState("Hussain");
+const [fullName, setFullName] = useState("Shahadat Hussain");
+```
+
+Think about it - did we really need the `fullName` state? We could have easily derived `fullName` from `firstName` and `lastName` like this:
+
+```jsx
+const fullName = firstName + " " + lastName;
+```
+
+In this case, the state
+
+```jsx
+const [fullName, setFullName] = useState("Shahadat Hussain");
+```
+
+was `Redundant` or unnecessary. We should avoid such `Redundant` states.
+
+#### Don't Mirror Props in State
+
+When a state is declared in a parent component and its value is passed to a child component as a prop, and the child component uses that prop to initialize its own state, this is called mirroring props in state.
+
+This should not be done because if you pass a state value from parent to child and use it as the initial value of the child's state variable, when you want to change the state value from the child component, you can change it from the child, but if the parent component changes the state that you passed as a prop to the child, it won't have any control, and it cannot be changed from the parent. This is because the initial value of a state is initialized at the component's first render and doesn't change afterward. Only through the `setter function` can the state value be changed.
+
+So in this case, even if you change that state in the parent component, it won't go to the child component as a prop anymore, because the child's state's initial value has already been set in the first render.
+
+### Avoid Duplication in State
+
+If the same value is used with multiple state variables, it's called duplication. We need to be cautious about such duplicate states.
+
+In other words, if we have a state variable with some values, and we've taken another state with those same values, that's called duplication. State duplication should be avoided; if necessary, use `Derived State` in such cases.
+
+### Avoid Deeply Nested State
+
+If we have a state that is an object, and one of its properties is another object, and that nested object has more nested objects, creating a multi-layered deeply nested object, this results in a complex structure.
+
+Working with such a structure makes updating the state increase code complexity, may cause bugs, and ruins the readability of the code. So we should avoid taking such objects as state.
+
+In such cases, we should `normalize` or `flatten` the object data and then use it as state.
+

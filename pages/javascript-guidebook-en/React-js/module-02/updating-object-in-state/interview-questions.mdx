@@ -1,0 +1,279 @@
+import { Callout } from 'nextra/components';
+
+# Updating Objects in State – Interview Questions & Answers 🎯
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="80" style={{marginBottom: '1rem'}} />
+
+Use these questions to prepare for interviews or test your understanding of how to update objects in React state.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – State Object Update Fundamentals 🌱
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: Why shouldn't you mutate objects directly in React state?**  
+A: React won't notice direct mutations, so the UI won't update. Always use the setter function to replace the object.
+
+```jsx
+// ❌ Wrong way
+position.x = 5;
+// React doesn't know the state changed!
+
+// ✅ Right way
+setPosition({ ...position, x: 5 });
+```
+
+**Q2: How do you update a single property in an object stored in state?**  
+A: Use the spread syntax to copy the old object, then override the property you want to change.
+
+```jsx
+setPerson({ ...person, name: 'Alex' });
+```
+
+**Q3: What is 'immutability' in the context of React state?**  
+A: It means you treat state as read-only and never change it directly. Instead, you create a new object or array and set state to that new value.
+
+</div>
+
+---
+
+## 1.2 – Nested Objects & Common Pitfalls 💡
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q4: How do you update a nested property in an object in state?**  
+A: Copy each level of the object you want to update, using the spread syntax at every level.
+
+```jsx
+setPerson({
+  ...person,
+  artwork: {
+    ...person.artwork,
+    city: 'Lagos'
+  }
+});
+```
+
+**Q5: What happens if you only copy the top-level object but not the nested one?**  
+A: The nested object reference stays the same, so changes to it may not trigger a re-render and can cause bugs.
+
+**Q6: Can you use libraries to help with deep updates?**  
+A: Yes! Libraries like [Immer](https://immerjs.github.io/immer/) let you write code that looks like mutation, but actually creates a new copy under the hood.
+
+```jsx
+import { useImmer } from 'use-immer';
+
+const [person, updatePerson] = useImmer({
+  name: 'Niki',
+  artwork: { city: 'Hamburg' }
+});
+
+updatePerson(draft => {
+  draft.artwork.city = 'Lagos';
+});
+```
+
+</div>
+
+---
+
+## 1.3 – Advanced & Scenario-Based Questions 🧠
+
+<div style={{ background: 'rgba(220, 50, 50, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(220, 50, 50, 0.15)', color: 'inherit' }}>
+
+**Q7: Scenario: You have a state object with a counter and a nested user object. How do you increment the counter and update the user's name in one go?**  
+A:
+```jsx
+setState(prev => ({
+  ...prev,
+  counter: prev.counter + 1,
+  user: {
+    ...prev.user,
+    name: 'Sam'
+  }
+}));
+```
+
+**Q8: What are the risks of mutating state directly in collaborative or async scenarios?**  
+A: You can get race conditions, stale data, or bugs because React won't know about the changes. Always use the setter and treat state as read-only.
+
+**Q9: How would you update an array of objects in state, changing just one object by id?**  
+A:
+```jsx
+setItems(items => items.map(item =>
+  item.id === targetId ? { ...item, value: 'new' } : item
+));
+```
+
+**Q10: Scenario: You have a form with nested state. After submitting, you want to reset only the nested address object. How do you do it?**  
+A:
+```jsx
+setForm(form => ({
+  ...form,
+  address: { street: '', city: '', zip: '' }
+}));
+```
+
+</div>
+
+---
+
+## 1.4 – More Scenarios & Deep Dives 🚦
+
+<div style={{ background: 'rgba(100, 200, 100, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(100, 200, 100, 0.15)', color: 'inherit' }}>
+
+**Q11: Scenario: You have a state object with a list of todos. How do you mark a specific todo as completed by id?**  
+A:
+```jsx
+setTodos(todos => todos.map(todo =>
+  todo.id === targetId ? { ...todo, completed: true } : todo
+));
+```
+
+**Q12: Scenario: You want to update a deeply nested property (e.g., user.profile.settings.theme) in state. What's the best approach?**  
+A: Use the spread syntax at each level, or use a library like Immer for easier deep updates.
+
+```jsx
+// With spread syntax
+setUser(user => ({
+  ...user,
+  profile: {
+    ...user.profile,
+    settings: {
+      ...user.profile.settings,
+      theme: 'dark'
+    }
+  }
+}));
+
+// With Immer
+updateUser(draft => {
+  draft.profile.settings.theme = 'dark';
+});
+```
+
+**Q13: Scenario: You have a state object for a shopping cart. How do you remove an item by id?**  
+A:
+```jsx
+setCart(cart => cart.filter(item => item.id !== removeId));
+```
+
+**Q14: What should you do if you need to update state based on the previous state value?**  
+A: Always use the updater function form of the setter to ensure you have the latest state.
+
+```jsx
+setCount(count => count + 1);
+```
+
+**Q15: Scenario: You have a state object with a nested array. How do you add a new item to the nested array?**  
+A:
+```jsx
+setData(data => ({
+  ...data,
+  items: [...data.items, newItem]
+}));
+```
+
+**Q16: Scenario: You want to reset part of your state to its initial value without affecting the rest. How do you do it?**  
+A:
+```jsx
+setState(state => ({
+  ...state,
+  partToReset: initialPartValue
+}));
+```
+
+**Q17: Scenario: You have a state object with a loading flag and data. How do you set loading to true and clear data at the same time?**  
+A:
+```jsx
+setState(state => ({
+  ...state,
+  loading: true,
+  data: null
+}));
+```
+
+**Q18: Scenario: You want to toggle a boolean property in a nested object in state.**  
+A:
+```jsx
+setSettings(settings => ({
+  ...settings,
+  preferences: {
+    ...settings.preferences,
+    notifications: !settings.preferences.notifications
+  }
+}));
+```
+
+**Q19: Scenario: You want to update multiple properties in a nested object at once.**  
+A:
+```jsx
+setProfile(profile => ({
+  ...profile,
+  details: {
+    ...profile.details,
+    firstName: 'Jane',
+    lastName: 'Doe',
+    age: 30
+  }
+}));
+```
+
+**Q20: Scenario: You want to merge new properties into an object in state, but keep all existing properties.**  
+A:
+```jsx
+setConfig(config => ({
+  ...config,
+  ...newProperties
+}));
+```
+
+</div>
+
+---
+
+<Callout type="info">Keep practicing with more scenarios! Try to create your own state update challenges and solve them using the spread syntax or Immer.</Callout>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+## Practice Interview Exercise 🏋️‍♂️
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+You have a state object representing a user's profile, including a nested preferences object. When the user toggles dark mode, how would you update just the dark mode property in preferences?
+
+Take a moment to formulate your answer before checking the suggested response.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Approach:**
+```jsx
+setProfile(profile => ({
+  ...profile,
+  preferences: {
+    ...profile.preferences,
+    darkMode: !profile.preferences.darkMode
+  }
+}));
+```
+
+This approach copies each level and only changes the property you want, ensuring React sees the update and re-renders the UI.
+
+</details>
+</div>
+
+---
+
+**Tip:** Review these questions and answers, and try to explain each concept in your own words for the best interview preparation!
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of updating objects in state, but also your ability to apply this understanding to real-world, async, and collaborative scenarios.

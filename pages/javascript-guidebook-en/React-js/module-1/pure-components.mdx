@@ -1,0 +1,109 @@
+### What is a Pure Function?
+
+A function is called pure if it satisfies the following two conditions:
+
+1. **Same output for the same input**: A pure function always produces a specific output according to its input. This means for the same input, you'll always get the same output.
+2. **Absence of side effects**: A pure function does not change any external state or variable. It only works according to its input and does not cause any changes outside.
+
+#### Example of a Pure Function:
+
+```javascript
+function add(a, b) {
+    return a + b;
+}
+```
+
+Here, the `add` function is pure because it only produces output based on its input and doesn't change any external state.
+
+#### Example of an Impure Function:
+
+```javascript
+let x = 10;
+
+function addWithSideEffect(a, b) {
+    x = a + b; // Changing an external variable
+    return x;
+}
+```
+
+This function is impure because it changes the external variable `x`, which creates a side effect.
+
+---
+
+### Why Should Pure Functional Components Be Used in React?
+
+React recommends keeping components pure because there are several benefits. Primarily, using pure functional components provides performance and usability advantages in React. Let's look at these benefits in detail:
+
+### 1. **Avoiding Unnecessary Renders**
+
+For pure functional components, React does not re-render the component if there is no change in input or props. That is, if the input remains the same, React can use the previous output, which increases the efficiency of application rendering.
+
+#### Example:
+
+```javascript
+import React from "react";
+
+const Greeting = React.memo(function Greeting({ name }) {
+    console.log("Rendering Greeting");
+    return <h1>Hello, {name}!</h1>;
+});
+```
+
+Here, this component has been made pure through the use of `React.memo`. If there is no change in the `name` prop, React will reuse the previously rendered output, and no new render will be necessary.
+
+### 2. **Simple and Clean Code**
+
+Pure functional components make code simple and clean. Since they depend only on input and do not depend on any external state, they are easy to understand and apply.
+
+#### Example:
+
+```javascript
+function WelcomeMessage({ user }) {
+    return <p>Welcome, {user}!</p>;
+}
+```
+
+This type of component is extremely clean and readable because it does not change any external state, but instead only provides output through props.
+
+### 3. **Predictable Behavior**
+
+Pure functional components always give specific outputs based on specific inputs. This makes their behavior predictable, meaning it can be anticipated in advance. This is important for debugging and bug resolution, as behavior is always predictable.
+
+### 4. **Easy Testing**
+
+Pure functional components are easy to test because they are dependent on input and output. By testing output according to input, it's easy to understand whether the function is working correctly.
+
+#### Example:
+
+```javascript
+function sum(a, b) {
+    return a + b;
+}
+
+// Testing example:
+console.log(sum(2, 3)); // Output will be: 5
+```
+
+### 5. **Benefits of Memoization**
+
+Using pure functional components in React makes `memoization` easy. React can store previous outputs for the same input, thereby avoiding unnecessary renders and improving performance. `React.memo` is specially used for this purpose.
+
+---
+
+Using pure functional components in React makes code simpler, increases predictability, and improves performance. Avoiding unnecessary rendering, easy testing, and keeping code clean make the use of pure functions very important. Additionally, because of React's `memoization` feature, using pure functional components significantly increases application efficiency.
+
+### What to do if we must perform a task that compromises component purity?
+
+Yes, it's true that it may not always be possible to maintain component purity. We might need to do something that could compromise the purity of a component. In such situations, we can do two things:
+
+#### Manage With Event Handler:
+
+For side effects that we can handle through `event-handlers`, we should try to do them inside the `event-handler`. This is because `event-handlers` are not active during React's rendering time, so `event-handlers` don't need to be pure. `event-handlers` are active during `Hydration` time **(the process where JavaScript becomes active after React components load is called `Hydration`)**. The main point is to ensure no side effects occur during React's rendering time.
+
+#### Managing Side Effects with the `useEffect` Hook:
+
+If there is no other way, then as a last resort, React has provided a built-in hook for handling side effects, called `useEffect`. This hook should be used to manage side effects. This hook also becomes active after React's rendering is complete. So this hook can be used to handle side effects, but that should be the very last option.
+
+### Can variables inside a function be changed?
+
+Yes, variables inside a function can be changed. This won't compromise the component's purity. This is called `local mutation`. There's no problem with local mutation.

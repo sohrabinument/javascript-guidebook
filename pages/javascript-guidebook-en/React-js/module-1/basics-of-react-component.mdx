@@ -1,0 +1,95 @@
+import { Steps } from "nextra/components";
+
+import { Callout } from "nextra/components";
+
+## What are `Components`?
+
+`Component` is one of the core concepts in React. It is often called the building block of UI. Each part of the UI code that can be reused repeatedly can be considered a component. Even a small button can be a component.
+
+React helps us write our markup in small, reusable code blocks, where each block is a component.
+
+However, there are some rules for creating components that are shown below.
+
+## How to create a React `Component`?
+
+A React component is a JavaScript function that combines markup with JavaScript.
+
+**React Component Syntax**
+
+```javascript showLineNumbers filename="profile.jsx"
+export default function Profile() {
+    return (
+        <img
+            src='https://i.imgur.com/MK3eW3Am.jpg'
+            alt='Katherine Johnson'
+        />
+    );
+}
+```
+
+**Steps to follow when creating a component:**
+
+<Steps>
+    ### Export the component
+
+    Use `export default` to make a component reusable, so that we can `import` and use the component in other files.
+
+    ### Define the function
+    After `export default`, define a named function.
+    ```javascript showlineNumbers
+        export default function Profile(){}
+    ```
+
+    <Callout type="warning" emoji='💡'>
+        When creating a `React Component`, you must write the first letter of the function name with a `Capital letter`, otherwise it won't work.
+    </Callout>
+
+    ### Add markup inside the function
+
+    Return markup using `JSX (Javascript XML)` syntax inside the function.
+
+    ```javascript showLineNumbers {2}
+    export default function Profile() {
+        return img src="https://i.imgur.com/MK3eW3As.jpg" alt="Katherine Johnson" />
+    }
+    ```
+    **If the `return statement` needs to be written in more than one line, it must be written inside `()`**
+    Example:
+      ```javascript showLineNumbers filename="Profile.jsx" {2-6}
+    export default function Profile() {
+        return (
+        <div>
+             <img src="https://i.imgur.com/MK3eW3As.jpg" alt="Katherine Johnson" />
+        </div>
+        )
+    }
+    ```
+
+</Steps>
+
+## How to use components:
+
+After creating a component, it can be used within another component in the same file or imported into another file to be used there.
+
+Example:
+
+```javascript showLineNumbers filename="Gallery.jsx"
+import Profile from "Profile";
+export default function Gallery() {
+    return (
+        <section>
+            <h1>Amazing scientists</h1>
+            <Profile />
+            <Profile />
+            <Profile />
+        </section>
+    );
+}
+```
+
+## Rules to follow when nesting components:
+
+**`Rule 1` - If a component is very small and won't be reused, it can be written and used in the same file. But if the component is large, has more `interactivity`, and needs to be reused in various places, then it should be created in separate files.**
+
+**`Rule 2` - You can nest one component inside another component, but you cannot nest another function definition inside a component.**
+

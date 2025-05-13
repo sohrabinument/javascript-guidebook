@@ -1,0 +1,145 @@
+import { Steps, Tabs } from "nextra/components";
+
+### Synchronizing with Effects
+
+**When we need to work with external APIs or handle side effects (such as making API calls, showing alerts, accessing databases), we use `useEffect`.**
+
+**Remember that actions that need to trigger automatically should be handled through `useEffect`, while those triggered based on user actions should be handled through `event handlers`.**
+
+**For example, let's say we need to display a list of all products on our screen as soon as our component loads, and this list is coming from an API. In this case, we need to do something that automatically calls the API without any `event handler` as soon as the component loads. We can do this automatic task with `useEffect`.**
+
+**On the other hand, let's say there's a `Show Details` button on a product card, which shows the product details when clicked. This "something happens when clicked" will be handled with an `event handler`.**
+
+**`useEffect` only executes after the component has rendered and committed. This means that whatever we write inside the effect will only execute after our component has loaded and appeared on the screen.**
+
+#### How to write an Effect
+
+To write an effect, we need to follow three steps. Let's learn about them in detail.
+
+1. **Declare an Effect.**
+2. **Specify the Effect dependencies.**
+3. **Add cleanup if needed.**
+
+<Steps>
+    ### **Declare an Effect.**
+    To declare an effect, first we need to import the `useEffect` hook into our component. Then we need to call `useEffect` at the top level of our component.
+
+    ```jsx {3-5}
+    import React from 'react'
+    const App = () => {
+        useEffect(()=>{
+             // effect code will go here
+         })
+      return (
+        <div>
+            <h1>Hello World! </h1>
+        </div>
+      )
+    }
+    export default App
+    ```
+
+The effect code only executes after the component has re-rendered and is visible on the screen. In this state, whatever we write inside the effect will run every time our component re-renders.
+
+But this is a problem because what if we write something inside the effect that we only need to run once when the component loads, and we don't want that effect code to run again even if the component re-renders? For example: We connected to a server in a component, and now that component has an input form. So every time we type, our component will re-render, and each time our effect will run and connect to the server. But do we need this connection on every key press? We only want the connection to happen if our component loads for the first time.
+
+So we need something that allows us to control this behavior. For this reason, we'll add dependencies to the effect.
+
+### **Specify the Effect dependencies.**
+
+We'll add dependencies to have control over React's effect. Because we want to specify when our component should run, will it be called on every re-render, or just once, or will it depend on something specific?
+
+To add dependencies, we need to provide some values ([] or other dependencies) as the second parameter of the effect.
+
+**If we want the effect to be called on every re-render, we write it like this:**
+
+```jsx
+useEffect(() => {
+    //code will go here
+});
+```
+
+In this case, we don't need to specify any dependencies.
+
+**If we want the effect to be called only on the first render and not when the component re-renders later, we write it like this:**
+
+```jsx
+useEffect(() => {
+    // code will go here
+}, []);
+```
+
+In this case, we just need to provide an empty [] as the second parameter.
+
+**If we want the component to run once when the component loads and then run again when something specific changes, we need to specify the dependencies inside [] in the second parameter:**
+
+```jsx
+useEffect(() => {
+    //code will go here
+}, [a, b]);
+```
+
+In this case, we've added `a` and `b` as dependencies, which can be anything that we've used inside our effect. We need to add these to the dependencies. We can add multiple dependencies. `eslint` will automatically suggest what dependencies we need to add. We can also follow these suggestions to add dependencies.
+
+However, we need to understand which values we want the effect to run again when they change, and use those as dependencies in the effect.
+
+For the values we add as dependencies, React will check after each component render to see if those values are the same as in the previous render or if they've changed, and it does this using JavaScript's `Object.is()` method. If any one of the values has changed, React will call the effect again.
+
+### **Add cleanup if needed.**
+
+Let's consider an example to understand when we need cleanup and why we need to do it.
+
+Let's say we have a chat application. Now, whenever a user turns on the application to chat and clicks on the chat component, it will immediately establish a connection with a chat server through an effect.
+
+<Tabs items={["App.js", "Chat.js"]}>
+    <Tabs.Tab>
+            ```jsx
+              import { useEffect } from 'react';
+              import { createConnection } from './chat.js';
+
+             export default function ChatRoom() {
+                 useEffect(() => {
+                     const connection = createConnection();
+                     connection.connect();
+                 }, []);
+                 return <h1>Welcome to the chat!</h1>;
+             }
+
+            ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+       ```jsx
+            export function createConnection() {
+             // A real implementation would actually connect to the server
+             return {
+               connect() {
+                 console.log('✅ Connecting...');
+               },
+               disconnect() {
+                 console.log('❌ Disconnected.');
+               }
+             };
+            }
+         ```
+    </Tabs.Tab>
+
+</Tabs>
+
+Now the user went back to another component and then came back again and clicked on the chat component, now another connection was established.
+
+If you notice, the first connection that was made after the user clicked on the chat icon wasn't closed when the user went back to another page, and when the user came back again and clicked on the chat icon again, another connection was established. If the user keeps going back and forth like this, countless connections will be running, leading to memory leaks. Therefore, we should always clean up our effect when the component unmounts.
+
+To clean up, we need to return a function call from within the callback function of the effect, and inside that function, we'll write the cleanup.
+
+```jsx {4-6}
+useEffect(() => {
+    const connection = createConnection();
+    connection.connect();
+    return () => {
+        connection.disconnect();
+    };
+}, []);
+```
+
+</Steps>
+

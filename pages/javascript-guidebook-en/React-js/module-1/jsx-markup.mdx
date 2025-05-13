@@ -1,0 +1,169 @@
+## What is `JSX`?
+
+`JSX` is a syntax extension of JavaScript that helps us write markup similar to `HTML`. The major advantage of `JSX` is that it allows writing JavaScript logic and `HTML` markup in the same place (inside a component). This gives us extra flexibility when we need to make changes later.
+
+Though `JSX` looks exactly like `HTML`, it is not `HTML`, but rather much more `Strict` than `HTML`. If you make any mistake in `JSX`, it immediately gives an `Error`.
+
+In `HTML`, we can only write static content, but in `JSX`, we can use dynamic values.
+
+## What are the rules for writing `JSX`?
+
+There are several rules to follow in `JSX`:
+
+### 1. Return a Single root element:
+
+`JSX` must return only a single root element. If you need to return multiple elements, you must wrap them with a parent element. In such cases, you can use a `<div> </div>` element. However, using `<div> </div>` will render an additional `<div> </div>` element in the `HTML` `Element Tree`.
+
+❌ Incorrect
+
+```javascript filename= "Profile.jsx  "
+export default function Profile() {
+    return (
+            <h1>Hello Mr XX</h1>
+            <p>Your age is 30</p>
+        // This code won't work because two elements are being returned
+    );
+}
+```
+
+✅ Correct
+
+```javascript filename= "Profile.jsx  "
+export default function Profile() {
+    return (
+        <div>
+            <h1>Hello Mr XX</h1>
+            <p>Your age is 30</p>
+        </div>
+        // This code will work because two elements are wrapped with a parent `<div> </div>`
+    );
+}
+```
+
+However, if you don't want to render any additional `<div> </div>` element, you can use `<></>`. This is called a `Fragment` tag. Also, if you ever need to pass a `key` inside a `Fragment`, you should write `<Fragment></Fragment>` instead of `<></>`.
+
+#### Why do we need to return a single JSX root?
+
+    <small>**Credit to : Saffaullah Shuvo**</small>
+
+Well, in any programming, a function can only return one data type/structure. For example, a simple number or a complex data structure,
+
+```javascript
+function returnOne() { return 1; } // Is it possible to return two numbers?
+function returnTwo() { return (100 500) } // This is a syntax error // This means the Compiler doesn't support this syntax
+
+```
+
+So, can't we return two numbers? Yes, we can-
+
+```javascript
+function returnTwo() { return [100, 500]; // There are many other ways too }
+```
+
+Since JSX is a JavaScript Object:
+
+```javascript
+function returnTwoJSX() {
+return (<h1>Hi</h1> <h2>Hello</h2>)
+ }
+  // Behind the scene
+  function returnTwoJSX() {
+   return (
+    {type: 'h1', props: { children: 'Hi'}} // object1
+    {type: 'h2', props: { children: 'Hello'}} // object2
+    )
+    }
+     // So this is also a syntax error
+
+```
+
+But we can return it as a single data by putting it inside an Array or inside a parent element.
+
+-   Solution 1 - Wrap with a parent element
+
+```javascript
+function returnParentJSX() {
+    return (
+        <div>
+            <h1>Hi</h1>
+            <h2>Hello</h2>
+        </div>
+    );
+}
+// Behind the scene
+function returnParentJSX() {
+    return {
+        type: "div",
+        props: { children: [object1, object2] },
+        // ...additional properties
+    };
+}
+```
+
+-   Solution 2 - Use Fragment as a parent
+
+```javascript
+function returnFragmentJSX() {
+    return (
+        <Fragment>
+            {" "}
+            // short form <></>
+            <h1>Hi</h1>
+            <h2>Hello</h2>
+        </Fragment>
+    );
+}
+// Behind the scene
+function returnFragmentJSX() {
+    return {
+        type: Symbol(react.fragment),
+        props: { children: [object1, object2] }, // ...additional property
+    };
+}
+```
+
+Will it work if we return a direct Object instead of JSX? For example:
+
+```javascript
+function returnDirectObject() {
+    return {
+        type: "div",
+        props: {
+            className: "bg-white",
+            children: [
+                {
+                    type: "h1",
+                    props: { className: "text-2xl", children: "Hi" },
+                },
+                { type: "p", props: { children: "Hello World" } },
+            ],
+        },
+    };
+}
+```
+
+No, because this Object wasn't created in React's way. React keeps additional properties inside the Object. React creates it like this:
+
+```javascript
+import { createElement } from "react";
+
+function returnDirectObject() {
+    return createElement(
+        "div",
+        { className: "bg-white" },
+        createElement("h1", { className: "text-2xl" }, "Hi"),
+        createElement("p", null, "Hello World")
+    );
+}
+```
+
+### 2. Close all the tags:
+
+Every tag used in `JSX` must be closed. Self-closing tags like `<img>`, `<hr>` must also be closed like `<img />`, `<hr />`.
+
+### 3. camelCase ~all~ most of the things!:
+
+Since we are writing `JavaScript` in `JSX`, we need to write `multiple-word` `Attributes` in `camelCase` according to JavaScript rules.
+
+**Since `class` is a reserved keyword in JavaScript, we cannot use `class`. Instead of `class`, we need to use `className`.**
+

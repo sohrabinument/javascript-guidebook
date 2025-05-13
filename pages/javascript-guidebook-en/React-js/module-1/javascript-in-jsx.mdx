@@ -1,0 +1,55 @@
+**In `JSX`, we can write JavaScript and `HTML` markup together. Whenever we need to use a dynamic value in the markup, or perform a logical operation, or even if we need to access the value of a variable or object, we need to write it inside `{ }` double curly braces.**
+
+Example:
+
+```javascript filename="Profile.jsx" showLineNumbers {5-6,8}
+export default function Profile(name) {
+    let age = 30;
+    return (
+        <div className='profile-card'>
+            <h1>Hello Mr {name}</h1> // name is a dynamic value written using {}
+            through JavaScript.
+            <p>Your age is {age}</p> // age is a dynamic value from a variable
+            written using {}.
+            <p>
+                You are {age >= 21 ? "Eligable" : "Not Eligable"} for Marraige
+                // This line performs a logical operation using JavaScript
+            </p>
+        </div>
+    );
+}
+```
+
+So with `{ }`, we can write JavaScript expressions inside them.
+
+## Using "double curlies": CSS and other objects in JSX
+
+Example:
+
+```javascript filename="Profile.jsx" showLineNumbers {6,8-11}
+export default function Profile(name) {
+    let age = 30;
+    return (
+        <div
+            className='profile-card'
+            style={{
+                // This line contains an object
+                backgroundColor: "gray",
+                color: "black",
+                fontWeight: "bold",
+            }}>
+            <h1>Hello Mr {name}</h1> // name is a dynamic value written using {}
+            through JavaScript.
+            <p>Your age is {age}</p> // age is a dynamic value from a variable
+            written using {}.
+            <p>
+                You are {age >= 21 ? "Eligable" : "Not Eligable"} for Marraige
+                // This line performs a logical operation using JavaScript
+            </p>
+        </div>
+    );
+}
+```
+
+When we need to write an object inside `{ }` in `JSX`, we follow the same step. It might seem like we're using `{ }` twice, but that's not the case. The first `{ }` is for creating space for JavaScript, and the second `{ }` is for the object.
+

@@ -1,0 +1,44 @@
+### Fetching data with effects
+
+When fetching data with effects in React, we must implement the effect's cleanup function. In development mode, when we fetch data and set it to state, we need to make sure it doesn't get set twice by ignoring the first `setState` call in the effect's cleanup.
+
+```jsx {3,9-11}
+const [data, setData] = useState([]);
+useEffect(() => {
+    let ignore = false;
+
+    async function startFatching() {
+        const fetched = await fetch(`apiurl/${id}`);
+        const json = await fetched.json();
+
+        if (!ignore) {
+            setData(json);
+        }
+    }
+
+    startFatching();
+
+    return () => {
+        ignore = true;
+    };
+}, [id]);
+```
+
+Notice that on line 3 we've created a variable called `ignore` and on lines 9-11 we check if `ignore` is `true` before updating the state. We only update the state if `ignore` is not `true`.
+
+Let's understand this pattern better:
+
+We know that in development mode, each component runs twice, meaning: `mount --> unmount --> remount`.
+
+So the first time our component mounts, our effect runs and `ignore` is set to `false`. Then the next line calls the asynchronous function `startFatching()`, which carries the value of `ignore` as `false` in its closure while it performs its data fetching work in the Web API.
+
+After that, our effect has no more work to do, so when the component is about to `unmount` for its second run, React sees that there's a cleanup function in the effect and runs it. In the cleanup, we set the `ignore` variable's value to `true`.
+
+During this time, when the `startFatching()` function finishes its work and tries to update the state, it will see that the `ignore` variable in its closure has become `true`. So it won't do anything.
+
+Meanwhile, when the component `remounts`, the entire component runs again with a fresh `ignore` variable set to `false`, and `startFatching()` is called again. This time the component won't unmount, so the cleanup function won't be called and the `ignore` variable's value won't change. When `startFatching()` completes and returns with data, it will still see `ignore` as `false`, so it will update the state.
+
+Using this pattern makes our code safe in both development and production modes. Our state won't get updated twice.
+
+Although fetching data through effects like this isn't the best approach, we can use libraries like [React Query](https://tanstack.com/query/latest), [useSWR](https://swr.vercel.app/), [rtkQuery](https://redux-toolkit.js.org/rtk-query/overview) for data fetching in React applications. Alternatively, if we're using a framework, we'll get built-in data fetching mechanisms there.
+

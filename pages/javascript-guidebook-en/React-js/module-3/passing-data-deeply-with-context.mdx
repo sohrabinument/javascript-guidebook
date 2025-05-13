@@ -1,0 +1,138 @@
+import { Steps } from "nextra/components";
+
+### Passing Data Deeply with Context
+
+Normally, we pass data from parent components to child components via `Props`. But if the component we want to pass data to is deeply nested in the component tree, in that case, we have to use many components merely as carriers to send our data to the desired component, and we also have to pass data to components that don't need it. This process of passing data from one component to another just to reach a desired component is called **Props Drilling**.
+
+So we can understand that using so many components merely as carriers to take data to a specific component is very troublesome and can even create bugs. And to solve this **Props Drilling** problem, `useContext` was introduced.
+
+### Context is an alternative to passing props
+
+Context is an alternative to Props Drilling. With Context, we can manage data that we want to send to nested components in a separate place and send it to components through the Context Provider.
+
+### How to use Context
+
+We can use the `useContext` hook by following three steps.
+
+-   **Create a Context**
+
+-   **Provide Context data through provider**
+
+-   **Use Context in Component**
+
+<Steps>
+
+### Create a Context
+
+    First, we need to create a context like this.
+
+    ```jsx filename="counterContext.js"
+    import {createContext} from "react"
+    export const CounterContext = createContext(0)
+    ```
+
+We've created a `Context` for a counter application here and set the default value of the `Context` to `0`.
+
+### Provide Context data through provider
+
+Then, we need to wrap the parent component of the component where we want to access the `Context` value with `Context.Provider`, and pass the data that needs to be sent as a value through the `value={}` Attribute.
+
+```jsx filename="App.jsx" {6-8}
+import { CounterContext } from "./counterContext.js";
+const countValue = 3;
+export default function App() {
+    return (
+        <section className='section'>
+            <CounterContext.Provider value={countValue}>
+                {children}
+            </CounterContext.Provider>
+        </section>
+    );
+}
+```
+
+### Use Context in Component
+
+After that, we can access the data in the component where we need it by calling `useContext`.
+
+```jsx filename="Counter.jsx" {6-8}
+import { useContext } from "react";
+const countValue = useContext();
+
+export default function App() {
+    return (
+        <div>
+            <h1> Count Value is : {countValue}</h1>
+        </div>
+    );
+}
+```
+
+This way, we can access the `Context` data from all child components of the parent we wrapped with `Context.Provider`.
+
+</Steps>
+
+### Using and providing context from the same component
+
+In the previous example, we saw that we were passing data through `Context.Provider` in the parent component and accessing data in the child component by using `useContext`,
+
+We can also use `useContext` to get data in the same component, and also send data to child components from that component.
+
+```jsx filename="App.jsx" {6-8}
+import { CounterContext } from "./counterContext.js";
+import { useContext } from "react";
+export default function App() {
+    const count = useContext(CounterContext);
+    return (
+        <section className='section'>
+            <CounterContext.Provider value={count+1}>
+                {children}
+            </CounterContext.Provider>
+        </section>
+    );
+}
+```
+
+### Context passes through intermediate components or Nesting multiple Contexts
+
+If we have multiple Contexts and need to use them in the same component, we can nest them like this.
+
+```jsx filename="App.jsx" {6-8}
+import { CounterContext } from "./counterContext.js";
+import { OtherContext } from "./otherContext.js";
+import { useContext } from "react";
+export default function App() {
+    const count = useContext(CounterContext);
+    return (
+        <section className='section'>
+            <CounterContext.Provider value={count+1}>
+                <OtherContext.Provider value={something}>
+                    {children}
+                </OtherContext.Provider>
+            </CounterContext.Provider>
+        </section>
+    );
+}
+```
+
+Here, we've nested one Context inside another, but one doesn't affect the other.
+
+### Before you use context (things we must keep in mind before using context)
+
+The ease of using Context and avoiding the hassle of passing Props repeatedly might make us want to use `Context` most of the time. But it's not advisable to use `Context` just to avoid the hassle of passing data to a few components.
+
+At the beginning of our application, we can work without using context in two ways:
+
+-   **Start by passing props** If our components aren't extremely complex, we should work by passing `Props`. It doesn't matter how many props need to be passed; it's not a problem at all.
+
+-   **Extract components and pass JSX as children** If we increase the use of children props and compose our components beautifully, we'll see that the nesting of our components is greatly reduced, and we can pass data very easily.
+
+### Use cases for context (when to use Context)
+
+Context should not be used everywhere anytime. If there's data that may be needed anywhere in our application, almost in all components, then we can consider using `Context`. Also,
+
+-   **Theming** What theme will be used in our application, or how the theme will be managed based on user interaction - for this, our theme data might be used anywhere in the component, so `Context` can be used for **Theming**.
+-   **Authentication** We might need user information or authentication data from various places in the application, so `Context` can be used to manage **Authentication**.
+-   **Routing** Most libraries for routing use Context behind the scenes.
+-   **Complex State with Reducer** When we need to manage very complex logic in our application and need to pass it to deeply nested components, `useContext` can be used together with the `useReducer` hook.
+

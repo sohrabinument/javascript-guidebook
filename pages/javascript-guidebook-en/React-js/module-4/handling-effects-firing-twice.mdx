@@ -1,0 +1,76 @@
+### How to handle the Effect firing twice in development?
+
+React intentionally runs each component twice in development mode so we can easily identify if there are any bugs in the code. So when we see our component running twice in development mode, we shouldn't think, **"How can we make our component run only once?" Instead, we should think, "How can we properly implement our effects so they work correctly even if our component mounts twice?"**
+
+The general answer to this is implementing the effect's cleanup function. If we can correctly implement the cleanup function, our component will work properly even if it mounts twice.
+
+### Don't use refs to prevent Effects from firing
+
+A common mistake many people make is trying to prevent the effect from running twice using `ref`.
+
+```jsx
+const connectionRef = useRef(null);
+useEffect(() => {
+    // ❌ This wont fix the bug!!!
+    if (!connectionRef.current) {
+        connectionRef.current = createConnection();
+        connectionRef.current.connect();
+    }
+}, []);
+```
+
+While this might make it appear in development mode that your connection is only happening once, it doesn't actually fix the bug. When a user navigates to another page and comes back, a new connection will be created, but the previous connection won't have been closed. This will cause a memory leak.
+
+Therefore, to fix this, we must implement a cleanup function.
+
+Below we'll look at some common patterns to help us understand when we need to write a cleanup function and when we don't.
+
+#### Controlling non-React widgets
+
+When we add a UI element that isn't written in React, for example, if we add an image and set its zoom level using an effect, we don't need a cleanup function. This is because no matter how many times the component mounts, the same component will receive the same value repeatedly. So there's no need for cleanup in this case.
+
+```jsx
+useEffect(() => {
+    const map = mapRef.current;
+    map.setZoomLevel(zoomLevel);
+}, [zoomLevel]);
+```
+
+However, there are some APIs that throw errors if run twice in succession, such as the built-in `showModal` method of the HTML `dialog` tag. If `showModal` is called twice, it might throw an error, so we need cleanup in this case.
+
+```jsx
+useEffect(() => {
+    const dialog = dialogRef.current;
+    dialog.showModal();
+    return () => dialog.close();
+}, []);
+```
+
+#### Subscribing to events
+
+Whenever we add an event listener inside an effect, we must clean it up.
+
+```jsx
+useEffect(() => {
+    function handleScroll(e) {
+        console.log(window.scrollX, window.scrollY);
+    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+```
+
+#### Triggering animations
+
+When we add an animation to a component inside an effect, we must add cleanup so that when the component unmounts, the animation resets. Otherwise, it can negatively impact the user experience.
+
+```jsx
+useEffect(() => {
+    const node = ref.current;
+    node.style.opacity = 1; // Trigger the animation
+    return () => {
+        node.style.opacity = 0; // Reset to the initial value
+    };
+}, []);
+```
+

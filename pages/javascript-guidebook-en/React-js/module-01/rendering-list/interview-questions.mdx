@@ -1,0 +1,133 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Rendering Lists Interview Questions & Answers 🎯
+
+Use these questions to prepare for interviews or test your understanding of rendering lists in React.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – List Rendering Fundamentals 🌱
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: How do you render a list of items in React?**  
+A: Use the JavaScript `map()` function to transform an array of data into an array of JSX elements. For example:
+```jsx
+const items = ["Apple", "Banana", "Cherry"];
+const listItems = items.map((item) => <li>{item}</li>);
+return <ul>{listItems}</ul>;
+```
+
+**Q2: Why is the `key` prop important when rendering lists?**  
+A: The `key` prop helps React identify which items have changed, been added, or removed. This allows React to efficiently update and re-render only the changed elements, improving performance and preventing bugs.
+
+**Q3: What happens if you forget to provide a key when rendering a list?**  
+A: React will show a warning in the console. Without a unique key, React cannot reliably track which items have changed, which can lead to inefficient updates and bugs in the UI.
+
+</div>
+
+---
+
+## 1.2 – Intermediate Usage 💡
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q4: What are the consequences of using array indexes as keys?**  
+A: Using array indexes as keys can lead to issues when the list changes (items are added, removed, or reordered). React may not correctly track the items, causing unexpected behavior, loss of component state, or inefficient re-renders.
+
+**Q5: How can you filter a list before rendering it in React?**  
+A: Use the JavaScript `filter()` method to create a new array with only the items you want to display, then use `map()` to render them. For example:
+```jsx
+const fruits = ["Apple", "Banana", "Cherry"];
+const filtered = fruits.filter((fruit) => fruit.startsWith("B"));
+const listItems = filtered.map((fruit) => <li>{fruit}</li>);
+return <ul>{listItems}</ul>;
+```
+
+**Q6: How do you render multiple elements for each item in a list?**  
+A: You can return multiple elements for each item by wrapping them in a `<React.Fragment>` (or the shorthand `<>...</>`) and providing a `key` prop:
+```jsx
+import { Fragment } from "react";
+const listItems = people.map((person) => (
+  <Fragment key={person.id}>
+    <h2>{person.name}</h2>
+    <p>{person.profession}</p>
+  </Fragment>
+));
+```
+
+</div>
+
+---
+
+## 1.3 – Best Practices & Scenario-Based 🧠
+
+<div style={{ background: 'rgba(220, 50, 50, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(220, 50, 50, 0.15)', color: 'inherit' }}>
+
+**Q7: How can you handle dynamic lists where items can be added or removed?**  
+A: Always use a unique and stable key (such as an ID from your data) for each list item. This allows React to correctly track and update the list when items are added, removed, or reordered.
+
+**Q8: Scenario: You have a list of tasks, and users can add or remove tasks. How do you ensure React updates the list efficiently and without bugs?**  
+A: Use a unique ID as the key for each task. Avoid using array indexes as keys. When adding or removing tasks, update the array and React will handle the rest efficiently.
+
+**Q9: Scenario: You want to display a message if the list is empty. How would you do this?**  
+A: Use a conditional check before rendering the list:
+```jsx
+{items.length === 0 ? <p>No items found.</p> : <ul>{listItems}</ul>}
+```
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+## Practice Interview Exercise 🏋️‍♂️
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+You are building a contact list app. Users can add, remove, and search contacts. Each contact has a unique ID, name, and email.
+
+**Question:** How would you render the list, handle dynamic updates, and show a message if no contacts match the search?
+
+Take a moment to formulate your answer before checking the suggested response.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Approach:**
+
+```jsx
+const filteredContacts = contacts.filter(/* your search logic */);
+if (filteredContacts.length === 0) {
+  return <p>No contacts found.</p>;
+}
+return (
+  <ul>
+    {filteredContacts.map(contact => (
+      <li key={contact.id}>{contact.name} ({contact.email})</li>
+    ))}
+  </ul>
+);
+```
+
+- Use a unique key for each contact.
+- Filter the list before rendering.
+- Show a message if the filtered list is empty.
+
+</details>
+</div>
+
+---
+
+**Tip:** Review these questions and answers, and try to explain each concept in your own words for the best interview preparation!
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of list rendering, but also your ability to write clean, maintainable, and efficient code for real-world scenarios.

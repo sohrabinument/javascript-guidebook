@@ -1,0 +1,95 @@
+import { Callout } from "nextra/components";
+
+# Importing and Exporting Components – Interview Questions & Answers 📦
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="80" style={{marginBottom: '1rem'}} />
+
+Use these questions to prepare for interviews or test your understanding of importing and exporting components in React.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Component Organization & Exports 🗂️
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: Why should you split components into separate files?**  
+A: For better organization, reusability, and maintainability of your code.
+
+**Q2: What is the difference between default and named exports in React?**  
+A: Default export allows only one export per file and can be imported with any name. Named exports allow multiple exports per file and must be imported with the same name.
+
+**Q3: How do you import a default export?**  
+A: `import ComponentName from './ComponentFile';`
+
+**Q4: How do you import a named export?**  
+A: `import { ComponentName } from './ComponentFile';`
+
+</div>
+
+---
+
+## 1.2 – Advanced Usage & Scenarios 🚀
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q5: Can you have both default and named exports in the same file? How do you import them?**  
+A: Yes. Import the default export without braces and named exports with braces:  
+`import DefaultComponent, { NamedComponent } from './ComponentFile';`
+
+**Q6: What happens if you try to import a named export as a default import, or vice versa?**  
+A: You will get an error; the import/export syntax must match.
+
+**Q7: Scenario: You want to use both `Gallery` and `Profile` from the same file. How would you export and import them?**  
+A: Export one as default and the other as named, or both as named. Import accordingly:  
+`import Gallery, { Profile } from './Gallery';` or `import { Gallery, Profile } from './Gallery';`
+
+**Q8: Why is it discouraged to use anonymous default exports (like `export default () => {}`)?**  
+A: It makes debugging harder because the component will not have a meaningful name in error messages or React DevTools.
+
+</div>
+
+---
+
+<Callout type="info">Practice splitting and importing components in a small React project to reinforce these concepts!</Callout>
+
+---
+
+## Practice Interview Exercise 🏋️‍♂️
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+You're working on a React app with a growing number of components. You notice that some files are getting very large and hard to manage.
+
+**Question:** What steps would you take to organize your components and their exports/imports for better maintainability and scalability?
+
+Take a moment to formulate your answer before checking the suggested response.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Best Practices:**
+
+1. Split components into separate files based on functionality.
+2. Use default export for the main component in a file, and named exports for helpers.
+3. Use meaningful and consistent file/component names.
+4. Group related components in folders.
+5. Use index.js files for cleaner imports if needed.
+6. Avoid anonymous default exports for better debugging.
+
+**Benefits:**
+- Easier to find and maintain code
+- Better reusability
+- Fewer merge conflicts in teams
+
+</details>
+</div>
+
+---
+
+**Tip:** Review these questions and answers, and try to explain each concept in your own words for the best interview preparation!
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of import/export syntax, but also your understanding of why good organization matters and how you'd apply it in real-world React projects.

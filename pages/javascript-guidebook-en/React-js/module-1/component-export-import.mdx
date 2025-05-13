@@ -1,0 +1,78 @@
+## How to `import & export` in React?
+
+**There are two ways to `import & export` components in React:**
+
+1. `default export and import`
+2. `named export and import`
+
+## `default export and import`
+
+**Example:**
+
+### `default export`
+
+```javascript showLineNumbers filename="Gallery.js"
+export default function Gallery() {
+    return; //Jsx will return
+}
+```
+
+Alternatively, `default export` can be done this way:
+
+```javascript showLineNumbers filename="Gallery.js"
+function Gallery() {
+    return; //Jsx will return
+}
+export default Gallery;
+```
+
+### `default import`
+
+```javascript showLineNumbers filename="App.js"
+import Gallery from "Gallery"; // Here, writing .js or .jsx is not necessary
+```
+
+**In the case of `default import`, we can import a component with any name. However, we must use the same name that we used for importing the component.**
+
+## `named export and import`
+
+**Example:**
+
+### `named export`
+
+```javascript showLineNumbers filename="Gallery.js" {1}
+export function Gallery() {
+    return; //Jsx will return
+}
+```
+
+**With `named export`, we can export multiple components from a single file, such as:**
+
+```javascript showLineNumbers filename="Gallery.js"
+export function Card() {
+    return; //Jsx will return
+}
+
+export function Image() {
+    return; //Jsx will return
+}
+
+export function Profile() {
+    return; //Jsx will return
+}
+```
+
+### `named import`
+
+```javascript showLineNumbers filename="App.js"
+import { Card, Image, Profile } from "Gallery"; // This way we can import multiple components in a single line.
+```
+
+#### Alias Named Import
+
+In the case of `named import`, we can also rename components using an `Alias`.
+
+```javascript showLineNumbers filename="App.js"
+import { Card as ImageCard } from "Gallery";
+```
+

@@ -1,0 +1,201 @@
+import { Steps } from "nextra/components";
+
+## What are `Props`?
+
+In React, `Props` are used to pass data from a `Parent Component` to a `Child Component`. `Props` are similar to function `Parameters`.
+
+We can send `Props` from a `Parent Component` to a `Child Component` just like we write `Attributes` in `HTML`.
+
+**Example:**
+
+```javascript filename="Profile.jsx" {4,5}
+export default function Profile() {
+    return (
+        <Avater //imgurl and size are two props sent to the child component Avater
+            imgurl='https://example.com/image/1.png'
+            size={100}
+        />
+    );
+}
+```
+
+```javascript filename="Avater.jsx" {5-7}
+export default function Avater(props) {
+    // props are received as an Object named props from the parent Avater component
+    return (
+        <img
+            src={props.imgurl}
+            alt='Avater Image'
+            size={props.size}
+        />
+    );
+}
+```
+
+We can send any JavaScript value in `Props`, even functions.
+
+## How to Send and Receive `Props`?
+
+Below I explain in detail how to send and receive `Props`.
+
+<Steps>
+    ### Step 1 :  Pass props to the child component
+
+    ```javascript filename="Profile.jsx"
+        export default function Profile() {
+            return (
+              <Avatar
+                person={{ name: 'Lin Lanying', imageId: '1bX5QH6' }}
+                size={100}
+              />
+            );
+          }
+    ```
+    Here, from the `Avatar` component to its child component
+    `person` = which is an object,
+    `size` = which is a number,
+    have been sent.
+
+### Step 2 : Read props inside the child component
+
+```javascript filename="Avater.jsx" {1,5-7}
+export default function Avater(props) {
+    return (
+        <img
+            src={props.imgurl}
+            alt='Avater Image'
+            size={props.size}
+        />
+    );
+}
+```
+
+`props` are received as an `Object` named `props` from the `parent Avater` component
+
+</Steps>
+
+## Receiving `Props` using the `Destructuring` method
+
+`Props` can be received using the `Destructuring` method. In that case, we can do it like this:
+
+```javascript filename="Avater.jsx" {1}
+export default function Avater({ imgurl, size }) {
+    return (
+        <img
+            src={imgurl}
+            alt='Avater Image'
+            size={size}
+        />
+    );
+}
+```
+
+## Using default values in `Props`
+
+Sometimes the value of `Props` may be `Undefined`. In that case, we might need to set a default value for `Props`. We can set a default value using `=` like this:
+
+```javascript showLineNumbers filename="Avater.jsx" {1}
+export default function Avater({ imgurl, size = 100 }) {
+    return (
+        <img
+            src={imgurl}
+            alt='Avater Image'
+            size={size}
+        />
+    );
+}
+```
+
+## Forwarding props with the JSX spread syntax
+
+Sometimes it may happen that we need to forward all the `Props` we received in a component to another child component within that component. In that case, instead of writing all those `Props` again, we can pass them using the `JSX spread syntax` `{...props}`.
+
+In this case, in the main component where we receive the `Props`, we need to receive them as an object named `props` instead of using the `Destructuring Method`.
+
+**Example:**
+
+<Steps>
+### Step 1:
+
+First, three `Props` named `name`, `age`, and `gender` are passed from the `App` component to the `Profile` component.
+
+```javascript filename="App.jsx" showLineNumbers
+export default function App() {
+    return (
+        <div>
+            <div>
+                <Profile
+                    name='Ripon'
+                    age={30}
+                    gender='male'
+                />
+            </div>
+        </div>
+    );
+}
+```
+
+### Step 2:
+
+Here, all the `props` are received as an object named `props` in the `Profile` component.
+
+```javascript filename="Profile.jsx" showLineNumbers {1}
+export default function Profile(props) {
+    return (
+        <div>
+            <Card {...props} />
+        </div>
+    );
+}
+```
+
+### Step 3:
+
+Here, all the `props` are `Spread` using `{...props}` and sent to the `Card` component.
+
+```javascript filename="Profile.jsx" showLineNumbers {4}
+export default function Profile(props) {
+    return (
+        <div>
+            <Card {...props} />
+        </div>
+    );
+}
+```
+
+</Steps>
+
+## Sending `JSX` or `Component` as children props
+
+We can wrap another `Component` with a component and send it as `Props`. This is called `children` `Props`. And when receiving it, it must be received with the name `children`.
+
+```javascript filename="Card.jsx" showLineNumbers {3-5}
+export default function Profile() {
+    return (
+        <Card>
+            <Profile />
+        </Card>
+    );
+}
+```
+
+```javascript filename="Card.jsx" showLineNumbers {1,5}
+export default function Card({ children }) {
+    // Here the `Profile` component is received as `children`
+    return (
+        <div className='card'>
+            <h1>This is Profile Card</h1>
+            {children}
+        </div>
+    );
+}
+```
+
+## Props are Immutable: why?
+
+`Props` cannot be changed directly because `props` are `Immutable`. `props` can only be managed through `State` from the `Parent Component`. If a `props` value needs to be changed due to user interaction, React passes new `Props` to the `Child Component`. But it never modifies the previously sent `props`.
+
+After sending new `Props`, the previous `Props` are discarded from JavaScript memory or garbage collected.
+
+Therefore, the value of `Props` can never be changed or overridden within the `Child Component`.
+

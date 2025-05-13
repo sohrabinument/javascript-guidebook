@@ -1,0 +1,291 @@
+import { Steps } from "nextra/components";
+
+### Installation
+
+#### Setup React Project
+
+First, you need to set up a React project. To set up a React project using Vite, use the command below and follow the prompts to set up the project.
+
+```bash
+    npx create-vite@latest
+```
+
+Then, follow the prompts that appear on screen.
+
+Or, there's a shortcut which is to use this command:
+
+```bash
+npm create vite@latest your-project-name -- --template react
+```
+
+Then, follow the prompts that appear on screen.
+
+#### Add React Router Dom to Project
+
+To set up `React Router Dom` in a React project, enter the command below.
+
+```bash
+npm install react-router-dom
+```
+
+#### Adding A Router
+
+First, we need to create a browser router and configure our first route. This will enable client-side routing for our web app. To create a `browser router` and configure it to enable routing in our application, follow the steps below.
+
+<Steps>
+
+### Create a browser router.
+
+For this, we need to go to the `Main.jsx` file and import a hook called `createBrowserRouter` from `react-router-dom`, and then create a `browser router` like this:
+
+```jsx filename="main.jsx" {3, 6-11}
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter } from "react-router-dom";
+import "./index.css";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <div>Home Page</div>,
+    },
+]);
+
+createRoot(document.getElementById("root")).render(
+    <StrictMode>
+        <App />
+    </StrictMode>
+);
+```
+
+### Provide the browser router to the entire application.
+
+For this, we need to import a context provider called `RouterProvider` from `react-router-dom` and provide the `browser router` as shown below:
+
+```jsx filename="main.jsx" {3, 6-11 , 15}
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <div>Home Page</div>,
+    },
+]);
+
+createRoot(document.getElementById("root")).render(
+    <StrictMode>
+        <RouterProvider router={router} />
+    </StrictMode>
+);
+```
+
+</Steps>
+
+That completes our Router setup, and we will see our first route in the browser, which will display just the `Home Page` text.
+
+### The Root Route / Home Page Route
+
+We can see a `/` route in our application where we only see the `Home Page` text. Now we'll set up a `Home Page` or main layout.
+
+For this, we first need to create our own component for the `Home Page` or main layout. Since this is the `/` route, we can name it `Root`.
+
+Then we'll use that `Root` layout in our `/` router.
+
+```jsx filename="main.jsx" {5,10}
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import Root from "./pages/Root";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Root />,
+    },
+]);
+
+createRoot(document.getElementById("root")).render(
+    <StrictMode>
+        <RouterProvider router={router} />
+    </StrictMode>
+);
+```
+
+Now we'll see everything from our `Root` layout in our `/` route.
+
+### Handling Not Found Errors
+
+Currently, our application has only one route, the `/` route. If we enter any other route in the `URL`, we'll see an error page. But that's `react-router-dom`'s own design. If we want to manage this error with our own error page,
+
+We first need to create an `ErrorPage` and set it as the `errorElement` for the router.
+
+```jsx filename="main.jsx" {5,12}
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import ErrorPage from "./pages/ErrorPage";
+import Root from "./pages/Root";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Root />,
+        errorElement: <ErrorPage />,
+    },
+]);
+
+createRoot(document.getElementById("root")).render(
+    <StrictMode>
+        <RouterProvider router={router} />
+    </StrictMode>
+);
+```
+
+Now we'll see our custom error page in our UI.
+
+In the error page, we can import a hook called `useRouterError` from `react-router-dom` to see error details.
+
+```jsx filename="ErrorPage.jsx" {1,4,11}
+import { useRouteError } from "react-router-dom";
+
+export default function ErrorPage() {
+    const { status, statusText } = useRouteError();
+
+    return (
+        <div id='error-page'>
+            <h1>Oops!</h1>
+            <p>Sorry, an unexpected error has occurred.</p>
+            <p>
+                {status} | {statusText}
+            </p>
+        </div>
+    );
+}
+```
+
+### Add More Route
+
+Our application currently has only one route, `/`. Now we can add as many routes as we need. For this, we need to create the necessary `JSX` for each route we need. Then we need to define the `path` and `element` for that route as an object in the `browser router` array.
+
+```jsx filename="main.jsx" {5,15-18}
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import Contact from "./pages/Contact";
+import ErrorPage from "./pages/ErrorPage";
+import Root from "./pages/Root";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Root />,
+        errorElement: <ErrorPage />,
+    },
+    {
+        path: "/contacts/:contactId",
+        element: <Contact />,
+    },
+]);
+
+createRoot(document.getElementById("root")).render(
+    <StrictMode>
+        <RouterProvider router={router} />
+    </StrictMode>
+);
+```
+
+Notice that we've used `path: "/contacts/:contactId"` here. The `/:contactId` means a dynamic route. If we want to access a specific ID after `/contacts`, we can use a dynamic route segment like this.
+
+### Nested Routes
+
+When we want our application to have a `Root` layout and we want the content of our other routes to be visible in a specific place in that layout, meaning the entire application has a single layout and only route-specific content changes within that layout when the route changes, then we can do nested routing. Let's say we want to make our `/contacts` route a nested route. We can do it like this:
+
+```jsx filename="main.jsx" {14-19}
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import Contact from "./pages/Contact";
+import ErrorPage from "./pages/ErrorPage";
+import Root from "./pages/Root";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Root />,
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: "/contacts/:contactId",
+                element: <Contact />,
+            },
+        ],
+    },
+]);
+
+createRoot(document.getElementById("root")).render(
+    <StrictMode>
+        <RouterProvider router={router} />
+    </StrictMode>
+);
+```
+
+In this case, we need to define that route as a `children` of the `Root` layout.
+
+And to define which part of the `Root` layout should show the content of those layouts, we need to import the `<Outlet/>` component from `react-router-dom` and use it to indicate where the content should appear.
+
+```jsx filename="Root.jsx" {1,8}
+import { Outlet } from "react-router-dom";
+
+export default function Root() {
+    return (
+        <>
+            {/* all the other elements */}
+            <div id='detail'>
+                <Outlet />
+            </div>
+        </>
+    );
+}
+```
+
+### Client Side Routing
+
+So far, all our routes have been working fine, but if you notice, whenever we navigate, our application's pages reload. This is not the behavior of a React application. So if we want to make it `Client Side Routing`, we need to use the `<Link to=""/>` component from `react-router-dom` instead of the `<a/>` tag, and use `to` instead of `href`.
+
+```jsx filename="Root.jsx" {1,12,15}
+import { Outlet, Link } from "react-router-dom";
+
+export default function Root() {
+    return (
+        <>
+            <div id='sidebar'>
+                {/* other elements */}
+
+                <nav>
+                    <ul>
+                        <li>
+                            <Link to={`contacts/1`}>Your Name</Link>
+                        </li>
+                        <li>
+                            <Link to={`contacts/2`}>Your Friend</Link>
+                        </li>
+                    </ul>
+                </nav>
+
+                {/* other elements */}
+            </div>
+        </>
+    );
+}
+```
+
+
+
+**We are trying to update the entire documentation as quickly as possible**

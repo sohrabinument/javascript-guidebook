@@ -1,0 +1,171 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Updating Arrays in State – Interview Questions & Answers 🎯
+
+Use these questions to prepare for interviews or test your understanding of updating arrays in React state.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 2.1 – Array State Basics 🧩
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: Why shouldn't you use `push()` to add an item to an array in React state?**  
+A: Because `push()` mutates the original array, and React won't detect the change. Always create a new array instead.
+
+**Q2: How do you add an item to an array in state?**  
+A:
+```jsx
+setItems([
+  ...items,
+  { id: nextId++, name: name }
+]);
+```
+
+**Q3: How do you remove an item from an array in state?**  
+A:
+```jsx
+setItems(items.filter(item => item.id !== removeId));
+```
+
+**Q4: How do you update an item in an array in state?**  
+A:
+```jsx
+setItems(items.map(item =>
+  item.id === updateId ? { ...item, name: 'New Name' } : item
+));
+```
+
+</div>
+
+---
+
+## 2.2 – Array Methods & Pitfalls ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q5: What is the difference between `slice` and `splice`?**  
+A: `slice` returns a new array and does not mutate the original. `splice` mutates the original array. Use `slice` for React state!
+
+**Q6: How would you insert an item at a specific position in an array in state?**  
+A:
+```jsx
+const insertAt = 2;
+setItems([
+  ...items.slice(0, insertAt),
+  newItem,
+  ...items.slice(insertAt)
+]);
+```
+
+**Q7: How do you sort an array in state without mutating it?**  
+A:
+```jsx
+setItems([...items].sort((a, b) => a.value - b.value));
+```
+
+**Q8: What are the risks of mutating arrays in state directly?**  
+A: React may not re-render, leading to bugs and unpredictable UI.
+
+</div>
+
+---
+
+## 2.3 – Nested & Advanced Updates 🏗️
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+**Q9: How do you update a nested array inside an object in state?**  
+A:
+```jsx
+setTodos(todos.map(todo =>
+  todo.id === 1
+    ? {
+        ...todo,
+        tasks: todo.tasks.map(task =>
+          task.id === 1 ? { ...task, text: 'Updated' } : task
+        )
+      }
+    : todo
+));
+```
+
+**Q10: How would you update multiple items in an array at once?**  
+A:
+```jsx
+setItems(items.map(item =>
+  item.category === 'Dairy' ? { ...item, checked: true } : item
+));
+```
+
+**Q11: How can you handle very complex or deeply nested state updates?**  
+A: Use libraries like [Immer](https://immerjs.github.io/immer/) or break your state into smaller pieces.
+
+</div>
+
+---
+
+## 2.4 – Scenario & Practical Example 🏆
+
+<div style={{ background: 'rgba(0, 180, 120, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 180, 120, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+Suppose you have a shopping cart array in state. How do you increase the quantity of a specific item?
+
+Take a moment to think before checking the answer.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+```jsx
+setCart(cart.map(item =>
+  item.id === targetId ? { ...item, quantity: item.quantity + 1 } : item
+));
+```
+</details>
+
+---
+
+Suppose you want to remove all items with a quantity of 0 from your cart. How?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+```jsx
+setCart(cart.filter(item => item.quantity > 0));
+```
+</details>
+
+---
+
+How would you toggle a boolean property (e.g., `selected`) for a specific item in an array?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+```jsx
+setItems(items.map(item =>
+  item.id === targetId ? { ...item, selected: !item.selected } : item
+));
+```
+</details>
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of updating arrays in state, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />

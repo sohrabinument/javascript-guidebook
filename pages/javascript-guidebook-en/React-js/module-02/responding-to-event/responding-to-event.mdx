@@ -1,0 +1,110 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# 🖱️ Responding to Events in React
+
+> **👋 Friendly Intro:**
+>
+> Making your app interactive is what brings it to life! In React, you can respond to user actions—like clicks, typing, or mouse movements—by handling events. Let's see how you can do this the React way! ⚡
+
+---
+
+## What is an Event Handler? 🤔
+
+An **event handler** is a function that runs when something happens in your UI (like a button click). In React, you add event handlers as props to elements, such as `onClick`, `onChange`, or `onMouseEnter`.
+
+---
+
+## Adding an Event Handler to a Button 🛎️
+
+Here's how you make a button respond to a click:
+
+```jsx
+export default function Button() {
+  // Define the handler function inside the component
+  const handleClick = () => {
+    alert('You clicked me!');
+  };
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}
+```
+
+<Callout type="tip">
+Pass the **function reference** (e.g., `onClick={handleClick}`), not the result of calling the function (e.g., `onClick={handleClick()}`), or it will run immediately!
+</Callout>
+
+---
+
+## Inline Event Handlers 📝
+
+You can also use an inline function for quick actions:
+
+```jsx
+export default function InlineButton() {
+  return (
+    <button onClick={() => alert('Hello!')}>Say Hello</button>
+  );
+}
+```
+
+<Callout type="info">Inline handlers are great for short actions. For more complex logic, define a separate function.</Callout>
+
+---
+
+## Common Event Handler Props in React
+
+- `onClick`: Fires when an element is clicked
+- `onChange`: Fires when an input value changes
+- `onSubmit`: Fires when a form is submitted
+- `onMouseEnter`: Fires when the mouse enters an element
+- `onKeyDown`: Fires when a key is pressed
+
+---
+
+## Best Practices & Pitfalls 🚦
+
+- ✅ **Pass a function reference**, not a function call.
+- ✅ Use arrow functions for inline logic if needed.
+- 🚫 **Don't call the function directly** in the prop (e.g., `onClick={myFunc()}`).
+- ✅ Name your handler functions clearly (e.g., `handleClick`).
+
+<Callout type="warning">If you call the function directly, it will run every time the component renders—not just when the user interacts!</Callout>
+
+---
+
+## Example: Handling Form Submission 📝
+
+```jsx
+export default function MyForm() {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevents page reload
+    alert('Form submitted!');
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+<Callout type="info">Use `e.preventDefault()` to stop the default browser behavior (like reloading the page on form submit).</Callout>
+
+---
+
+## Recap & Next Steps 🚀
+
+- Add interactivity by responding to events in React.
+- Always pass a function reference to event props.
+- Use inline functions for quick actions, but prefer named functions for complex logic.
+- Practice by making buttons, forms, and inputs interactive!
+
+<Callout type="success">Try adding event handlers to your own components and see how your app comes alive! 🎉</Callout>

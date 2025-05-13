@@ -1,0 +1,102 @@
+**Declarative and Imperative programming approaches are different methods of programming. Let's first understand the main concept of each approach, and then look at code examples.**
+
+### 1. Imperative Approach:
+
+In imperative programming, you tell **how to do something** step by step. You describe each step specifically, and the computer follows those steps correctly. It's like a cooking recipe, where each step is explained in detail.
+
+#### Example:
+
+Let's say we need to multiply the elements of an array by 2.
+
+```javascript
+// Imperative approach
+const numbers = [1, 2, 3, 4, 5];
+const doubledNumbers = [];
+
+for (let i = 0; i < numbers.length; i++) {
+    doubledNumbers.push(numbers[i] * 2);
+}
+
+console.log(doubledNumbers); // Output: [2, 4, 6, 8, 10]
+```
+
+Here we're using a loop to multiply each element by 2 and push it into a new array. Each step like:
+
+-   Looping,
+-   Multiplication,
+-   Pushing
+
+is explicitly stated.
+
+### 2. Declarative Approach:
+
+In declarative programming, you state **what you want to do**, but you don't specifically mention **how to do it**. You don't have to tell the computer each step explicitly.
+
+In this approach, you basically just state what you want, and the computer figures out the implementation details itself.
+
+#### Example:
+
+Let's do the same task we did above, but using a declarative approach:
+
+```javascript
+// Declarative approach
+const numbers = [1, 2, 3, 4, 5];
+const doubledNumbers = numbers.map((num) => num * 2);
+
+console.log(doubledNumbers); // Output: [2, 4, 6, 8, 10]
+```
+
+Here, we've used the `.map()` function, which multiplies each element by 2 and creates a new array. However, there's no mention of a loop—we haven't directly told how to multiply on the array. We've just said, **"Multiply each element by 2"**.
+
+### Main Differences:
+
+1. **Imperative:** You have to specify each step step-by-step, detailing exactly how the task will be accomplished.
+2. **Declarative:** You just state what needs to be done, and how it's done remains hidden or the computer figures it out itself.
+
+---
+
+### Which Approach Does React Use to Change UI?
+
+React primarily changes its UI using a **Declarative** approach. This means that in React, instead of thinking about how the UI will be updated, you describe **what the current state of the UI should be**, and React takes care of the necessary work behind the scenes to update that UI.
+
+### How Does React's Declarative Approach Work?
+
+1. **Declarative Components:** When creating each UI element (component) in React, you tell each component how it should look. You specify the **final state** of the UI, but you don't have to explicitly say how that state will change.
+
+    Example:
+
+    ```javascript
+    function Greeting({ name }) {
+        return <h1>Hello, {name}!</h1>;
+    }
+    ```
+
+    Here, we're just saying, "This component should look like this," but we don't have to think about how it will render or how many times. React handles those tasks in its own way.
+
+2. **State Changes:** Another important aspect of React's declarative approach is **state**. When you change a state, React updates the UI according to that state.
+
+    Example:
+
+    ```javascript
+    import React, { useState } from "react";
+
+    function Counter() {
+        const [count, setCount] = useState(0);
+
+        return (
+            <div>
+                <p>You clicked {count} times</p>
+                <button onClick={() => setCount(count + 1)}>Click me</button>
+            </div>
+        );
+    }
+    ```
+
+    Here, when we change the state (`count`), React re-renders the UI accordingly. We're just specifying what the UI should look like when the state changes, but how the DOM is manipulated or how the changes occur, that's React's responsibility.
+
+3. **Virtual DOM:** Another big aspect of React's declarative UI changes is the **Virtual DOM**. When state or props change, React first checks those changes through the Virtual DOM, and then updates only the necessary UI parts at the necessary locations.
+
+React determines how to make changes by using the Virtual DOM. As a result, developers don't have to think about the DOM.
+
+React's UI updating method works in a declarative approach. This allows developers to just state what the final state of the UI will be, and React handles how those changes will occur.
+

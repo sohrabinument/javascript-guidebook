@@ -1,0 +1,168 @@
+import { Steps } from "nextra/components";
+
+React has various built-in hooks for different tasks such as `useState`, `useEffect`, and `useContext`. But while working, you might sometimes think, "I wish React had a hook for this task!" In such situations, you can create your own custom hook.
+
+In this lesson, we'll learn what a custom hook is and how to create one in detail.
+
+### Custom Hooks: Sharing logic between components
+
+Let's say you're building an application where you need to frequently check if the user is `online` or `offline`. If the user is online, you want to show a status saying online, and if offline, you want to show offline.
+
+You'll need to do two things:
+
+1. You'll need a state to track whether the user is online or offline, and display it in the UI through JSX
+2. You'll need an effect to access the browser's online and offline events, which will update the state.
+
+In this case, your code would look like this:
+
+```jsx
+import { useEffect, useState } from "react";
+
+const StatusBar = () => {
+    const [isOnline, setIsOnline] = useState(true);
+
+    useEffect(() => {
+        function handleOnline() {
+            setIsOnline(true);
+        }
+        function handleOffline() {
+            setIsOnline(false);
+        }
+
+        window.addEventListener("online", handleOnline);
+        window.addEventListener("offline", handleOffline);
+        return () => {
+            window.removeEventListener("online", handleOnline);
+            window.removeEventListener("offline", handleOffline);
+        };
+    }, []);
+
+    return <div>{isOnline ? "✅ Online" : "❌ Disconnected"} </div>;
+};
+
+export default StatusBar;
+```
+
+This will accomplish your task, but let's say you create another component where you need to show something if the user is online and something else if they're offline.
+
+Let's say you have a `Play Now` button in another component that should be disabled if the user's network goes offline, and in that case, the button's text should show `Reconnecting...`. In this case too, you need to know the user's network status. You could copy and paste the code from the previous component into this component to get the job done. But this wouldn't be an efficient approach at all.
+
+But what if you could turn the logic of checking whether the user is online or offline, along with the state, into a separate reusable custom hook? Then we could reuse it as much as we want, wherever we want.
+
+Creating a custom hook means taking these stateful logics and turning them into a separate hook. Let's convert the previous logic into a custom hook.
+
+### Extracting your own custom Hook from a component
+
+<Steps>
+    ### First, I'll create a separate file for the hook and declare a function for creating the custom hook.
+
+    We need to create a separate file. We can name the file anything, but the convention is to name it after the hook we're creating. And the function we write for the hook should be very specific to the task we want to accomplish. And the function name must start with `use` and the first letter after that should not be capitalized.
+
+    In this example, we're checking the user's `online` status, so we're naming the hook `useOnlineStatus`.
+
+    ```jsx filename="useOnlineStatus.js" /useOnlineStatus/
+    export default function useOnlineStatus(){
+
+    }
+
+    ```
+
+### Then we need to cut the logic we wrote inside the component and paste it inside the hook.
+
+```jsx {4-20}
+import { useEffect, useState } from "react";
+
+export default function useOnlineStatus() {
+    const [isOnline, setIsOnline] = useState(true);
+
+    useEffect(() => {
+        function handleOnline() {
+            setIsOnline(true);
+        }
+        function handleOffline() {
+            setIsOnline(false);
+        }
+
+        //syncronization
+        window.addEventListener("online", handleOnline);
+        window.addEventListener("offline", handleOffline);
+        //cleanup
+        return () => {
+            window.removeEventListener("online", handleOnline);
+            window.removeEventListener("offline", handleOffline);
+        };
+    }, []);
+}
+```
+
+### Then we need to return the value or variable that we'll need in our component from the hook function.
+
+In case multiple variables are needed, they can be returned as an object. Since our component only needs the online status, we're only returning `isOnline` from here.
+
+```jsx {21-24}
+import { useEffect, useState } from "react";
+
+export default function useOnlineStatus() {
+    const [isOnline, setIsOnline] = useState(true);
+
+    useEffect(() => {
+        function handleOnline() {
+            setIsOnline(true);
+        }
+        function handleOffline() {
+            setIsOnline(false);
+        }
+
+        //syncronization
+        window.addEventListener("online", handleOnline);
+        window.addEventListener("offline", handleOffline);
+        //cleanup
+        return () => {
+            window.removeEventListener("online", handleOnline);
+            window.removeEventListener("offline", handleOffline);
+        };
+    }, []);
+    return isOnline;
+}
+```
+
+### Then inside the component at the top level, we can call the hook to extract `isOnline` and work conditionally.
+
+```jsx
+import useOnlineStatus from "../../hooks/useOnlineStatus";
+
+const StatusBar = () => {
+    const isOnline = useOnlineStatus();
+    return <div>{isOnline ? "✅ Online" : "❌ Disconnected"} </div>;
+};
+
+export default StatusBar;
+```
+
+</Steps>
+
+With these few steps, we've created our custom hook. Now we can use this hook as many times as we want, wherever we want.
+
+### Hook names always start with `use`
+
+In React applications, the following naming conventions need to be followed for components and hooks:
+
+1. **React component names must start with a capital letter**
+2. **Hook names must start with use followed by a capital letter**
+
+### Should all functions called during rendering start with the use prefix?
+
+No, regular functions should never start with `use`. The `use` prefix should only be used at the beginning of hook names (built-in or custom hooks).
+
+**If a function doesn't use any React hooks internally, then it should be used as a regular function rather than a hook. This is because if you write it as a regular function, you can use it anywhere in your component, whereas if you use it as a hook, you can only use it at the top level of your component.**
+
+### When to use custom Hooks
+
+**You don't need to create a custom hook to reduce every small duplication in your code. You can duplicate some logical parts, and it's good to do so.**
+
+**When you use an effect, you're trying to access something outside React. You might be writing an effect once and need to use it in many components. In such cases, you can turn the effect into a custom hook.**
+
+### Custom Hooks help you migrate to better patterns
+
+Effects are an `Escape Hatch`. When you use an effect, you're accessing an API outside of React. The React team is constantly working on this so that you don't have to use too many effects. They'll provide some built-in hooks for effects, so if you use your current codebase's effects as custom hooks, when React releases built-in hooks for these in future versions, you can easily migrate your hooks to them with very little change.
+

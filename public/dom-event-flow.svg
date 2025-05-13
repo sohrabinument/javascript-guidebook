@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f8f9fa" rx="8" ry="8"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#333">DOM Event Flow</text>
+  
+  <!-- DOM Tree Structure -->
+  <!-- Window -->
+  <rect x="240" y="70" width="120" height="40" rx="8" ry="8" fill="#e2f2ff" stroke="#0366d6" stroke-width="2"/>
+  <text x="300" y="95" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">window</text>
+  
+  <!-- Document -->
+  <rect x="240" y="130" width="120" height="40" rx="8" ry="8" fill="#e2f2ff" stroke="#0366d6" stroke-width="2"/>
+  <text x="300" y="155" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">document</text>
+  
+  <!-- HTML -->
+  <rect x="240" y="190" width="120" height="40" rx="8" ry="8" fill="#e2f2ff" stroke="#0366d6" stroke-width="2"/>
+  <text x="300" y="215" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">html</text>
+  
+  <!-- BODY -->
+  <rect x="240" y="250" width="120" height="40" rx="8" ry="8" fill="#e2f2ff" stroke="#0366d6" stroke-width="2"/>
+  <text x="300" y="275" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">body</text>
+  
+  <!-- DIV -->
+  <rect x="240" y="310" width="120" height="40" rx="8" ry="8" fill="#e2f2ff" stroke="#0366d6" stroke-width="2"/>
+  <text x="300" y="335" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">div</text>
+  
+  <!-- BUTTON (target) -->
+  <rect x="240" y="370" width="120" height="40" rx="8" ry="8" fill="#ffeecc" stroke="#e36209" stroke-width="3"/>
+  <text x="300" y="395" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">button (target)</text>
+  
+  <!-- Connector Lines -->
+  <line x1="300" y1="110" x2="300" y2="130" stroke="#0366d6" stroke-width="2"/>
+  <line x1="300" y1="170" x2="300" y2="190" stroke="#0366d6" stroke-width="2"/>
+  <line x1="300" y1="230" x2="300" y2="250" stroke="#0366d6" stroke-width="2"/>
+  <line x1="300" y1="290" x2="300" y2="310" stroke="#0366d6" stroke-width="2"/>
+  <line x1="300" y1="350" x2="300" y2="370" stroke="#0366d6" stroke-width="2"/>
+  
+  <!-- Capturing Phase -->
+  <path d="M 170 90 L 170 370 L 230 370" stroke="#4caf50" stroke-width="3" stroke-dasharray="5,3" marker-end="url(#arrow-green)" fill="none"/>
+  <text x="155" y="220" font-family="Arial, sans-serif" font-size="14" text-anchor="end" fill="#2e7d32" transform="rotate(270, 155, 220)">Capturing Phase (Down)</text>
+  
+  <!-- Bubbling Phase -->
+  <path d="M 430 370 L 490 370 L 490 90" stroke="#f44336" stroke-width="3" stroke-dasharray="5,3" marker-end="url(#arrow-red)" fill="none"/>
+  <text x="505" y="220" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#c62828" transform="rotate(90, 505, 220)">Bubbling Phase (Up)</text>
+  
+  <!-- Arrow Markers -->
+  <defs>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4caf50"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f44336"/>
+    </marker>
+  </defs>
+  
+  <!-- Legend -->
+  <rect x="50" y="130" width="15" height="15" fill="none" stroke="#4caf50" stroke-width="3" stroke-dasharray="5,3"/>
+  <text x="75" y="143" font-family="Arial, sans-serif" font-size="14" fill="#2e7d32">Capture Phase</text>
+  
+  <rect x="50" y="160" width="15" height="15" fill="none" stroke="#f44336" stroke-width="3" stroke-dasharray="5,3"/>
+  <text x="75" y="173" font-family="Arial, sans-serif" font-size="14" fill="#c62828">Bubble Phase</text>
+  
+  <rect x="50" y="190" width="15" height="15" fill="#ffeecc" stroke="#e36209" stroke-width="2"/>
+  <text x="75" y="203" font-family="Arial, sans-serif" font-size="14" fill="#333">Target Element</text>
+</svg>

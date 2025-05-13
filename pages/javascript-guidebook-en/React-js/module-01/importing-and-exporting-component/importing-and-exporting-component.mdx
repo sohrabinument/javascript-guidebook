@@ -1,0 +1,150 @@
+import { Callout } from "nextra/components";
+
+---
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="100" style={{marginBottom: '1rem'}} />
+
+# 📦 Importing and Exporting Components in React
+
+Welcome! Organizing your React components into separate files and importing/exporting them is key to building scalable, maintainable apps. Let's see how to do it right! 🚀
+
+---
+
+## 🗂️ Why Split Components into Files?
+
+- **Organization:** Easier to find and maintain code.
+- **Reusability:** Use the same component in multiple places.
+- **Scalability:** Large apps are easier to manage.
+
+<Callout type="info">Think of each file as a container for a LEGO block (component) in your app!</Callout>
+
+---
+
+## 🚀 Exporting a Component
+
+There are two main ways to export a component:
+
+### 1. Default Export
+
+Use `export default` if your file exports only one main component.
+
+```jsx
+// Profile.js
+export default function Profile() {
+  return <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=400&h=400&q=80" alt="Profile Example" />;
+}
+```
+
+### 2. Named Export
+
+Use `export` (without default) if you want to export multiple components from the same file.
+
+```jsx
+// Gallery.js
+export function Profile() {
+  return <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=400&h=400&q=80" alt="Profile Example" />;
+}
+
+export function Gallery() {
+  return (
+    <section>
+      <h1>Amazing scientists</h1>
+      <Profile />
+      <Profile />
+      <Profile />
+    </section>
+  );
+}
+```
+
+---
+
+## 📥 Importing a Component
+
+How you import depends on how you exported:
+
+### Importing a Default Export
+
+```jsx
+import Profile from './Profile';
+```
+
+### Importing a Named Export
+
+```jsx
+import { Profile, Gallery } from './Gallery';
+```
+
+<Callout type="warning">You can only have one default export per file, but as many named exports as you want.</Callout>
+
+---
+
+## 🔄 Mixing Default and Named Exports
+
+You can mix both in one file, but be careful with the import syntax:
+
+```jsx
+// Gallery.js
+export function Profile() { /* ... */ }
+export default function Gallery() { /* ... */ }
+
+// App.js
+import Gallery, { Profile } from './Gallery';
+```
+
+---
+
+## 🏆 Best Practices
+
+- Use default export for the main component in a file.
+- Use named exports for helper or additional components.
+- Always use meaningful names for your components and files.
+- Be consistent with your export/import style.
+
+<Callout type="success">Pro Tip: Consistency in naming and structure makes your codebase easier to navigate and maintain!</Callout>
+
+---
+
+## 🧩 Example: Splitting Components
+
+Suppose you have a `Gallery` and a `Profile` component. You can put them in separate files:
+
+**Profile.js**
+```jsx
+export default function Profile() {
+  return <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=400&h=400&q=80" alt="Profile Example" />;
+}
+```
+
+**Gallery.js**
+```jsx
+import Profile from './Profile';
+
+export default function Gallery() {
+  return (
+    <section>
+      <h1>Amazing scientists</h1>
+      <Profile />
+      <Profile />
+      <Profile />
+    </section>
+  );
+}
+```
+
+**App.js**
+```jsx
+import Gallery from './Gallery';
+
+export default function App() {
+  return <Gallery />;
+}
+```
+
+---
+
+For more, see the [official React documentation on importing and exporting components](https://react.dev/learn/importing-and-exporting-components).
+
+---
+
+<Callout type="info">Practice splitting your own components into files and importing/exporting them. It's a key skill for real-world React development!</Callout>

@@ -1,0 +1,223 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# 🔄 Event Propagation in React
+
+> **👋 Friendly Intro:**
+>
+> Want to make your app interactive? Understanding how events flow in React is key! This guide will help you master event propagation, delegation, capturing, and stopping events—with simple language, diagrams, and practical tips. Inspired by the [official React docs](https://react.dev/learn/responding-to-events#event-propagation).
+
+---
+
+## What is Event Propagation? 🤔
+
+Event propagation is the process by which events (like clicks, keypresses, etc.) move through the DOM tree. This process happens in **three phases**:
+
+1. **Capturing Phase:** The event starts at the root of the DOM and travels _down_ to the target element. In React, you can listen to this phase using props like `onClickCapture`.
+2. **Target Phase:** The event reaches the target element (the one you actually interacted with).
+3. **Bubbling Phase:** The event then bubbles _up_ from the target element back to the root. In React, most event handlers (like `onClick`) listen during this phase by default.
+
+<img src="/dom-event-flow.svg" alt="DOM Event Flow Diagram" width="600" style={{display:'block',margin:'2rem auto'}} />
+
+<Callout type="info">In React, most event handlers (like <code>onClick</code>) listen during the <b>bubbling phase</b> by default. But you can use <code>onClickCapture</code> to listen during the capturing phase.</Callout>
+
+**Real-world analogy:**
+Imagine you're at a concert. If someone in the crowd (the target) shouts, the sound first travels to the people nearby (bubbling up to parents), and then to the security at the entrance (the root). If security wants to catch every shout before it reaches the crowd, they'd use the capturing phase!
+
+**Why does propagation matter?**
+- It lets you handle events at different levels of your UI.
+- You can stop events from reaching parent elements using `e.stopPropagation()`.
+- You can use capturing to intercept events before they reach the target.
+
+---
+
+## Event Delegation 🏷️ (In Depth)
+
+Event delegation is a powerful technique where you attach a single event handler to a parent element, and use it to manage events for all of its children—even if those children are added dynamically.
+
+**How does it work?**
+- Thanks to event bubbling, when a child element is interacted with, the event bubbles up to the parent. The parent's handler can check which child was interacted with and respond accordingly.
+
+**Why is it useful?**
+- **Performance:** You don't need to add a separate event handler to every child element. This is especially helpful for lists with many or dynamic items.
+- **Dynamic UIs:** If you add or remove child elements (like list items) dynamically, you don't need to worry about attaching or detaching handlers for each one.
+- **Cleaner code:** Your event logic is centralized in one place.
+
+**Practical React Example:**
+```jsx
+function TodoList({ todos, onToggle }) {
+  const handleClick = (e) => {
+    if (e.target.tagName === 'LI') {
+      const id = e.target.getAttribute('data-id');
+      onToggle(id);
+    }
+  };
+  return (
+    <ul onClick={handleClick}>
+      {todos.map(todo => (
+        <li key={todo.id} data-id={todo.id} style={{ cursor: 'pointer' }}>
+          {todo.text}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+<Callout type="tip">With event delegation, you can handle clicks for all <code>&lt;li&gt;</code> items—even if the list changes—using just one handler on the <code>&lt;ul&gt;</code>!</Callout>
+
+**Visual Diagram:**
+
+<img src="/event-delegation.svg" alt="Event Delegation Diagram" width="600" style={{display:'block',margin:'2rem auto'}} />
+
+**Summary:**
+- Event propagation lets events flow through your UI, giving you flexibility in how you handle them.
+- Event delegation leverages propagation to make your code more efficient and maintainable, especially for dynamic lists.
+
+---
+
+## Bubbling vs. Capturing: Visual Diagram
+
+<img src="/bubbling-vs-capturing.svg" alt="Bubbling vs Capturing in React" width="700" style={{display:'block',margin:'2rem auto'}} />
+
+---
+
+## How to Add an Event Handler in React 🖱️
+
+1. **Define a function** inside your component (e.g., `handleClick`).
+2. **Pass it as a prop** to the element (e.g., `onClick={handleClick}`).
+
+**Example:**
+```jsx
+export default function Button() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
+  return (
+    <button onClick={handleClick}>Click me</button>
+  );
+}
+```
+
+<Callout type="tip">
+Always <b>pass</b> the function (e.g., `onClick={handleClick}`), <b>not call</b> it (e.g., `onClick={handleClick()}`), or it will run immediately!
+</Callout>
+
+---
+
+## Event Delegation 🏷️
+
+Event delegation means attaching a single event handler to a parent element to handle events for all its children. This is possible because of event bubbling.
+
+**Why use it?**
+- Fewer event listeners = better performance
+- Easier to manage dynamic lists
+
+**Example:**
+```jsx
+function List() {
+  const handleClick = (e) => {
+    if (e.target.tagName === 'LI') {
+      alert('Clicked: ' + e.target.textContent);
+    }
+  };
+  return (
+    <ul onClick={handleClick}>
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Cherry</li>
+    </ul>
+  );
+}
+```
+
+<Callout type="tip">With event delegation, you can handle clicks for all <code>&lt;li&gt;</code> items using just one handler on the <code>&lt;ul&gt;</code>!</Callout>
+
+---
+
+## Event Capturing (Capture Phase) 🕵️‍♂️
+
+You can listen to the capturing phase in React by using props like <code>onClickCapture</code>.
+
+**Example:**
+```jsx
+function Parent() {
+  const handleCapture = () => {
+    alert('Captured on parent!');
+  };
+  return (
+    <div onClickCapture={handleCapture}>
+      <button>Click Me</button>
+    </div>
+  );
+}
+```
+
+<Callout type="info"><code>onClickCapture</code> fires <b>before</b> the child's <code>onClick</code> handler, even if the child calls <code>e.stopPropagation()</code>.</Callout>
+
+---
+
+## Stopping Propagation 🚦
+
+If you want to stop an event from bubbling up to parent elements, use <code>e.stopPropagation()</code> in your handler.
+
+**Example:**
+```jsx
+function Child({ children }) {
+  const handleClick = (e) => {
+    e.stopPropagation();
+    alert('Child clicked!');
+  };
+  return <button onClick={handleClick}>{children}</button>;
+}
+```
+
+<Callout type="warning"><code>e.stopPropagation()</code> stops the event from reaching parent <code>onClick</code> handlers, but <b>not</b> <code>onClickCapture</code> handlers!</Callout>
+
+---
+
+## Preventing Default Behavior 🛑
+
+Some events have default browser actions (like form submission). Use <code>e.preventDefault()</code> to stop them.
+
+**Example:**
+```jsx
+export default function Signup() {
+  return (
+    <form onSubmit={e => {
+      e.preventDefault();
+      alert('Submitting!');
+    }}>
+      <input />
+      <button>Send</button>
+    </form>
+  );
+}
+```
+
+<Callout type="info"><code>e.preventDefault()</code> stops the browser's default action (like reloading the page on form submit). It does <b>not</b> stop event propagation.</Callout>
+
+---
+
+## Common Pitfalls & Best Practices ⚠️
+
+- **Don't call event handlers directly in JSX:**
+  - ❌ `onClick={handleClick()}` (runs immediately)
+  - ✅ `onClick={handleClick}` (runs on click)
+- **Don't confuse `e.stopPropagation()` and `e.preventDefault()`:**
+  - `e.stopPropagation()` stops the event from bubbling up.
+  - `e.preventDefault()` stops the default browser action.
+- **Use event delegation for lists:** Attach one handler to a parent instead of many children.
+- **Use `onClickCapture` for analytics or logging:** It fires before bubbling and can't be stopped by children.
+
+---
+
+## Recap & Next Steps 🚀
+
+- Events flow through the DOM in two phases: capture and bubble.
+- Use event handlers to respond to user actions.
+- Use `e.stopPropagation()` to stop bubbling, `e.preventDefault()` to stop default actions.
+- Use event delegation and `onClickCapture` for advanced scenarios.
+
+<Callout type="success">Practice these concepts in your own React components! For more, see the <a href="https://react.dev/learn/responding-to-events#event-propagation" target="_blank">official React docs on event propagation</a>. 🎉</Callout>

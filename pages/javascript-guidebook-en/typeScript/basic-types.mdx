@@ -1,0 +1,123 @@
+## Basic Types of TypeScript
+TypeScript has various basic types. Such as:
+- Primitive Types (string, number, boolean, null, undefined)
+- Reference Types (object, array, tuple)
+- Any Types (any)
+- Void Types (void)
+- Never Types (never)
+- Unknown Types (unknown)
+- Enum Types (enum)
+
+Let's discuss each type below:
+
+## Primitive Types 
+- string: Variables of string type. For example:
+```typescript
+const name: string = "John Doe";
+```
+- number: Variables of number type. For example:
+```typescript
+const age: number = 25;
+```
+- boolean: Variables of boolean type. For example:
+```typescript
+const isStudent: boolean = true;
+```
+- null: Variables of null type. For example:
+```typescript
+const address: null = null;
+```
+- undefined: Variables of undefined type. For example:
+```typescript
+const phoneNumber: undefined = undefined;
+```
+
+## Reference Types
+- object: Variables of object type. For example:
+```typescript
+const person: object = {
+  name: "John Doe",
+  age: 25,
+};
+```
+- array: Variables of array type. For example:
+```typescript
+const numbers: number[] = [1, 2, 3, 4, 5];
+```
+- tuple: Variables of tuple type. For example:
+```typescript
+const person: [string, number] = ["John Doe", 25];
+```
+
+## Any Types
+- any: Variables of any type. Any type of value can be assigned to this variable. For example:
+```typescript
+const data: any = "Hello, World!";
+```
+
+## Void Types
+- void: Not a variable type.
+void is typically used as a return type for functions. If a function doesn't return anything, then void is used. For example:
+
+```typescript
+function greet(): void {
+  console.log("Hello, World!");
+}
+```
+
+## Never Types
+- never: never is typically used as a return type for functions. If a function never returns anything or throws an error exception or runs in an infinite loop, then never is used. For example:
+```typescript
+function throwError(): never {
+  throw new Error("Something went wrong!");
+}
+``` 
+
+## Unknown Types
+- unknown: unknown is a type that can be any type, but you cannot directly work with it until it is type-checked.
+
+```ts
+function getData(): unknown {
+  return "Hello, World!";
+}
+
+// Wrong:
+// console.log(getData().toUpperCase()); ❌
+
+// Correct:
+const result = getData();
+if (typeof result === "string") {
+  console.log(result.toUpperCase()); // ✅
+}
+
+```
+
+🔥 any vs unknown:
+
+any → You can use it however you want. It will not type check.
+
+unknown → Cannot be used directly without type checking. Type safe.
+
+## Enum Types
+- enum: enum is a special type that allows you to set named constant values. You can use enum to define a set of values within a group. For example:
+```typescript
+enum Color {
+  Red,
+  Green,
+  Blue,
+}
+const favoriteColor: Color = Color.Green;
+console.log(favoriteColor); // 1
+```
+> Here, an enum named Color has been created. Three values have been defined in this enum: Red, Green, Blue. Then a variable named favoriteColor has been created and assigned the value Color.Green. When favoriteColor is printed to the console, 1 will be printed. This is because the first value of an enum starts from 0.
+> You can also customize the values of an enum. For example:
+```typescript
+enum Color {
+  Red = "RED",
+  Green = "GREEN",
+  Blue = "BLUE",
+}
+const favoriteColor: Color = Color.Green;
+console.log(favoriteColor); // GREEN
+```
+> Here, an enum named Color has been created. Three values have been defined in this enum: Red, Green, Blue. Then a variable named favoriteColor has been created and assigned the value Color.Green. When favoriteColor is printed to the console, GREEN will be printed. This is because the values of the enum have been customized. 

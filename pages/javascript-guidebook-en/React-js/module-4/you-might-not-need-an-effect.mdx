@@ -1,0 +1,315 @@
+### You Might Not Need an Effect
+
+React calls effects an `escape hatch`, meaning you should only use effects when you need to do something outside of React's paradigm. Unnecessary effects can harm your application's codebase maintainability and create many bugs.
+
+If we only want to do something based on a prop or state change, we don't need effects. We'll look at several examples where effects aren't needed. But first, let's learn about some rules of thumb that tell us when we don't need effects.
+
+#### You don't need an Effect to transform data for rendering:
+
+If we just want to transform data and show it in the UI, we should never use Effects for this. In this case, we should use the [Derived State](https://reactive-accelarator.vercel.app/javascript-guidebook/React-js/module-3/choosing-the-state-structure#avoid-redundant-state-%E0%A6%85%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A7%9F%E0%A7%8B%E0%A6%9C%E0%A6%A8%E0%A7%80%E0%A7%9F-%E0%A6%B8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%9F-%E0%A6%A8%E0%A6%BE-%E0%A6%A8%E0%A7%87%E0%A7%9F%E0%A6%BE-%E0%A6%AC%E0%A6%BE-%E0%A6%AA%E0%A6%B0%E0%A6%BF%E0%A6%B9%E0%A6%BE%E0%A6%B0-%E0%A6%95%E0%A6%B0%E0%A6%BE) pattern.
+
+#### You don't need an Effect to do something when state or prop changes:
+
+If we want to do something when a prop or state changes, we should never use Effects.
+
+#### You don't need an Effect to do something on user events specific actions:
+
+Actions that should be done when a user triggers an event should only be handled by event handlers. We should never use effects for event-specific actions.
+
+### When You don't need Effects
+
+#### Updating state based on props or state
+
+Let's say we have a component where we're taking a user's `firstname` and `lastname` as inputs, and we're generating and displaying the user's `Fullname` in the UI. In this case, many people create a separate state for `Fullname` and update it in an effect when `firstname` and `lastname` change. Like this:
+
+```jsx
+function Form() {
+  const [firstName, setFirstName] = useState("Taylor");
+  const [lastName, setLastName] = useState("Swift");
+
+  // ❌ Avoid: redundant state and unnecessary Effect
+  const [fullName, setFullName] = useState("");
+  useEffect(() => {
+    setFullName(firstName + " " + lastName);
+  }, [firstName, lastName]);
+  // ...
+}
+```
+
+But this could be done very easily using Derived State without any additional state or effects. We could calculate `firstname` and `lastname` in a separate local variable and show it in the UI during rendering. For example:
+
+```jsx
+function Form() {
+  const [firstName, setFirstName] = useState("Taylor");
+  const [lastName, setLastName] = useState("Swift");
+  // ✅ Good: calculated during rendering
+  const fullName = firstName + " " + lastName;
+  // ...
+}
+```
+
+#### Resetting all state when a prop changes
+
+What if we've reused the same component multiple times and controlled them with props, and this component has its own local state? Now we want the component's local state to change when its props change.
+
+For example, let's say we have a component called Post for a blog post, and this component has some local state to manage comments for that post. Now, there might be a problem where we show different posts by changing the post ID through props, but because the internal states don't change, all posts show the same comments. In this situation, many people take an effect inside the component and reset the local states whenever the prop changes. Like this:
+
+```jsx
+export default function ProfilePage({ postId }) {
+  const [comment, setComment] = useState("");
+
+  // ❌ Avoid: Resetting state on prop change in an Effect
+  useEffect(() => {
+    setComment("");
+  }, [postId]);
+  // ...
+}
+```
+
+This might work correctly, but it will degrade the application's performance. This is because effects run after the component has loaded and appeared on the screen. Now, when the component first loads, it loads with the comments from the post, then when the prop changes and another post is shown, it will first come to the UI with the previous comments, then the effect will run and reset the comment state with `setComment("")`, and as soon as `setComment("")` is called, the component will re-render. And the previous comments will be erased.
+
+So think about how many times the component is re-rendering to accomplish this small task, which is why the application will become slow due to these extra re-renders.
+
+But this same task could be done very easily using the `key` prop without any effects.
+
+If we render the component with a dynamic `key` prop using the postId during component rendering, React will automatically reset all the local states inside it whenever the prop changes. For example:
+
+```jsx
+export default function BlogPage({ postId }) {
+  return <Post postId={postId} key={postId} />;
+}
+
+function Posts({ postId }) {
+  // ✅ This and any other state below will reset on key change automatically
+  const [comment, setComment] = useState("");
+  // ...
+}
+```
+
+#### Sharing logic between event handlers
+
+Let's say there's a product page, and each product card has two buttons, one is `Buy Product` and the other is `Checkout`. Now the logic is that when either button is clicked, it will show a notification message saying `Product added to cart`, and when the `Checkout` button is clicked, it will also take you to the `/checkout` page.
+
+Now what many people do is that since the same action happens when either button is clicked (showing a notification), they share the logic inside a `useEffect` and show a notification.
+
+Like this:
+
+```jsx
+function ProductPage({ product, addToCart }) {
+  // ❌ Avoid: Event-specific logic inside an Effect
+  useEffect(() => {
+    if (product.isInCart) {
+      showNotification(`Added ${product.name} to the shopping cart!`);
+    }
+  }, [product]);
+
+  function handleBuyClick() {
+    addToCart(product);
+  }
+
+  function handleCheckoutClick() {
+    addToCart(product);
+    navigateTo("/checkout");
+  }
+  // ...
+}
+```
+
+This creates a bug in the application because effects run after the component has loaded. Now if a user adds a product to the cart by clicking the `Buy Product` button, in real-life applications this data would be saved in a database. So when the user adds a product to the cart, goes to another page, and then returns to the product page, as soon as they return, the effect will run and show the notification message again.
+
+But since this is a user event-specific task, because the notification should only show when the user clicks the `Buy Product` or `Checkout` button, this task should be done within the event handler. We can do it like this:
+
+```jsx
+function ProductPage({ product, addToCart }) {
+  // ✅ Good: Event-specific logic is called from event handlers
+
+  function buyProduct() {
+    addToCart(product);
+    `Added ${product.name} to the shopping cart!`;
+  }
+
+  function handleBuyClick() {
+    buyProduct();
+  }
+
+  function handleCheckoutClick() {
+    buyProduct();
+    navigateTo("/checkout");
+  }
+  // ...
+}
+```
+
+#### Sending a POST request
+
+Let's say in our application, whenever a component is visited, an analytics log is automatically posted to the server. And let's say there's also a form where the user inputs information and submits it, and when the submit button is clicked, a post request is sent to the server.
+
+So in this case, we have two scenarios: one where we need to do something automatically, and another where we need to do something after the user clicks the submit button. We can handle it like this:
+
+```jsx
+function Form() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  // ✅ Good: This logic should run because the component was displayed
+  useEffect(() => {
+    post("/analytics/event", { eventName: "visit_form" });
+  }, []);
+
+  //  ✅ Good: Event-specific logic inside an event handler
+  function handleSubmit(e) {
+    e.preventDefault();
+    post("api/register", { firstName, lastName });
+  }
+  // ...
+}
+```
+
+Since the post request for analytics needs to be sent automatically, we put it inside an effect, and the post request that should be sent when the user submits the form is placed inside the event handler.
+
+#### Initializing the application
+
+Let's say there's some logic that we want to run only once when the entire application loads. In this case, we're not talking about a specific component, but logic that should run only once in the entire application. Many people try to do it like this:
+
+```jsx
+function App() {
+  // ❌ Avoid: Effects with logic that should only ever run once
+  useEffect(() => {
+    loadDataFromLocalStorage();
+    checkAuthToken();
+  }, []);
+  // ...
+}
+```
+
+They write an effect at the top level of the application and call it without any dependencies. But this could break the application's logic in development mode because the component mounts twice, so we can follow one of these two methods in such situations:
+
+- 1.
+
+```jsx
+let didInit = false;
+
+function App() {
+  useEffect(() => {
+    if (!didInit) {
+      didInit = true;
+      // ✅ Only runs once per app load
+      loadDataFromLocalStorage();
+      checkAuthToken();
+    }
+  }, []);
+  // ...
+}
+```
+
+- 2.
+
+```jsx
+if (typeof window !== "undefined") {
+  // Check if we're running in the browser.
+  // ✅ Only runs once per app load
+  checkAuthToken();
+  loadDataFromLocalStorage();
+}
+
+function App() {
+  // ...
+}
+```
+
+#### Notifying parent components about state changes
+
+Imagine we have a component where the parent component is managing a state, and when the child component's local state changes due to a user action, we need to notify the parent component. In this case, many people might pass a setter function as a prop from the parent component to the child component, and use an effect in the child component to call the parent's setter function when the child's state changes. Like this:
+
+```jsx
+function Toggle({ onChange }) {
+  const [isOn, setIsOn] = useState(false);
+
+  // ❌ Avoid: The onChange handler runs too late
+  useEffect(() => {
+    onChange(isOn);
+  }, [isOn, onChange]);
+
+  function handleClick() {
+    setIsOn(!isOn);
+  }
+
+  function handleDragEnd(e) {
+    if (isCloserToRightEdge(e)) {
+      setIsOn(true);
+    } else {
+      setIsOn(false);
+    }
+  }
+
+  // ...
+}
+```
+
+But this approach is not efficient at all, because we know that effects run after the component has finished loading. So here, the parent's state won't initially be in sync with the child's state. Later, it will sync through the effect with an additional re-render. This causes unnecessary re-renders, which will slow down the application.
+
+Instead, we can call the parent component's setter function directly in the same event handler that changes the child component's local state, keeping the child and parent state in sync in a single render pass. Our code would look like this:
+
+```jsx
+function Toggle({ onChange }) {
+  const [isOn, setIsOn] = useState(false);
+
+  function updateToggle(nextIsOn) {
+    // ✅ Good: Perform all updates during the event that caused them
+    setIsOn(nextIsOn);
+    onChange(nextIsOn);
+  }
+
+  function handleClick() {
+    updateToggle(!isOn);
+  }
+
+  function handleDragEnd(e) {
+    if (isCloserToRightEdge(e)) {
+      updateToggle(true);
+    } else {
+      updateToggle(false);
+    }
+  }
+
+  // ...
+}
+```
+
+#### Passing data to the parent
+
+When we need data in a child component and also need the same data in the parent component, many people might try to fetch the data in the child component and then pass it to the parent using an effect. They might do it like this:
+
+```jsx
+function Parent() {
+  const [data, setData] = useState(null);
+  // ...
+  return <Child onFetched={setData} />;
+}
+
+function Child({ onFetched }) {
+  const data = useSomeAPI();
+  // ❌ Avoid: Passing data to the parent in an Effect
+  useEffect(() => {
+    if (data) {
+      onFetched(data);
+    }
+  }, [onFetched, data]);
+  // ...
+}
+```
+
+This breaks React's unidirectional data flow. Instead, if the same data is needed in both the child and parent components, rather than fetching the data in the child, fetch it directly in the parent and pass it down to the child as a prop. This can be done like this:
+
+```jsx
+function Parent() {
+  const data = useSomeAPI();
+  // ...
+  // ✅ Good: Passing data down to the child
+  return <Child data={data} />;
+}
+
+function Child({ data }) {
+  // ...
+}
+```

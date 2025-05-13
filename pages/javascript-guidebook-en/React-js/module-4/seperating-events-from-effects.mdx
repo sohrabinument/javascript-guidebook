@@ -1,0 +1,49 @@
+### Separating Events from Effects
+
+When a user makes an interaction, event handlers typically run. If the same interaction is made again, the event handler re-runs. But an effect only re-runs when a value in its dependency array changes between renders.
+
+Sometimes we might use both together, but in this lesson, we'll learn how to separate events from effects.
+
+#### Choosing between event handlers and Effects (When to use effects and when to use event handlers?)
+
+Imagine you're building a chatroom component. In this case, there are two requirements:
+
+1. Your component needs to automatically connect to the chatroom server.
+2. When you click the `Send` button, only then should the message be sent.
+
+Now think about which should go where.
+
+**Of course, what happens after a click will be an event handler, and what happens automatically will be an effect.**
+
+#### Reactive values and reactive logic (What are reactive values and reactive logic?)
+
+##### Reactive values
+
+Generally, we can say that event handlers are triggered manually, such as something happening after clicking a button - we can call this an event. On the other hand, if something needs to be done automatically, then these automatic tasks will be effects.
+
+Props, state, and variables declared inside the component body are reactive values.
+
+```jsx /serverUrl/ /roomId/ /message/
+const serverUrl = "https://localhost:1234";
+
+function ChatRoom({ roomId }) {
+    const [message, setMessage] = useState("");
+
+    // ...
+}
+```
+
+In this example, `serverUrl` is not a reactive value because it's a static value declared outside the component's rendering. It will never change in the component's re-render. But `roomId` and `message` are reactive values. This is because `roomId` comes as a prop and `message` is a state variable. So both are reactive values.
+
+##### reactive logic
+
+-   **Logic inside event handlers is not reactive** Logic written inside event handlers is never reactive, because they won't automatically do anything; the logic will only execute when an action is triggered.
+
+-   **Logic inside Effects is reactive** Logic written inside effects is reactive. This is because if something in the effect's dependency array changes during a re-render, the logic inside the effect runs automatically.
+
+#### Extracting non-reactive logic out of Effects
+
+Sometimes you might need to write non-reactive logic inside effects. But this can change the behavior of our application, meaning something we don't want to happen automatically might get called automatically.
+
+In such situations, React has a built-in hook called `useEffectEvent` which hasn't been released in React's stable version yet. We can use it when it's released in the stable version. Since it hasn't been released in the stable version yet, we're not adding its documentation here. However, if you want, you can [click on this link to learn more about `useEffectEvent`](https://react.dev/learn/separating-events-from-effects#declaring-an-effect-event)
+

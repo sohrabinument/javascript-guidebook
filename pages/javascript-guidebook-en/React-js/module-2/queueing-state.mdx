@@ -1,0 +1,127 @@
+**React takes multiple state updates in each render as a `Queue` and updates them together in batches. This is why it's called `React Queueing a Series of State Updates`. Let's understand this in detail:**
+
+### React batches multiple state updates:
+
+Let's understand with a code example:
+
+Imagine you've come to a hotel and ordered a dish, and after some time, the waiter will inform you about the status of your dish or serve it.
+
+Now let's look at some code:
+
+```jsx filename="App.jsx" showLineNumbers
+import { useState } from "react";
+
+export default function App() {
+    const [disStatus, setDishStatus] = useState(
+        "Order just received and sent for cooking"
+    );
+
+    return (
+        <>
+            <h1>{disStatus}</h1>
+            <button
+                onClick={() => {
+                    setDishStatus("Your dish is being cooked");
+                    setDishStatus("Your dish has been cooked");
+                    setDishStatus(
+                        "Your dish has been served, enjoy the dish"
+                    );
+                }}>
+                What's the status of our dish?
+            </button>
+        </>
+    );
+}
+```
+
+When you placed your order, the state of your dish was `Order just received and sent for cooking`, which is the initial state in this React code.
+
+Then you clicked on the `What's the status of our dish?` `button` to know the status of your dish.
+
+When you clicked the button, the dish status changes or the state updates in three steps inside the button's handler function:
+
+1. In the first state update, the dish status `disStatus` becomes `Your dish is being cooked`
+
+2. In the second state update, the dish status `disStatus` becomes `Your dish has been cooked`
+
+3. In the third state update, the dish status `disStatus` becomes `Your dish has been served, enjoy the dish`
+
+Now, how many statuses do you think you'll see on the screen? Since the state has changed three times, should we expect to see all three statuses one after another, with the component re-rendering three times?
+
+**No, you won't see that here. You'll see only one status, which is the final status: `Your dish has been served, enjoy the dish`**
+
+---
+
+Now let's understand why this happens or how React did this:
+
+-   **React batch updates states:** This means that if a state update happens inside an `event handler function` and if there are multiple state updates inside that event handler, for example:
+
+```jsx
+export default function App() {
+    <button
+        onClick={() => {
+            setDishStatus("Your dish is being cooked");
+            setDishStatus("Your dish has been cooked");
+            setDishStatus("Your dish has been served, enjoy the dish");
+        }}>
+        What's the status of our dish?
+    </button>;
+}
+```
+
+In this code, `setDishStatus` has been called three times. So **React doesn't trigger a re-render immediately after receiving the first `setter function`; rather, it triggers after all the code inside the `event handler function` has executed.** And then it batches all the state updates inside that `event handler function` and manages a state queue. It then changes each state one by one from the queue. And in the next render, all outputs are received together.
+
+Now a question might arise: if that's the case, then we would have seen all three state changes as output in the first example's code.
+
+So let's understand this better:
+
+### Updating the same state multiple times before the next render
+
+There are two ways to update state in React using the function where we change the state:
+
+1. `Replace the value of state with setter function`:
+
+```jsx
+export default function App() {
+    const [disStatus, setDishStatus] = useState(
+        "Order just received and sent for cooking"
+    );
+    <button
+        onClick={() => {
+            setDishStatus("Your dish is being cooked");
+            setDishStatus("Your dish has been cooked");
+            setDishStatus("Your dish has been served, enjoy the dish");
+        }}>
+        What's the status of our dish?
+    </button>;
+}
+```
+
+When we update the state in this way, we're actually replacing the previous value of the state with a new value. So in the example above, when the last `setter function` was called, `disStatus` was replaced. That's why we only saw `Your dish has been served, enjoy the dish` in the output.
+
+2. `Update the value of state with updater function`:
+
+```jsx
+export default function App() {
+    const [disStatus, setDishStatus] = useState(
+        "Order just received and sent for cooking"
+    );
+    <button
+        onClick={() => {
+            setDishStatus((d) => `${d} , Your dish is being cooked `);
+            setDishStatus((d) => `${d} , Your dish has been cooked `);
+            setDishStatus(
+                (d) => `${d} , Your dish has been served, enjoy the dish `
+            );
+        }}>
+        What's the status of our dish?
+    </button>;
+}
+```
+
+Here, we've used an `anonymous Arrow` function syntax inside `setDishStatus`, which receives the previous state value as a parameter. And then it updates the value by adding a new value to it.
+
+This way, we can get the previous state value every time we update the state, and use that value to update with a new value.
+
+If we update the state in the way of the `updater function` above, we'll finally see all three change values like this: `Order just received and sent for cooking, Your dish is being cooked, Your dish has been cooked, Your dish has been served, enjoy the dish`
+

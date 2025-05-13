@@ -1,0 +1,161 @@
+### **Linking and Navigation**  
+Next.js has four methods for navigating between routes:  
+
+1. Using the `<Link>` component.  
+2. Using the `useRouter` hook (Client Components).  
+3. Using the `redirect` function (Server Components).  
+4. Using the native History API.  
+
+This page explains in detail how each method works.
+
+---
+
+### **1. `<Link>` Component**  
+`<Link>` is a built-in component that extends the HTML `<a>` tag. `<Link>` provides benefits like prefetching and client-side navigation. It is the most recommended method for navigation in Next.js.  
+
+#### **Usage:**  
+Import from `next/link` and pass the `href` prop.  
+```jsx {1,4}
+import Link from 'next/link';
+ 
+export default function Page() {
+  return <Link href="/dashboard">Dashboard</Link>;
+}
+```
+
+#### **Linking to Dynamic Segments:**  
+```jsx
+import Link from 'next/link';
+ 
+export default function PostList({ posts }) {
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>
+          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+#### **Checking Active Links:**  
+To check for active links, the component must be a client-side component because active links can only be determined after loading in the browser. In this case, import the `usePathname` function from `next/navigation`. With `usePathname`, we get the route path, then we can conditionally check against that route path to define active links.
+
+**Example**
+```jsx
+'use client';
+ 
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+ 
+export function Links() {
+  const pathname = usePathname();
+ 
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
+            className={`link ${pathname === '/about' ? 'active' : ''}`}
+            href="/about"
+          >
+            About
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+```
+
+#### **Scrolling to an ID:**  
+Next.js default behavior is to always scroll to the top position on a new page after navigation, and maintain the scroll position when using browser back and forward. However, if we want to scroll to a specific position during navigation, we can use the # routing technique.
+
+```jsx
+<Link href="/dashboard#settings">Settings</Link>
+```
+
+#### **Disabling Scroll Restoration:**  
+Next.js default behavior is to always scroll to the top position on a new page after navigation, and maintain the scroll position when using browser back and forward. However, if we want to disable scroll restoration when using browser back and forward, we need to add `scroll={false}` inside the `Link` component.
+
+```jsx
+<Link href="/dashboard" scroll={false}>Dashboard</Link>;
+```
+
+---
+
+### **2. `useRouter` Hook**  
+The `useRouter` hook is used in client components to programmatically change routes.  
+**Example**
+```jsx
+'use client';
+ 
+import { useRouter } from 'next/navigation';
+ 
+export default function Page() {
+  const router = useRouter();
+ 
+  return (
+    <button type="button" onClick={() => router.push('/dashboard')}>
+      Dashboard
+    </button>
+  );
+}
+```
+
+---
+
+### **3. `redirect` Function**  
+Used to redirect routes in Server Components.  
+```jsx
+import { redirect } from 'next/navigation';
+ 
+async function fetchTeam(id) {
+  const res = await fetch('https://...');
+  if (!res.ok) return undefined;
+  return res.json();
+}
+ 
+export default async function Profile({ params }) {
+  const team = await fetchTeam(params.id);
+  if (!team) {
+    redirect('/login');
+  }
+}
+```
+
+---
+
+### **4. Native History API**  
+You can change the browser's History using `pushState` and `replaceState`.  
+
+#### **`pushState` Example:**  
+```jsx
+'use client';
+ 
+import { useSearchParams } from 'next/navigation';
+ 
+export default function SortProducts() {
+  const searchParams = useSearchParams();
+ 
+  function updateSorting(sortOrder) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('sort', sortOrder);
+    window.history.pushState(null, '', `?${params.toString()}`);
+  }
+ 
+  return (
+    <>
+      <button onClick={() => updateSorting('asc')}>Sort Ascending</button>
+      <button onClick={() => updateSorting('desc')}>Sort Descending</button>
+    </>
+  );
+}
+```

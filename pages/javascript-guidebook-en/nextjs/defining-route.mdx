@@ -1,0 +1,29 @@
+**Defining Routes in Next.js**  
+
+Next.js uses a **file-system based router**, where folders work as route segments. Each folder maps to a URL segment. And nested routes can be created by nesting folders inside folders.  
+
+![visual explanation](https://nextjs.org/_next/image?url=%2Fdocs%2Fdark%2Froute-segments-to-path-segments.png&w=1920&q=75&dpl=dpl_GMLGGxnM8gb5oi7tkqLMgMrVXRbf)
+
+### **Creating Routes:**  
+In Next.js, routes are created using a `page.js` or `page.tsx` file. The content in this page will be the content of this route. If there is no `page.js` or `page.tsx` file in the route segments, then the route will not be created.
+Here,
+- Each folder represents a route segment.  
+- **Nested Routes:** Routes can be further nested by nesting folders inside.  
+
+### **Example:**  
+#### `/dashboard/analytics` route  
+If there is no `page.js` file in the **dashboard** or **analytics** folders, then that route cannot be accessed publicly.  
+However, you can keep other files (such as components, CSS files, images) in these folders.  
+
+
+#### **Note:**  
+- Any file extension can be used: `.js`, `.jsx`, `.tsx`.  
+- Having a `page.js` or `page.tsx` means that route will be publicly accessible. 
+
+---
+
+### **Important Points:**  
+1. **Folders are route segments.**  
+   - Example: `app/blog` means the `/blog` route.  
+2. **To create a page, a `page.js` file must exist**  
+3. **You can keep files other than page files to share layouts or components.**

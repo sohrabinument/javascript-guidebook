@@ -1,0 +1,134 @@
+# Example with Vanilla JavaScript 🍦
+
+Let's build a simple product cart feature using Vanilla JavaScript to understand how we manage state and UI updates without React.
+
+## The Product Cart Example 🛒
+
+Here's a simple product card with an "Add to Cart" button. When clicked, it updates the total price.
+
+> **💡 Interactive Example:** Try the code in [this CodePen](https://codepen.io/your-username/pen/example-code) to see it in action!
+
+### HTML Structure 🏗️
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - Vanilla JS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-slate-900 text-slate-400 flex items-center justify-center h-screen px-10"
+  >
+    <div class="shadow-md rounded-lg bg-slate-800 border-slate-700">
+      <a href="#">
+        <img
+          class="rounded-t-lg"
+          src="https://dummyimage.com/680X400/087ea4/ffffff.png&text=Product"
+          alt="product image"
+        />
+      </a>
+      <div class="px-5 py-5">
+        <div class="flex items-center justify-between mt-5">
+          <a href="#">
+            <h3 class="font-semibold text-xl tracking-tight">
+              Reactive Accelerator Course
+            </h3>
+          </a>
+          <span id="total" class="text-xl font-medium text-teal-500">
+            Total: ৳ 0
+          </span>
+        </div>
+        <div class="flex items-center justify-between mt-5">
+          <span id="price" class="text-2xl font-bold text-slate-300">
+            ৳ 5000
+          </span>
+          <button
+            id="button"
+            class="text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-[#087ea4] hover:bg-[#087ea4]/[.8] focus:ring-[#087ea4]/[.5]"
+          >
+            Add to cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+```
+
+![Product Card UI](https://dummyimage.com/600x400/000/fff&text=Product+Card+UI)
+
+### JavaScript Implementation 🧩
+
+```javascript
+// Get DOM elements
+const button = document.getElementById("button");
+const price = document.getElementById("price");
+const total = document.getElementById("total");
+
+// State management
+const productPrice = 5000;
+let totalPrice = 0;
+
+// Initialize UI
+price.innerText = `৳ ${productPrice}`;
+total.innerText = "Total: ৳ 0";
+
+// Event handling
+button.addEventListener("click", () => {
+  totalPrice += productPrice;
+  total.innerText = `Total: ৳ ${totalPrice}`;
+});
+```
+
+> **🔍 Did you know?** Before React, most developers had to write code like this for every interactive element on a webpage!
+
+## How This Works 🔄
+
+![Vanilla JS Flow](https://dummyimage.com/800x250/087ea4/ffffff&text=Vanilla+JavaScript+Flow)
+
+1. **DOM Selection** 🎯: We select elements using `getElementById`
+2. **State Management** 📊: We use simple variables to track the price
+3. **Event Handling** 👆: We add a click event listener to the button
+4. **UI Updates** 🔄: We manually update the DOM when state changes
+
+### Visual Breakdown
+
+| Concept          | Vanilla JS Approach                          |
+| ---------------- | -------------------------------------------- |
+| DOM Selection    | `document.getElementById("button")`          |
+| State Management | `let totalPrice = 0;`                        |
+| Event Handling   | `button.addEventListener("click", ...)`      |
+| UI Updates       | `total.innerText = "Total: ৳ ${totalPrice}"` |
+
+## Key Points to Notice ✅
+
+- We manually select DOM elements
+- State is managed with simple variables
+- UI updates are done manually
+- The code is straightforward for this simple example
+
+> **⚠️ Warning:** This approach becomes increasingly complex and error-prone as your application grows!
+
+### Try It Yourself! 👨‍💻
+
+Modify the example to:
+
+1. Add a "Remove from Cart" button
+2. Display the number of items in the cart
+3. Calculate and show a 10% discount when the total is above ৳ 10,000
+
+## The Limitations Begin to Show 🧐
+
+While this works for a simple case, this approach has several limitations when building more complex applications. In the next section, we'll explore the problems with this Vanilla JavaScript approach and how React helps solve them.
+
+> **💡 Pro Tip:** Keep this example in mind as we move forward. We'll revisit it with React to show how much cleaner the code becomes!
+
+---
+
+**Next Steps:**
+
+- [Problems in Vanilla JavaScript](/javascript-guidebook-en/React-js/LWS-Module-1/problem-in-vanilla-js)
+- [Why React?](/javascript-guidebook-en/React-js/LWS-Module-1/why-react)

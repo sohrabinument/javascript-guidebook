@@ -1,0 +1,24 @@
+## What is `React`?
+
+React is a JavaScript library developed by Facebook. It helps design both native and web interfaces simultaneously. It is a JavaScript library written in JavaScript.
+
+Facebook software engineer Jordan Walke created React.js in 2011, inspired by a Component Based Framework called XHP-js from PHP. It was first implemented in Facebook's newsfeed in 2011 and was used in Instagram in 2012. In 2013, Facebook company open-sourced React.js. The open-source GitHub repository for React [React.js](https://github.com/facebook/react) contains nothing but vanilla JavaScript.
+
+## Why should we use `React`, what's the problem with vanilla JavaScript?
+
+When we work with vanilla JavaScript, what happens is that when we need to change any UI due to user interaction, we have to manually make each UI change. But in `React`, we don't need to do that. In React, whenever any data or state changes due to user interaction, the UI automatically reacts and changes automatically. This process of repeatedly updating the UI is primarily what React was created to automate.
+
+## What are `React` and `React DOM`?
+
+To build a UI, we actually need to manage three aspects:
+
+-   1. Building the UI/DOM.
+-   2. Handling User Interaction.
+-   3. Rendering the DOM in the browser.
+
+The `React` and `React DOM` packages actually do these jobs.
+
+`React` helps build the USER INTERFACE and manages if any data changes due to user interaction.
+
+The `React DOM` package renders the DOM in the browser, and once rendered in the browser, it waits for data changes. If any data changes anywhere, it identifies that change in its `VIRTUAL DOM`, makes the necessary changes to the UI, and directly paints them in the browser. And the user can see the updated UI.
+

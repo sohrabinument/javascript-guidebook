@@ -1,0 +1,75 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Event Propagation – Interview Questions & Answers 🎯
+
+Use these questions to prepare for interviews or test your understanding of event propagation in React.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Event Propagation Fundamentals 🔄
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: What is event propagation in React?**  
+A: Event propagation is the process by which events travel through the DOM tree in two phases: capturing (from root to target) and bubbling (from target back up to root).
+
+**Q2: Which phase does React's `onClick` handler listen to by default?**  
+A: React's `onClick` handler listens during the bubbling phase by default.
+
+**Q3: How can you listen to the capturing phase in React?**  
+A: By using props like `onClickCapture` instead of `onClick`.
+
+</div>
+
+---
+
+## 1.2 – Stopping Propagation & Preventing Default 🚦
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q4: How do you stop an event from bubbling up to parent elements?**  
+A: Call `e.stopPropagation()` inside your event handler.
+
+**Q5: What is the difference between `e.stopPropagation()` and `e.preventDefault()`?**  
+A: `e.stopPropagation()` stops the event from bubbling up the DOM, while `e.preventDefault()` stops the browser's default action (like form submission).
+
+**Q6: Can `e.stopPropagation()` prevent a parent's `onClickCapture` from firing?**  
+A: No, `onClickCapture` fires during the capture phase, before bubbling and before `stopPropagation()` can take effect.
+
+</div>
+
+---
+
+## 1.3 – Scenario & Practical Example 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+Suppose you have a parent `<div>` with an `onClick` handler and a child `<button>` with its own `onClick` handler. What happens if you click the button? How can you make sure only the button's handler runs?
+
+Take a moment to think before checking the answer.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- By default, both the button's and the parent's `onClick` handlers will run (button first, then parent) due to event bubbling.
+- To make sure only the button's handler runs, call `e.stopPropagation()` in the button's handler.
+
+</details>
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of event propagation, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />

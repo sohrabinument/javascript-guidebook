@@ -1,0 +1,59 @@
+### Effects "react" to reactive values
+
+```jsx
+const serverUrl = "https://localhost:1234";
+
+function ChatRoom({ roomId }) {
+    useEffect(() => {
+        const connection = createConnection(serverUrl, roomId);
+        connection.connect();
+        return () => {
+            connection.disconnect();
+        };
+    }, [roomId]);
+    // ...
+}
+```
+
+According to the example above, two variables are used in the effect, but only one variable `roomId` is used as a dependency. Why is that? Why isn't `serverUrl` included in the effect's dependencies?
+
+The reason is that `serverUrl` is a static value and it's declared outside of the component, so it will never change in any re-render. Variables that are declared outside of the component and will never change are not reactive values. Only reactive values need to be included in the effect's dependencies.
+
+On the other hand, the `roomId` variable comes from props. Props and state can change during re-renders, so they are reactive values because they are declared inside React components and will be recalculated during rendering, making them reactive.
+
+If `serverUrl` was coming as a prop, then it would also be a reactive value. Reactive values that are used inside an effect must be added to the effect's dependencies.
+
+### What an Effect with empty dependencies means
+
+```jsx
+const serverUrl = "https://localhost:1234";
+const roomId = "general";
+
+function ChatRoom() {
+    useEffect(() => {
+        const connection = createConnection(serverUrl, roomId);
+        connection.connect();
+        return () => {
+            connection.disconnect();
+        };
+    }, []); // ✅ All dependencies declared
+    // ...
+}
+```
+
+If our effect only needs to run once to connect to the chat room when the component mounts, and the effect doesn't need to run again, and the connection should only stop when the component unmounts, then we can move the dependency variables outside the component as static values. Since no reactive values are used inside the effect, the dependencies array can remain empty.
+
+**Actually, we don't need to think about component mounting and unmounting at all. We just need to write the start and stop logic inside the effect, and React will figure out the rest. If any dependencies need to be added, our `eslint` will suggest them.**
+
+### All variables declared in the component body are reactive
+
+Not only props and state are reactive values, but all variables declared inside the component body are also reactive. For example, if we read a value from context inside our component and declare it within the component, that is also a reactive value. **We should only keep variables inside the component that are related to the component's rendering. Any variables that are not related to the component's rendering and will never change should always be declared outside the component.**
+
+### React verifies that you specified every reactive value as a dependency
+
+When we set up a React project, the `linter` we configure for React will always warn us to ensure that all reactive values used inside an effect are added to the effect's dependencies.
+
+If we use a reactive value inside an effect but don't add it to the dependencies, the `linter` will warn us. We should never suppress this warning; instead, we should add the values that the `linter` suggests to the dependencies.
+
+If we want our component not to re-synchronize, we can keep the reactive values outside the component as static values that will never change, and the effect will not need to re-synchronize.
+

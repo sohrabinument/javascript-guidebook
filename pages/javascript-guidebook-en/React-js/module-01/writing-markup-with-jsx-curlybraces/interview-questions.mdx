@@ -1,0 +1,107 @@
+import { Callout } from "nextra/components";
+
+# JavaScript in JSX with Curly Braces – Interview Questions & Answers 🟦
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="80" style={{marginBottom: '1rem'}} />
+
+Use these questions to prepare for interviews or test your understanding of using JavaScript in JSX with curly braces.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Curly Braces Basics 🌱
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: Why do we use curly braces `{}` in JSX?**  
+A: Curly braces let you embed JavaScript expressions, variables, or function calls inside JSX markup.
+
+**Q2: Where can you use curly braces in JSX?**  
+A: Inside tag content (e.g., `<h1>{name}</h1>`) and as attribute values (e.g., `<img src={avatar} />`).
+
+</div>
+
+---
+
+## 1.2 – Expressions & Inline Styles 💡
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q3: What is the difference between `src="avatar.png"` and `src={avatar}` in JSX?**  
+A: `src="avatar.png"` passes the string "avatar.png" as the value, while `src={avatar}` passes the value of the JavaScript variable `avatar`.
+
+**Q4: How do you use an object for inline styles in JSX?**  
+A: Use double curly braces: `<div style={{ color: 'red' }}></div>`. The outer braces are for JSX, the inner braces are for the JavaScript object.
+
+</div>
+
+---
+
+## 1.3 – Advanced & Scenario-Based 🧠
+
+<div style={{ background: 'rgba(220, 50, 50, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(220, 50, 50, 0.15)', color: 'inherit' }}>
+
+**Q5: Is the following JSX valid? Why or why not?**
+```jsx
+<{tag}>Hello</{tag}>
+```
+A: Invalid. You cannot use curly braces to define tag names in JSX.
+
+**Q6: What will happen if you write `<img src="{avatar}" />` in JSX?**  
+A: It will pass the string `"{avatar}"` as the value, not the variable. You should use `src={avatar}` instead.
+
+**Q7: Can you use a function call inside curly braces in JSX? Give an example.**  
+A: Yes. Example: `<h1>{formatName(user)}</h1>`
+
+**Q8: What is the output of the following code?
+```jsx
+const count = 5;
+return <p>{count + 1}</p>;
+```
+A: It will render `<p>6</p>` because the expression inside the curly braces is evaluated.
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+## Practice Interview Exercise 🏋️‍♂️
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+You're building a React component that displays a user's profile. You want to show the user's name, avatar, and a dynamic greeting based on the time of day.
+
+**Question:** How would you use curly braces in JSX to achieve this? What are some best practices to keep your code clean and readable?
+
+Take a moment to formulate your answer before checking the suggested response.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Best Practices:**
+
+1. Use curly braces to embed variables (e.g., `{user.name}`) and function calls (e.g., `{getGreeting()}`) in your JSX.
+2. Use curly braces for dynamic attribute values (e.g., `src={user.avatar}`).
+3. Keep your expressions simple and readable inside JSX.
+4. Avoid putting complex logic directly in JSX; use helper functions if needed.
+
+**Example:**
+```jsx
+<h1>{getGreeting()}, {user.name}!</h1>
+<img src={user.avatar} alt={user.name} />
+```
+
+</details>
+</div>
+
+---
+
+**Tip:** Review these questions and answers, and try to explain each concept in your own words for the best interview preparation!
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of curly braces in JSX, but also your understanding of why and how to use them effectively in real-world React components.

@@ -1,0 +1,118 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# ⚡ How Rendering Works in React
+
+> **Why understand rendering?**
+>
+> Knowing how React renders your UI helps you write faster, more predictable, and bug-free apps. Let's break down the process with analogies, diagrams, and practical tips!
+
+---
+
+## The Restaurant Analogy 🍽️
+
+Imagine your React components are chefs in a kitchen, preparing delicious UI. React is the waiter, taking orders (user actions) and serving the finished dish (UI) to the customer (user).
+
+- **User** = Customer placing an order
+- **React** = Waiter delivering the order
+- **Component** = Chef preparing the dish (UI)
+- **DOM** = Table where the food (UI) is served
+
+---
+
+## The Three Steps of Rendering 🪄
+
+React's UI update process happens in **three main steps**:
+
+1. **Trigger**: Something happens (user clicks, types, or the app loads) that tells React to update the UI.
+2. **Render**: React calls your components to figure out what the UI should look like (creates a new virtual DOM).
+3. **Commit**: React updates the real DOM to match the virtual DOM, so the user sees the changes.
+
+<Callout type="info">Any screen update in React happens in these three steps: <b>Trigger → Render → Commit</b>.</Callout>
+
+---
+
+## Step 1: Trigger a Render 🚦
+
+A render is triggered when:
+- The app loads for the first time (initial render)
+- A component's state or props change
+
+**Analogy:**
+- The customer (user) places an order (clicks, types, or loads the page).
+- The waiter (React) takes the order to the kitchen (component).
+
+```jsx
+// Initial render
+root.render(<App />);
+
+// State update triggers re-render
+setCount(count + 1);
+```
+
+---
+
+## Step 2: Render Phase 🎨
+
+React calls your components (functions) to figure out what should be displayed. This is a pure calculation—given the same inputs, you get the same output.
+
+- On initial render, React calls the root component.
+- On updates, React calls the component whose state or props changed.
+- If a component returns other components, React renders them too (recursively).
+
+**Analogy:**
+- The chef (component) prepares the dish (UI) based on the order (state/props).
+- The waiter (React) checks with the chef for the latest dish.
+
+<Callout type="warning">Rendering should be pure! Don't change objects or variables outside the function during render. Same inputs should always give the same output.</Callout>
+
+---
+
+## Step 3: Commit Phase 📝
+
+After rendering, React updates the DOM:
+- On initial render, React creates and appends all DOM nodes.
+- On updates, React applies only the minimal changes needed to match the new virtual DOM.
+
+**Analogy:**
+- The waiter (React) brings the finished dish (UI) from the kitchen (component) and serves it on the table (DOM) for the customer (user).
+
+---
+
+## Example: Simple Counter 🔢
+
+```jsx
+import { useState } from 'react';
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <div style={{textAlign: 'center'}}>
+      <h1>{count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+- When you click the button, it triggers a render.
+- React calls the Counter component (render phase).
+- React updates the DOM with the new count (commit phase).
+
+---
+
+## Recap & Visual Summary 🚀
+
+| Step    | What Happens?                                 | Analogy (Restaurant)         |
+|---------|-----------------------------------------------|-----------------------------|
+| Trigger | User action or state/props change             | Customer places an order    |
+| Render  | React calls components, builds virtual DOM    | Chef prepares the dish      |
+| Commit  | React updates the DOM, user sees the change   | Waiter serves the food      |
+
+- React rendering has three main steps: <b>Trigger → Render → Commit</b>.
+- Only state/props changes or the initial load trigger renders.
+- Keep your render functions pure.
+- React only updates the DOM if something actually changed.
+
+<Callout type="success">For more, see the <a href="https://react.dev/learn/render-and-commit" target="_blank">official React docs on rendering</a>. Practice by building your own interactive components! 🎉</Callout>

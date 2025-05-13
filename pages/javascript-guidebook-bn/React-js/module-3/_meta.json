@@ -1,0 +1,11 @@
+{
+  "declaretive-imperative": "৩.১ - ডিক্লারেটিভ বনাম ইম্পেরেটিভ UI",
+  "thinking-about-ui": "৩.২ - রিয়্যাক্টে UI নিয়ে ডিক্লারেটিভভাবে চিন্তা করা",
+  "choosing-the-state-structure": "৩.৩ - রিয়্যাক্টে স্টেট স্ট্রাকচার নির্বাচন করা",
+  "lifting-state-up": "৩.৪ - কম্পোনেন্টগুলোর মধ্যে স্টেট শেয়ার করা: স্টেট উপরে তোলা (Lifting State Up)",
+  "preserving-and-reseting-state": "৩.৫ - স্টেট সংরক্ষণ ও রিসেট করা: ডিফল্ট আচরণ",
+  "reseting-state-at-same-position": "৩.৬ - একই স্থানে স্টেট রিসেট করা: ডিফল্ট আচরণ পরিবর্তন",
+  "extracting-state-logic-into-reducer": "৩.৭ - স্টেট লজিক রিডিউসারে রূপান্তর করা",
+  "passing-data-deeply-with-context": "৩.৮ - গভীরভাবে ডেটা পাঠানো: Context API পরিচিতি",
+  "scaling-up-with-reducer-and-context": "৩.৯ - রিডিউসার এবং কনটেক্সট দিয়ে অ্যাপ স্কেল করা"
+}

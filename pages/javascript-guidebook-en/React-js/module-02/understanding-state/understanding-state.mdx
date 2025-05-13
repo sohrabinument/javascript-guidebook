@@ -1,0 +1,123 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# 🧠 Understanding State in React
+
+> **Why care about state?**
+>
+> State lets your components "remember" things—like user input, the current image, or whether a modal is open. Mastering state is key to building interactive UIs!
+
+---
+
+## What is State? 🤔
+
+State is React's way of letting components remember information between renders. For example, when you type in a form, click a button, or toggle a modal, state helps React "remember" what should be shown on the screen.
+
+<Callout type="info">State is <b>local</b> to each component instance. If you render the same component twice, each copy has its own state!</Callout>
+
+---
+
+## When a Regular Variable Isn't Enough
+
+Suppose you want to show a different image each time a button is clicked. If you use a regular variable, React won't remember its value between renders, and the UI won't update as expected.
+
+```jsx
+// This WON'T work:
+let index = 0;
+function handleClick() {
+  index = index + 1;
+}
+```
+
+- Local variables don't persist between renders.
+- Changing a local variable won't trigger a re-render.
+
+---
+
+## Meet useState: Your First Hook 🪝
+
+React provides the `useState` Hook to solve this problem. It gives you:
+- A state variable to remember data between renders
+- A setter function to update the variable and trigger a re-render
+
+```jsx
+import { useState } from 'react';
+
+function Gallery() {
+  const [index, setIndex] = useState(0);
+  // ...
+}
+```
+
+> The `[index, setIndex]` syntax is called array destructuring. `useState` always returns a pair: the current value and a function to update it.
+
+---
+
+## How useState Works (Visual)
+
+<img src="/useState.svg" alt="React useState Hook Diagram" width="650" style={{display:'block',margin:'2.5rem auto'}} />
+
+1. Your component renders for the first time. `useState(0)` returns `[0, setIndex]`.
+2. When you call `setIndex(1)`, React remembers the new value and re-renders the component.
+3. On the next render, `useState(0)` returns `[1, setIndex]`.
+
+---
+
+## Example: Image Gallery 🖼️
+
+```jsx
+import { useState } from 'react';
+
+const images = [
+  'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+  'https://images.unsplash.com/photo-1465101046530-73398c7f28ca',
+  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308'
+];
+
+export default function Gallery() {
+  const [index, setIndex] = useState(0);
+  function handleNext() {
+    setIndex((prev) => (prev + 1) % images.length);
+  }
+  return (
+    <div style={{textAlign: 'center'}}>
+      <img src={images[index]} alt="Gallery" width="400" style={{borderRadius: '10px'}} />
+      <br />
+      <button onClick={handleNext} style={{marginTop: '1rem'}}>Next</button>
+      <p>{index + 1} / {images.length}</p>
+    </div>
+  );
+}
+```
+
+---
+
+## State is Isolated and Private 🔒
+
+Each component instance has its own state. If you render two `<Gallery />` components, their state is independent:
+
+```jsx
+export default function Page() {
+  return (
+    <>
+      <Gallery />
+      <Gallery />
+    </>
+  );
+}
+```
+
+<Callout type="info">State is <b>private</b> to the component. The parent can't change it directly.</Callout>
+
+---
+
+## Recap & Best Practices 🚀
+
+- Use state when a component needs to "remember" information between renders.
+- Declare state variables with the `useState` Hook.
+- Only call Hooks at the top level of your component (not inside loops, conditions, or nested functions).
+- State is private to each component instance.
+- The setter function both updates the value and triggers a re-render.
+
+<Callout type="success">Practice using <code>useState</code> in your own components! For more, see the <a href="https://react.dev/learn/state-a-components-memory" target="_blank">official React docs on state</a>. 🎉</Callout>

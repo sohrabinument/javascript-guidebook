@@ -1,0 +1,149 @@
+import { Callout, Steps } from "nextra/components";
+
+React has given us a system to handle events. Event handlers are essentially activated when an event is triggered, such as clicks, hovers, focus, etc.
+
+### Adding Event Handler to JSX
+
+We can add an `Event Handler` in React in two steps:
+
+<Steps>
+    ### Declare a handler function and add logic:
+     First, we need to declare a handler function and implement logic in it.
+      For example, if we want to show "Button has been clicked" when a `button` is clicked, our handler function and logic would be as follows:
+
+        ```jsx filename="Button.jsx"
+        export default function Button(){
+
+            function handleClick(){ // Here a handler function named handleClick is declared and logic is implemented inside it.
+                alert("Button has been clicked");
+            }
+
+        }
+
+        ```
+    ### Add the handler function to the button:
+        Then we need to add the handler function to the `button` element:
+
+        ```jsx filename="Button.jsx"
+        export default function Button(){
+
+            function handleClick(){
+                alert("Button has been clicked");
+            }
+
+        return <button onClick={handleClick}>Click Me</button> // Here the handler function is added to the onClick of the button.
+
+        }
+      ```
+
+</Steps>
+
+**We can also add `Event Handler` functions inline in `JSX`.**
+
+For example:
+
+        ```jsx filename="Button.jsx"
+        export default function Button(){
+
+        return <button onClick={ function handleClick(){
+                alert("Button has been clicked");
+            }}>Click Me</button> // Here the handler function is added to the onClick of the button.
+
+        }
+      ```
+
+Or we can write it even more concisely using the `Arrow Function` syntax:
+
+```jsx filename="Button.jsx"
+export default function Button() {
+    return (
+        <button
+            onClick={() => {
+                alert("Button has been clicked");
+            }}>
+            Click Me
+        </button>
+    ); // Here the handler function is added to the onClick of the button.
+}
+```
+
+Here, a function named `handleClick` is defined and passed to the `button` element `as a props`. The `handleClick` function is an `event handler` function.
+
+<Callout
+    type='warning'
+    emoji='💡'>
+    - 👉 Event handler functions must be defined inside the component.
+
+    - 👉 By convention, the names of `event handler`s should start with `handle` followed by
+    the `event name`. Examples: `handleClick`, `handleMouseEnter`,
+    `handleMouseLeave`
+
+</Callout>
+
+---
+
+<Callout
+    type='info'
+          emoji='📍'>
+
+    Event handler functions need to be passed inside the component, **you must only pass them, not call them**
+    For example:
+
+     |✅ Only passed | ❌ Directly called |
+    |:------------------:|:----------------:|
+    |`<button onClick={handleClick}</button>` | `<button onClick={handleClick()}</button>` |
+
+    There's a very important difference between these two systems.
+
+    - Just passing it `<button onClick={handleClick}</button>` means - telling React that I've given you an event handler, remember it and call the function whenever that event occurs.
+    In this case, a `Click` event handler is used, which means when a `Click` happens, only then will the function be called and the output will be seen.
+
+    - But directly calling it `<button onClick={handleClick()}</button>` means: the function will be automatically called as soon as the component renders, it won't wait for the click to happen. If a function manages `State` in this way, then the `State` will keep changing and the component will keep re-rendering. This will put the application in an `infinite` loop.
+
+    The same thing needs to be considered when defining functions inline. Although we only write the function definition there and don't call the function. However, since `IIFE-(immediately invoked function expression)` gets called immediately, we cannot write `IIFE-(immediately invoked function expression)` inline.
+
+</Callout>
+
+### Reading Props in Event Handler
+
+Since event handlers are written inside components, the `event handler function`s can directly access any props the component has.
+
+### Pass Event Handler to Child Components as Props
+
+Sometimes we need to manage events of child components from parent components. In that case, we can define an `event handler function` in the parent component and pass it as props to the child component.
+
+Let's understand in detail:
+
+```jsx filename="App.jsx"
+export default function App() {
+    function handlePlay() {
+        alert("Movie is playing");
+    }
+    return <MovieCard onPlay={handlePlay} />;
+}
+```
+
+```jsx filename="MovieCard.jsx"
+export default function MovieCard({ onPlay }) {
+    return <button onClick={onPlay}>Play</button>;
+}
+```
+
+Here, `App` is a parent component and it has a child component named `MovieCard`. A prop named `onPlay` is passed to the MovieCard component. Through this `onPlay` prop, an event handler named `handlePlay` is passed.
+
+The child component `MovieCard` receives that prop and triggers it in the `onClick` of the button.
+
+This means that we can define which handler function will be called when the button of the child component `MovieCard` is clicked in the parent component itself and can send it as props.
+
+### Naming Conventions of event handler props
+
+<Callout
+    type='warning'
+    emoji='💡'>
+    - 👉 The names of event handler props should start with `on`.
+    - 👉 Reserved keywords like `onClick`, `onHover` should only be used with native `html` elements.
+
+    - 👉 Starting with `on`, any relevant name can be used. For example, `onSmash` can be used instead of `onClick`.
+
+</Callout>
+

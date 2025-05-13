@@ -1,0 +1,285 @@
+import { Steps, Tabs } from "nextra/components";
+
+### Scaling Up with Reducer and Context
+
+`reducer` allows us to manage complex state logic by separating it from the component into a function. And `Context` lets us pass data deeply without `props drilling`. We can combine both `reducer` and `Context` to make complex components much simpler and more elegant.
+
+### Combining a reducer with context
+
+We can combine `Context` and `Reducer` together in three steps to pass data to any component in the application.
+
+1. **Create the context.**
+2. **Create a Reducer and Provide the state and dispatch via Provider**
+3. **Use context anywhere in the tree.**
+
+<Steps>
+    ### Create the context
+     
+    We need to create a context in a separate file and export it so that it can be imported and used from other files.
+
+    ```jsx filename="CounterContext.js"
+    import {createContext} from "react"
+    const CounterContext = createContext(0)
+    export default CounterContext
+    ```
+    ### Create a Reducer and Provide the state and dispatch via Provider
+    We need to create a reducer and pass the `state` and `dispatch` function from that reducer, which our components will need, to the main parent of the component tree where we want to pass data. This way, all nested child components will be able to access that data.
+
+    If you don't know how to create a Reducer, [click here](https://reactive-accelarator.vercel.app/javascript-guidebook/React-js/module-3/extracting-state-logic-into-reducer)
+
+<Tabs items={["App.jsx", "Counter.jsx", "CounterContext.js","counterReducer.js"]}>
+    <Tabs.Tab>
+        ```jsx {3,4,7,8,11,12,13}
+            import React from 'react'
+            import Counter from "./Counter"
+            import counterReducer from "./CounterReducer.js"
+            import CounterContext from "./CounterContext.js"
+
+            const App = () => {
+            const initialState = 0
+            const [count,dispatch] = useReducer(counterReducer,initialState)
+              return (
+                <div>
+                <CounterContext.Provider value={{count,dispatch}}>
+                  <Counter/>
+                </CounterContext.Provider>
+                </div>
+              )
+            }
+
+            export default App
+
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+
+     ```jsx
+            export default function Counter(){
+           return <button>
+               <h1> Count : 0</h1>
+               <button>Incriment</button>
+               <button>Decriment</button>
+           </>
+        }
+     ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+    ```jsx
+       import {createContext} from "react"
+        const CounterContext = createContext(0)
+        export default CounterContext
+    ```
+
+</Tabs.Tab>    
+<Tabs.Tab>
+    ```jsx
+
+export const counterReducer = (state, action) => {
+    switch (action.type) {
+        case "INCRIMENT": {
+            return state + 1;
+        }
+        case "DECRIMENT": {
+            return state - 1;
+        }
+        default: {
+            return state;
+        }
+    }
+};
+    ```
+</Tabs.Tab>
+</Tabs>
+
+### Use context anywhere in the tree.
+
+In this step, we can receive data via `useContext` in any component where we need the data. In the context of this example, we only need data in the `Counter` component, so now we'll receive and use data from the `Counter` component.
+
+<Tabs items={["Counter.jsx","App.jsx","CounterContext.js","counterReducer.js"]}>
+   
+       <Tabs.Tab>
+     ```jsx
+        import {useContext} from "react"
+        import CounterContext from "./CounterContext.js"
+        export default function Counter(){
+            const {state,dispatch} = useContext(CounterContext)
+           return <button>
+               <h1> Count : {count}</h1>
+               <button onClick={()=> dispatch({type:"INCRIMENT"})}>Incriment</button>
+               <button onClick={()=> dispatch({type:"DECRIMENT"})}>Decriment</button>
+           </>
+        }
+     ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```jsx {3,4,7,8,11,12,13}
+            import React from 'react'
+            import Counter from "./Counter"
+            import counterReducer from "./CounterReducer.js"
+            import CounterContext from "./CounterContext.js"
+
+            const App = () => {
+            const initialState = 0
+            const [count,dispatch] = useReducer(counterReducer,initialState)
+              return (
+                <div>
+                <CounterContext.Provider value={{count,dispatch}}>
+                  <Counter/>
+                </CounterContext.Provider>
+                </div>
+              )
+            }
+
+            export default App
+
+        ```
+    </Tabs.Tab>
+
+    <Tabs.Tab>
+    ```jsx
+       import {createContext} from "react"
+        const CounterContext = createContext(0)
+        export default CounterContext
+    ```
+
+</Tabs.Tab>    
+<Tabs.Tab>
+    ```jsx
+
+export const counterReducer = (state, action) => {
+    switch (action.type) {
+        case "INCRIMENT": {
+            return state + 1;
+        }
+        case "DECRIMENT": {
+            return state - 1;
+        }
+        default: {
+            return state;
+        }
+    }
+};
+    ```
+</Tabs.Tab>
+</Tabs>
+
+Now if we run our code, we'll see it's working perfectly. These are the three main steps through which we can use Reducer with Context.
+
+</Steps>
+
+### Moving all wiring into a single file - A Better Approach
+
+Now we'll use Reducer with Context in a more elegant approach. We'll manage all Context-related work in a separate file and also manage the states from that file.
+
+<Tabs items={["App.jsx","CounterProvider.jsx","counterReducer.js","Counter.jsx",]}>
+
+    <Tabs.Tab>
+        ```jsx {3,7,8,9}
+            import React from 'react'
+            import Counter from "./Counter"
+            import CounterProvider from "./CounterProvider"
+            const App = () => {
+              return (
+                <div>
+                <CounterProvider>
+                  <Counter/>
+                </CounterProvider>
+                </div>
+              )
+            }
+            export default App
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+    ```jsx
+    import React from 'react'
+    import {createContext,useReducer} from "react"
+    import counterReducer from "./counterReducer.js"
+
+    const CounterContext = createContext(0)
+    const initialState = 0
+
+     const CounterProvider = ({children}) => {
+        const [count,dispatch] = useReducer(counterReducer,initialState)
+          return (
+            <CounterContext.provider value={{count,dispatch}}>
+                {children}
+            </CounterContext.provider>
+          )
+        }
+
+     export default CounterProvider
+
+    ```
+
+</Tabs.Tab>  
+<Tabs.Tab>
+    ```jsx
+
+export const counterReducer = (state, action) => {
+    switch (action.type) {
+        case "INCRIMENT": {
+            return state + 1;
+        }
+        case "DECRIMENT": {
+            return state - 1;
+        }
+        default: {
+            return state;
+        }
+    }
+};
+    ```
+</Tabs.Tab>
+       <Tabs.Tab>
+     ```jsx
+        import {useContext} from "react"
+        import CounterContext from "./CounterContext.js"
+        export default function Counter(){
+            const {state,dispatch} = useContext(CounterContext)
+           return <button>
+               <h1> Count : {count}</h1>
+               <button onClick={()=> dispatch({type:"INCRIMENT"})}>Incriment</button>
+               <button onClick={()=> dispatch({type:"DECRIMENT"})}>Decriment</button>
+           </>
+        }
+     ```
+    </Tabs.Tab>
+</Tabs>
+This way, we can move everything out of our main parent component and manage it in a separate file.
+Additionally, instead of calling Context repeatedly like this 
+```jsx
+   const {state,dispatch} = useContext(CounterContext)
+```
+**We can create a separate custom hook and use it,**
+
+<Tabs items={["hooks.js","Counter.jsx",]}>
+
+    <Tabs.Tab>
+
+        ```jsx
+        import {useContext} from "react"
+        import CounterContext from "./CounterContext.js"
+
+        export default function useCounterContext(){
+            return useContext(CounterContext)
+        }
+        ```
+    </Tabs.Tab>
+
+     <Tabs.Tab>
+     ```jsx
+        import {useContext} from "react"
+        import useCounterContext from "./hooks.js"
+        export default function Counter(){
+            const {state,dispatch} = useCounterContext()
+           return <button>
+               <h1> Count : {count}</h1>
+               <button onClick={()=> dispatch({type:"INCRIMENT"})}>Incriment</button>
+               <button onClick={()=> dispatch({type:"DECRIMENT"})}>Decriment</button>
+           </>
+        }
+     ```
+    </Tabs.Tab>
+
+</Tabs>

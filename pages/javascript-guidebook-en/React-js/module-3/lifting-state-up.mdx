@@ -1,0 +1,45 @@
+**`lifting state up` is one of the best design patterns in React**
+
+#### What does lifting state up mean?
+
+In React, lifting state up means moving a state from a component's local space to its parent component instead of keeping it locally.
+
+#### Why do we need to lift state up?
+
+We know that the states of React components are isolated within that component, meaning they belong to their own component. Even if that component is used multiple times, each instance will maintain a separate state, never syncing with one another. There can also be cases where a component has two or three `Sibling` components, such as:
+
+```jsx filename="App.js"
+const App = () => {
+    return (
+        <div>
+            <Product />
+            <Cart />
+        </div>
+    );
+};
+
+export default App;
+```
+
+Here, there is a parent component called `App`, which has two child components: `Product` and `Cart`. `Product` and `Cart` are `Siblings` to each other.
+
+Now, let's say our `Product` component has a local state inside it. What if we need that state inside the child component? How can we pass the local state of `Product` to `Cart`?
+
+This is where the **lifting state up** pattern comes in handy. We can move the local state of the `Product` component to their immediate parent component, `App`. And from `App`, we can pass the same state to both the `Product` and `Cart` components via `Props`.
+
+#### Controlled and Uncontrolled Components
+
+`Controlled and Uncontrolled Components` is a term specific to React, not a general programming technical term.
+
+##### Controlled Components
+
+In React, a `Controlled Component` refers to components that are entirely controlled by the parent, meaning the parent manages the state in its own space and simply sends the data to the child through `Props`. Such components are called `Controlled Components` in React.
+
+In other words, `Controlled Components` depend on `Props`.
+
+##### UnControlled Components
+
+React components that maintain their state in their own local space and work with that state are called `UnControlled Components`.
+
+This means that the parent has no control over that component; it relies on its own state data and not on the parent's `Props`.
+

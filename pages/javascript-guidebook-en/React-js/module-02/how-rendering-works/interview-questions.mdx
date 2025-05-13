@@ -1,0 +1,162 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# How Rendering Works in React – Interview Questions & Answers 🎯
+
+Use these questions to prepare for interviews or test your understanding of React's rendering process.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Rendering Fundamentals ⚡
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: What are the three main steps of React's rendering process?**  
+A: Trigger, Render, Commit.
+
+**Q2: What can trigger a render in React?**  
+A: The initial load of the app, or a change in a component's state or props.
+
+**Q3: In the restaurant analogy, what role does React play?**  
+A: React is the waiter, delivering orders (UI updates) between the user and the component kitchen.
+
+</div>
+
+---
+
+## 1.2 – Deeper Understanding & Pitfalls ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q4: What does "rendering should be pure" mean in React?**  
+A: Given the same inputs, a component should always return the same output (JSX). It should not change any objects or variables outside its scope during render.
+
+**Q5: Does React always update the DOM after every render?**  
+A: No, React only updates the DOM if there are actual changes between the previous and current render.
+
+**Q6: What happens in the commit phase?**  
+A: React updates the real DOM to match the virtual DOM, so the user sees the changes.
+
+</div>
+
+---
+
+## 1.3 – Scenario & Practical Example 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+Suppose you have a counter component. When you click the increment button, describe what happens in each of the three rendering steps.
+
+Take a moment to think before checking the answer.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- **Trigger:** Clicking the button triggers a state update.
+- **Render:** React calls the component to calculate the new UI (with the updated count).
+- **Commit:** React updates the DOM to show the new count.
+
+</details>
+</div>
+
+---
+
+## 1.4 – More Scenario-Based & Advanced Questions 🚀
+
+<div style={{ background: 'rgba(100, 200, 100, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(100, 200, 100, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+Suppose you have a parent component that renders a list of child components. If you update the state in the parent, what happens to the children?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- When the parent's state updates, React will re-render the parent.
+- All child components will also be re-rendered unless they are memoized (e.g., with React.memo) and their props haven't changed.
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+You have a component that fetches data from an API and stores it in state. If you call setState with the same data as before, will React re-render the component?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- If you call setState with the exact same value as the current state, React will skip the re-render for performance reasons.
+- For objects and arrays, React uses reference equality (===), so even if the contents are the same, a new object reference will trigger a re-render.
+
+</details>
+
+---
+
+### Advanced Question:
+
+What is React.StrictMode and how does it affect rendering?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- React.StrictMode is a tool for highlighting potential problems in an application.
+- In development mode, it intentionally double-invokes certain lifecycle methods and render functions to help you find side effects and bugs in your components.
+- It does not affect production builds.
+
+</details>
+
+---
+
+### Advanced Question:
+
+Why is it important that rendering is pure in React? What can go wrong if you mutate state or perform side effects during render?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- Pure rendering means the same inputs always produce the same output, making your UI predictable and easier to debug.
+- If you mutate state or perform side effects during render, you can introduce bugs, unpredictable UI, and make React's optimizations (like skipping renders) unreliable.
+- React may call your render function multiple times (especially in StrictMode), so side effects in render can cause duplicate actions or inconsistent state.
+
+</details>
+
+---
+
+### Advanced Question:
+
+How can you optimize rendering performance in large React applications?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- Use React.memo to prevent unnecessary re-renders of child components.
+- Use useMemo and useCallback to memoize expensive calculations and functions.
+- Split large components into smaller ones.
+- Use keys correctly in lists.
+- Avoid unnecessary state in high-level components.
+- Consider virtualization for large lists (e.g., react-window).
+
+</details>
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of rendering, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />

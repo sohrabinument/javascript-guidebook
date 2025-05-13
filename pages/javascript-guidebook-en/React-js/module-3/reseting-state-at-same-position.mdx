@@ -1,0 +1,106 @@
+### Resetting state at the same position
+
+**We know that as long as a component stays in the same position, React will maintain its state.**
+
+But if we need to reset a component's state at the same position, we can do it in two ways:
+
+1.  Rendering a component in different positions
+2.  Give each component an explicit identity with `key`
+
+#### Rendering a component in different positions
+
+```jsx filename="App.jsx"
+import { useState } from "react";
+
+export default function Scoreboard() {
+    const [isPlayerA, setIsPlayerA] = useState(true);
+    return (
+        <div>
+            {isPlayerA ? (
+                <Counter person='Taylor' />
+            ) : (
+                <Counter person='Sarah' />
+            )}
+            <button
+                onClick={() => {
+                    setIsPlayerA(!isPlayerA);
+                }}>
+                Next player!
+            </button>
+        </div>
+    );
+}
+
+function Counter({ person }) {
+    const [score, setScore] = useState(0);
+    const [hover, setHover] = useState(false);
+
+    let className = "counter";
+    if (hover) {
+        className += " hover";
+    }
+
+    return (
+        <div
+            className={className}
+            onPointerEnter={() => setHover(true)}
+            onPointerLeave={() => setHover(false)}>
+            <h1>
+                {person}'s score: {score}
+            </h1>
+            <button onClick={() => setScore(score + 1)}>Add one</button>
+        </div>
+    );
+}
+```
+
+Here, a component is counting a player's score. When we press the `Add One` button to increase the score, the score state changes. We also have a button at the bottom named `Next Player`, and we want the player's name to change when this button is pressed and the score to be reset. But that's not happening here because the counter component is maintaining its position, so the state isn't being reset.
+
+But if we write the code this way,
+
+```jsx
+// First code that will maintain state
+{
+    isPlayerA ? <Counter person='Taylor' /> : <Counter person='Sarah' />;
+}
+```
+
+```jsx
+{
+    isPlayerA && <Counter person='Taylor' />; // Here if isPlayerA is false, null will be returned at this position
+}
+{
+    !isPlayerA && <Counter person='Sarah' />; // Here if isPlayerA is true, null will be returned at this position
+}
+```
+
+The render tree structure becomes like this: ![reset state](../../../../public/UISTATES/resetstate.png)
+
+So we can see that if `isPlayerA` is false, the component below will render. Here, the two components are in two different positions, because if one is not `true`, a `null` is returned at that position, and the other component is rendered at a different position.
+
+#### Resetting state with a `key`
+
+Another most efficient way is to use the `key` prop. We became familiar with the `key` prop when rendering lists.
+
+The `key` prop is not only used for list rendering. The meaning of the `key` prop is to represent that component as a separate component to React.
+
+So if we want to code the same way as before and just reset the states, we can use the `key` prop like this.
+
+```jsx
+{
+    isPlayerA ? (
+        <Counter
+            key='Taylor'
+            person='Taylor'
+        />
+    ) : (
+        <Counter
+            key='Sarah'
+            person='Sarah'
+        />
+    );
+}
+```
+
+Here, the meaning of the `key` prop is two completely different components at the same position.
+

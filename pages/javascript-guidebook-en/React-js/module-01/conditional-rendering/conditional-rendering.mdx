@@ -1,0 +1,117 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Conditional Rendering in React
+
+> **🎯 Friendly Intro:**
+>
+> Conditional rendering lets you show different things in your React app depending on the situation—just like magic! ✨ It's a superpower for making your UI dynamic and interactive.
+
+---
+
+## Common Ways to Do Conditional Rendering
+
+### 1. Using if/else Statements
+
+```jsx
+function Greeting({ isLoggedIn }) {
+  if (isLoggedIn) {
+    return <h1>Welcome back!</h1>;
+  }
+  return <h1>Please sign in.</h1>;
+}
+```
+
+<Callout type="tip">Use <strong>if/else</strong> when you have more complex logic or need to return early from your component.</Callout>
+
+---
+
+### 2. Using the Ternary Operator ⚡
+
+The ternary operator is a concise way to render content based on a condition:
+
+```jsx
+function Greeting({ isLoggedIn }) {
+  return (
+    <div>
+      {isLoggedIn ? <h1>Welcome back!</h1> : <h1>Please sign in.</h1>}
+    </div>
+  );
+}
+```
+
+<Callout type="info">Ternary operators are great for simple, inline conditions. But avoid nesting them too deeply!</Callout>
+
+---
+
+### 3. Using Logical AND (&&) Operator 🟢
+
+If you want to render something only when a condition is true, you can use the <code>&&</code> operator:
+
+```jsx
+function Notification({ hasUnread }) {
+  return (
+    <div>
+      {hasUnread && <p>You have unread messages!</p>}
+    </div>
+  );
+}
+```
+
+<Callout type="warning">Remember: <code>false</code>, <code>null</code>, <code>undefined</code>, <code>0</code>, and <code>''</code> (empty string) are all "falsy" in JavaScript, so nothing will render if the condition is falsy.</Callout>
+
+---
+
+### 4. Assigning JSX to a Variable 🧩
+
+For more complex conditions, you can assign JSX to a variable and use it in your return statement:
+
+```jsx
+function UserStatus({ isOnline }) {
+  let status;
+  if (isOnline) {
+    status = <span className="online">Online</span>;
+  } else {
+    status = <span className="offline">Offline</span>;
+  }
+  return <div>User is: {status}</div>;
+}
+```
+
+<Callout type="tip">This approach keeps your <code>return</code> statement clean and readable, especially with multiple conditions.</Callout>
+
+---
+
+## Best Practices 🌟
+
+- ✅ Use the ternary operator for simple conditions.
+- ✅ Use if/else or variables for more complex logic to keep your JSX clean.
+- 🚫 Avoid deeply nested ternary operators—they can make your code hard to read.
+
+<Callout type="info">Keep your UI logic simple and easy to follow. Readable code is maintainable code!</Callout>
+
+---
+
+## Example from Official Docs 📚
+
+```jsx
+function Item({ name, isPacked }) {
+  return (
+    <li className="item">
+      {isPacked ? <del>{name + ' ✅'}</del> : name}
+    </li>
+  );
+}
+```
+[See more on the official React docs](https://react.dev/learn/conditional-rendering)
+
+---
+
+## 🚀 Recap & Next Steps
+
+- Conditional rendering lets you show different things based on your app's state.
+- Choose the method (if/else, ternary, &&, variable) that keeps your code clean and readable.
+- Practice by building small components with different conditions!
+
+<Callout type="success">Ready to level up? Try combining conditional rendering with lists or forms for even more dynamic UIs!</Callout>

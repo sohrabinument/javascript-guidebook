@@ -1,0 +1,385 @@
+**In JavaScript, `Arrays` can be mutated, but when you store an `Array` as the value of a React state variable, you must think that the `Array` cannot be mutated either. Whenever a state variable's value is an `Array`, to update it, you must always create a completely new `Array` or make a copy of the previous `Array`, update the value there, and then set it as the updated value of the state.**
+
+### (Updating arrays without mutation) - How to update an `Array` without mutation.
+
+In JavaScript, `Array` is a type of object. In React's state, `Array` should always be considered `read-only`. So you can never directly reassign like `arr[0]= "something"`. And there are also several `Array` methods that mutate the old `Array` such as: `push`, `pop`, `shift`, `unshift`, `splice`, `sort`, `reverse`, `arr[i]`. These should not be used to update React's state.
+
+Let's learn which methods can be used to update `Array` data for updating React's state and which ones should not be used.
+
+| Purpose                  | ❌ - Mutates the old `Array` | ✅ Returns a new `Arry`                                              |
+| ------------------------ | ---------------------------- | -------------------------------------------------------------------- |
+| Adding in Array          | `push`, `unshift`            | `concat`, `[...sprade,]`, `array.with()`                             |
+| Removing from Array      | `pop`, `shift`, `splice`     | `filter`, `slice`, `toSpliced`                                       |
+| Replacing in Array       | `splice`, `arr[0]="something"` | `map`, `toSpliced`                                                  |
+| Sorting in Array         | `sort`, `reverse`            | First copy the old `Array` then `sort` or `reverse`, `toSorted`, `toReversed` |
+
+#### (Adding to an Array) Adding elements to an `Array`.
+
+**avoid `push()` , use `concat` or `[...spread]`**
+
+Normally, the `push()` method can be used to add something to an `Array`, but the `push()` method mutates the main `Array`. So when updating React's state, instead of using the `push()` method, use `concat` or `[...spread]` to add items to the `Array`.
+
+```jsx filename="App.jsx" showLineNumbers
+let nextId = 0
+const [artists, setArtists] = useState([{..}, {..}, {..}]);
+setArtists([
+    ...artists, // that contains all the old items
+    { id: nextId++, name: "Something" }, // and one new item at the end
+]);
+```
+
+#### (Removing from an array) Removing elements from an `Array`.
+
+**avoid `pop`,`unshift` use `filter` or `slice` or `toSpliced`** The easiest way to remove something from an `Array` is to use `filter`. The `filter` method doesn't touch the main `Array`; rather, it returns a new `Array`.
+
+```jsx filename="App.jsx" showLineNumbers
+let nextId = 0
+const [artists, setArtists] = useState([{..}, {..}, {..}]);
+const filteredData = artists.filter((item)=> item.id !== 2)
+setArtists(filteredData)
+```
+
+#### (Transforming an array) Transforming an `Array`.
+
+If you need to change something within an `Array` item, you should use `map()`. `map()` doesn't change the main `Array` but returns a new `Array`.
+
+With `map()`, you can `iterate` through each item in an `Array` and conditionally make changes where needed.
+
+#### (Replacing items in an array) Replacing items in an `Array`.
+
+If you need to replace an item in an `Array`, you should use `map()`.
+
+With `map()`, you can `iterate` through each item in an `Array` and conditionally replace the item that needs to be replaced.
+
+#### (Inserting into an array) Inserting items at a position in an `Array`.
+
+To add an item at a specific position in an `Array`, you can use `slice` or `toSpliced`. `toSpliced` is a new feature in ECMA SCRIPT 2023. It doesn't change the main `Array` and returns a new `Array`.
+
+**Inserting using the `slice()` method:**
+
+```jsx filename="App.jsx" showLineNumbers
+import { useState } from "react";
+
+let nextId = 3;
+const initialArtists = [
+  { id: 0, name: "Marta Colvin Andrade" },
+  { id: 1, name: "Lamidi Olonade Fakeye" },
+  { id: 2, name: "Louise Nevelson" },
+];
+
+export default function List() {
+  const [name, setName] = useState("");
+  const [artists, setArtists] = useState(initialArtists);
+
+  function handleClick() {
+    const insertAt = 1; // The position number where insertion will happen
+    const nextArtists = [
+      // Items before the insert position
+      ...artists.slice(0, insertAt),
+      // New item
+      { id: nextId++, name: name },
+      // The rest of the items after the insert position
+      ...artists.slice(insertAt),
+    ];
+    setArtists(nextArtists);
+    setName("");
+  }
+
+  return (
+    <>
+      <h1>Inspiring sculptors:</h1>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <button onClick={handleClick}>Insert</button>
+      <ul>
+        {artists.map((artist) => (
+          <li key={artist.id}>{artist.name}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+---
+
+**Inserting using the `toSpliced()` method:**
+
+```jsx filename="App.jsx" showLineNumbers
+import { useState } from "react";
+
+let nextId = 3;
+const initialArtists = [
+  { id: 0, name: "Marta Colvin Andrade" },
+  { id: 1, name: "Lamidi Olonade Fakeye" },
+  { id: 2, name: "Louise Nevelson" },
+];
+
+export default function List() {
+  const [name, setName] = useState("");
+  const [artists, setArtists] = useState(initialArtists);
+
+  function handleClick() {
+    const insertAt = 1; // The position number where insertion will happen
+
+    const nextArtists = artists.toSpliced(insertAt, {
+      // Will add new item and return a new array
+      id: nextId++,
+      name: "Something",
+    });
+    setArtists(nextArtists);
+    setName("");
+  }
+
+  return (
+    <>
+      <h1>Inspiring sculptors:</h1>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <button onClick={handleClick}>Insert</button>
+      <ul>
+        {artists.map((artist) => (
+          <li key={artist.id}>{artist.name}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+#### (sort or reverse in array) - Sorting or reversing.
+
+Directly using the `sort` or `reverse` method to sort or reverse an `Array` changes the main `Array`. So instead of directly using `sort` or `reverse`, you first need to use the `[...spread]` syntax to spread it.
+
+```jsx filename="App.jsx" showLineNumbers
+import { useState } from "react";
+
+const initialList = [
+  { id: 0, title: "Big Bellies" },
+  { id: 1, title: "Lunar Landscape" },
+  { id: 2, title: "Terracotta Army" },
+];
+
+export default function List() {
+  const [list, setList] = useState(initialList);
+
+  function handleClick() {
+    const nextList = [...list];
+    nextList.reverse();
+    setList(nextList);
+  }
+
+  return (
+    <>
+      <button onClick={handleClick}>Reverse</button>
+      <ul>
+        {list.map((artwork) => (
+          <li key={artwork.id}>{artwork.title}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+It's important to keep in mind that the `[...spread]` syntax only creates a copy of the first level. According to the example above, if only the order of the objects is being sorted or reversed, this method is fine, but if you needed to do something to the objects inside the `Array`, then just doing `[...spread]` once wouldn't be enough.
+
+#### (Updating objects inside an Array) - Updating objects inside an `Array`.
+
+When we need to update objects inside an Array, we can do it using `map()`.
+
+Since `map()` `iterates` through each item in the `Array` and returns an item for each `iteration`, we can conditionally change any item using `map()`.
+
+```jsx filename="App.jsx" showLineNumbers
+import { useState } from "react";
+
+let nextId = 3;
+const initialList = [
+  { id: 0, title: "Big Bellies", seen: false },
+  { id: 1, title: "Lunar Landscape", seen: false },
+  { id: 2, title: "Terracotta Army", seen: true },
+];
+
+export default function BucketList() {
+  const [myList, setMyList] = useState(initialList);
+  const [yourList, setYourList] = useState(initialList);
+
+  function handleToggleMyList(artworkId, nextSeen) {
+    setMyList(
+      myList.map((artwork) => {
+        if (artwork.id === artworkId) {
+          // Create a *new* object with changes
+          return { ...artwork, seen: nextSeen };
+        } else {
+          // No changes
+          return artwork;
+        }
+      })
+    );
+  }
+
+  function handleToggleYourList(artworkId, nextSeen) {
+    setYourList(
+      yourList.map((artwork) => {
+        if (artwork.id === artworkId) {
+          // Create a *new* object with changes
+          return { ...artwork, seen: nextSeen };
+        } else {
+          // No changes
+          return artwork;
+        }
+      })
+    );
+  }
+
+  return (
+    <>
+      <h1>Art Bucket List</h1>
+      <h2>My list of art to see:</h2>
+      <ItemList artworks={myList} onToggle={handleToggleMyList} />
+      <h2>Your list of art to see:</h2>
+      <ItemList artworks={yourList} onToggle={handleToggleYourList} />
+    </>
+  );
+}
+
+function ItemList({ artworks, onToggle }) {
+  return (
+    <ul>
+      {artworks.map((artwork) => (
+        <li key={artwork.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={artwork.seen}
+              onChange={(e) => {
+                onToggle(artwork.id, e.target.checked);
+              }}
+            />
+            {artwork.title}
+          </label>
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+#### (Write concise update logic with Immer) - Running `Array` operations easily with the help of `Immer`.
+
+If we don't want to worry so much about mutation, we can use [Immer](https://www.npmjs.com/package/immer) to easily perform all kinds of `Array` operations. To learn step by step how to use `Immer`, **[click here](https://reactive-accelarator.vercel.app/javascript-guidebook/React-js/module-2/updating-object-in-state#immer-%E0%A6%95%E0%A6%BF%E0%A6%AD%E0%A6%BE%E0%A6%AC%E0%A7%87-%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%AC%E0%A6%B9%E0%A6%BE%E0%A6%B0-%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87-%E0%A6%B9%E0%A7%9F)**
+
+### Four special `Array` methods of ECMA SCRIPT 2023 (ES-2023):
+
+With the four special `Array` methods of ECMA SCRIPT 2023 (ES-2023), we can easily run various `Array` operations without `Mutating` the main `Array`.
+
+1. toSpliced()
+2. toReversed()
+3. toSorted()
+4. with()
+
+#### toSpliced() method:
+
+Using the `Array.prototype.toSpliced()` method, we can add or delete any item at any position in an `Array`. And it doesn't touch the main `Array`. Example:
+
+**Example using `splice()` which changes the main Array.**
+
+```javascript
+const arr = ["a", "b", "c", "d", "e"];
+const arr2 = arr.splice(2, 3, "x", "y");
+console.log(arr);
+console.log(arr2);
+
+//Output:
+["a", "b", "x", "y"]; // Main Array has been changed
+["c", "d", "e"];
+```
+
+**Example using `toSpliced()` which does not change the main Array.**
+
+```javascript
+const arr = ["a", "b", "c", "d", "e"];
+const arr2 = arr.toSpliced(2, 3, "x", "y");
+console.log(arr);
+console.log(arr2);
+
+//Output:
+["a", "b", "c", "d", "e"]; // Main Array remains unchanged.
+["a", "b", "x", "y"]; // A new Array is returned
+```
+
+#### toReversed() method:
+
+The `Array.prototype.toReversed()` method can be used to reverse an `Array`, keeping the main `Array` unchanged.
+
+**Example using `reverse()` which changes the main Array.**
+
+```javascript
+const arr = ["a", "b", "c", "d", "e"];
+const arr2 = arr.reverse();
+console.log(arr);
+console.log(arr2);
+
+//Output:
+["e", "d", "c", "b", "a"]; // Main Array has been changed
+["e", "d", "c", "b", "a"];
+```
+
+**Example using `toReversed()` which does not change the main Array.**
+
+```javascript
+const arr = ["a", "b", "c", "d", "e"];
+const arr2 = arr.toReversed();
+console.log(arr);
+console.log(arr2);
+
+//Output:
+
+["a", "b", "c", "d", "e"]; // Main Array remains unchanged.
+["e", "d", "c", "b", "a"]; // A new Array is returned
+```
+
+#### toSorted() method:
+
+`Array.prototype.toSorted()` can be used to `sort` an `Array` without changing the main `Array`.
+
+**Example using `sort()` which changes the main Array.**
+
+```javascript
+const arr = ["a", "d", "c", "f", "e"];
+const arr2 = arr.sort();
+console.log(arr);
+console.log(arr2);
+
+//Output:
+["a", "c", "d", "e", "f"]; // Main Array has been changed
+["a", "c", "d", "e", "f"];
+```
+
+**Example using `toSorted()` which does not change the main Array.**
+
+```javascript
+const arr = ["a", "d", "c", "f", "e"];
+const arr2 = arr.toSorted();
+console.log(arr);
+console.log(arr2);
+
+//Output:
+["a", "d", "c", "f", "e"]; // Main Array remains unchanged.
+["a", "c", "d", "e", "f"]; // A new Array is returned
+```
+
+#### with() method:
+
+The `Array.prototype.with()` method returns a new `Array` by changing a value at a specific position in the `Array` with another value.
+
+**Example:**
+
+```javascript
+const arr = ["a", "d", "c", "f", "e"];
+const arr2 = arr.with(1, "b");
+console.log(arr);
+console.log(arr2);
+
+//Output:
+["a", "d", "c", "f", "e"]; // Main Array remains unchanged.
+["a", "b", "c", "f", "e"]; // A new Array is returned
+```

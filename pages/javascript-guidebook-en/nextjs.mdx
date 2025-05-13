@@ -1,0 +1,32 @@
+## **What is Next.js?**  
+Next.js is a React framework, which means it's built on top of React, and this framework allows you to build full-stack web applications (frontend + backend). This framework provides us with additional features and optimizations.
+
+### How it works:  
+1. **Creating UI with React Components:**  
+Through Next.js, we build user interfaces (UI) using React Components. That is, the things users will see are created with React.  
+
+2. **Built-in Tooling:**  
+Inside Next.js, there are some built-in tools, such as a bundler (which combines files together) and a compiler (which converts code as needed). This means we don't need to set these up separately.  
+
+3. **SEO and Performance:**  
+Next.js supports server-side rendering (SSR) and static site generation (SSG). As a result, the website performs well on search engines (Google, Bing) and loads very quickly.  
+
+4. **API Routes:**  
+Next.js has an API Routes feature that allows you to do backend work directly. No separate server setup is needed.  
+
+
+### What is Client Side Rendering (CSR)? 
+In client-side rendering, code is rendered in the client or browser. In this case, think about our React application: what happens in a React application is that the entire application first loads in the browser, then when the user requests a page, React DOM package calls its render function to inject that page's content into the DOM.
+So, when our application initially loads, there is nothing except a placeholder div named root.
+Because of this, when a Google bot comes to crawl the site's data, it leaves without crawling anything because it finds no content.
+This is a major disadvantage of `Client Side Rendering`.
+
+### What is Server Side Rendering (SSR)?  
+In server-side rendering, the application's code runs on the server before reaching the browser. The server simulates a browser internally, runs all the code once, and sends it to the browser as HTML, CSS, and JavaScript. 
+This way, when it reaches the browser, all HTML and CSS is already loaded, and after all HTML and CSS are loaded, the page becomes interactive through Hydration, which adds JavaScript to the site. This means that when a Google bot visits the site, it will find content. This improves SEO.
+
+
+### What are Server Components (React Server Components)?
+React Server Components allow rendering all components in the application on either the client side or server side as needed. 
+In this case, components without any interaction or browser-related features are run on the server and generated as static content, while components that need interaction are rendered on the client side.
+

@@ -1,0 +1,82 @@
+import { Steps } from "nextra/components";
+
+### Accessing another component's DOM nodes
+
+Normally, when we want to grab an `HTML ELEMENT` using a `ref`, we can do so and access its value through `ref.current`. However, if we try to directly access one of our custom components (e.g., `<MyInput/>`), we won't be able to. And if we check the `current` value of the `ref` in the console, we'll see `null`.
+
+Let's understand this problem with an example:
+
+```jsx
+import { useRef } from "react";
+
+function MyInput(props) {
+    return <input {...props} />;
+}
+
+export default function MyForm() {
+    const inputRef = useRef(null);
+
+    function handleClick() {
+        inputRef.current.focus();
+    }
+
+    return (
+        <>
+            <MyInput ref={inputRef} />
+            <button onClick={handleClick}>Focus the input</button>
+        </>
+    );
+}
+```
+
+Here we have two components: one is `<MyInput/>` which only contains an input tag, and the other is the parent component, which has a button. We want to focus on the input tag inside the `<MyInput/>` component when the button is clicked. But if we look at the output and click the button, we'll see that the input tag doesn't get focused.
+
+The reason is that React by default doesn't share a component's references with other components, even if it's its own child component.
+
+But if we want to change this behavior and truly want to give access to a node of our custom component to an outside component, we need to forward the reference from that custom component using React's `forwardRef` API.
+
+To do this, we need to follow two steps:
+
+<Steps>
+### Pass the `ref` from the parent component like a prop.
+    
+    ```jsx {12}
+        
+        import { useRef } from "react";
+        
+        export default function MyForm() {
+            const inputRef = useRef(null);
+        
+            function handleClick() {
+                inputRef.current.focus();
+            }
+        
+            return (
+                <>
+                    <MyInput ref={inputRef} />
+                    <button onClick={handleClick}>Focus the input</button>
+                </>
+            );
+        
+        }
+        
+    ```
+
+### Forward the component with the `ref` from the child component using `forwardRef` (which is a Higher Order Function).
+
+In this case, we need to wrap our entire component with `forwardRef` and access the `ref` passed from the parent component in the second parameter of the component, then set it to the node we want to access.
+
+    ```jsx {12}
+
+        import { forwordRef } from "react";
+
+        const MyInput = forwardRef((props,ref)=> { return <input {...props} ref={ref} />});
+
+        export default MyInput;
+
+    ```
+
+</Steps>
+
+Now if we check the output and click the button, we'll see it's working. Normally, components don't share their node references externally because this can cause unexpected behavior, so this is the default behavior. If we want to change it, we can follow the steps above.
+

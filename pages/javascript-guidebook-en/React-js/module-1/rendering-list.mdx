@@ -1,0 +1,55 @@
+In React, we often need to render lists of data or data from an `Array`. In such cases, we can use `map`, `filter` to display them.
+
+**Example:**
+
+```javascript
+const users = ["Mr x", "Mr y", "Mr z"];
+
+export function ListOfUser() {
+    const user = users.map((person) => <li>{person}</li>);
+    return <ul>{user}</ul>;
+}
+```
+
+## Usage of `key`:
+
+When rendering a list of items using `map`, each list element must have a `key`.
+
+```javascript
+const users = [
+    {
+        id: 1,
+        name: "Mr X",
+    },
+    {
+        id: 2,
+        name: "Mr XX",
+    },
+];
+
+export function ListOfUser() {
+    const user = users.map((person) => <li key={person.id}>{person.name}</li>);
+    return <ul>{user}</ul>;
+}
+```
+
+## How to get a `key`?
+
+We can get `keys` in different ways from different data sources, such as:
+
+-   **Data from a database:** The data we get from databases usually comes with an automatic `Id`, which we can use as a `key`.
+
+-   **Local data:** For data that is automatically generated locally, we can use `crypto.randomUUID()` or `uuid` to generate and save an `id/key`.
+
+## Rules of `key`
+
+-   `key` must be unique. The same `key` cannot be used for different elements in the same list.
+
+-   `key` should not be changed or generated during rendering.
+
+-   Never use the index of an `Array` as a `key`.
+
+## Why is `key` needed in React?
+
+React needs `key` to uniquely identify each item in its `DOM TREE`. This way, if an item is deleted from a list or if sorting is needed, React can easily understand which item has changed.
+

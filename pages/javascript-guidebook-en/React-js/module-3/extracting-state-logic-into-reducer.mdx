@@ -1,0 +1,172 @@
+import { Steps, Tabs } from "nextra/components";
+
+### Extracting State Logic into a Reducer
+
+In this lesson, we are first discussing the `useReducer` hook, which is one of React's many hooks that helps efficiently handle complex state management.
+
+Let's first understand what the `useReducer` hook is and how it works, then we'll learn how to use it in our code.
+
+#### Introduction of `useReducer` Hook
+
+`useReducer` is a React hook that was built based on JavaScript's `Array.reducer()` method. The `useReducer` hook also helps us manage React's state.
+
+The `useState` hook that we've been using for state management is actually built based on this `useReducer` hook.
+
+So the question is, when do we use which one? - We'll learn about that in detail, but for now, just keep in mind that the `useReducer` hook is used for complex state management in React.
+
+#### Syntax of `useReducer` Hook
+
+```jsx
+const [updatedStateFullValue, dispatch] = useReducer(reducerFunc, initialState);
+```
+
+#### Anatomy of `useReducer` Hook
+
+![useReducer Hook](../../../../public/hookimages/useREducer.png)
+
+---
+
+The `useReducer` hook takes two arguments:
+
+-   **Reducer Function**: This function manages all the business logic for our state changes. It takes two parameters:
+    -   **state**: This returns the value of our state, allowing us to manage our states within the `reducer function`.
+    -   **action**: This mainly contains our action. Whatever action we want to perform on the state, we get that action inside this `action` parameter. Here, we can access multiple things in the form of an object if we want.
+-   **Initial State**: This is the initial value of our state.
+
+And it returns a tuple, which contains two things:
+
+-   **Updated stateful value**: The updated or modified state that our reducer function returns, which we can render in the UI.
+-   **Dispatch Method**: This is used to send actions to the `reducer function` based on which the state will be managed.
+
+### How to use `useReducer` Hook?
+
+We can use `useReducer` by following three steps. Let's create a `Counter` as an example and understand how to use `useReducer`.
+
+In this example, we'll use the following `JSX`:
+
+    ```jsx
+            export default function App(){
+                return (
+               <div>
+                  <h1> Count : 0</h1>
+                  <button>Increment</button>
+                  <button>Decrement</button>
+              </div>
+
+                )
+            }
+    ```
+
+Here, in `App.jsx`, a counter has been created with two buttons. Clicking one button will `increment` the counter's value, and clicking the other will `decrement` it. Let's build this functionality using `useReducer`.
+
+<Steps>
+
+    ### Create a reducer function to manage state changing logic
+    First, we need to create a `reducer function` where we'll write all our logic for how we'll change the state based on button actions.
+    Let's create it:
+
+```javascript
+const counterReducer = (state, action) => {
+    switch (action.type) {
+        case "INCREMENT": {
+            return state + 1;
+        }
+        case "DECREMENT": {
+            return state - 1;
+        }
+        default: {
+            return state;
+        }
+    }
+};
+```
+
+Here we've created a `reducer function` named `counterReducer`, and we're using a `switch-case` to modify the state based on `action.type` (we'll dispatch the action.type later from the button). We could have also used `if-else` if we wanted.
+
+### Add `useReducer` to Component
+
+Then, where we want to manage the state (in this case, we're using it in the App component), we need to import and define the `useReducer` hook. And we need to use the value of `Count` dynamically from the `useReducer` hook.
+
+```jsx {1,2,4,7}
+import { useReducer } from "react";
+const initialState = 0;
+export default function App() {
+    const [count, dispatch] = useReducer(counterReducer, initialState);
+    return (
+        <div>
+            <h1> Count : {count}</h1>
+            <button>Increment</button>
+            <button>Decrement</button>
+        </div>
+    );
+}
+```
+
+Then we need to provide the `reducer function` and `initialState` as arguments to `useReducer`. We can name the updated state returned by the `reducer function` anything we want, but since we're managing a counter's state, we've named it `count`.
+
+### Call dispatch method on Event handlers and connect the event handlers
+
+Now we just need to `dispatch` the actions. We'll call the `dispatch` method in the event handlers that we'll add to the button's `onClick`, and we'll send the action we want to `dispatch` to the `reducer function` in the form of an object. We could have also called it directly in the button's `onClick` instead of within an event handler.
+
+```jsx {1,2,4}
+import { useReducer } from "react";
+const initialState = 0;
+export default function App() {
+    const [count, dispatch] = useReducer(counterReducer, initialState);
+
+    //increment handler
+    function handleIncrementClick() {
+        return dispatch({
+            type: "INCREMENT",
+        });
+    }
+
+    //decrement handler
+    function handleDecrementClick() {
+        return dispatch({
+            type: "DECREMENT",
+        });
+    }
+
+    return (
+        <div>
+            <h1> Count : {count}</h1>
+            <button onClick={handleIncrementClick}>Increment</button>
+            <button onClick={handleDecrementClick}>Decrement</button>
+        </div>
+    );
+}
+```
+
+That's it! If you follow these three steps correctly, you'll see our hook working.
+
+</Steps>
+
+### Comparing useState and useReducer
+
+React itself mentions in its documentation that the `useReducer` hook also has some downsides. It's not like we'll always only use `useReducer`; we'll use both `useState` and `useReducer` as needed. However, when comparing the two, there are some differences to understand:
+
+-   **Code Size:** Using `useState` requires comparatively less code than `useReducer`, but when the application becomes very large and needs to manage many states, `useReducer` helps by separating similar types of state logic, making the code more manageable.
+
+-   **Code Readability:** When using `useState`, code readability is good when the project is small, but as the project grows, code readability can deteriorate. In this case, `reducer` maintains good code readability by separating the business logic.
+
+-   **Debugging:** With `useState`, debugging code becomes difficult because finding where `setter functions` are called and debugging them can be quite challenging. With `useReducer`, all business logic is managed in one place, making debugging easier.
+
+-   **Testing:** `reducer` functions need to be pure functions, which means they can be easily tested in a separate environment at any time due to their pure nature.
+
+-   **Personal Preference:** Many people really like `useReducer`, while others don't use it at all. It's a matter of personal preference. However, instead of only using `useState` or only `useReducer`, we'll use both together, choosing whichever feels necessary in a particular situation.
+
+### When should use `useReducer`?
+
+We'll use what's needed based on our requirements. When our state logic becomes complex, we'll use `useReducer`, and when we need to manage simple local state, we can use `useState`.
+
+Let's see when to use which:
+
+| When | useState | useReducer |
+| :-: | :-: | :-: |
+| Number of state changes | Maximum three | Many |
+| If multiple state changes are related | No | Yes |
+| If state's data type is | String, Number, Boolean | Object, Array |
+| If there's complex logic | No | Yes |
+| If state's scope is | Local | Global |
+

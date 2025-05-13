@@ -1,0 +1,110 @@
+import { Callout } from "nextra/components";
+
+# Understanding Props in React – Interview Questions & Answers 🧩
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="80" style={{marginBottom: '1rem'}} />
+
+Use these questions to prepare for interviews or test your understanding of props in React.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Props Basics 🌱
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: What are props in React?**  
+A: Props are inputs to a React component that allow data to be passed from a parent component to a child component.
+
+**Q2: How do you pass a prop to a component?**  
+A: By adding attributes to the component in JSX, e.g., `<Avatar src="avatar.png" />`.
+
+</div>
+
+---
+
+## 1.2 – Intermediate Usage 💡
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q3: How do you set a default value for a prop?**  
+A: By using destructuring with a default value, e.g., `function Avatar({ size = 100 }) { ... }`.
+
+**Q4: Can a child component change its own props?**  
+A: No, props are read-only in the child component. Only the parent can change the value and pass a new prop.
+
+**Q5: What is the `children` prop in React?**  
+A: The `children` prop is a special prop that contains any nested JSX or components inside a component tag.
+
+</div>
+
+---
+
+## 1.3 – Advanced & Scenario-Based 🧠
+
+<div style={{ background: 'rgba(220, 50, 50, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(220, 50, 50, 0.15)', color: 'inherit' }}>
+
+**Q6: What happens if you pass `undefined`, `null`, or `false` to a prop with a default value?**  
+A: The default value is only used if the prop is `undefined` or not provided. If you pass `null` or `false`, those values will be used instead of the default.
+
+**Q7: How can you forward all props from one component to another?**  
+A: By using the spread syntax: `<Avatar {...props} />`.
+
+**Q8: Is it possible to pass a function as a prop? Give an example.**  
+A: Yes. Example: `<Button onClick={handleClick} />` where `handleClick` is a function.
+
+**Q9: Why should you use the spread syntax for props with care?**  
+A: Because it can make your code less explicit and harder to understand which props are being passed.
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+## Practice Interview Exercise 🏋️‍♂️
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+You're building a `ProfileCard` component that displays a user's name, avatar, and a button to follow/unfollow. The button's label and action should be controlled by the parent component.
+
+**Question:** How would you use props to make `ProfileCard` flexible and reusable? What are some best practices for handling props in this scenario?
+
+Take a moment to formulate your answer before checking the suggested response.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Best Practices:**
+
+1. Pass all dynamic data (name, avatar, button label, and action) as props.
+2. Use the `children` prop if you want to allow custom content inside the card.
+3. Use default values for optional props.
+4. Keep props read-only in the child; update them in the parent.
+
+**Example:**
+```jsx
+function ProfileCard({ name, avatar, buttonLabel, onButtonClick }) {
+  return (
+    <div>
+      <img src={avatar} alt={name} />
+      <h2>{name}</h2>
+      <button onClick={onButtonClick}>{buttonLabel}</button>
+    </div>
+  );
+}
+```
+
+</details>
+</div>
+
+---
+
+**Tip:** Review these questions and answers, and try to explain each concept in your own words for the best interview preparation!
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of props, but also your understanding of how to use them to build flexible, maintainable React components.

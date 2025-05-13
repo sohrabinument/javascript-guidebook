@@ -1,0 +1,103 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Rendering Lists in React
+
+> **👋 Friendly Intro:**
+>
+> Rendering lists is a superpower in React! It lets you turn any array of data into a dynamic, interactive UI. Let's see how you can do it like a pro. 🚀
+
+---
+
+## Rendering Data from Arrays 🗂️
+
+Suppose you have a list of people you want to display:
+
+```jsx
+const people = [
+  'Creola Katherine Johnson: mathematician',
+  'Mario José Molina-Pasquel Henríquez: chemist',
+  'Mohammad Abdus Salam: physicist',
+  'Percy Lavon Julian: chemist',
+  'Subrahmanyan Chandrasekhar: astrophysicist'
+];
+
+export default function List() {
+  const listItems = people.map(person => <li>{person}</li>);
+  return <ul>{listItems}</ul>;
+}
+```
+
+<Callout type="tip">Use <code>map()</code> to turn each item in your array into a React element. It's the most common way to render lists!</Callout>
+
+---
+
+## Filtering Arrays of Items 🔍
+
+You can use the <code>filter()</code> method to display only certain items. For example, to show only chemists:
+
+```jsx
+const people = [
+  { id: 0, name: 'Creola Katherine Johnson', profession: 'mathematician' },
+  { id: 1, name: 'Mario José Molina-Pasquel Henríquez', profession: 'chemist' },
+  { id: 2, name: 'Mohammad Abdus Salam', profession: 'physicist' },
+  { id: 3, name: 'Percy Lavon Julian', profession: 'chemist' },
+  { id: 4, name: 'Subrahmanyan Chandrasekhar', profession: 'astrophysicist' }
+];
+
+export default function ChemistList() {
+  const chemists = people.filter(person => person.profession === 'chemist');
+  const listItems = chemists.map(person => <li key={person.id}>{person.name}</li>);
+  return <ul>{listItems}</ul>;
+}
+```
+
+<Callout type="info">Combine <code>filter()</code> and <code>map()</code> to show only the items you want. This is great for search, categories, and more!</Callout>
+
+---
+
+## Keeping List Items in Order with <code>key</code> 🗝️
+
+When rendering lists, each child in a list should have a unique <code>key</code> prop:
+
+```jsx
+const listItems = people.map(person =>
+  <li key={person.id}>{person.name}</li>
+);
+```
+
+<Callout type="warning">Always use a unique and stable <code>key</code> (like an ID) for each list item. Avoid using array indexes as keys if the list can change order or have items added/removed.</Callout>
+
+**Why use keys?**  
+Keys help React identify which items have changed, are added, or are removed. This improves performance and helps React keep the UI in sync with the data.
+
+---
+
+## Rendering Multiple Elements per List Item 🧩
+
+If you need to render multiple elements for each item, you can use <code>&lt;React.Fragment&gt;</code> or <code>&lt;&gt;...&lt;/&gt;</code> with a key:
+
+```jsx
+import { Fragment } from 'react';
+
+const listItems = people.map(person =>
+  <Fragment key={person.id}>
+    <h2>{person.name}</h2>
+    <p>{person.profession}</p>
+  </Fragment>
+);
+```
+
+<Callout type="tip">Fragments let you group multiple elements without adding extra nodes to the DOM. Perfect for complex list items!</Callout>
+
+---
+
+## Recap & Next Steps 🚦
+
+- Use <code>map()</code> to transform arrays of data into arrays of components.
+- Use <code>filter()</code> to display only specific items.
+- Always provide a unique <code>key</code> prop for each list item.
+- Avoid using array indexes as keys.
+
+<Callout type="success">Try building a list with search or filter features to practice these concepts. Happy coding! 🎉</Callout>

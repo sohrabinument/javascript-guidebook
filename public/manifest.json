@@ -1,0 +1,84 @@
+{
+  "id": "jsguide",
+  "display_override": ["window-controls-overlay"],
+  "protocol_handlers": [{
+    "protocol": "mailto",
+    "url": "/newEmail?to=%s"
+  }],
+  "name": "জাভাস্ক্রিপ্ট গাইডবুক",
+  "short_name": "JS গাইডবুক",
+  "description": "জাভাস্ক্রিপ্ট গাইডবুক - বাংলায় লিখা জাভাস্ক্রিপ্ট ডকুমেন্টেশন যা একজন ডেভেলপারকে জাভাস্ক্রিপ্ট নিজের ভাষায় আরও সহজ করে বুঝতে সাহায্য করবে।",
+  "theme_color": "#F7DF1E",
+  "background_color": "#323330",
+  "icons": [{
+      "src": "AppImages/android/android-launchericon-192-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "AppImages/android/android-launchericon-144-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "AppImages/android/android-launchericon-512-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "AppImages/ios/1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/javascript-guidebook-bn",
+  "display": "standalone",
+  "orientation": "portrait",
+  "screenshots": [{
+    "src": "/screenshot.png",
+    "sizes": "450x1024",
+    "type": "image/png"
+  }],
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "handle_links": "preferred",
+  "dir": "ltr",
+  "prefer_related_applications": true,
+  "related_applications": [],
+  "scope": "https://javascript-guidebook-sohrab.vercel.app/",
+  "scope_extensions": [],
+  "iarc_rating_id": "11",
+  "lang": "bn",
+  "categories": ["education", "programming", "developers"],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "file_handlers": [{
+      "action": "/open-pdf",
+      "accept": {
+        "application/pdf": [".pdf"]
+      },
+      "icons": [{
+        "src": "AppImages/android/android-launchericon-192-192.png",
+        "sizes": "256x256",
+        "type": "image/png"
+      }],
+      "launch_type": "single-client"
+    },
+    {
+      "action": "/open-link",
+      "accept": {
+        "application/pdf": [".url"]
+      },
+      "icons": [{
+        "src": "AppImages/android/android-launchericon-192-192.png",
+        "sizes": "256x256",
+        "type": "image/png"
+      }],
+      "launch_type": "single-client"
+    }
+  ]
+}

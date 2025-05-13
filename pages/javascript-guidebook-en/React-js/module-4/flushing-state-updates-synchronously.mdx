@@ -1,0 +1,14 @@
+This is another "escape hatch". We know that React batches its state updates and the updated values are only available in the next render.
+
+But if we want to update state synchronously and ensure that code below the state update executes only after the state has been updated, we can use `flushSync`. This is a method from `react-dom`. It pauses the execution of code below it until the state update is complete, and tells React to update the state first before executing the following lines.
+
+So if we want to force a state update to occur before moving to the next line, we need to wrap the state's `setter function` in a callback passed to the `flushSync` method.
+
+```jsx
+import { flushSync } from "react-dom";
+
+flushSync(() => {
+    setTodos([...todos, newTodo]);
+});
+```
+
