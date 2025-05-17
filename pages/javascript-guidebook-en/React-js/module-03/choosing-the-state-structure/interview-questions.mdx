@@ -165,6 +165,55 @@ Flat state is easier to update.
 
 ---
 
+## 1.4 – Derived State & Props Mirroring 🧮🔄
+
+<div style={{ background: 'rgba(0, 180, 100, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 180, 100, 0.15)', color: 'inherit' }}>
+
+**Q9: What is derived state in React?**  
+A: Derived state is any value you can calculate from other state or props, rather than storing it separately in its own state variable.
+
+**Example:**
+```js
+const [firstName, setFirstName] = useState('Ada');
+const [lastName, setLastName] = useState('Lovelace');
+// Derived state:
+const fullName = firstName + ' ' + lastName;
+```
+
+**Q10: Why should you avoid storing derived state?**  
+A: If you store derived state, it can get out of sync with the source data and cause bugs. It's better to calculate it when needed.
+
+**Q11: What is props mirroring (mirrored state)?**  
+A: Props mirroring is when a child component copies a prop value into its own state variable.
+
+**Q12: Why is props mirroring usually discouraged?**  
+A: The child's state can get out of sync with the parent's prop, leading to confusion about the source of truth.
+
+**Q13: When is it okay to mirror props?**  
+A: If you only need the prop value once (e.g., as an initial value), and after that the child manages it independently. If you need to keep the child in sync with the parent, don't mirror—just use the prop directly.
+
+**Example (OK):**
+```js
+function Child({ initialValue }) {
+  const [value, setValue] = useState(initialValue); // Only use prop for initial value
+}
+```
+
+**Example (NOT OK):**
+```js
+function Child({ value }) {
+  // ❌ This will not update if parent changes 'value'
+  const [localValue, setLocalValue] = useState(value);
+}
+```
+
+**Q14: How do you keep a child component always in sync with a parent prop?**  
+A: Don't copy the prop to state—just use the prop directly in the child.
+
+</div>
+
+---
+
 <Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
 
 ---

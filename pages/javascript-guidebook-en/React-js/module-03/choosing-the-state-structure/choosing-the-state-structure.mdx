@@ -60,7 +60,7 @@ Now, you always update both together. Much safer! 🛡️
 Don't let your state variables "disagree" with each other! Contradictory state can lead to bugs that are hard to find.
 
 **Real-world analogy:**
-> Imagine a traffic light that is both green and red at the same time. That's a contradiction! ��❌
+> Imagine a traffic light that is both green and red at the same time. That's a contradiction! ❌
 
 **Bad Example:**
 ```js
@@ -111,7 +111,7 @@ const fullName = firstName + ' ' + lastName; // ✅ Just compute it
 Don't store the same data in multiple places. Duplicated state is hard to keep in sync and can lead to confusion. 🤹‍♂️
 
 **Real-world analogy:**
-> Imagine keeping two separate lists of your friends. If you add a friend to one list but forget the other, they're out of sync! ��
+> Imagine keeping two separate lists of your friends. If you add a friend to one list but forget the other, they're out of sync!
 
 **Bad Example:**
 ```js
@@ -186,3 +186,72 @@ setProfile(prev => ({ ...prev, name: 'Grace' }));
 ## 📚 Learn More
 
 For more details and examples, check out the [official React documentation](https://react.dev/learn/choosing-the-state-structure#group-related-state).
+
+---
+
+## 🧮 Derived State
+
+**Derived state** is any value you can calculate from props or other state, rather than storing it separately in its own state variable.
+
+**Why avoid storing derived state?**
+- It can get out of sync with the source data, leading to bugs.
+- It's simpler and less error-prone to calculate it when needed.
+
+**Example:**
+```js
+const [firstName, setFirstName] = useState('Ada');
+const [lastName, setLastName] = useState('Lovelace');
+// ❌ Don't do this:
+// const [fullName, setFullName] = useState(firstName + ' ' + lastName);
+// ✅ Do this:
+const fullName = firstName + ' ' + lastName;
+```
+Here, `fullName` is derived from `firstName` and `lastName`.
+
+**Best Practice:**
+> Only store state that cannot be computed from other state or props. If you can derive it, just calculate it in your render logic! 🧠
+
+---
+
+## 🔄 Props Mirroring
+
+**Props mirroring** (sometimes called "mirrored state") is when a child component copies a prop value into its own state variable.
+
+**Why is this usually discouraged?**
+- The child's state can get out of sync with the parent's prop.
+- It creates confusion about the "source of truth" for the data.
+
+**When is props mirroring okay?**
+- If you only need the prop value once (e.g., as an initial value), and after that the child manages it independently.
+- If you don't need to keep the child's state in sync with the parent's prop.
+
+**Example:**
+```js
+function Child({ initialValue }) {
+  // Only use the prop to set the initial state
+  const [value, setValue] = useState(initialValue);
+  // After this, 'value' is managed by the child
+  // and does not update if initialValue changes
+}
+```
+
+**Bad Example (Mirroring for sync):**
+```js
+function Child({ value }) {
+  // ❌ This is bad! It will not update if parent changes 'value'
+  const [localValue, setLocalValue] = useState(value);
+}
+```
+
+**Best Practice:**
+> If you want the child to always reflect the parent's prop, don't copy it to state—just use the prop directly! If you want the child to manage its own value after initialization, mirroring is okay.
+
+**Summary Table:**
+
+| Situation                                              | Should you mirror props? |
+|--------------------------------------------------------|-------------------------|
+| Need to keep in sync with parent                       | ❌ No                   |
+| Only need initial value, then manage independently     | ✅ Yes                  |
+| Want to control child from parent (controlled input)   | ❌ No                   |
+
+---
