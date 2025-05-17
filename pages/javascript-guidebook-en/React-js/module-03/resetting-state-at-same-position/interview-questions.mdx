@@ -1,0 +1,609 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Resetting State at the Same Position – Interview Questions & Answers 🔄
+
+Use these questions to prepare for interviews or test your understanding of how React resets state at the same position in the UI tree.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Fundamentals 🧩
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: When does React reset state at the same position in the tree?**  
+A: When you change the component type or the `key` prop at that position.
+
+```jsx
+// Example 1: Changing component type
+function App() {
+  const [showCounter, setShowCounter] = useState(true);
+  return (
+    <div>
+      {showCounter ? <Counter /> : <Timer />}
+      <button onClick={() => setShowCounter(!showCounter)}>
+        Toggle Component
+      </button>
+    </div>
+  );
+}
+
+// Example 2: Changing key prop
+function App() {
+  const [key, setKey] = useState(0);
+  return (
+    <div>
+      <Counter key={key} />
+      <button onClick={() => setKey(key + 1)}>Reset Counter</button>
+    </div>
+  );
+}
+```
+
+**Q2: What happens if you swap `<CounterA />` for `<CounterB />` at the same position?**  
+A: React destroys the old component and its state, and creates a new one from scratch.
+
+```jsx
+function CounterA() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <p>Counter A: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+function CounterB() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <p>Counter B: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+function App() {
+  const [showA, setShowA] = useState(true);
+  return (
+    <div>
+      {showA ? <CounterA /> : <CounterB />}
+      <button onClick={() => setShowA(!showA)}>Swap Counters</button>
+    </div>
+  );
+}
+```
+
+**Q3: How does the `key` prop affect state resetting?**  
+A: Changing the `key` prop makes React treat the component as a new instance, resetting its state.
+
+```jsx
+function Form() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  
+  return (
+    <form>
+      <input 
+        value={name} 
+        onChange={e => setName(e.target.value)} 
+        placeholder="Name"
+      />
+      <input 
+        value={email} 
+        onChange={e => setEmail(e.target.value)} 
+        placeholder="Email"
+      />
+    </form>
+  );
+}
+
+function App() {
+  const [formKey, setFormKey] = useState(0);
+  return (
+    <div>
+      <Form key={formKey} />
+      <button onClick={() => setFormKey(formKey + 1)}>
+        Reset Form
+      </button>
+    </div>
+  );
+}
+```
+
+**Q4: Why might you want to reset state at the same position?**  
+A: To clear forms, reset games, or ensure no leftover state from a previous component remains.
+
+```jsx
+function Game() {
+  const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(3);
+  
+  return (
+    <div>
+      <p>Score: {score}</p>
+      <p>Lives: {lives}</p>
+      <button onClick={() => setScore(score + 10)}>Score Point</button>
+      <button onClick={() => setLives(lives - 1)}>Lose Life</button>
+    </div>
+  );
+}
+
+function App() {
+  const [gameKey, setGameKey] = useState(0);
+  return (
+    <div>
+      <Game key={gameKey} />
+      <button onClick={() => setGameKey(gameKey + 1)}>
+        New Game
+      </button>
+    </div>
+  );
+}
+```
+
+**Q5: What is a common use case for resetting state with a key?**  
+A: Resetting a form when switching between different users or items.
+
+```jsx
+function UserForm({ userId }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  
+  useEffect(() => {
+    // Fetch user data
+    fetchUserData(userId).then(data => {
+      setName(data.name);
+      setEmail(data.email);
+    });
+  }, [userId]);
+  
+  return (
+    <form>
+      <input value={name} onChange={e => setName(e.target.value)} />
+      <input value={email} onChange={e => setEmail(e.target.value)} />
+    </form>
+  );
+}
+
+function App() {
+  const [selectedUserId, setSelectedUserId] = useState(1);
+  return (
+    <div>
+      <UserForm key={selectedUserId} userId={selectedUserId} />
+      <button onClick={() => setSelectedUserId(selectedUserId === 1 ? 2 : 1)}>
+        Switch User
+      </button>
+    </div>
+  );
+}
+```
+
+</div>
+
+---
+
+## 1.2 – Rules & Pitfalls ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q6: What is a pitfall of changing keys unnecessarily?**  
+A: It can cause unwanted state resets and loss of user input or progress.
+
+```jsx
+// ❌ Bad Practice: Unnecessary key changes
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  return (
+    <div>
+      {todos.map((todo, index) => (
+        <TodoItem 
+          key={Date.now()} // Changes on every render!
+          todo={todo} 
+        />
+      ))}
+    </div>
+  );
+}
+
+// ✅ Good Practice: Stable keys
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  return (
+    <div>
+      {todos.map((todo) => (
+        <TodoItem 
+          key={todo.id} // Stable, unique key
+          todo={todo} 
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+**Q7: Should you use keys just to force a reset?**  
+A: Only if you really need to reset state; otherwise, use keys for identity.
+
+```jsx
+// ❌ Bad Practice: Using key to force re-render
+function App() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <ExpensiveComponent key={count} /> {/* Unnecessary reset */}
+      <button onClick={() => setCount(count + 1)}>Update</button>
+    </div>
+  );
+}
+
+// ✅ Good Practice: Using state properly
+function App() {
+  const [data, setData] = useState(null);
+  return (
+    <div>
+      <ExpensiveComponent data={data} />
+      <button onClick={() => setData(newData)}>Update</button>
+    </div>
+  );
+}
+```
+
+**Q8: What happens if you nest component definitions inside other components?**  
+A: The nested component will be recreated on every render, resetting its state each time.
+
+```jsx
+// ❌ Bad Practice: Nested component definition
+function Parent() {
+  function Child() { // Recreated every render!
+    const [count, setCount] = useState(0);
+    return <button onClick={() => setCount(count + 1)}>{count}</button>;
+  }
+  return <Child />;
+}
+
+// ✅ Good Practice: Component defined outside
+function Child() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+
+function Parent() {
+  return <Child />;
+}
+```
+
+**Q9: How can you accidentally reset state in a list?**  
+A: By using a non-unique or changing key, causing React to treat items as new components.
+
+```jsx
+// ❌ Bad Practice: Using index as key
+function TodoList() {
+  const [todos, setTodos] = useState(['Learn React', 'Build App']);
+  return (
+    <ul>
+      {todos.map((todo, index) => (
+        <TodoItem 
+          key={index} // Changes when items are reordered!
+          todo={todo} 
+        />
+      ))}
+    </ul>
+  );
+}
+
+// ✅ Good Practice: Using unique, stable keys
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Learn React' },
+    { id: 2, text: 'Build App' }
+  ]);
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <TodoItem 
+          key={todo.id} // Stable, unique key
+          todo={todo} 
+        />
+      ))}
+    </ul>
+  );
+}
+```
+
+</div>
+
+---
+
+## 1.3 – Scenario & Practical Example 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+Suppose you have a form for editing user details. When you switch to a different user, you want the form to reset. How can you achieve this in React?
+
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Use a unique `key` for the form based on the user's ID. When the user changes, the key changes, and React resets the form's state.
+
+```jsx
+function UserForm({ userId }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    role: ''
+  });
+
+  useEffect(() => {
+    // Fetch user data when userId changes
+    fetchUserData(userId).then(data => {
+      setFormData(data);
+    });
+  }, [userId]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Save form data
+    saveUserData(userId, formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        value={formData.name}
+        onChange={e => setFormData({...formData, name: e.target.value})}
+        placeholder="Name"
+      />
+      <input
+        value={formData.email}
+        onChange={e => setFormData({...formData, email: e.target.value})}
+        placeholder="Email"
+      />
+      <select
+        value={formData.role}
+        onChange={e => setFormData({...formData, role: e.target.value})}
+      >
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit">Save</button>
+    </form>
+  );
+}
+
+function App() {
+  const [userId, setUserId] = useState(1);
+  return (
+    <div>
+      <UserForm key={userId} userId={userId} />
+      <button onClick={() => setUserId(userId === 1 ? 2 : 1)}>
+        Switch User
+      </button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+You have a component that swaps between `<CounterA />` and `<CounterB />` at the same position. What happens to the state?
+
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- React destroys the old component and its state, and creates a new one from scratch for the new component type.
+
+```jsx
+function CounterA() {
+  const [count, setCount] = useState(0);
+  const [lastReset, setLastReset] = useState(new Date());
+
+  return (
+    <div>
+      <h3>Counter A</h3>
+      <p>Count: {count}</p>
+      <p>Last Reset: {lastReset.toLocaleTimeString()}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => {
+        setCount(0);
+        setLastReset(new Date());
+      }}>Reset</button>
+    </div>
+  );
+}
+
+function CounterB() {
+  const [count, setCount] = useState(0);
+  const [lastReset, setLastReset] = useState(new Date());
+
+  return (
+    <div>
+      <h3>Counter B</h3>
+      <p>Count: {count}</p>
+      <p>Last Reset: {lastReset.toLocaleTimeString()}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => {
+        setCount(0);
+        setLastReset(new Date());
+      }}>Reset</button>
+    </div>
+  );
+}
+
+function App() {
+  const [showA, setShowA] = useState(true);
+  return (
+    <div>
+      {showA ? <CounterA /> : <CounterB />}
+      <button onClick={() => setShowA(!showA)}>Swap Counters</button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+How can you reset a timer or game when the user clicks "Restart"?
+
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Change the `key` prop of the timer or game component when restarting. This will reset its state.
+
+```jsx
+function Game() {
+  const [score, setScore] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (isPlaying && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isPlaying, timeLeft]);
+
+  const startGame = () => {
+    setIsPlaying(true);
+  };
+
+  const addPoints = () => {
+    setScore(prev => prev + 10);
+  };
+
+  return (
+    <div>
+      <h2>Game</h2>
+      <p>Score: {score}</p>
+      <p>Time Left: {timeLeft}s</p>
+      {!isPlaying ? (
+        <button onClick={startGame}>Start Game</button>
+      ) : (
+        <button onClick={addPoints}>Score Point</button>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  const [gameKey, setGameKey] = useState(0);
+  return (
+    <div>
+      <Game key={gameKey} />
+      <button onClick={() => setGameKey(gameKey + 1)}>Restart Game</button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+What is a pitfall of using array index as a key in a list?
+
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- If the list changes (items are added/removed/reordered), using the index as a key can cause React to reset or mix up state, leading to bugs.
+
+```jsx
+// ❌ Bad Practice: Using index as key
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { text: 'Learn React', completed: false },
+    { text: 'Build App', completed: false }
+  ]);
+
+  const addTodo = () => {
+    setTodos([{ text: 'New Todo', completed: false }, ...todos]);
+  };
+
+  const removeTodo = (index) => {
+    setTodos(todos.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div>
+      <button onClick={addTodo}>Add Todo</button>
+      <ul>
+        {todos.map((todo, index) => (
+          <TodoItem
+            key={index} // Problematic: index changes when items are added/removed
+            todo={todo}
+            onRemove={() => removeTodo(index)}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// ✅ Good Practice: Using unique, stable IDs
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Learn React', completed: false },
+    { id: 2, text: 'Build App', completed: false }
+  ]);
+
+  const addTodo = () => {
+    setTodos([{ id: Date.now(), text: 'New Todo', completed: false }, ...todos]);
+  };
+
+  const removeTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
+  return (
+    <div>
+      <button onClick={addTodo}>Add Todo</button>
+      <ul>
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id} // Stable, unique key
+            todo={todo}
+            onRemove={() => removeTodo(todo.id)}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+</details>
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of state resetting, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />

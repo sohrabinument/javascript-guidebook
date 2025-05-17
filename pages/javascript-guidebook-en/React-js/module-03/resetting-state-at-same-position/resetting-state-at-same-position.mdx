@@ -1,0 +1,128 @@
+# Resetting State at the Same Position in React 🔄
+
+Sometimes, you want to reset a component's state even if it's rendered at the same position in the UI tree. Let's see how React handles this, and how you can control when state is reset! 🧠✨
+
+---
+
+## When Does React Reset State at the Same Position? 🤔
+
+React usually preserves state for a component as long as it's rendered at the same position in the tree. But there are two main ways to force React to reset state at the same position:
+
+1. **Changing the component type** at that position (e.g., swapping `<CounterA />` for `<CounterB />`).
+2. **Changing the `key` prop** of the component at that position.
+
+---
+
+## 1️⃣ Changing Component Type
+
+If you render a different component at the same position, React will destroy the old component (and its state) and create a new one from scratch.
+
+### Example:
+
+```jsx
+function App() {
+  const [showA, setShowA] = useState(true);
+  return (
+    <div>
+      {showA ? <CounterA /> : <CounterB />}
+      <button onClick={() => setShowA(!showA)}>Swap</button>
+    </div>
+  );
+}
+```
+
+- When you swap from `CounterA` to `CounterB`, the state is reset because they are different components.
+
+---
+
+## 2️⃣ Changing the `key` Prop 🔑
+
+React uses the `key` prop to keep track of which component is which, especially in lists. If you change the key, React will treat it as a brand new component and reset its state.
+
+### Example:
+
+```jsx
+function App() {
+  const [player, setPlayer] = useState('Taylor');
+  return (
+    <div>
+      <Counter key={player} player={player} />
+      <button onClick={() => setPlayer(player === 'Taylor' ? 'Sarah' : 'Taylor')}>Next player!</button>
+    </div>
+  );
+}
+
+function Counter({ player }) {
+  const [score, setScore] = useState(0);
+  return (
+    <div>
+      <h1>{player}'s score: {score}</h1>
+      <button onClick={() => setScore(score + 1)}>Add one</button>
+    </div>
+  );
+}
+```
+
+- Switching the player changes the key, so the state is reset for the new player.
+
+---
+
+## Visual Diagram 🖼️
+
+![React key reset diagram](https://react.dev/images/docs/diagrams/state-key-reset.png)
+
+*Image credit: [React Official Docs](https://react.dev/learn/preserving-and-resetting-state#resetting-state-at-the-same-position)*
+
+---
+
+## Why Would You Want to Reset State? 💡
+
+- To clear a form when switching between users or items.
+- To reset a game or timer when starting over.
+- To ensure no leftover state from a previous component remains.
+
+---
+
+## Common Pitfalls & Best Practices ⚠️✅
+
+- **Don't change keys unnecessarily**—only do it when you want to reset state.
+- **Don't nest component definitions inside other components** unless you want to reset their state on every render.
+- **Use keys for identity, not for forcing resets** (unless you really need to reset state).
+
+---
+
+## Recap 📝
+
+- React preserves state for the same component at the same position.
+- Changing the component type or the `key` prop at the same position will reset state.
+- Use this feature to control when you want a fresh state.
+
+---
+
+## Challenge Yourself! 💡
+
+Try this: How would you reset a form's state when switching between different users?
+
+**Hint:** Use a unique `key` for the form based on the user's ID!
+
+```jsx
+function App() {
+  const [userId, setUserId] = useState(1);
+  return (
+    <div>
+      <UserForm key={userId} userId={userId} />
+      <button onClick={() => setUserId(userId === 1 ? 2 : 1)}>
+        Switch User
+      </button>
+    </div>
+  );
+}
+```
+
+---
+
+## Further Reading 📚
+- [React Docs: Resetting State at the Same Position](https://react.dev/learn/preserving-and-resetting-state#resetting-state-at-the-same-position)
+- [React Docs: Preserving and Resetting State](https://react.dev/learn/preserving-and-resetting-state)
+
+Happy coding! 🎉

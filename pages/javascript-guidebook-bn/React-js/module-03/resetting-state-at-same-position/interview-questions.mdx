@@ -1,0 +1,609 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# একই পজিশনে স্টেট রিসেট করা – ইন্টারভিউ প্রশ্ন ও উত্তর 🔄
+
+React কিভাবে UI ট্রিতে একই পজিশনে স্টেট রিসেট করে তা বোঝার জন্য এই প্রশ্নগুলো ব্যবহার করুন। ইন্টারভিউ প্রস্তুতির জন্যও এই প্রশ্নগুলো উপকারী।
+
+> **💡 প্রো টিপ:** উত্তর দেখার আগে নিজে চেষ্টা করুন। এটি কনসেপ্টগুলো মনে রাখতে সাহায্য করবে!
+
+---
+
+## 1.1 – মৌলিক বিষয়সমূহ 🧩
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**প্রশ্ন ১: React কখন ট্রিতে একই পজিশনে স্টেট রিসেট করে?**  
+উত্তর: যখন আপনি সেই পজিশনে কম্পোনেন্ট টাইপ বা `key` প্রপ পরিবর্তন করেন।
+
+```jsx
+// উদাহরণ ১: কম্পোনেন্ট টাইপ পরিবর্তন
+function App() {
+  const [showCounter, setShowCounter] = useState(true);
+  return (
+    <div>
+      {showCounter ? <Counter /> : <Timer />}
+      <button onClick={() => setShowCounter(!showCounter)}>
+        Toggle Component
+      </button>
+    </div>
+  );
+}
+
+// উদাহরণ ২: key প্রপ পরিবর্তন
+function App() {
+  const [key, setKey] = useState(0);
+  return (
+    <div>
+      <Counter key={key} />
+      <button onClick={() => setKey(key + 1)}>Reset Counter</button>
+    </div>
+  );
+}
+```
+
+**প্রশ্ন ২: একই পজিশনে `<CounterA />` কে `<CounterB />` দিয়ে প্রতিস্থাপন করলে কী হয়?**  
+উত্তর: React পুরানো কম্পোনেন্ট এবং এর স্টেট ধ্বংস করে নতুন একটি তৈরি করে।
+
+```jsx
+function CounterA() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <p>Counter A: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+function CounterB() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <p>Counter B: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+function App() {
+  const [showA, setShowA] = useState(true);
+  return (
+    <div>
+      {showA ? <CounterA /> : <CounterB />}
+      <button onClick={() => setShowA(!showA)}>Swap Counters</button>
+    </div>
+  );
+}
+```
+
+**প্রশ্ন ৩: `key` প্রপ স্টেট রিসেটিংকে কিভাবে প্রভাবিত করে?**  
+উত্তর: `key` প্রপ পরিবর্তন করলে React কম্পোনেন্টটিকে একটি নতুন ইনস্ট্যান্স হিসেবে বিবেচনা করে এবং এর স্টেট রিসেট করে।
+
+```jsx
+function Form() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  
+  return (
+    <form>
+      <input 
+        value={name} 
+        onChange={e => setName(e.target.value)} 
+        placeholder="Name"
+      />
+      <input 
+        value={email} 
+        onChange={e => setEmail(e.target.value)} 
+        placeholder="Email"
+      />
+    </form>
+  );
+}
+
+function App() {
+  const [formKey, setFormKey] = useState(0);
+  return (
+    <div>
+      <Form key={formKey} />
+      <button onClick={() => setFormKey(formKey + 1)}>
+        Reset Form
+      </button>
+    </div>
+  );
+}
+```
+
+**প্রশ্ন ৪: কেন আপনি একই পজিশনে স্টেট রিসেট করতে চাইবেন?**  
+উত্তর: ফর্ম ক্লিয়ার করতে, গেম রিসেট করতে, বা নিশ্চিত করতে যে পূর্ববর্তী কম্পোনেন্টের কোন স্টেট অবশিষ্ট নেই।
+
+```jsx
+function Game() {
+  const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(3);
+  
+  return (
+    <div>
+      <p>Score: {score}</p>
+      <p>Lives: {lives}</p>
+      <button onClick={() => setScore(score + 10)}>Score Point</button>
+      <button onClick={() => setLives(lives - 1)}>Lose Life</button>
+    </div>
+  );
+}
+
+function App() {
+  const [gameKey, setGameKey] = useState(0);
+  return (
+    <div>
+      <Game key={gameKey} />
+      <button onClick={() => setGameKey(gameKey + 1)}>
+        New Game
+      </button>
+    </div>
+  );
+}
+```
+
+**প্রশ্ন ৫: key দিয়ে স্টেট রিসেট করার একটি সাধারণ ব্যবহার কেস কী?**  
+উত্তর: বিভিন্ন ইউজার বা আইটেমের মধ্যে স্যুইচ করার সময় ফর্ম রিসেট করা।
+
+```jsx
+function UserForm({ userId }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  
+  useEffect(() => {
+    // Fetch user data
+    fetchUserData(userId).then(data => {
+      setName(data.name);
+      setEmail(data.email);
+    });
+  }, [userId]);
+  
+  return (
+    <form>
+      <input value={name} onChange={e => setName(e.target.value)} />
+      <input value={email} onChange={e => setEmail(e.target.value)} />
+    </form>
+  );
+}
+
+function App() {
+  const [selectedUserId, setSelectedUserId] = useState(1);
+  return (
+    <div>
+      <UserForm key={selectedUserId} userId={selectedUserId} />
+      <button onClick={() => setSelectedUserId(selectedUserId === 1 ? 2 : 1)}>
+        Switch User
+      </button>
+    </div>
+  );
+}
+```
+
+</div>
+
+---
+
+## 1.2 – নিয়ম ও সমস্যা ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**প্রশ্ন ৬: অপ্রয়োজনীয়ভাবে key পরিবর্তন করার সমস্যা কী?**  
+উত্তর: এটি অপ্রত্যাশিত স্টেট রিসেট এবং ইউজার ইনপুট বা প্রগ্রেস হারিয়ে যাওয়ার কারণ হতে পারে।
+
+```jsx
+// ❌ খারাপ অনুশীলন: অপ্রয়োজনীয় key পরিবর্তন
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  return (
+    <div>
+      {todos.map((todo, index) => (
+        <TodoItem 
+          key={Date.now()} // প্রতিটি রেন্ডারে পরিবর্তন হয়!
+          todo={todo} 
+        />
+      ))}
+    </div>
+  );
+}
+
+// ✅ ভালো অনুশীলন: স্থিতিশীল key
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  return (
+    <div>
+      {todos.map((todo) => (
+        <TodoItem 
+          key={todo.id} // স্থিতিশীল, অনন্য key
+          todo={todo} 
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+**প্রশ্ন ৭: শুধু রিসেট ফোর্স করার জন্য key ব্যবহার করা উচিত?**  
+উত্তর: শুধুমাত্র যখন সত্যিই স্টেট রিসেট করার প্রয়োজন হয়; অন্যথায়, identity এর জন্য key ব্যবহার করুন।
+
+```jsx
+// ❌ খারাপ অনুশীলন: রি-রেন্ডার ফোর্স করার জন্য key ব্যবহার
+function App() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <ExpensiveComponent key={count} /> {/* অপ্রয়োজনীয় রিসেট */}
+      <button onClick={() => setCount(count + 1)}>Update</button>
+    </div>
+  );
+}
+
+// ✅ ভালো অনুশীলন: স্টেট সঠিকভাবে ব্যবহার
+function App() {
+  const [data, setData] = useState(null);
+  return (
+    <div>
+      <ExpensiveComponent data={data} />
+      <button onClick={() => setData(newData)}>Update</button>
+    </div>
+  );
+}
+```
+
+**প্রশ্ন ৮: অন্য কম্পোনেন্টের ভিতরে কম্পোনেন্ট ডেফিনিশন নেস্ট করলে কী হয়?**  
+উত্তর: নেস্ট করা কম্পোনেন্ট প্রতিটি রেন্ডারে পুনরায় তৈরি হবে, প্রতিবার এর স্টেট রিসেট হবে।
+
+```jsx
+// ❌ খারাপ অনুশীলন: নেস্ট করা কম্পোনেন্ট ডেফিনিশন
+function Parent() {
+  function Child() { // প্রতিটি রেন্ডারে পুনরায় তৈরি হয়!
+    const [count, setCount] = useState(0);
+    return <button onClick={() => setCount(count + 1)}>{count}</button>;
+  }
+  return <Child />;
+}
+
+// ✅ ভালো অনুশীলন: কম্পোনেন্ট বাইরে ডেফাইন করা
+function Child() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
+
+function Parent() {
+  return <Child />;
+}
+```
+
+**প্রশ্ন ৯: লিস্টে কীভাবে দুর্ঘটনাক্রমে স্টেট রিসেট করতে পারেন?**  
+উত্তর: অনন্য বা পরিবর্তনশীল key ব্যবহার করে, যা React কে আইটেমগুলোকে নতুন কম্পোনেন্ট হিসেবে বিবেচনা করতে বাধ্য করে।
+
+```jsx
+// ❌ খারাপ অনুশীলন: ইনডেক্স key হিসেবে ব্যবহার
+function TodoList() {
+  const [todos, setTodos] = useState(['Learn React', 'Build App']);
+  return (
+    <ul>
+      {todos.map((todo, index) => (
+        <TodoItem 
+          key={index} // আইটেম রিঅর্ডার হলে পরিবর্তন হয়!
+          todo={todo} 
+        />
+      ))}
+    </ul>
+  );
+}
+
+// ✅ ভালো অনুশীলন: অনন্য, স্থিতিশীল key ব্যবহার
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Learn React' },
+    { id: 2, text: 'Build App' }
+  ]);
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <TodoItem 
+          key={todo.id} // স্থিতিশীল, অনন্য key
+          todo={todo} 
+        />
+      ))}
+    </ul>
+  );
+}
+```
+
+</div>
+
+---
+
+## 1.3 – সিনারিও ও ব্যবহারিক উদাহরণ 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### সিনারিও-ভিত্তিক প্রশ্ন:
+
+ধরুন আপনার কাছে ইউজার ডিটেইলস এডিট করার একটি ফর্ম আছে। যখন আপনি অন্য ইউজারে স্যুইচ করবেন, তখন ফর্মটি রিসেট করতে চান। React এ এটি কিভাবে করবেন?
+
+<details>
+<summary>**উত্তর দেখতে ক্লিক করুন**</summary>
+
+**উত্তর:**
+- ইউজারের ID ভিত্তিক ফর্মের জন্য একটি অনন্য `key` ব্যবহার করুন। যখন ইউজার পরিবর্তন হবে, key পরিবর্তন হবে, এবং React ফর্মের স্টেট রিসেট করবে।
+
+```jsx
+function UserForm({ userId }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    role: ''
+  });
+
+  useEffect(() => {
+    // userId পরিবর্তন হলে ইউজার ডাটা ফেচ করুন
+    fetchUserData(userId).then(data => {
+      setFormData(data);
+    });
+  }, [userId]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // ফর্ম ডাটা সেভ করুন
+    saveUserData(userId, formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        value={formData.name}
+        onChange={e => setFormData({...formData, name: e.target.value})}
+        placeholder="Name"
+      />
+      <input
+        value={formData.email}
+        onChange={e => setFormData({...formData, email: e.target.value})}
+        placeholder="Email"
+      />
+      <select
+        value={formData.role}
+        onChange={e => setFormData({...formData, role: e.target.value})}
+      >
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit">Save</button>
+    </form>
+  );
+}
+
+function App() {
+  const [userId, setUserId] = useState(1);
+  return (
+    <div>
+      <UserForm key={userId} userId={userId} />
+      <button onClick={() => setUserId(userId === 1 ? 2 : 1)}>
+        Switch User
+      </button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### সিনারিও-ভিত্তিক প্রশ্ন:
+
+আপনার একটি কম্পোনেন্ট আছে যা একই পজিশনে `<CounterA />` এবং `<CounterB />` এর মধ্যে স্যুইচ করে। স্টেটের কী হয়?
+
+<details>
+<summary>**উত্তর দেখতে ক্লিক করুন**</summary>
+
+**উত্তর:**
+- React পুরানো কম্পোনেন্ট এবং এর স্টেট ধ্বংস করে, নতুন কম্পোনেন্ট টাইপের জন্য নতুন একটি তৈরি করে।
+
+```jsx
+function CounterA() {
+  const [count, setCount] = useState(0);
+  const [lastReset, setLastReset] = useState(new Date());
+
+  return (
+    <div>
+      <h3>Counter A</h3>
+      <p>Count: {count}</p>
+      <p>Last Reset: {lastReset.toLocaleTimeString()}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => {
+        setCount(0);
+        setLastReset(new Date());
+      }}>Reset</button>
+    </div>
+  );
+}
+
+function CounterB() {
+  const [count, setCount] = useState(0);
+  const [lastReset, setLastReset] = useState(new Date());
+
+  return (
+    <div>
+      <h3>Counter B</h3>
+      <p>Count: {count}</p>
+      <p>Last Reset: {lastReset.toLocaleTimeString()}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => {
+        setCount(0);
+        setLastReset(new Date());
+      }}>Reset</button>
+    </div>
+  );
+}
+
+function App() {
+  const [showA, setShowA] = useState(true);
+  return (
+    <div>
+      {showA ? <CounterA /> : <CounterB />}
+      <button onClick={() => setShowA(!showA)}>Swap Counters</button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### সিনারিও-ভিত্তিক প্রশ্ন:
+
+ইউজার "Restart" বাটনে ক্লিক করলে টাইমার বা গেম কিভাবে রিসেট করবেন?
+
+<details>
+<summary>**উত্তর দেখতে ক্লিক করুন**</summary>
+
+**উত্তর:**
+- রিস্টার্ট করার সময় টাইমার বা গেম কম্পোনেন্টের `key` প্রপ পরিবর্তন করুন। এটি এর স্টেট রিসেট করবে।
+
+```jsx
+function Game() {
+  const [score, setScore] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (isPlaying && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isPlaying, timeLeft]);
+
+  const startGame = () => {
+    setIsPlaying(true);
+  };
+
+  const addPoints = () => {
+    setScore(prev => prev + 10);
+  };
+
+  return (
+    <div>
+      <h2>Game</h2>
+      <p>Score: {score}</p>
+      <p>Time Left: {timeLeft}s</p>
+      {!isPlaying ? (
+        <button onClick={startGame}>Start Game</button>
+      ) : (
+        <button onClick={addPoints}>Score Point</button>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  const [gameKey, setGameKey] = useState(0);
+  return (
+    <div>
+      <Game key={gameKey} />
+      <button onClick={() => setGameKey(gameKey + 1)}>Restart Game</button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### সিনারিও-ভিত্তিক প্রশ্ন:
+
+লিস্টে অ্যারেতে ইনডেক্স key হিসেবে ব্যবহার করার সমস্যা কী?
+
+<details>
+<summary>**উত্তর দেখতে ক্লিক করুন**</summary>
+
+**উত্তর:**
+- যদি লিস্ট পরিবর্তন হয় (আইটেম যোগ/মুছে/রিঅর্ডার হয়), ইনডেক্স key হিসেবে ব্যবহার করলে React স্টেট রিসেট বা মিক্স আপ করতে পারে, যা বাগের কারণ হতে পারে।
+
+```jsx
+// ❌ খারাপ অনুশীলন: ইনডেক্স key হিসেবে ব্যবহার
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { text: 'Learn React', completed: false },
+    { text: 'Build App', completed: false }
+  ]);
+
+  const addTodo = () => {
+    setTodos([{ text: 'New Todo', completed: false }, ...todos]);
+  };
+
+  const removeTodo = (index) => {
+    setTodos(todos.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div>
+      <button onClick={addTodo}>Add Todo</button>
+      <ul>
+        {todos.map((todo, index) => (
+          <TodoItem
+            key={index} // সমস্যা: আইটেম যোগ/মুছে গেলে ইনডেক্স পরিবর্তন হয়
+            todo={todo}
+            onRemove={() => removeTodo(index)}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// ✅ ভালো অনুশীলন: অনন্য, স্থিতিশীল ID ব্যবহার
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Learn React', completed: false },
+    { id: 2, text: 'Build App', completed: false }
+  ]);
+
+  const addTodo = () => {
+    setTodos([{ id: Date.now(), text: 'New Todo', completed: false }, ...todos]);
+  };
+
+  const removeTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
+  return (
+    <div>
+      <button onClick={addTodo}>Add Todo</button>
+      <ul>
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id} // স্থিতিশীল, অনন্য key
+            todo={todo}
+            onRemove={() => removeTodo(todo.id)}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+</details>
+
+</div>
+
+---
+
+<Callout type="info">ইন্টারভিউ প্রস্তুতির জন্য এই প্রশ্নগুলো রিভিউ করুন এবং কনসেপ্টগুলো নিজের ভাষায় ব্যাখ্যা করার চেষ্টা করুন!</Callout>
+
+---
+
+> **🚀 চূড়ান্ত পরামর্শ:** ইন্টারভিউতে শুধু স্টেট রিসেটিং এর জ্ঞানই নয়, বাস্তব-বিশ্বের সিনারিওতে পরিষ্কার, মেইনটেইনেবল এবং ইউজার-ফ্রেন্ডলি কোড লেখার দক্ষতাও দেখান।
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />
