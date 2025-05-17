@@ -1,0 +1,204 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Preserving and Resetting State – Interview Questions & Answers 🧠🔄
+
+Use these questions to prepare for interviews or test your understanding of how React preserves and resets state.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Fundamentals 🌳
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: Where does React actually store component state?**  
+A: React stores state internally and associates it with the position of the component in the UI tree—not in the JSX or the component function itself.
+
+**Q2: What happens if you render the same component in two different places?**  
+A: Each instance gets its own, independent state.
+
+**Q3: What happens to a component's state if you remove it from the tree?**  
+A: Its state is destroyed. If you add it back, it starts fresh.
+
+**Q4: How does React decide whether to preserve or reset state?**  
+A: By the component's position in the tree and its key (if provided). If the position or key changes, state is reset.
+
+**Q5: Why is understanding state preservation important?**  
+A: It helps you avoid bugs, unexpected resets, and makes your UI more predictable.
+
+</div>
+
+---
+
+## 1.2 – Rules & Pitfalls ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q6: What is a common pitfall with state and component keys?**  
+A: Changing a component's key will reset its state, so only change keys when you want to reset state.
+
+**Q7: What happens if you nest component definitions inside other components?**  
+A: The nested component will be re-created on every render, resetting its state each time.
+
+**Q8: Is state global in React?**  
+A: No, each component instance has its own isolated state, tied to its position in the tree.
+
+**Q9: How can you accidentally lose user input in a form?**  
+A: By rendering the form at different positions in the tree (e.g., conditionally rendering above/below other elements), causing React to reset its state.
+
+</div>
+
+---
+
+## 1.3 – Scenario & Practical Example 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+Suppose you have two `<Counter />` components rendered side by side. What happens if you increment one? Will the other change?
+
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Each `<Counter />` is rendered at a different position in the tree, so each has its own independent state. Incrementing one does not affect the other.
+
+```jsx
+function App() {
+  return (
+    <div>
+      <Counter />
+      <Counter />
+    </div>
+  );
+}
+
+function Counter() {
+  const [score, setScore] = useState(0);
+  return (
+    <div>
+      <h1>{score}</h1>
+      <button onClick={() => setScore(score + 1)}>Add one</button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+You have a component that is conditionally rendered (e.g., with a checkbox). Why does its state disappear when you uncheck the box and reappear as fresh when you check it again?
+
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- When you remove the component from the tree, React destroys its state. When you add it back, it starts with a new state.
+
+```jsx
+function App() {
+  const [show, setShow] = useState(true);
+  return (
+    <div>
+      {show && <Counter />}
+      <button onClick={() => setShow(!show)}>Toggle Counter</button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+How do keys affect state preservation in a list of components?
+
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- React uses the key to identify each component. Changing a key will reset the state for that component.
+
+```jsx
+function App() {
+  const [player, setPlayer] = useState('Taylor');
+  return (
+    <div>
+      <Counter key={player} player={player} />
+      <button onClick={() => setPlayer(player === 'Taylor' ? 'Sarah' : 'Taylor')}>Next player!</button>
+    </div>
+  );
+}
+
+function Counter({ player }) {
+  const [score, setScore] = useState(0);
+  return (
+    <div>
+      <h1>{player}'s score: {score}</h1>
+      <button onClick={() => setScore(score + 1)}>Add one</button>
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+Why does the input text disappear in this example when you show/hide the hint? How would you fix it?
+
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- The `<Form />` is rendered at a different position in the tree when the hint is shown, so its state is reset. To fix it, always render `<Form />` at the same position, and conditionally render the hint text instead.
+
+```jsx
+function App() {
+  const [showHint, setShowHint] = useState(false);
+  return (
+    <div>
+      <Form />
+      {showHint && <p><i>Hint: Your favorite city?</i></p>}
+      <button onClick={() => setShowHint(!showHint)}>
+        {showHint ? 'Hide hint' : 'Show hint'}
+      </button>
+    </div>
+  );
+}
+
+function Form() {
+  const [text, setText] = useState('');
+  return (
+    <textarea
+      value={text}
+      onChange={e => setText(e.target.value)}
+    />
+  );
+}
+```
+
+</details>
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of state preservation and resetting, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />
