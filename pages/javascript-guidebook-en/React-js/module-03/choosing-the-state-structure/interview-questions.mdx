@@ -1,0 +1,174 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Choosing the State Structure in React – Interview Questions & Answers 🏗️
+
+Use these questions to prepare for interviews or test your understanding of how to structure state in React.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Fundamentals 🌱
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: Why is it important to group related state together?**  
+A: Grouping related state (like x and y coordinates) helps keep your data in sync and your code clean. If you always update them together, put them in one object!
+
+**Example:**
+```js
+// Good
+const [position, setPosition] = useState({ x: 0, y: 0 });
+// Bad
+const [x, setX] = useState(0);
+const [y, setY] = useState(0);
+```
+
+**Q2: What can go wrong if you keep related state separate?**  
+A: You might forget to update both, leading to bugs or out-of-sync data.
+
+**Example:**
+```js
+setX(5); // Oops! Forgot setY!
+```
+
+**Q3: When should you NOT group state?**  
+A: If two pieces of state change independently, keep them separate.
+
+**Example:**
+```js
+const [isOpen, setIsOpen] = useState(false); // Modal open/close
+const [count, setCount] = useState(0); // Counter
+```
+
+</div>
+
+---
+
+## 1.2 – Rules & Pitfalls 🚦
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q4: What is a contradiction in state?**  
+A: When two state variables can have values that don't make sense together (e.g., a traffic light that's both green and red).
+
+**Example:**
+```js
+const [isLoading, setIsLoading] = useState(false);
+const [isLoaded, setIsLoaded] = useState(false);
+// Both could be true by mistake!
+```
+
+**Q5: How can you avoid contradictions?**  
+A: Use a single status variable instead of multiple booleans.
+
+**Example:**
+```js
+const [status, setStatus] = useState('idle'); // 'idle', 'loading', 'loaded'
+```
+
+**Q6: What is redundant state?**  
+A: State you can calculate from other state or props. Don't store it!
+
+**Example:**
+```js
+// Redundant
+const [fullName, setFullName] = useState(firstName + ' ' + lastName);
+// Better
+const fullName = firstName + ' ' + lastName;
+```
+
+**Q7: What is duplicated state?**  
+A: Storing the same data in more than one place.
+
+**Example:**
+```js
+// Duplicated
+const [items, setItems] = useState(['a', 'b']);
+const [count, setCount] = useState(2);
+// Better
+const count = items.length;
+```
+
+**Q8: Why avoid deeply nested state?**  
+A: It's hard to update and maintain. Flat state is easier!
+
+**Example:**
+```js
+// Deeply nested
+const [state, setState] = useState({ user: { profile: { name: '' } } });
+// Flat
+const [profile, setProfile] = useState({ name: '' });
+```
+
+</div>
+
+---
+
+## 1.3 – Scenario & Practical Examples 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario 1: Moving a Dot
+
+Suppose you have a red dot that moves on the screen. Should you use two state variables for x and y, or one object?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Best:**
+```js
+const [position, setPosition] = useState({ x: 0, y: 0 });
+```
+Because x and y always change together!
+
+</details>
+
+---
+
+### Scenario 2: Shopping Cart
+
+You have a shopping cart with a list of items. Should you store the item count separately?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**No!**
+```js
+const [cartItems, setCartItems] = useState([]);
+const itemCount = cartItems.length;
+```
+Always calculate count from the array.
+
+</details>
+
+---
+
+### Scenario 3: User Profile
+
+You want to store a user's name and age. Should you nest them deeply?
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Keep it flat!**
+```js
+const [profile, setProfile] = useState({ name: '', age: 0 });
+```
+Flat state is easier to update.
+
+</details>
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of state structure, but also your ability to write clean, maintainable, and user-friendly React code.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />
