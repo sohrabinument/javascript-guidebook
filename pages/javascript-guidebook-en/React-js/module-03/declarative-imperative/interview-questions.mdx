@@ -1,0 +1,77 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Declarative vs Imperative Programming – Interview Questions & Answers 🚦
+
+Use these questions to prepare for interviews or test your understanding of declarative and imperative programming in UI development.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Fundamentals 🧩
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: What is imperative programming in the context of UI?**  
+A: Imperative programming is when you tell the computer step-by-step how to update the UI, specifying each instruction in detail (e.g., show/hide elements, change styles directly).
+
+**Q2: What is declarative programming in the context of UI?**  
+A: Declarative programming is when you describe what the UI should look like for a given state, and the framework (like React) figures out how to update the UI accordingly.
+
+**Q3: Which approach does React use?**  
+A: React uses a declarative approach, letting you describe the UI for each state and handling the updates automatically.
+
+</div>
+
+---
+
+## 1.2 – Rules & Pitfalls ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q4: What is a common pitfall of imperative UI programming?**  
+A: It can become hard to manage and error-prone as the UI grows, since you must manually update every part of the UI, increasing the risk of bugs.
+
+**Q5: Why is declarative programming often preferred for complex UIs?**  
+A: Because it makes code easier to read, maintain, and reason about—React takes care of updating the UI based on state changes.
+
+**Q6: Can you mix imperative and declarative code in React?**  
+A: Yes, but it's best to stay declarative as much as possible. Sometimes, for direct DOM manipulation, you might use imperative code (e.g., with refs).
+
+</div>
+
+---
+
+## 1.3 – Scenario & Practical Example 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+Suppose you want to show a loading spinner when a form is submitting, and hide it when done. How would you do this imperatively vs declaratively?
+
+Take a moment to think before checking the answer.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Imperative:**
+- You would manually show/hide the spinner by changing its style or class in response to events (e.g., `spinner.style.display = 'block'`).
+
+**Declarative (React):**
+- You would use a state variable like `isLoading`, and conditionally render the spinner: `{isLoading && <Spinner />}`. React handles showing/hiding based on state.
+
+</details>
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of declarative vs imperative programming, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />
