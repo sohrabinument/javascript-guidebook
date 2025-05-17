@@ -1,0 +1,252 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Lifting State Up – Interview Questions & Answers 🚀
+
+Use these questions to prepare for interviews or test your understanding of lifting state up and state sharing in React.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 3.1 – Fundamentals 🧩
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: What does "Lifting State Up" mean in React?**  
+A: Moving state from child components to their closest common parent so multiple components can share and coordinate that state.
+
+**Q2: Why do we need to lift state up?**  
+A: To share state between sibling components and keep the UI in sync with a single source of truth.
+
+**Q3: What is a real-world analogy for lifting state up?**  
+A: Like two siblings sharing a toy kept by their parent, so both can access it without fighting or confusion.
+
+**Q4: How do you implement lifting state up in code?**  
+A: Move the state to the common parent, pass it and its updater as props to children, and let children update via props.
+
+```jsx
+// Example: Lifting state up for two sibling components
+function Parent() {
+  const [sharedValue, setSharedValue] = useState("");
+  return (
+    <>
+      <ChildA value={sharedValue} setValue={setSharedValue} />
+      <ChildB value={sharedValue} />
+    </>
+  );
+}
+function ChildA({ value, setValue }) {
+  return <input value={value} onChange={e => setValue(e.target.value)} placeholder="Type here" />;
+}
+function ChildB({ value }) {
+  return <div>Value: {value}</div>;
+}
+```
+
+**Q5: What is the main benefit of lifting state up?**  
+A: It ensures a single source of truth, making the UI predictable and easier to debug.
+
+**Q6: Can you lift state up for more than two components?**  
+A: Yes! Lift the state to the closest common parent of all components that need to share it.
+
+</div>
+
+---
+
+## 3.2 – Rules & Pitfalls ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q7: What is a common pitfall when lifting state up?**  
+A: Lifting too much state up can make parent components bloated and harder to manage. Only lift state when necessary.
+
+**Q8: What happens if you keep the same state in two sibling components instead of lifting it up?**  
+A: The state will get out of sync, leading to bugs and inconsistent UI.
+
+```jsx
+// ❌ Bad: Siblings with separate state (out of sync)
+function Parent() {
+  return (
+    <>
+      <ChildA />
+      <ChildB />
+    </>
+  );
+}
+function ChildA() {
+  const [value, setValue] = useState("");
+  return <input value={value} onChange={e => setValue(e.target.value)} />;
+}
+function ChildB() {
+  const [value, setValue] = useState("");
+  return <div>Value: {value}</div>;
+}
+// These will NOT stay in sync!
+```
+
+**Q9: How does lifting state up relate to controlled and uncontrolled components?**  
+A: When you lift state up, the parent controls the state (controlled component). If the child manages its own state, it's uncontrolled.
+
+**Q10: Should you always lift state up to the App component?**  
+A: No, only lift state up to the closest common parent that needs to share it.
+
+**Q11: Is state shared between different instances of a component?**  
+A: No, each instance has its own isolated state unless you lift it up and share via props.
+
+</div>
+
+---
+
+## 3.3 – Scenario & Practical Example 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+### Scenario-Based Question:
+
+Suppose you have a `Products` and a `Cart` component as siblings. You want to add products to the cart from `Products` and display them in `Cart`. How would you share the cart state?
+
+Take a moment to think before checking the answer.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- Lift the `cart` state up to their common parent (e.g., `App`).
+- Pass `cart` and `setCart` as props to both `Products` and `Cart`.
+- `Products` can update the cart, and `Cart` can display it.
+
+```jsx
+function App() {
+  const [cart, setCart] = useState([]);
+  return (
+    <>
+      <Products cart={cart} setCart={setCart} />
+      <Cart cart={cart} />
+    </>
+  );
+}
+function Products({ cart, setCart }) {
+  const products = [
+    { id: 1, name: "Apple 🍎" },
+    { id: 2, name: "Banana 🍌" },
+  ];
+  const addToCart = (product) => setCart([...cart, product]);
+  return (
+    <div>
+      <h2>Products</h2>
+      {products.map((product) => (
+        <div key={product.id}>
+          {product.name}
+          <button onClick={() => addToCart(product)}>Add to Cart</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+function Cart({ cart }) {
+  return (
+    <div>
+      <h2>Cart</h2>
+      {cart.length === 0 ? <p>No items in cart.</p> : (
+        <ul>
+          {cart.map((item, idx) => <li key={idx}>{item.name}</li>)}
+        </ul>
+      )}
+    </div>
+  );
+}
+```
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+You have two input fields. How can you make them always show the same value, no matter which one you type in?
+
+Take a moment to think before checking the answer.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- Lift the state up to their common parent.
+- Pass the value and updater function as props to both inputs.
+
+```jsx
+function SyncedInputs() {
+  const [text, setText] = useState("");
+  return (
+    <>
+      <input value={text} onChange={e => setText(e.target.value)} />
+      <input value={text} onChange={e => setText(e.target.value)} />
+    </>
+  );
+}
+```
+
+</details>
+
+---
+
+### Scenario-Based Question:
+
+Suppose you have an Accordion with two panels, and you want only one panel open at a time. How would you manage the open/close state?
+
+Take a moment to think before checking the answer.
+
+<details>
+<summary>**Click to see a sample answer**</summary>
+
+**Sample Answer:**
+- Lift the active panel state up to the Accordion parent.
+- Pass `isActive` and `onShow` props to each Panel.
+
+```jsx
+function Accordion() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  return (
+    <>
+      <Panel
+        title="About"
+        isActive={activeIndex === 0}
+        onShow={() => setActiveIndex(0)}
+      >
+        About content...
+      </Panel>
+      <Panel
+        title="Etymology"
+        isActive={activeIndex === 1}
+        onShow={() => setActiveIndex(1)}
+      >
+        Etymology content...
+      </Panel>
+    </>
+  );
+}
+function Panel({ title, children, isActive, onShow }) {
+  return (
+    <section>
+      <h3>{title}</h3>
+      {isActive ? <p>{children}</p> : <button onClick={onShow}>Show</button>}
+    </section>
+  );
+}
+```
+
+</details>
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of lifting state up, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />
