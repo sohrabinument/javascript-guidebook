@@ -1,0 +1,651 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Extracting State Logic into a Reducer – Interview Questions & Answers 🧠🔄
+
+Use these questions to prepare for interviews or test your understanding of reducers and state management in React.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Beginner Questions 🌱
+
+<div style={{ background: 'rgba(0, 200, 100, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 200, 100, 0.15)', color: 'inherit' }}>
+
+**Q1: What is a reducer in React, and why would you use one?**  
+A: A reducer is a function that takes the current state and an action, then returns the new state. You use it to centralize and organize complex state logic, especially when multiple state updates are related or depend on each other.
+
+**Q2: What is the default value you pass to `useReducer`?**  
+A: The initial state for your reducer (e.g., an empty array, object, or number).
+
+**Q3: Can you use `useReducer` in class components?**  
+A: No, `useReducer` is a React Hook and only works in function components.
+
+**Q4: What does the `type` property in an action object represent?**  
+A: It describes what kind of update should happen (e.g., 'add', 'remove', 'toggle').
+
+**Q5: What are the arguments to a reducer function?**  
+A: The current state and an action object.
+
+**Q6: What is an action in the context of reducers?**  
+A: An action is an object that describes what happened (usually with a `type` property and any extra data needed for the update).
+
+**Q7: What does the `dispatch` function do?**  
+A: It sends an action to the reducer, which then calculates and returns the new state.
+
+**Q8: What happens if you forget to return a new state in your reducer?**  
+A: The state will be `undefined`, which can break your app.
+
+**Q9: Can you use `useReducer` without any actions?**  
+A: No, actions are required to tell the reducer what to do.
+
+**Q10: Why must reducers be pure functions?**  
+A: Pure functions always return the same output for the same input and have no side effects. This makes state updates predictable and easier to debug.
+
+</div>
+
+---
+
+## 1.2 – Practical & Code-Based Questions 🧩
+
+<div style={{ background: 'rgba(200, 200, 0, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(200, 200, 0, 0.15)', color: 'inherit' }}>
+
+**Q11: Write a simple reducer for a counter that can increment, decrement, and reset.**
+<details>
+<summary>**Click to see the answer**</summary>
+
+```js
+function counterReducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return state + 1;
+    case 'decrement':
+      return state - 1;
+    case 'reset':
+      return 0;
+    default:
+      throw new Error('Unknown action: ' + action.type);
+  }
+}
+```
+
+</details>
+
+---
+
+**Q12: What happens if you mutate state directly inside a reducer?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Mutating state directly can cause bugs and unpredictable UI updates. React expects you to return a new state object/array, not modify the existing one.
+
+```js
+// Bad: Mutates state directly
+function badReducer(state, action) {
+  if (action.type === 'add') {
+    state.push(action.item); // ❌
+    return state;
+  }
+  return state;
+}
+
+// Good: Returns new state
+function goodReducer(state, action) {
+  if (action.type === 'add') {
+    return [...state, action.item]; // ✅
+  }
+  return state;
+}
+```
+
+</details>
+
+---
+
+**Q13: How do you reset all state in a reducer to its initial value?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Handle a 'reset' action that returns the initial state.
+
+```js
+function reducer(state, action) {
+  switch (action.type) {
+    case 'reset':
+      return initialState;
+    // ...other cases
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+---
+
+**Q14: How would you handle a form with many fields and complex validation using reducers?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Use a reducer to manage the form state as an object, with actions for updating fields, validating, and resetting. This centralizes logic and makes it easier to handle complex interactions.
+
+```js
+function formReducer(state, action) {
+  switch (action.type) {
+    case 'update_field':
+      return { ...state, [action.field]: action.value };
+    case 'reset':
+      return initialState;
+    // ...validation logic
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+---
+
+**Q15: How do you handle side effects (like API calls) with reducers?**  
+A: Do side effects outside the reducer (e.g., in event handlers or with `useEffect`), then dispatch actions when the async work is done.
+
+**Q16: How can you organize many actions in a large reducer?**  
+A: Use a `switch` statement or an object mapping action types to handler functions. For very large reducers, split logic into smaller functions or use a reducer-combining utility.
+
+**Q17: What is the benefit of using constants for action types?**  
+A: It helps avoid typos and makes refactoring easier, especially in large codebases.
+
+**Q18: Can you use context with reducers? Why would you?**  
+A: Yes! Using React Context with reducers lets you share state and dispatch across many components (like a mini-Redux).
+
+</div>
+
+---
+
+## 1.3 – Intermediate & Advanced Questions 🧠
+
+<div style={{ background: 'rgba(200, 0, 100, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(200, 0, 100, 0.15)', color: 'inherit' }}>
+
+**Q19: How would you implement optimistic UI updates with reducers?**  
+A: Update the UI immediately in the reducer, then handle success/failure with additional actions based on the async result.
+
+**Q20: How can you persist reducer state to localStorage?**  
+A: Use `useEffect` to save state to localStorage whenever it changes, and initialize the reducer with the saved value if available.
+
+**Q21: How do you combine multiple reducers?**  
+A: Write separate reducer functions for different state slices, then combine their results in a parent reducer or use multiple `useReducer` hooks.
+
+**Q22: What are the trade-offs of using reducers for all state?**  
+A: Reducers add structure and clarity for complex state, but can be overkill for simple state and add boilerplate.
+
+**Q23: How would you test a reducer with asynchronous actions?**  
+A: Test the reducer as a pure function with sync actions; test async logic separately (e.g., in thunks or effects that dispatch actions).
+
+**Q24: What are common mistakes when using reducers in React?**  
+A: Mutating state directly, using side effects inside the reducer, or forgetting to handle unknown actions.
+
+**Q25: Can you use async code (like fetch) inside a reducer? Why or why not?**  
+A: No. Reducers must be pure and synchronous. Do async work outside, then dispatch actions when done.
+
+**Q26: How can you test a reducer function?**  
+A: Since reducers are pure functions, you can call them with different states and actions and check the returned value.
+
+**Q27: How do you debug reducer-based state logic?**  
+A: Log actions and state in the reducer, use React DevTools, and keep actions descriptive.
+
+**Q28: How would you migrate a component from `useState` to `useReducer`?**  
+A: Identify all state and update logic, write a reducer function to handle all actions, replace `useState` with `useReducer`, and update event handlers to dispatch actions.
+
+**Q29: When should you choose `useReducer` over `useState`?**  
+A: When state logic is complex, involves multiple sub-values, or when you want to centralize updates for maintainability and testing.
+
+**Q30: Can you use multiple reducers in a single component?**  
+A: Yes! You can call `useReducer` multiple times for different pieces of state, or combine reducers for more complex logic.
+
+**Q31: What is Immer, and how does it help with reducers?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Immer lets you write reducers that look like they mutate state directly, but under the hood, it creates a new state object. This makes reducers easier to write and read, especially for complex state updates.
+
+```js
+import { useImmerReducer } from 'use-immer';
+
+function tasksReducer(draft, action) {
+  switch (action.type) {
+    case 'added':
+      draft.push({ id: action.id, text: action.text, done: false });
+      break;
+    case 'toggled':
+      const task = draft.find(t => t.id === action.id);
+      if (task) task.done = !task.done;
+      break;
+    case 'deleted':
+      return draft.filter(t => t.id !== action.id);
+    default:
+      throw new Error('Unknown action: ' + action.type);
+  }
+}
+```
+
+</details>
+
+</div>
+
+---
+
+## 1.4 – Scenario-Based & Real-Life Example Questions 🌍
+
+<div style={{ background: 'rgba(0, 150, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 150, 200, 0.15)', color: 'inherit' }}>
+
+**Q32: Scenario – To-Do List Refactor:**
+Why might you refactor a to-do list app from `useState` to `useReducer`?
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- As the app grows, state logic for adding, toggling, and deleting tasks becomes scattered across multiple functions. Using a reducer centralizes all state changes, making the code easier to maintain, debug, and extend (e.g., adding editing or filtering tasks).
+
+```js
+function tasksReducer(tasks, action) {
+  switch (action.type) {
+    case 'added':
+      return [...tasks, { id: action.id, text: action.text, done: false }];
+    case 'toggled':
+      return tasks.map(task =>
+        task.id === action.id ? { ...task, done: !task.done } : task
+      );
+    case 'deleted':
+      return tasks.filter(task => task.id !== action.id);
+    default:
+      throw new Error('Unknown action: ' + action.type);
+  }
+}
+```
+
+</details>
+
+---
+
+**Q33: Scenario – Multi-step Form:**
+You're building a multi-step form (e.g., checkout). How can a reducer help manage the state?
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- A reducer can manage the current step, form values, and validation errors in one place. Actions like 'next_step', 'prev_step', 'update_field', and 'reset' make the logic clear and maintainable.
+
+```js
+function formReducer(state, action) {
+  switch (action.type) {
+    case 'next_step':
+      return { ...state, step: state.step + 1 };
+    case 'prev_step':
+      return { ...state, step: state.step - 1 };
+    case 'update_field':
+      return { ...state, [action.field]: action.value };
+    case 'reset':
+      return initialState;
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+---
+
+**Q34: Scenario – Notification System:**
+How would you use a reducer to manage notifications in an app?
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- The reducer can handle actions like 'add_notification', 'remove_notification', and 'clear_notifications', keeping the notification list up to date and easy to manage.
+
+```js
+function notificationReducer(state, action) {
+  switch (action.type) {
+    case 'add_notification':
+      return [...state, action.notification];
+    case 'remove_notification':
+      return state.filter(n => n.id !== action.id);
+    case 'clear_notifications':
+      return [];
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+---
+
+**Q35: Scenario – Real-Time Collaboration:**
+In a collaborative document editor, how could reducers help manage user actions and document state?
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Reducers can handle actions for editing, cursor movement, and syncing changes from other users, making the state updates predictable and easier to debug.
+
+</details>
+
+---
+
+**Q36: Scenario – Game State:**
+How would you use a reducer to manage the state of a turn-based game (like chess or tic-tac-toe)?
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- The reducer can manage the board state, current player, move history, and game status, with actions for 'make_move', 'undo', 'reset', and 'set_winner'.
+
+```js
+function gameReducer(state, action) {
+  switch (action.type) {
+    case 'make_move':
+      // ...update board and history
+      return { ...state, /* ... */ };
+    case 'undo':
+      // ...revert to previous state
+      return { ...state, /* ... */ };
+    case 'reset':
+      return initialState;
+    case 'set_winner':
+      return { ...state, winner: action.winner };
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+---
+
+**Q37: Scenario – Undo/Redo in Drawing App:**
+How would you structure reducer state to support undo/redo for a drawing canvas?
+<details>
+<summary>**Click to see the answer**</summary>
+
+**Answer:**
+- Store the current drawing and a history stack. Actions like 'draw', 'undo', and 'redo' update the stacks accordingly, allowing users to move back and forth through their changes.
+
+```js
+function drawingReducer(state, action) {
+  switch (action.type) {
+    case 'draw':
+      return {
+        ...state,
+        history: [...state.history, state.current],
+        current: action.newDrawing,
+        future: [],
+      };
+    case 'undo':
+      const prev = state.history[state.history.length - 1];
+      return {
+        ...state,
+        history: state.history.slice(0, -1),
+        current: prev,
+        future: [state.current, ...state.future],
+      };
+    case 'redo':
+      const next = state.future[0];
+      return {
+        ...state,
+        history: [...state.history, state.current],
+        current: next,
+        future: state.future.slice(1),
+      };
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+</div>
+
+---
+
+## 1.5 – Extra & Edge Case Questions 🚀
+
+<div style={{ background: 'rgba(100, 0, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(100, 0, 200, 0.15)', color: 'inherit' }}>
+
+**Q38: How do you handle deeply nested state updates in a reducer?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Use the spread operator or libraries like Immer to avoid mutating nested objects.
+
+```js
+// Without Immer
+function reducer(state, action) {
+  switch (action.type) {
+    case 'update_nested':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          profile: {
+            ...state.user.profile,
+            name: action.name
+          }
+        }
+      };
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+---
+
+**Q39: How can you prevent unnecessary re-renders when using useReducer?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Make sure to return the same state object if nothing has changed, and use React.memo or useCallback for child components.
+
+</details>
+
+---
+
+**Q40: How do you handle batching of multiple actions in a reducer?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: You can dispatch multiple actions in sequence, or implement a 'batch' action that takes an array of actions.
+
+```js
+function reducer(state, action) {
+  if (action.type === 'batch') {
+    return action.actions.reduce(reducer, state);
+  }
+  // ...other cases
+  return state;
+}
+```
+
+</details>
+
+---
+
+**Q41: How do you integrate useReducer with useContext for global state?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Create a context for state and dispatch, and provide them to your app.
+
+```js
+const StateContext = React.createContext();
+const DispatchContext = React.createContext();
+
+function AppProvider({ children }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <StateContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        {children}
+      </DispatchContext.Provider>
+    </StateContext.Provider>
+  );
+}
+```
+
+</details>
+
+---
+
+**Q42: How do you handle error states in a reducer?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Add an error field to your state and handle actions like 'set_error' and 'clear_error'.
+
+```js
+function reducer(state, action) {
+  switch (action.type) {
+    case 'set_error':
+      return { ...state, error: action.error };
+    case 'clear_error':
+      return { ...state, error: null };
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+---
+
+**Q43: Can you use useReducer for animation state or transitions?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Yes, for complex animation state machines, reducers can help manage transitions and states in a predictable way.
+
+</details>
+
+---
+
+**Q44: How do you migrate a Redux reducer to useReducer?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Copy the reducer function, use it with useReducer, and replace Redux-specific code (like middleware) with React hooks or context.
+
+</details>
+
+---
+
+**Q45: How do you handle derived state in a reducer?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Store only the minimal state needed; compute derived values (like counts or filtered lists) in selectors or during render.
+
+</details>
+
+---
+
+**Q46: How do you debug reducers in large apps?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Use logging inside the reducer, React DevTools, or custom middleware to track actions and state changes.
+
+</details>
+
+---
+
+**Q47: What are the limitations of useReducer compared to Redux?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: useReducer is local to a component tree, has no middleware, and no built-in devtools, but is simpler for local or medium-complexity state.
+
+</details>
+
+---
+
+**Q48: How do you handle undo/redo with multiple independent pieces of state?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Use multiple reducers, each with their own history, or a parent reducer that manages the history for all sub-states.
+
+</details>
+
+---
+
+**Q49: How do you handle initialization from async data in useReducer?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Use a 'load' action dispatched after fetching data, and initialize state with a loading flag.
+
+```js
+function reducer(state, action) {
+  switch (action.type) {
+    case 'load_start':
+      return { ...state, loading: true };
+    case 'load_success':
+      return { ...state, loading: false, data: action.data };
+    default:
+      return state;
+  }
+}
+```
+
+</details>
+
+---
+
+**Q50: Can you use useReducer with TypeScript?**
+<details>
+<summary>**Click to see the answer**</summary>
+
+A: Yes! Define types for your state and actions for full type safety.
+
+```ts
+type State = { count: number };
+type Action = { type: 'increment' } | { type: 'decrement' };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case 'increment': return { count: state.count + 1 };
+    case 'decrement': return { count: state.count - 1 };
+    default: return state;
+  }
+}
+```
+
+</details>
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of reducers, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />
