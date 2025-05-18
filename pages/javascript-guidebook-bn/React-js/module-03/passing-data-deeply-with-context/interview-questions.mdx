@@ -1,0 +1,346 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# React-এ Context দিয়ে ডেটা গভীরে পাঠানো – ইন্টারভিউ প্রশ্ন ও উত্তর 🌳
+
+এই প্রশ্নগুলো ব্যবহার করুন ইন্টারভিউ প্রস্তুতির জন্য বা React Context ও ডেটা গভীরে পাঠানো সম্পর্কে আপনার বোঝা যাচাই করতে।
+
+> **💡 টিপ:** প্রতিটি প্রশ্নের উত্তর নিজে চেষ্টা করুন, তারপর উত্তর দেখুন। এতে মনে রাখতে সুবিধা হবে!
+
+---
+
+## ১.১ – মৌলিক ধারণা 🧩
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**প্রশ্ন ১: React Context কোন সমস্যার সমাধান করে?**  
+উত্তর: Context "prop drilling" সমস্যার সমাধান করে—মানে, ডেটা অনেকগুলো কম্পোনেন্টের ভেতর দিয়ে পাঠাতে হয়, যেগুলো আসলে সেই ডেটা ব্যবহারই করে না, শুধু গভীর কোনো চাইল্ড পর্যন্ত পৌঁছানোর জন্য। Context lets you share data with any component in the tree, no matter how deep, without passing props manually at every level.
+
+**প্রশ্ন ২: কিভাবে React-এ Context তৈরি ও ব্যবহার করবেন?**  
+উত্তর:
+১. Context তৈরি করুন:
+```jsx
+import { createContext } from 'react';
+const MyContext = createContext(defaultValue);
+```
+2. ট্রি-র উপরে Provider দিয়ে ভ্যালু দিন:
+```jsx
+<MyContext.Provider value={value}>
+  <App />
+</MyContext.Provider>
+```
+3. যেকোনো চাইল্ডে ব্যবহার করুন:
+```jsx
+import { useContext } from 'react';
+const value = useContext(MyContext);
+```
+
+**প্রশ্ন ৩: Context-এর ডিফল্ট ভ্যালু কী? কখন ব্যবহৃত হয়?**  
+উত্তর: The default value is the argument you pass to `createContext`. It is used only if a component calls `useContext` but is not wrapped in a matching Provider above it in the tree.
+
+**প্রশ্ন ৪: এক কম্পোনেন্টে একাধিক context ব্যবহার করা যায়?**  
+A: Yes! You can use as many contexts as you want. Just call `useContext` for each one and wrap your tree in multiple providers.
+
+**প্রশ্ন ৫: Context-এর সাধারণ ব্যবহার কোথায়?**  
+A:
+- Theming (light/dark mode)
+- Current user/authentication
+- Language/locale
+- Global notifications
+- Sharing reducer state (with useReducer)
+
+</div>
+
+---
+
+## ১.২ – নিয়ম ও সমস্যা ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**প্রশ্ন ৬: Provider ছাড়া useContext ব্যবহার করলে কী হয়?**  
+A: You get the default value passed to `createContext`. This can lead to bugs if you expect a value from a provider but forgot to wrap your component tree.
+
+**প্রশ্ন ৭: Context-এ অপ্রয়োজনীয় re-render এড়াতে কী করবেন?**  
+A: Memoize the value you pass to the Provider if it's an object or function:
+```jsx
+const value = useMemo(() => ({ user, logout }), [user]);
+<MyContext.Provider value={value}>...</MyContext.Provider>
+```
+
+**প্রশ্ন ৮: Context বেশি ব্যবহার করলে কী সমস্যা?**  
+A: Overusing context for data that only a few components need can make your app harder to understand and debug. Prefer props for most cases; use context for truly global/shared data.
+
+**প্রশ্ন ৯: কখন context ব্যবহার না করাই ভালো?**  
+A:
+- For local state (form input, toggles, etc.)
+- When only a few components need the data
+- For rapidly changing values (like mouse position)
+
+**প্রশ্ন ১০: টিমে context ডকুমেন্ট করবেন কিভাবে?**  
+A:
+- Add comments explaining what the context is for and what values it provides.
+- Document expected shape and usage in your codebase's docs or README.
+
+</div>
+
+---
+
+## ১.৩ – সিনারিও ও বাস্তব উদাহরণ 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+**প্রশ্ন ১১: Context দিয়ে থিম মান পাঠানোর সহজ উদাহরণ দেখান।**
+<details>
+<summary>উত্তর দেখুন</summary>
+<div>
+
+```jsx
+// ThemeContext.js
+import { createContext } from 'react';
+export const ThemeContext = createContext('light');
+
+// App.js
+import { ThemeContext } from './ThemeContext';
+import { useState } from 'react';
+
+function App() {
+  const [theme, setTheme] = useState('light');
+  return (
+    <ThemeContext.Provider value={theme}>
+      <Toolbar />
+      <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+        Toggle Theme
+      </button>
+    </ThemeContext.Provider>
+  );
+}
+
+// Button.js
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+function Button() {
+  const theme = useContext(ThemeContext);
+  return <button className={theme}>থিম দিয়ে স্টাইলড!</button>;
+}
+```
+
+</div>
+</details>
+
+**প্রশ্ন ১২: Context + reducer দিয়ে todo list-এর কোড দেখান।**
+<details>
+<summary>উত্তর দেখুন</summary>
+<div>
+
+```jsx
+// TodoContext.js
+import { createContext, useReducer, useContext } from 'react';
+
+const TodoContext = createContext();
+
+function todoReducer(todos, action) {
+  switch (action.type) {
+    case 'add':
+      return [...todos, { id: Date.now(), text: action.text, done: false }];
+    case 'toggle':
+      return todos.map(todo =>
+        todo.id === action.id ? { ...todo, done: !todo.done } : todo
+      );
+    case 'remove':
+      return todos.filter(todo => todo.id !== action.id);
+    default:
+      throw new Error('Unknown action: ' + action.type);
+  }
+}
+
+export function TodoProvider({ children }) {
+  const [todos, dispatch] = useReducer(todoReducer, []);
+  return (
+    <TodoContext.Provider value={{ todos, dispatch }}>
+      {children}
+    </TodoContext.Provider>
+  );
+}
+
+export function useTodos() {
+  return useContext(TodoContext);
+}
+```
+
+```jsx
+// App.js
+import { TodoProvider, useTodos } from './TodoContext';
+import { useState } from 'react';
+
+function AddTodo() {
+  const { dispatch } = useTodos();
+  const [text, setText] = useState('');
+  return (
+    <form onSubmit={e => {
+      e.preventDefault();
+      dispatch({ type: 'add', text });
+      setText('');
+    }}>
+      <input value={text} onChange={e => setText(e.target.value)} />
+      <button>Add</button>
+    </form>
+  );
+}
+
+function TodoList() {
+  const { todos, dispatch } = useTodos();
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id} style={{ textDecoration: todo.done ? 'line-through' : '' }}>
+          {todo.text}
+          <button onClick={() => dispatch({ type: 'toggle', id: todo.id })}>Toggle</button>
+          <button onClick={() => dispatch({ type: 'remove', id: todo.id })}>Remove</button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default function App() {
+  return (
+    <TodoProvider>
+      <h1>Todo List</h1>
+      <AddTodo />
+      <TodoList />
+    </TodoProvider>
+  );
+}
+```
+
+</div>
+</details>
+
+**প্রশ্ন ১৩: Context + reducer কোথায় বাস্তবে বেশি কাজে লাগে? (যেমন authentication)**
+<details>
+<summary>উত্তর দেখুন</summary>
+<div>
+ধরুন, authentication state (user login/logout) গ্লোবালি ম্যানেজ করতে চান:
+
+```jsx
+// AuthContext.js
+import { createContext, useReducer, useContext } from 'react';
+
+const AuthContext = createContext();
+
+function authReducer(state, action) {
+  switch (action.type) {
+    case 'login':
+      return { ...state, user: action.user, isLoggedIn: true };
+    case 'logout':
+      return { ...state, user: null, isLoggedIn: false };
+    default:
+      throw new Error('Unknown action: ' + action.type);
+  }
+}
+
+export function AuthProvider({ children }) {
+  const [state, dispatch] = useReducer(authReducer, { user: null, isLoggedIn: false });
+  return (
+    <AuthContext.Provider value={{ state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
+```
+
+```jsx
+// App.js
+import { AuthProvider, useAuth } from './AuthContext';
+
+function LoginButton() {
+  const { dispatch } = useAuth();
+  return <button onClick={() => dispatch({ type: 'login', user: { name: 'Alice' } })}>Login</button>;
+}
+
+function LogoutButton() {
+  const { dispatch } = useAuth();
+  return <button onClick={() => dispatch({ type: 'logout' })}>Logout</button>;
+}
+
+function UserInfo() {
+  const { state } = useAuth();
+  return state.isLoggedIn ? <div>Welcome, {state.user.name}!</div> : <div>Please log in.</div>;
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <UserInfo />
+      <LoginButton />
+      <LogoutButton />
+    </AuthProvider>
+  );
+}
+```
+
+</div>
+</details>
+
+</div>
+
+---
+
+## ১.৪ – আরও ইন্টারভিউ প্রস্তুতি: এজ কেস, বেস্ট প্র্যাকটিস ও বাস্তব উদাহরণ 🧠
+
+<div style={{ background: 'rgba(0, 180, 100, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 180, 100, 0.15)', color: 'inherit' }}>
+
+**প্রশ্ন ১৪: একাধিক context provider nested করা যায়? কী হয়?**  
+A: Yes! You can nest as many context providers as you want. Each provider can supply a different value for its context, and consumers will use the value from the closest provider above them in the tree.
+
+**প্রশ্ন ১৫: context consumer-এর জন্য ডিফল্ট মান কিভাবে দেবেন?**  
+A: Pass a value to `createContext(defaultValue)`. This value is used only if there is no matching provider above the consumer.
+
+**প্রশ্ন ১৬: বড় বা দ্রুত বদলানো object context-এ দিলে পারফরম্যান্স কিভাবে ঠিক রাখবেন?**  
+A: Use `useMemo` to memoize the value you pass to the provider, so consumers only re-render when the actual value changes.
+
+**প্রশ্ন ১৭: parent কম্পোনেন্টে context value আপডেট করলে কী হয়?**  
+A: All components that consume that context (using `useContext`) will re-render with the new value.
+
+**প্রশ্ন ১৮: context update-এ কোন কম্পোনেন্ট re-render হচ্ছে, কিভাবে জানবেন?**  
+A: Use React DevTools' "Highlight Updates" feature, or add console logs in your components. You can also split context to minimize unnecessary re-renders.
+
+**প্রশ্ন ১৯: context + custom hook দিয়ে reusable logic কিভাবে বানাবেন?**  
+A: Create a custom hook (e.g., `useAuth`) that calls `useContext` and returns the context value. This makes it easy to use context in any component.
+
+**প্রশ্ন ২০: context আর Redux-এর পার্থক্য কী?**  
+A: context React-এর built-in, সহজ/মাঝারি state শেয়ার করতে ভালো। Redux বড়, জটিল গ্লোবাল state, middleware, devtools ইত্যাদির জন্য।
+
+**প্রশ্ন ২১: context-এ শুধু ডেটা না, function-ও শেয়ার করা যায়?**  
+A: Yes! You can pass any value (including functions) as the context value. This is common for sharing dispatch functions, callbacks, or API methods.
+
+**প্রশ্ন ২২: context ব্যবহারে কোন কোন ভুল এড়ানো উচিত?**  
+A:
+- Storing rapidly changing values (like mouse position) in context
+- Mirroring props to context unnecessarily
+- Using context for local state
+- Passing new objects/functions as context value on every render (causes re-renders)
+
+**প্রশ্ন ২৩: context ব্যবহার করা কম্পোনেন্ট টেস্ট করবেন কিভাবে?**  
+A: Wrap the component in a test provider with a mock value, or test the context logic separately. For reducers, test the reducer function directly.
+
+**প্রশ্ন ২৪: context state (যেমন logout-এ) কিভাবে reset করবেন?**  
+A: You can reset the state in your reducer or context provider by dispatching a reset action, or by remounting the provider with a new key.
+
+</div>
+
+---
+
+<Callout type="info">এই প্রশ্নগুলো পড়ে নিজে উত্তর দেয়ার চেষ্টা করুন—ইন্টারভিউতে সবচেয়ে ভালো প্রস্তুতি হবে!</Callout>
+
+---
+
+> **🚀 চূড়ান্ত টিপ:** ইন্টারভিউতে শুধু context-এর থিওরি নয়, বাস্তব উদাহরণ ও পরিষ্কার, মেইনটেইনেবল কোড দেখাতে পারলে বেশি পয়েন্ট পাবেন!
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />

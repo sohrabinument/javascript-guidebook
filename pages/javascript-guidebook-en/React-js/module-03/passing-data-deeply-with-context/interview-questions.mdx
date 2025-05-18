@@ -1,0 +1,346 @@
+import { Callout } from "nextra/components";
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" width="70" style={{marginBottom: '1rem'}} />
+
+# Passing Data Deeply with Context – Interview Questions & Answers 🌳
+
+Use these questions to prepare for interviews or test your understanding of React Context and how to pass data deeply in your component tree.
+
+> **💡 Pro Tip:** Try answering each question yourself before checking the answer. This will help you remember the concepts better!
+
+---
+
+## 1.1 – Fundamentals 🧩
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: What problem does React Context solve?**  
+A: Context solves the problem of "prop drilling"—having to pass data through many layers of components that don't use it, just to reach a deeply nested child. Context lets you share data with any component in the tree, no matter how deep, without passing props manually at every level.
+
+**Q2: How do you create and use a Context in React?**  
+A:
+1. Create a context:
+```jsx
+import { createContext } from 'react';
+const MyContext = createContext(defaultValue);
+```
+2. Provide a value at the top of your tree:
+```jsx
+<MyContext.Provider value={value}>
+  <App />
+</MyContext.Provider>
+```
+3. Consume the value in any child:
+```jsx
+import { useContext } from 'react';
+const value = useContext(MyContext);
+```
+
+**Q3: What is the default value of a context? When is it used?**  
+A: The default value is the argument you pass to `createContext`. It is used only if a component calls `useContext` but is not wrapped in a matching Provider above it in the tree.
+
+**Q4: Can you have multiple contexts in one component?**  
+A: Yes! You can use as many contexts as you want. Just call `useContext` for each one and wrap your tree in multiple providers.
+
+**Q5: What are some common use cases for context?**  
+A:
+- Theming (light/dark mode)
+- Current user/authentication
+- Language/locale
+- Global notifications
+- Sharing reducer state (with useReducer)
+
+</div>
+
+---
+
+## 1.2 – Rules & Pitfalls ⚠️
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q6: What happens if you use useContext outside of a Provider?**  
+A: You get the default value passed to `createContext`. This can lead to bugs if you expect a value from a provider but forgot to wrap your component tree.
+
+**Q7: How do you avoid unnecessary re-renders with context?**  
+A: Memoize the value you pass to the Provider if it's an object or function:
+```jsx
+const value = useMemo(() => ({ user, logout }), [user]);
+<MyContext.Provider value={value}>...</MyContext.Provider>
+```
+
+**Q8: What is a pitfall of overusing context?**  
+A: Overusing context for data that only a few components need can make your app harder to understand and debug. Prefer props for most cases; use context for truly global/shared data.
+
+**Q9: When should you NOT use context?**  
+A:
+- For local state (form input, toggles, etc.)
+- When only a few components need the data
+- For rapidly changing values (like mouse position)
+
+**Q10: How do you document your contexts for a team?**  
+A:
+- Add comments explaining what the context is for and what values it provides.
+- Document expected shape and usage in your codebase's docs or README.
+
+</div>
+
+---
+
+## 1.3 – Scenario & Practical Examples 🏆
+
+<div style={{ background: 'rgba(20, 120, 220, 0.10)', padding: '20px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(20, 120, 220, 0.15)', color: 'inherit' }}>
+
+**Q11: Show a simple example of passing a theme value with context.**
+<details>
+<summary>Show Answer</summary>
+<div>
+
+```jsx
+// ThemeContext.js
+import { createContext } from 'react';
+export const ThemeContext = createContext('light');
+
+// App.js
+import { ThemeContext } from './ThemeContext';
+import { useState } from 'react';
+
+function App() {
+  const [theme, setTheme] = useState('light');
+  return (
+    <ThemeContext.Provider value={theme}>
+      <Toolbar />
+      <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+        Toggle Theme
+      </button>
+    </ThemeContext.Provider>
+  );
+}
+
+// Button.js
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+function Button() {
+  const theme = useContext(ThemeContext);
+  return <button className={theme}>Styled by theme!</button>;
+}
+```
+
+</div>
+</details>
+
+**Q12: Show a code example of a todo list using context + reducer.**
+<details>
+<summary>Show Answer</summary>
+<div>
+
+```jsx
+// TodoContext.js
+import { createContext, useReducer, useContext } from 'react';
+
+const TodoContext = createContext();
+
+function todoReducer(todos, action) {
+  switch (action.type) {
+    case 'add':
+      return [...todos, { id: Date.now(), text: action.text, done: false }];
+    case 'toggle':
+      return todos.map(todo =>
+        todo.id === action.id ? { ...todo, done: !todo.done } : todo
+      );
+    case 'remove':
+      return todos.filter(todo => todo.id !== action.id);
+    default:
+      throw new Error('Unknown action: ' + action.type);
+  }
+}
+
+export function TodoProvider({ children }) {
+  const [todos, dispatch] = useReducer(todoReducer, []);
+  return (
+    <TodoContext.Provider value={{ todos, dispatch }}>
+      {children}
+    </TodoContext.Provider>
+  );
+}
+
+export function useTodos() {
+  return useContext(TodoContext);
+}
+```
+
+```jsx
+// App.js
+import { TodoProvider, useTodos } from './TodoContext';
+import { useState } from 'react';
+
+function AddTodo() {
+  const { dispatch } = useTodos();
+  const [text, setText] = useState('');
+  return (
+    <form onSubmit={e => {
+      e.preventDefault();
+      dispatch({ type: 'add', text });
+      setText('');
+    }}>
+      <input value={text} onChange={e => setText(e.target.value)} />
+      <button>Add</button>
+    </form>
+  );
+}
+
+function TodoList() {
+  const { todos, dispatch } = useTodos();
+  return (
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id} style={{ textDecoration: todo.done ? 'line-through' : '' }}>
+          {todo.text}
+          <button onClick={() => dispatch({ type: 'toggle', id: todo.id })}>Toggle</button>
+          <button onClick={() => dispatch({ type: 'remove', id: todo.id })}>Remove</button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default function App() {
+  return (
+    <TodoProvider>
+      <h1>Todo List</h1>
+      <AddTodo />
+      <TodoList />
+    </TodoProvider>
+  );
+}
+```
+
+</div>
+</details>
+
+**Q13: Show a real-life scenario where context + reducer is useful (e.g., authentication).**
+<details>
+<summary>Show Answer</summary>
+<div>
+Suppose you want to manage authentication state (user login/logout) globally:
+
+```jsx
+// AuthContext.js
+import { createContext, useReducer, useContext } from 'react';
+
+const AuthContext = createContext();
+
+function authReducer(state, action) {
+  switch (action.type) {
+    case 'login':
+      return { ...state, user: action.user, isLoggedIn: true };
+    case 'logout':
+      return { ...state, user: null, isLoggedIn: false };
+    default:
+      throw new Error('Unknown action: ' + action.type);
+  }
+}
+
+export function AuthProvider({ children }) {
+  const [state, dispatch] = useReducer(authReducer, { user: null, isLoggedIn: false });
+  return (
+    <AuthContext.Provider value={{ state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
+```
+
+```jsx
+// App.js
+import { AuthProvider, useAuth } from './AuthContext';
+
+function LoginButton() {
+  const { dispatch } = useAuth();
+  return <button onClick={() => dispatch({ type: 'login', user: { name: 'Alice' } })}>Login</button>;
+}
+
+function LogoutButton() {
+  const { dispatch } = useAuth();
+  return <button onClick={() => dispatch({ type: 'logout' })}>Logout</button>;
+}
+
+function UserInfo() {
+  const { state } = useAuth();
+  return state.isLoggedIn ? <div>Welcome, {state.user.name}!</div> : <div>Please log in.</div>;
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <UserInfo />
+      <LoginButton />
+      <LogoutButton />
+    </AuthProvider>
+  );
+}
+```
+
+</div>
+</details>
+
+</div>
+
+---
+
+## 1.4 – More Interview Prep: Edge Cases, Best Practices & Real-World Scenarios 🧠
+
+<div style={{ background: 'rgba(0, 180, 100, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 180, 100, 0.15)', color: 'inherit' }}>
+
+**Q14: Can you nest multiple context providers? What happens?**  
+A: Yes! You can nest as many context providers as you want. Each provider can supply a different value for its context, and consumers will use the value from the closest provider above them in the tree.
+
+**Q15: How do you provide a default value for context consumers?**  
+A: Pass a value to `createContext(defaultValue)`. This value is used only if there is no matching provider above the consumer.
+
+**Q16: How can you optimize performance when using context with large or frequently changing objects?**  
+A: Use `useMemo` to memoize the value you pass to the provider, so consumers only re-render when the actual value changes.
+
+**Q17: What happens if you update a context value in a parent component?**  
+A: All components that consume that context (using `useContext`) will re-render with the new value.
+
+**Q18: How can you debug which components are re-rendering due to context changes?**  
+A: Use React DevTools' "Highlight Updates" feature, or add console logs in your components. You can also split context to minimize unnecessary re-renders.
+
+**Q19: How do you combine context with custom hooks for reusable logic?**  
+A: Create a custom hook (e.g., `useAuth`) that calls `useContext` and returns the context value. This makes it easy to use context in any component.
+
+**Q20: What is the difference between context and Redux?**  
+A: Context is built-in to React and best for sharing simple or medium-complexity state. Redux is a third-party library for managing complex, global state with middleware, devtools, and more structure.
+
+**Q21: Can you use context to share functions, not just data?**  
+A: Yes! You can pass any value (including functions) as the context value. This is common for sharing dispatch functions, callbacks, or API methods.
+
+**Q22: What are some anti-patterns to avoid with context?**  
+A:
+- Storing rapidly changing values (like mouse position) in context
+- Mirroring props to context unnecessarily
+- Using context for local state
+- Passing new objects/functions as context value on every render (causes re-renders)
+
+**Q23: How do you test components that use context?**  
+A: Wrap the component in a test provider with a mock value, or test the context logic separately. For reducers, test the reducer function directly.
+
+**Q24: How can you reset context state (e.g., on logout)?**  
+A: You can reset the state in your reducer or context provider by dispatching a reset action, or by remounting the provider with a new key.
+
+</div>
+
+---
+
+<Callout type="info">Review these questions and try to explain the concepts in your own words for the best interview preparation!</Callout>
+
+---
+
+> **🚀 Final Advice:** In interviews, show not just your knowledge of context, but also your ability to write clean, maintainable, and user-friendly code for real-world scenarios.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Interview Success" width="100" style={{borderRadius: '8px', marginTop: '2rem'}} />
