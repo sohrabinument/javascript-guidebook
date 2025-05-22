@@ -2,18 +2,18 @@
     "index": {
         "title": "JavaScript Fundamentals"
     },
-    "01-getting-started": "Getting Started with JavaScript",
-    "02-variables-datatypes": "Variables and Data Types",
-    "03-operators": "Operators and Expressions",
-    "04-control-flow": "Control Flow and Loops",
-    "05-functions": "Functions and Scope",
-    "06-objects-arrays": "Objects and Arrays",
-    "07-advanced-concepts": "Advanced JavaScript Concepts",
-    "08-async-programming": "Asynchronous Programming",
-    "09-dom-manipulation": "DOM Manipulation",
-    "10-error-handling": "Error Handling and Debugging",
-    "11-modern-features": "Modern JavaScript Features",
-    "12-best-practices": "JavaScript Best Practices",
-    "13-advanced-patterns": "Advanced JavaScript Patterns",
-    "14-interview-questions": "Interview Questions"
+    "getting-started": "Getting Started with JavaScript",
+    "variables-datatypes": "Variables and Data Types",
+    "operators": "Operators and Expressions",
+    "control-flow": "Control Flow and Loops",
+    "functions": "Functions and Scope",
+    "objects-arrays": "Objects and Arrays",
+    "advanced-concepts": "Advanced JavaScript Concepts",
+    "async-programming": "Asynchronous Programming",
+    "dom-manipulation": "DOM Manipulation",
+    "error-handling": "Error Handling and Debugging",
+    "modern-features": "Modern JavaScript Features",
+    "best-practices": "JavaScript Best Practices",
+    "advanced-patterns": "Advanced JavaScript Patterns",
+    "interview-questions": "Interview Questions"
 }
