@@ -1,0 +1,2997 @@
+import { Callout } from "nextra/components";
+
+# Complete JavaScript Interview Preparation Guide 🎯
+
+A comprehensive collection of 200+ JavaScript interview questions with detailed answers and code examples to help you ace your next interview!
+
+> **💡 Pro Tip:** Practice coding these examples and try to explain the concepts in your own words. Understanding the "why" is just as important as knowing the "what"!
+
+---
+
+## 1. Fundamentals & Basics 🌱
+
+<div style={{ background: 'rgba(0, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(0, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q1: What is JavaScript and what are its key features?**  
+A: JavaScript is a high-level, interpreted programming language primarily used for web development. Key features include:
+
+- Dynamic typing
+- First-class functions
+- Prototype-based object orientation
+- Event-driven programming
+- Asynchronous programming support
+
+**Q2: What are the different data types in JavaScript?**  
+A: JavaScript has 8 data types:
+
+- **Primitive types:** Number, String, Boolean, Undefined, Null, Symbol, BigInt
+- **Non-primitive:** Object (includes arrays, functions, dates, etc.)
+
+```js
+let num = 42; // Number
+let str = "Hello"; // String
+let bool = true; // Boolean
+let undef; // Undefined
+let empty = null; // Null
+let sym = Symbol("id"); // Symbol
+let big = 123n; // BigInt
+let obj = { name: "John" }; // Object
+```
+
+**Q3: What is the difference between `var`, `let`, and `const`?**  
+A:
+
+- `var`: Function-scoped, can be redeclared and updated, hoisted
+- `let`: Block-scoped, can be updated but not redeclared, hoisted but not initialized
+- `const`: Block-scoped, cannot be updated or redeclared, hoisted but not initialized
+
+```js
+// var example
+function varExample() {
+  if (true) {
+    var x = 1;
+  }
+  console.log(x); // 1 (accessible outside if block)
+}
+
+// let example
+function letExample() {
+  if (true) {
+    let y = 1;
+  }
+  console.log(y); // ReferenceError: y is not defined
+}
+
+// const example
+const z = 1;
+z = 2; // TypeError: Assignment to constant variable
+```
+
+**Q4: What is hoisting in JavaScript?**  
+A: Hoisting is JavaScript's behavior of moving variable and function declarations to the top of their scope during compilation.
+
+```js
+console.log(x); // undefined (not ReferenceError)
+var x = 5;
+
+// Equivalent to:
+var x;
+console.log(x); // undefined
+x = 5;
+
+// Function hoisting
+sayHello(); // "Hello!" - works due to hoisting
+
+function sayHello() {
+  console.log("Hello!");
+}
+```
+
+**Q5: What is the difference between `==` and `===`?**  
+A:
+
+- `==` (loose equality): Compares values with type coercion
+- `===` (strict equality): Compares values and types without coercion
+
+```js
+console.log(5 == "5"); // true (type coercion)
+console.log(5 === "5"); // false (different types)
+console.log(null == undefined); // true
+console.log(null === undefined); // false
+```
+
+**Q6: What is type coercion in JavaScript?**  
+A: Type coercion is the automatic conversion of values from one data type to another.
+
+```js
+// Implicit coercion
+console.log("5" + 1); // "51" (number to string)
+console.log("5" - 1); // 4 (string to number)
+console.log(true + 1); // 2 (boolean to number)
+
+// Explicit coercion
+console.log(Number("5")); // 5
+console.log(String(123)); // "123"
+console.log(Boolean(0)); // false
+```
+
+**Q7: What is the difference between `null` and `undefined`?**  
+A:
+
+- `undefined`: Variable declared but not assigned a value
+- `null`: Intentional absence of any object value
+
+```js
+let a;
+console.log(a); // undefined
+
+let b = null;
+console.log(b); // null
+
+console.log(typeof undefined); // "undefined"
+console.log(typeof null); // "object" (known quirk)
+```
+
+**Q8: What are truthy and falsy values?**  
+A: Falsy values: `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined`, `NaN`
+All other values are truthy.
+
+```js
+// Falsy values
+console.log(Boolean(false)); // false
+console.log(Boolean(0)); // false
+console.log(Boolean("")); // false
+console.log(Boolean(null)); // false
+console.log(Boolean(undefined)); // false
+console.log(Boolean(NaN)); // false
+
+// Truthy values
+console.log(Boolean("0")); // true
+console.log(Boolean([])); // true
+console.log(Boolean({})); // true
+```
+
+**Q9: What is the `typeof` operator and its return values?**  
+A: `typeof` returns a string indicating the type of the operand.
+
+```js
+console.log(typeof 42); // "number"
+console.log(typeof "hello"); // "string"
+console.log(typeof true); // "boolean"
+console.log(typeof undefined); // "undefined"
+console.log(typeof null); // "object" (known bug)
+console.log(typeof {}); // "object"
+console.log(typeof []); // "object"
+console.log(typeof function () {}); // "function"
+console.log(typeof Symbol()); // "symbol"
+```
+
+**Q10: How do you check if a variable is an array?**  
+A: Use `Array.isArray()` method:
+
+```js
+const arr = [1, 2, 3];
+const obj = { 0: 1, 1: 2, 2: 3, length: 3 };
+
+console.log(Array.isArray(arr)); // true
+console.log(Array.isArray(obj)); // false
+
+// Alternative methods (less reliable)
+console.log(arr instanceof Array); // true
+console.log(Object.prototype.toString.call(arr)); // "[object Array]"
+```
+
+</div>
+
+---
+
+## 2. Functions & Scope 🔧
+
+<div style={{ background: 'rgba(230, 150, 70, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(230, 150, 70, 0.15)', color: 'inherit' }}>
+
+**Q11: What are the different ways to create functions in JavaScript?**  
+A: There are several ways to create functions:
+
+```js
+// Function Declaration
+function add(a, b) {
+  return a + b;
+}
+
+// Function Expression
+const multiply = function (a, b) {
+  return a * b;
+};
+
+// Arrow Function
+const divide = (a, b) => a / b;
+
+// Method in Object
+const calc = {
+  subtract: function (a, b) {
+    return a - b;
+  },
+};
+
+// Constructor Function
+function Person(name) {
+  this.name = name;
+}
+```
+
+**Q12: What is the difference between function declaration and function expression?**  
+A:
+
+- Function declarations are hoisted completely
+- Function expressions are not hoisted
+
+```js
+// This works due to hoisting
+console.log(declared()); // "I'm declared!"
+
+function declared() {
+  return "I'm declared!";
+}
+
+// This throws an error
+console.log(expressed()); // TypeError: expressed is not a function
+
+var expressed = function () {
+  return "I'm an expression!";
+};
+```
+
+**Q13: What are arrow functions and how do they differ from regular functions?**  
+A: Arrow functions are a shorter syntax for writing functions with some key differences:
+
+```js
+// Regular function
+function regular() {
+  console.log(this); // depends on how it's called
+  console.log(arguments); // has arguments object
+}
+
+// Arrow function
+const arrow = () => {
+  console.log(this); // lexically bound this
+  console.log(arguments); // ReferenceError: arguments is not defined
+};
+
+// Arrow function variations
+const single = (x) => x * 2;
+const multiple = (x, y) => x + y;
+const block = (x, y) => {
+  const result = x + y;
+  return result;
+};
+```
+
+**Q14: What is a closure in JavaScript?**  
+A: A closure is a function that has access to variables in its outer scope even after the outer function has returned.
+
+```js
+function outerFunction(x) {
+  return function innerFunction(y) {
+    return x + y; // inner function has access to x
+  };
+}
+
+const addFive = outerFunction(5);
+console.log(addFive(3)); // 8
+
+// Practical example: Module pattern
+function createCounter() {
+  let count = 0;
+  return {
+    increment: () => ++count,
+    decrement: () => --count,
+    getCount: () => count,
+  };
+}
+
+const counter = createCounter();
+console.log(counter.increment()); // 1
+console.log(counter.getCount()); // 1
+```
+
+**Q15: What is the scope chain in JavaScript?**  
+A: The scope chain is the mechanism by which JavaScript looks for variables, starting from the innermost scope and moving outward.
+
+```js
+const global = "I'm global";
+
+function outer() {
+  const outerVar = "I'm outer";
+
+  function inner() {
+    const innerVar = "I'm inner";
+    console.log(innerVar); // Found in inner scope
+    console.log(outerVar); // Found in outer scope
+    console.log(global); // Found in global scope
+  }
+
+  inner();
+}
+
+outer();
+```
+
+**Q16: What is the `this` keyword in JavaScript?**  
+A: `this` refers to the object that is executing the current function. Its value depends on how the function is called.
+
+```js
+// Global context
+console.log(this); // Window object (browser) or global (Node.js)
+
+// Object method
+const obj = {
+  name: "John",
+  greet: function () {
+    console.log(this.name); // "John"
+  },
+};
+
+// Constructor function
+function Person(name) {
+  this.name = name;
+}
+
+// Arrow function (lexical this)
+const arrowObj = {
+  name: "Jane",
+  greet: () => {
+    console.log(this.name); // undefined (this refers to global)
+  },
+};
+```
+
+**Q17: How do you change the context of `this`?**  
+A: Use `call()`, `apply()`, or `bind()` methods:
+
+```js
+function greet(greeting, punctuation) {
+  console.log(greeting + " " + this.name + punctuation);
+}
+
+const person = { name: "John" };
+
+// call() - arguments passed individually
+greet.call(person, "Hello", "!");
+
+// apply() - arguments passed as array
+greet.apply(person, ["Hi", "."]);
+
+// bind() - returns new function with bound context
+const boundGreet = greet.bind(person, "Hey");
+boundGreet("?");
+```
+
+**Q18: What are higher-order functions?**  
+A: Functions that take other functions as arguments or return functions.
+
+```js
+// Function that takes another function as argument
+function repeat(fn, times) {
+  for (let i = 0; i < times; i++) {
+    fn();
+  }
+}
+
+repeat(() => console.log("Hello"), 3);
+
+// Function that returns another function
+function multiplyBy(factor) {
+  return function (number) {
+    return number * factor;
+  };
+}
+
+const double = multiplyBy(2);
+console.log(double(5)); // 10
+```
+
+**Q19: What is function currying?**  
+A: Currying is transforming a function with multiple arguments into a sequence of functions with single arguments.
+
+```js
+// Regular function
+function add(a, b, c) {
+  return a + b + c;
+}
+
+// Curried version
+function curriedAdd(a) {
+  return function (b) {
+    return function (c) {
+      return a + b + c;
+    };
+  };
+}
+
+// Arrow function currying
+const curriedAddArrow = (a) => (b) => (c) => a + b + c;
+
+console.log(curriedAdd(1)(2)(3)); // 6
+console.log(curriedAddArrow(1)(2)(3)); // 6
+```
+
+**Q20: What are immediately invoked function expressions (IIFE)?**  
+A: Functions that are executed immediately after they're defined.
+
+```js
+// Basic IIFE
+(function () {
+  console.log("IIFE executed!");
+})();
+
+// IIFE with parameters
+(function (name) {
+  console.log("Hello, " + name);
+})("World");
+
+// Arrow IIFE
+(() => {
+  console.log("Arrow IIFE!");
+})();
+
+// IIFE for module pattern
+const myModule = (function () {
+  let privateVar = 0;
+
+  return {
+    increment: () => ++privateVar,
+    getCount: () => privateVar,
+  };
+})();
+```
+
+</div>
+
+---
+
+## 3. Objects & Prototypes 🏗️
+
+<div style={{ background: 'rgba(120, 200, 80, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(120, 200, 80, 0.15)', color: 'inherit' }}>
+
+**Q21: How do you create objects in JavaScript?**  
+A: There are multiple ways to create objects:
+
+```js
+// Object literal
+const obj1 = { name: "John", age: 30 };
+
+// Constructor function
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+const obj2 = new Person("Jane", 25);
+
+// Object.create()
+const obj3 = Object.create({ name: "Bob" });
+
+// Class (ES6)
+class Animal {
+  constructor(species) {
+    this.species = species;
+  }
+}
+const obj4 = new Animal("Dog");
+
+// Factory function
+function createUser(name) {
+  return {
+    name,
+    greet() {
+      console.log(`Hello, I'm ${this.name}`);
+    },
+  };
+}
+const obj5 = createUser("Alice");
+```
+
+**Q22: What is prototypal inheritance?**  
+A: JavaScript uses prototype-based inheritance where objects can inherit properties and methods from other objects.
+
+```js
+// Constructor function
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.speak = function () {
+  console.log(`${this.name} makes a sound`);
+};
+
+function Dog(name, breed) {
+  Animal.call(this, name);
+  this.breed = breed;
+}
+
+// Set up inheritance
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+
+Dog.prototype.bark = function () {
+  console.log(`${this.name} barks!`);
+};
+
+const myDog = new Dog("Buddy", "Golden Retriever");
+myDog.speak(); // "Buddy makes a sound"
+myDog.bark(); // "Buddy barks!"
+```
+
+**Q23: What is the prototype chain?**  
+A: The prototype chain is the mechanism by which objects inherit features from one another.
+
+```js
+const animal = {
+  eats: true,
+  walk() {
+    console.log("Animal walks");
+  },
+};
+
+const rabbit = {
+  jumps: true,
+  __proto__: animal,
+};
+
+const longEar = {
+  earLength: 10,
+  __proto__: rabbit,
+};
+
+console.log(longEar.eats); // true (inherited from animal)
+console.log(longEar.jumps); // true (inherited from rabbit)
+longEar.walk(); // "Animal walks"
+
+// Check prototype chain
+console.log(longEar.__proto__ === rabbit); // true
+console.log(rabbit.__proto__ === animal); // true
+console.log(animal.__proto__ === Object.prototype); // true
+```
+
+**Q24: What are ES6 classes and how do they work?**  
+A: ES6 classes are syntactic sugar over JavaScript's prototype-based inheritance.
+
+```js
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  // Instance method
+  greet() {
+    console.log(`Hello, I'm ${this.name}`);
+  }
+
+  // Static method
+  static species() {
+    return "Homo sapiens";
+  }
+
+  // Getter
+  get info() {
+    return `${this.name} is ${this.age} years old`;
+  }
+
+  // Setter
+  set newAge(age) {
+    if (age > 0) this.age = age;
+  }
+}
+
+// Inheritance
+class Student extends Person {
+  constructor(name, age, grade) {
+    super(name, age);
+    this.grade = grade;
+  }
+
+  study() {
+    console.log(`${this.name} is studying`);
+  }
+}
+
+const student = new Student("Alice", 20, "A");
+student.greet(); // "Hello, I'm Alice"
+student.study(); // "Alice is studying"
+```
+
+**Q25: What is the difference between `__proto__` and `prototype`?**  
+A:
+
+- `__proto__` is the actual object used in the lookup chain
+- `prototype` is a property of constructor functions
+
+```js
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.greet = function () {
+  console.log(`Hello, I'm ${this.name}`);
+};
+
+const john = new Person("John");
+
+console.log(john.__proto__ === Person.prototype); // true
+console.log(Person.prototype.constructor === Person); // true
+
+// Prototype chain
+console.log(john.__proto__.__proto__ === Object.prototype); // true
+console.log(Object.prototype.__proto__ === null); // true
+```
+
+**Q26: What are getters and setters?**  
+A: Special methods that allow you to define how properties are accessed and modified.
+
+```js
+const person = {
+  firstName: "John",
+  lastName: "Doe",
+
+  // Getter
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+
+  // Setter
+  set fullName(value) {
+    const parts = value.split(" ");
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  },
+};
+
+console.log(person.fullName); // "John Doe"
+person.fullName = "Jane Smith";
+console.log(person.firstName); // "Jane"
+
+// Using Object.defineProperty
+const obj = {};
+Object.defineProperty(obj, "name", {
+  get() {
+    return this._name;
+  },
+  set(value) {
+    this._name = value.toUpperCase();
+  },
+});
+
+obj.name = "john";
+console.log(obj.name); // "JOHN"
+```
+
+**Q27: What is property descriptor in JavaScript?**  
+A: Property descriptors define the behavior of object properties.
+
+```js
+const obj = {};
+
+Object.defineProperty(obj, "name", {
+  value: "John",
+  writable: true, // Can be changed
+  enumerable: true, // Shows up in for...in loops
+  configurable: true, // Can be deleted or reconfigured
+});
+
+// Get property descriptor
+console.log(Object.getOwnPropertyDescriptor(obj, "name"));
+
+// Define multiple properties
+Object.defineProperties(obj, {
+  age: {
+    value: 30,
+    writable: false,
+  },
+  city: {
+    value: "New York",
+    enumerable: false,
+  },
+});
+```
+
+**Q28: What is the difference between `Object.freeze()`, `Object.seal()`, and `Object.preventExtensions()`?**  
+A:
+
+- `Object.freeze()`: Prevents all changes
+- `Object.seal()`: Prevents adding/removing properties
+- `Object.preventExtensions()`: Prevents adding new properties
+
+```js
+const obj1 = { name: "John" };
+Object.freeze(obj1);
+obj1.name = "Jane"; // Ignored in strict mode, error in non-strict
+obj1.age = 30; // Ignored
+delete obj1.name; // Ignored
+
+const obj2 = { name: "John" };
+Object.seal(obj2);
+obj2.name = "Jane"; // Works
+obj2.age = 30; // Ignored
+delete obj2.name; // Ignored
+
+const obj3 = { name: "John" };
+Object.preventExtensions(obj3);
+obj3.name = "Jane"; // Works
+obj3.age = 30; // Ignored
+delete obj3.name; // Works
+```
+
+**Q29: How do you check if a property exists in an object?**  
+A: Several methods to check property existence:
+
+```js
+const obj = { name: "John", age: 30 };
+
+// hasOwnProperty (own properties only)
+console.log(obj.hasOwnProperty("name")); // true
+
+// in operator (includes inherited)
+console.log("name" in obj); // true
+console.log("toString" in obj); // true (inherited)
+
+// Object.hasOwnProperty.call (safer)
+console.log(Object.prototype.hasOwnProperty.call(obj, "name")); // true
+
+// hasOwnProperty method (ES2022)
+console.log(Object.hasOwn(obj, "name")); // true
+
+// Check for undefined
+console.log(obj.name !== undefined); // true
+```
+
+**Q30: What is object destructuring?**  
+A: A syntax that allows unpacking properties from objects into distinct variables.
+
+```js
+const person = {
+  name: "John",
+  age: 30,
+  city: "New York",
+  country: "USA",
+};
+
+// Basic destructuring
+const { name, age } = person;
+
+// Renaming variables
+const { name: fullName, age: years } = person;
+
+// Default values
+const { name, occupation = "Unknown" } = person;
+
+// Nested destructuring
+const user = {
+  id: 1,
+  profile: {
+    name: "John",
+    email: "john@email.com",
+  },
+};
+
+const {
+  profile: { name: userName, email },
+} = user;
+
+// Function parameter destructuring
+function greet({ name, age = 0 }) {
+  console.log(`Hello ${name}, you are ${age} years old`);
+}
+
+greet(person);
+```
+
+</div>
+
+---
+
+## 4. Arrays & Array Methods 📊
+
+<div style={{ background: 'rgba(220, 50, 50, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(220, 50, 50, 0.15)', color: 'inherit' }}>
+
+**Q31: What are the different ways to create arrays?**  
+A: Multiple methods to create arrays:
+
+```js
+// Array literal
+const arr1 = [1, 2, 3, 4, 5];
+
+// Array constructor
+const arr2 = new Array(1, 2, 3, 4, 5);
+const arr3 = new Array(5); // Creates array with 5 empty slots
+
+// Array.from()
+const arr4 = Array.from("hello"); // ['h', 'e', 'l', 'l', 'o']
+const arr5 = Array.from({ length: 3 }, (_, i) => i); // [0, 1, 2]
+
+// Array.of()
+const arr6 = Array.of(1, 2, 3); // [1, 2, 3]
+const arr7 = Array.of(5); // [5] (different from new Array(5))
+
+// Spread operator
+const arr8 = [...arr1]; // Creates a copy
+```
+
+**Q32: What are the main array methods for iteration?**  
+A: Common iteration methods with examples:
+
+```js
+const numbers = [1, 2, 3, 4, 5];
+
+// forEach - executes function for each element
+numbers.forEach((num, index) => {
+  console.log(`${index}: ${num}`);
+});
+
+// map - creates new array with transformed elements
+const doubled = numbers.map((num) => num * 2);
+console.log(doubled); // [2, 4, 6, 8, 10]
+
+// filter - creates new array with elements that pass test
+const evens = numbers.filter((num) => num % 2 === 0);
+console.log(evens); // [2, 4]
+
+// find - returns first element that passes test
+const found = numbers.find((num) => num > 3);
+console.log(found); // 4
+
+// findIndex - returns index of first element that passes test
+const foundIndex = numbers.findIndex((num) => num > 3);
+console.log(foundIndex); // 3
+
+// some - tests if at least one element passes test
+const hasEven = numbers.some((num) => num % 2 === 0);
+console.log(hasEven); // true
+
+// every - tests if all elements pass test
+const allPositive = numbers.every((num) => num > 0);
+console.log(allPositive); // true
+```
+
+**Q33: What are reduce and reduceRight methods?**  
+A: Methods that reduce an array to a single value:
+
+```js
+const numbers = [1, 2, 3, 4, 5];
+
+// reduce - left to right
+const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+console.log(sum); // 15
+
+// Complex reduce example
+const people = [
+  { name: "John", age: 30 },
+  { name: "Jane", age: 25 },
+  { name: "Bob", age: 35 },
+];
+
+const groupedByAge = people.reduce((acc, person) => {
+  const ageGroup = person.age >= 30 ? "adult" : "young";
+  if (!acc[ageGroup]) acc[ageGroup] = [];
+  acc[ageGroup].push(person);
+  return acc;
+}, {});
+
+// reduceRight - right to left
+const string = ["a", "b", "c", "d"];
+const reversed = string.reduceRight((acc, curr) => acc + curr, "");
+console.log(reversed); // 'dcba'
+```
+
+**Q34: What are the array methods for adding/removing elements?**  
+A: Methods that modify arrays:
+
+```js
+const arr = [1, 2, 3];
+
+// push - add to end, returns new length
+console.log(arr.push(4, 5)); // 5
+console.log(arr); // [1, 2, 3, 4, 5]
+
+// pop - remove from end, returns removed element
+console.log(arr.pop()); // 5
+console.log(arr); // [1, 2, 3, 4]
+
+// unshift - add to beginning, returns new length
+console.log(arr.unshift(0)); // 5
+console.log(arr); // [0, 1, 2, 3, 4]
+
+// shift - remove from beginning, returns removed element
+console.log(arr.shift()); // 0
+console.log(arr); // [1, 2, 3, 4]
+
+// splice - add/remove elements at any position
+const removed = arr.splice(1, 2, "a", "b"); // start, deleteCount, ...items
+console.log(removed); // [2, 3]
+console.log(arr); // [1, 'a', 'b', 4]
+
+// slice - returns shallow copy of portion (doesn't modify original)
+const copy = arr.slice(1, 3);
+console.log(copy); // ['a', 'b']
+console.log(arr); // [1, 'a', 'b', 4] (unchanged)
+```
+
+**Q35: How do you check if a value is an array?**  
+A: Multiple methods to check for arrays:
+
+```js
+const arr = [1, 2, 3];
+const obj = { 0: 1, 1: 2, 2: 3, length: 3 };
+
+// Best method
+console.log(Array.isArray(arr)); // true
+console.log(Array.isArray(obj)); // false
+
+// instanceof (can be unreliable in some cases)
+console.log(arr instanceof Array); // true
+
+// Object.prototype.toString
+console.log(Object.prototype.toString.call(arr)); // "[object Array]"
+
+// constructor property (can be changed)
+console.log(arr.constructor === Array); // true
+```
+
+**Q36: What is array destructuring?**  
+A: Syntax for unpacking array values into distinct variables:
+
+```js
+const colors = ["red", "green", "blue", "yellow"];
+
+// Basic destructuring
+const [first, second] = colors;
+console.log(first, second); // "red green"
+
+// Skipping elements
+const [primary, , tertiary] = colors;
+console.log(primary, tertiary); // "red blue"
+
+// Rest operator
+const [head, ...tail] = colors;
+console.log(head); // "red"
+console.log(tail); // ["green", "blue", "yellow"]
+
+// Default values
+const [a, b, c, d, e = "default"] = colors;
+console.log(e); // "yellow" (not default)
+
+// Swapping variables
+let x = 1,
+  y = 2;
+[x, y] = [y, x];
+console.log(x, y); // 2 1
+
+// Nested arrays
+const nested = [
+  [1, 2],
+  [3, 4],
+];
+const [[a1, b1], [a2, b2]] = nested;
+```
+
+**Q37: What are the array methods for searching?**  
+A: Methods to find elements in arrays:
+
+```js
+const fruits = ["apple", "banana", "orange", "apple"];
+
+// indexOf - first occurrence index
+console.log(fruits.indexOf("apple")); // 0
+console.log(fruits.indexOf("grape")); // -1
+
+// lastIndexOf - last occurrence index
+console.log(fruits.lastIndexOf("apple")); // 3
+
+// includes - boolean check
+console.log(fruits.includes("banana")); // true
+
+// find - first element that passes test
+const people = [
+  { name: "John", age: 30 },
+  { name: "Jane", age: 25 },
+];
+const adult = people.find((person) => person.age >= 30);
+console.log(adult); // { name: 'John', age: 30 }
+
+// findIndex - index of first element that passes test
+const adultIndex = people.findIndex((person) => person.age >= 30);
+console.log(adultIndex); // 0
+```
+
+**Q38: How do you sort arrays in JavaScript?**  
+A: Using the sort method with custom comparators:
+
+```js
+const numbers = [3, 1, 4, 1, 5, 9, 2, 6];
+
+// Default sort (converts to strings)
+console.log(numbers.sort()); // [1, 1, 2, 3, 4, 5, 6, 9]
+
+// Numeric sort
+const numericSort = [...numbers].sort((a, b) => a - b);
+console.log(numericSort); // [1, 1, 2, 3, 4, 5, 6, 9]
+
+// Reverse numeric sort
+const reverseSort = [...numbers].sort((a, b) => b - a);
+
+// String array sort
+const names = ["John", "jane", "Bob", "alice"];
+const sortedNames = names.sort(); // ['Bob', 'John', 'alice', 'jane']
+
+// Case-insensitive sort
+const caseInsensitive = names.sort((a, b) =>
+  a.toLowerCase().localeCompare(b.toLowerCase())
+);
+
+// Object sorting
+const people = [
+  { name: "John", age: 30 },
+  { name: "Jane", age: 25 },
+  { name: "Bob", age: 35 },
+];
+
+const sortedByAge = people.sort((a, b) => a.age - b.age);
+const sortedByName = people.sort((a, b) => a.name.localeCompare(b.name));
+```
+
+**Q39: How do you flatten arrays?**  
+A: Multiple methods to flatten nested arrays:
+
+```js
+const nested = [1, [2, 3], [4, [5, 6]], 7];
+
+// flat() - flattens one level by default
+console.log(nested.flat()); // [1, 2, 3, 4, [5, 6], 7]
+
+// flat(depth) - specify depth
+console.log(nested.flat(2)); // [1, 2, 3, 4, 5, 6, 7]
+
+// flat(Infinity) - flatten all levels
+console.log(nested.flat(Infinity)); // [1, 2, 3, 4, 5, 6, 7]
+
+// flatMap() - map then flat
+const sentences = ["hello world", "how are you"];
+const words = sentences.flatMap((sentence) => sentence.split(" "));
+console.log(words); // ['hello', 'world', 'how', 'are', 'you']
+
+// Manual flatten using recursion
+function flattenArray(arr) {
+  return arr.reduce((flat, item) => {
+    return flat.concat(Array.isArray(item) ? flattenArray(item) : item);
+  }, []);
+}
+```
+
+**Q40: What is the difference between `concat()` and spread operator?**  
+A: Both merge arrays but with different behaviors:
+
+```js
+const arr1 = [1, 2];
+const arr2 = [3, 4];
+const arr3 = [5, 6];
+
+// concat() - returns new array
+const result1 = arr1.concat(arr2, arr3);
+console.log(result1); // [1, 2, 3, 4, 5, 6]
+
+// Spread operator - more flexible
+const result2 = [...arr1, ...arr2, ...arr3];
+console.log(result2); // [1, 2, 3, 4, 5, 6]
+
+// Spread allows insertion at any position
+const result3 = [0, ...arr1, 2.5, ...arr2];
+console.log(result3); // [0, 1, 2, 2.5, 3, 4]
+
+// Performance: concat is generally faster for simple concatenation
+// Spread is more readable and flexible
+```
+
+</div>
+
+---
+
+## 5. Asynchronous JavaScript 🚀
+
+<div style={{ background: 'rgba(150, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(150, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q41: What is the event loop in JavaScript?**  
+A: The event loop is the mechanism that handles asynchronous operations in JavaScript's single-threaded environment.
+
+```js
+console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3");
+});
+
+console.log("4");
+
+// Output: 1, 4, 3, 2
+// Explanation: Microtasks (Promises) have higher priority than macrotasks (setTimeout)
+```
+
+**Q42: What are Promises and how do they work?**  
+A: Promises represent the eventual completion or failure of an asynchronous operation.
+
+```js
+// Creating a Promise
+const myPromise = new Promise((resolve, reject) => {
+  const success = Math.random() > 0.5;
+
+  setTimeout(() => {
+    if (success) {
+      resolve("Operation successful!");
+    } else {
+      reject(new Error("Operation failed!"));
+    }
+  }, 1000);
+});
+
+// Consuming a Promise
+myPromise
+  .then((result) => {
+    console.log(result);
+    return "Next step";
+  })
+  .then((nextResult) => {
+    console.log(nextResult);
+  })
+  .catch((error) => {
+    console.error(error.message);
+  })
+  .finally(() => {
+    console.log("Cleanup operations");
+  });
+
+// Promise states: pending, fulfilled, rejected
+```
+
+**Q43: What is async/await and how does it work?**  
+A: Async/await is syntactic sugar over Promises that makes asynchronous code look synchronous.
+
+```js
+// Function that returns a Promise
+function fetchData() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Data fetched"), 1000);
+  });
+}
+
+// Using async/await
+async function getData() {
+  try {
+    console.log("Fetching data...");
+    const data = await fetchData();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Calling async function
+getData().then((result) => console.log("Final result:", result));
+
+// Multiple awaits
+async function fetchMultipleData() {
+  const data1 = await fetchData();
+  const data2 = await fetchData();
+  return [data1, data2];
+}
+
+// Parallel execution
+async function fetchParallelData() {
+  const [data1, data2] = await Promise.all([fetchData(), fetchData()]);
+  return [data1, data2];
+}
+```
+
+**Q44: What are the Promise static methods?**  
+A: Promise provides several static methods for handling multiple promises:
+
+```js
+const promise1 = Promise.resolve(3);
+const promise2 = new Promise((resolve) =>
+  setTimeout(() => resolve("foo"), 1000)
+);
+const promise3 = Promise.resolve(42);
+
+// Promise.all - waits for all to resolve, fails if any rejects
+Promise.all([promise1, promise2, promise3]).then((values) =>
+  console.log(values)
+); // [3, 'foo', 42]
+
+// Promise.allSettled - waits for all to settle (resolve or reject)
+Promise.allSettled([promise1, Promise.reject("error"), promise3]).then(
+  (results) => console.log(results)
+);
+// [{status: 'fulfilled', value: 3}, {status: 'rejected', reason: 'error'}, ...]
+
+// Promise.race - resolves/rejects with first settled promise
+Promise.race([promise1, promise2, promise3]).then((value) =>
+  console.log(value)
+); // 3 (first to resolve)
+
+// Promise.any - resolves with first fulfilled promise
+Promise.any([Promise.reject("error"), promise2, promise3]).then((value) =>
+  console.log(value)
+); // 'foo' or 42
+
+// Promise.resolve/reject - create resolved/rejected promises
+const resolved = Promise.resolve("immediate");
+const rejected = Promise.reject(new Error("immediate error"));
+```
+
+**Q45: What is callback hell and how do you avoid it?**  
+A: Callback hell is the nesting of multiple callbacks making code hard to read and maintain.
+
+```js
+// Callback hell example
+getData((data) => {
+  processData(data, (processedData) => {
+    saveData(processedData, (result) => {
+      sendNotification(result, (notification) => {
+        console.log("All done!");
+      });
+    });
+  });
+});
+
+// Solution 1: Named functions
+function handleData(data) {
+  processData(data, handleProcessedData);
+}
+
+function handleProcessedData(processedData) {
+  saveData(processedData, handleSavedData);
+}
+
+// Solution 2: Promises
+getData()
+  .then((data) => processData(data))
+  .then((processedData) => saveData(processedData))
+  .then((result) => sendNotification(result))
+  .then(() => console.log("All done!"))
+  .catch((error) => console.error(error));
+
+// Solution 3: Async/await
+async function handleDataFlow() {
+  try {
+    const data = await getData();
+    const processedData = await processData(data);
+    const result = await saveData(processedData);
+    await sendNotification(result);
+    console.log("All done!");
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+**Q46: What are microtasks and macrotasks?**  
+A: Different types of asynchronous tasks with different priorities in the event loop.
+
+```js
+console.log("1"); // Synchronous
+
+setTimeout(() => console.log("2"), 0); // Macrotask
+
+Promise.resolve().then(() => console.log("3")); // Microtask
+
+queueMicrotask(() => console.log("4")); // Microtask
+
+setTimeout(() => console.log("5"), 0); // Macrotask
+
+Promise.resolve()
+  .then(() => {
+    console.log("6");
+    return Promise.resolve();
+  })
+  .then(() => console.log("7")); // Chained microtasks
+
+console.log("8"); // Synchronous
+
+// Output: 1, 8, 3, 4, 6, 7, 2, 5
+// Microtasks always execute before macrotasks
+```
+
+**Q47: How do you handle errors in async operations?**  
+A: Multiple ways to handle errors in asynchronous code:
+
+```js
+// Promise error handling
+fetch("/api/data")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Fetch error:", error));
+
+// Async/await error handling
+async function fetchData() {
+  try {
+    const response = await fetch("/api/data");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error; // Re-throw if needed
+  }
+}
+
+// Global error handlers
+window.addEventListener("unhandledrejection", (event) => {
+  console.error("Unhandled promise rejection:", event.reason);
+  event.preventDefault(); // Prevent default browser behavior
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+```
+
+**Q48: What is the difference between setTimeout and setInterval?**  
+A: Both are used for timing operations but behave differently:
+
+```js
+// setTimeout - executes once after delay
+const timeoutId = setTimeout(() => {
+  console.log("Executed once after 1 second");
+}, 1000);
+
+// Clear timeout
+clearTimeout(timeoutId);
+
+// setInterval - executes repeatedly
+const intervalId = setInterval(() => {
+  console.log("Executed every second");
+}, 1000);
+
+// Clear interval
+setTimeout(() => {
+  clearInterval(intervalId);
+  console.log("Interval cleared");
+}, 5000);
+
+// Recursive setTimeout (better alternative to setInterval)
+function recursiveTimeout() {
+  console.log("Recursive execution");
+  setTimeout(recursiveTimeout, 1000);
+}
+
+// With dynamic delay
+function dynamicTimeout() {
+  console.log("Dynamic execution");
+  const delay = Math.random() * 2000 + 500; // 500-2500ms
+  setTimeout(dynamicTimeout, delay);
+}
+```
+
+**Q49: What is debouncing and throttling?**  
+A: Techniques to control the frequency of function execution:
+
+```js
+// Debouncing - execute after delay, reset delay on new calls
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Usage: Search input
+const debouncedSearch = debounce((query) => {
+  console.log("Searching for:", query);
+  // API call here
+}, 300);
+
+document.getElementById("search").addEventListener("input", (e) => {
+  debouncedSearch(e.target.value);
+});
+
+// Throttling - execute at most once per interval
+function throttle(func, interval) {
+  let lastTime = 0;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastTime >= interval) {
+      lastTime = now;
+      func.apply(this, args);
+    }
+  };
+}
+
+// Usage: Scroll event
+const throttledScroll = throttle(() => {
+  console.log("Scroll position:", window.scrollY);
+}, 100);
+
+window.addEventListener("scroll", throttledScroll);
+```
+
+**Q50: How do you make API calls in JavaScript?**  
+A: Multiple methods for making HTTP requests:
+
+```js
+// Fetch API (modern approach)
+async function fetchUserData(userId) {
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer token",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    throw error;
+  }
+}
+
+// POST request with fetch
+async function createUser(userData) {
+  try {
+    const response = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Failed to create user:", error);
+    throw error;
+  }
+}
+
+// XMLHttpRequest (older approach)
+function makeXHRRequest(url, method = "GET") {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(JSON.parse(xhr.responseText));
+      } else {
+        reject(new Error(`Request failed: ${xhr.status}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error("Network error"));
+    xhr.send();
+  });
+}
+```
+
+</div>
+
+---
+
+## 6. DOM Manipulation & Events 🌐
+
+<div style={{ background: 'rgba(50, 180, 180, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(50, 180, 180, 0.15)', color: 'inherit' }}>
+
+**Q51: How do you select DOM elements?**  
+A: Multiple methods to select elements from the DOM:
+
+```js
+// By ID
+const elementById = document.getElementById("myId");
+
+// By class name
+const elementsByClass = document.getElementsByClassName("myClass");
+const firstByClass = elementsByClass[0];
+
+// By tag name
+const elementsByTag = document.getElementsByTagName("div");
+
+// Query selector (CSS-style selectors)
+const firstMatch = document.querySelector(".myClass");
+const allMatches = document.querySelectorAll(".myClass");
+
+// Advanced selectors
+const nested = document.querySelector("div.container > p.highlight");
+const multiple = document.querySelectorAll(
+  'input[type="text"], input[type="email"]'
+);
+
+// Traversing
+const parent = element.parentElement;
+const children = element.children;
+const siblings = element.nextElementSibling;
+const previous = element.previousElementSibling;
+```
+
+**Q52: How do you manipulate DOM elements?**  
+A: Various ways to modify DOM elements:
+
+```js
+const element = document.getElementById("myElement");
+
+// Text content
+element.textContent = "New text content";
+element.innerHTML = "<strong>HTML content</strong>";
+
+// Attributes
+element.setAttribute("data-id", "123");
+element.getAttribute("data-id");
+element.removeAttribute("data-id");
+
+// Properties
+element.id = "newId";
+element.className = "newClass";
+element.classList.add("active");
+element.classList.remove("inactive");
+element.classList.toggle("highlight");
+element.classList.contains("active");
+
+// Styles
+element.style.color = "red";
+element.style.backgroundColor = "blue";
+element.style.cssText = "color: red; background: blue;";
+
+// Creating and inserting elements
+const newElement = document.createElement("div");
+newElement.textContent = "New element";
+newElement.className = "new-item";
+
+// Insertion methods
+parent.appendChild(newElement);
+parent.insertBefore(newElement, existingChild);
+element.insertAdjacentHTML("beforeend", "<p>New paragraph</p>");
+element.insertAdjacentElement("afterbegin", newElement);
+
+// Removing elements
+element.remove();
+parent.removeChild(element);
+```
+
+**Q53: What are event listeners and how do you use them?**  
+A: Event listeners allow you to respond to user interactions:
+
+```js
+const button = document.getElementById("myButton");
+
+// Adding event listeners
+button.addEventListener("click", function (event) {
+  console.log("Button clicked!");
+  console.log("Event type:", event.type);
+  console.log("Target:", event.target);
+});
+
+// Arrow function listener
+button.addEventListener("click", (e) => {
+  e.preventDefault(); // Prevent default behavior
+  e.stopPropagation(); // Stop event bubbling
+});
+
+// Multiple listeners
+button.addEventListener("mouseenter", handleMouseEnter);
+button.addEventListener("mouseleave", handleMouseLeave);
+
+function handleMouseEnter(e) {
+  e.target.style.backgroundColor = "lightblue";
+}
+
+function handleMouseLeave(e) {
+  e.target.style.backgroundColor = "";
+}
+
+// Removing event listeners
+button.removeEventListener("click", handleClick);
+
+// Event delegation (for dynamic content)
+document.addEventListener("click", function (e) {
+  if (e.target.matches(".dynamic-button")) {
+    console.log("Dynamic button clicked");
+  }
+});
+```
+
+**Q54: What is event bubbling and capturing?**  
+A: The process of how events propagate through the DOM:
+
+```js
+// HTML: <div id="outer"><div id="inner"><button>Click</button></div></div>
+
+const outer = document.getElementById("outer");
+const inner = document.getElementById("inner");
+const button = document.querySelector("button");
+
+// Event bubbling (default) - from target to root
+button.addEventListener("click", () => console.log("Button"));
+inner.addEventListener("click", () => console.log("Inner"));
+outer.addEventListener("click", () => console.log("Outer"));
+
+// Output when button clicked: Button, Inner, Outer
+
+// Event capturing - from root to target
+button.addEventListener("click", () => console.log("Button capture"), true);
+inner.addEventListener("click", () => console.log("Inner capture"), true);
+outer.addEventListener("click", () => console.log("Outer capture"), true);
+
+// Output: Outer capture, Inner capture, Button capture
+
+// Stopping propagation
+inner.addEventListener("click", (e) => {
+  e.stopPropagation();
+  console.log("Stopped at inner");
+});
+
+// Immediate propagation stop
+inner.addEventListener("click", (e) => {
+  e.stopImmediatePropagation();
+  console.log("No other listeners will run");
+});
+```
+
+**Q55: How do you handle form events?**  
+A: Working with form elements and their events:
+
+```js
+const form = document.getElementById("myForm");
+const input = document.getElementById("myInput");
+
+// Form submission
+form.addEventListener("submit", function (e) {
+  e.preventDefault(); // Prevent default form submission
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+  console.log("Form data:", data);
+
+  // Validate and process form
+  if (validateForm(data)) {
+    submitForm(data);
+  }
+});
+
+// Input events
+input.addEventListener("input", function (e) {
+  console.log("Input value changed:", e.target.value);
+  validateField(e.target);
+});
+
+input.addEventListener("focus", function (e) {
+  e.target.classList.add("focused");
+});
+
+input.addEventListener("blur", function (e) {
+  e.target.classList.remove("focused");
+  validateField(e.target);
+});
+
+// Custom validation
+function validateField(field) {
+  const value = field.value.trim();
+  const errorElement = document.getElementById(field.id + "-error");
+
+  if (value === "") {
+    field.classList.add("error");
+    errorElement.textContent = "This field is required";
+  } else {
+    field.classList.remove("error");
+    errorElement.textContent = "";
+  }
+}
+
+// File input handling
+const fileInput = document.getElementById("fileInput");
+fileInput.addEventListener("change", function (e) {
+  const files = e.target.files;
+  for (let file of files) {
+    console.log("File:", file.name, file.size, file.type);
+  }
+});
+```
+
+**Q56: What is the difference between `innerHTML`, `textContent`, and `innerText`?**  
+A: Different ways to get/set element content:
+
+```js
+const element = document.getElementById("content");
+
+// innerHTML - gets/sets HTML content
+element.innerHTML = "<strong>Bold text</strong>";
+console.log(element.innerHTML); // "<strong>Bold text</strong>"
+
+// textContent - gets/sets text content, ignores HTML
+element.textContent = "<strong>Bold text</strong>";
+console.log(element.textContent); // "<strong>Bold text</strong>"
+
+// innerText - gets/sets visible text, respects styling
+const hiddenElement = document.createElement("div");
+hiddenElement.innerHTML = '<span style="display: none;">Hidden</span>Visible';
+console.log(hiddenElement.textContent); // "HiddenVisible"
+console.log(hiddenElement.innerText); // "Visible"
+
+// Performance and security
+// innerHTML: Can execute scripts (XSS risk), slower
+// textContent: Safe from XSS, faster
+// innerText: Considers CSS, slower than textContent
+```
+
+**Q57: How do you work with element dimensions and positions?**  
+A: Getting and setting element size and position:
+
+```js
+const element = document.getElementById("myElement");
+
+// Getting dimensions
+console.log("Width:", element.offsetWidth); // Including padding, border
+console.log("Height:", element.offsetHeight); // Including padding, border
+console.log("Client width:", element.clientWidth); // Excluding border
+console.log("Client height:", element.clientHeight); // Excluding border
+console.log("Scroll width:", element.scrollWidth); // Full content width
+console.log("Scroll height:", element.scrollHeight); // Full content height
+
+// Getting position
+console.log("Offset left:", element.offsetLeft);
+console.log("Offset top:", element.offsetTop);
+
+// getBoundingClientRect - relative to viewport
+const rect = element.getBoundingClientRect();
+console.log("Rect:", {
+  top: rect.top,
+  left: rect.left,
+  width: rect.width,
+  height: rect.height,
+  right: rect.right,
+  bottom: rect.bottom,
+});
+
+// Scroll position
+console.log("Scroll left:", element.scrollLeft);
+console.log("Scroll top:", element.scrollTop);
+
+// Window dimensions
+console.log("Window width:", window.innerWidth);
+console.log("Window height:", window.innerHeight);
+console.log("Document width:", document.documentElement.scrollWidth);
+```
+
+**Q58: How do you create and dispatch custom events?**  
+A: Creating and handling custom events:
+
+```js
+// Creating custom events
+const customEvent = new CustomEvent("myCustomEvent", {
+  detail: {
+    message: "Hello from custom event!",
+    timestamp: Date.now(),
+  },
+  bubbles: true,
+  cancelable: true,
+});
+
+// Dispatching custom event
+const element = document.getElementById("myElement");
+element.dispatchEvent(customEvent);
+
+// Listening for custom event
+element.addEventListener("myCustomEvent", function (e) {
+  console.log("Custom event received:", e.detail);
+});
+
+// Event constructor (older approach)
+const oldEvent = new Event("oldCustomEvent", {
+  bubbles: true,
+  cancelable: true,
+});
+
+// Creating event with createEvent (legacy)
+const legacyEvent = document.createEvent("CustomEvent");
+legacyEvent.initCustomEvent("legacyEvent", true, true, { data: "legacy" });
+
+// Practical example: Component communication
+class EventBus {
+  constructor() {
+    this.element = document.createElement("div");
+  }
+
+  on(event, callback) {
+    this.element.addEventListener(event, callback);
+  }
+
+  emit(event, data) {
+    this.element.dispatchEvent(new CustomEvent(event, { detail: data }));
+  }
+
+  off(event, callback) {
+    this.element.removeEventListener(event, callback);
+  }
+}
+
+const eventBus = new EventBus();
+eventBus.on("userLogin", (e) => console.log("User logged in:", e.detail));
+eventBus.emit("userLogin", { username: "john" });
+```
+
+**Q59: What is the difference between `addEventListener` and `onclick`?**  
+A: Different approaches to handling events:
+
+```js
+const button = document.getElementById("myButton");
+
+// onclick property - can only have one handler
+button.onclick = function () {
+  console.log("First handler");
+};
+
+button.onclick = function () {
+  console.log("Second handler"); // Overwrites first
+};
+
+// addEventListener - can have multiple handlers
+button.addEventListener("click", function () {
+  console.log("First listener");
+});
+
+button.addEventListener("click", function () {
+  console.log("Second listener"); // Both will execute
+});
+
+// Benefits of addEventListener:
+// 1. Multiple listeners for same event
+// 2. Better control (capture/bubble phase)
+// 3. Can remove specific listeners
+// 4. Better for modern JavaScript practices
+
+const handler = function () {
+  console.log("Removable handler");
+};
+
+button.addEventListener("click", handler);
+button.removeEventListener("click", handler); // Can remove
+
+// onclick cannot be removed selectively
+button.onclick = null; // Removes all onclick handlers
+```
+
+**Q60: How do you work with CSS classes in JavaScript?**  
+A: Manipulating CSS classes dynamically:
+
+```js
+const element = document.getElementById("myElement");
+
+// classList methods
+element.classList.add("active"); // Add class
+element.classList.remove("inactive"); // Remove class
+element.classList.toggle("highlight"); // Toggle class
+element.classList.contains("active"); // Check if class exists
+element.classList.replace("old", "new"); // Replace class
+
+// Multiple classes
+element.classList.add("class1", "class2", "class3");
+element.classList.remove("class1", "class2");
+
+// className property (older approach)
+element.className = "new-class another-class";
+element.className += " additional-class";
+
+// Conditional class management
+function updateStatus(isActive) {
+  if (isActive) {
+    element.classList.add("active");
+    element.classList.remove("inactive");
+  } else {
+    element.classList.add("inactive");
+    element.classList.remove("active");
+  }
+}
+
+// Utility functions
+function hasClass(element, className) {
+  return element.classList.contains(className);
+}
+
+function toggleClass(element, className, force) {
+  return element.classList.toggle(className, force);
+}
+
+// CSS class animation example
+function animateElement(element) {
+  element.classList.add("animate");
+
+  element.addEventListener(
+    "animationend",
+    function () {
+      element.classList.remove("animate");
+    },
+    { once: true }
+  );
+}
+```
+
+</div>
+
+---
+
+## 7. ES6+ Features 🆕
+
+<div style={{ background: 'rgba(255, 165, 0, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(255, 165, 0, 0.15)', color: 'inherit' }}>
+
+**Q61: What are template literals and how do you use them?**  
+A: Template literals provide an easier way to create strings with embedded expressions:
+
+```js
+const name = "John";
+const age = 30;
+
+// Template literal syntax
+const greeting = `Hello, my name is ${name} and I am ${age} years old.`;
+
+// Multi-line strings
+const multiLine = `
+  This is a multi-line string.
+  No need for \n or string concatenation.
+  It preserves formatting and indentation.
+`;
+
+// Expression evaluation
+const calculation = `The result is: ${5 + 3 * 2}`;
+
+// Function calls in templates
+function formatCurrency(amount) {
+  return `${amount.toFixed(2)}`;
+}
+
+const price = `The price is ${formatCurrency(19.99)}`;
+
+// Tagged templates
+function highlight(strings, ...values) {
+  return strings.reduce((result, string, i) => {
+    const value = values[i] ? `<mark>${values[i]}</mark>` : "";
+    return result + string + value;
+  }, "");
+}
+
+const highlighted = highlight`Hello ${name}, you are ${age} years old!`;
+```
+
+**Q62: What is destructuring assignment?**  
+A: Destructuring allows unpacking values from arrays or properties from objects:
+
+```js
+// Array destructuring
+const colors = ["red", "green", "blue"];
+const [primary, secondary, tertiary] = colors;
+
+// Skipping elements
+const [first, , third] = colors;
+
+// Rest operator
+const [head, ...tail] = colors;
+
+// Default values
+const [a, b, c, d = "yellow"] = colors;
+
+// Object destructuring
+const person = { name: "John", age: 30, city: "New York" };
+const { name, age } = person;
+
+// Renaming variables
+const { name: fullName, age: years } = person;
+
+// Default values
+const { name, occupation = "Unknown" } = person;
+
+// Nested destructuring
+const user = {
+  id: 1,
+  profile: {
+    name: "John",
+    contact: {
+      email: "john@email.com",
+    },
+  },
+};
+
+const {
+  profile: {
+    name: userName,
+    contact: { email },
+  },
+} = user;
+
+// Function parameter destructuring
+function greet({ name, age = 0 }) {
+  return `Hello ${name}, you are ${age} years old`;
+}
+
+// Swapping variables
+let x = 1,
+  y = 2;
+[x, y] = [y, x];
+```
+
+**Q63: What is the spread operator and rest parameter?**  
+A: Spread expands iterables, rest collects multiple elements:
+
+```js
+// Spread
+const arr = [1, 2, 3];
+const copy = [...arr];
+
+// Rest
+function logAll(...args) {
+  console.log(args);
+}
+```
+
+**Q64: How do you use the rest parameter in function arguments?**  
+A: The rest parameter (`...args`) collects all remaining arguments into an array.
+
+```js
+function sum(...numbers) {
+  return numbers.reduce((acc, n) => acc + n, 0);
+}
+console.log(sum(1, 2, 3)); // 6
+```
+
+**Q65: What is the difference between the spread operator and rest parameter?**  
+A: Spread expands elements (e.g., in arrays/objects), rest collects multiple elements into an array (in function parameters or destructuring).
+
+```js
+// Spread
+const arr = [1, 2, 3];
+const copy = [...arr];
+
+// Rest
+function logAll(...args) {
+  console.log(args);
+}
+```
+
+**Q66: What is object destructuring with rest properties?**  
+A: You can collect the remaining properties into a new object.
+
+```js
+const { a, ...rest } = { a: 1, b: 2, c: 3 };
+console.log(rest); // { b: 2, c: 3 }
+```
+
+**Q67: What is optional chaining (`?.`) and how is it useful?**  
+A: It allows safe access to deeply nested properties without throwing errors if a property is undefined.
+
+```js
+const user = {};
+console.log(user.profile?.name); // undefined (no error)
+```
+
+**Q68: What is nullish coalescing (`??`) and how is it different from `||`?**  
+A: `??` returns the right-hand value only if the left is `null` or `undefined`, while `||` returns the right if the left is any falsy value.
+
+```js
+const value = 0;
+console.log(value || 10); // 10
+console.log(value ?? 10); // 0
+```
+
+**Q69: What is a default parameter in a function?**  
+A: A parameter that has a default value if not provided.
+
+```js
+function greet(name = "Guest") {
+  return `Hello, ${name}!`;
+}
+console.log(greet()); // Hello, Guest!
+```
+
+**Q70: What is a tagged template literal?**  
+A: A function that processes a template literal.
+
+```js
+function tag(strings, ...values) {
+  return strings[0] + values.map((v, i) => v + strings[i + 1]).join("");
+}
+console.log(tag`Hello ${"World"}!`); // Hello World!
+```
+
+**Q71: What is a Symbol and how is it used?**  
+A: A Symbol is a unique and immutable primitive value, often used as object property keys to avoid name collisions.
+
+```js
+const sym = Symbol("id");
+const obj = { [sym]: 123 };
+```
+
+**Q72: What is a Set and how is it different from an Array?**  
+A: A Set is a collection of unique values; arrays can have duplicates.
+
+```js
+const set = new Set([1, 2, 2, 3]);
+console.log(set); // Set {1, 2, 3}
+```
+
+**Q73: What is a Map and how is it different from an Object?**  
+A: A Map allows keys of any type and maintains insertion order; objects have string/symbol keys only.
+
+```js
+const map = new Map();
+map.set("a", 1);
+map.set(2, "b");
+console.log(map.get(2)); // 'b'
+```
+
+**Q74: What is a WeakMap and WeakSet?**  
+A: Collections that allow objects as keys and do not prevent garbage collection.
+
+**Q75: What is a generator function?**  
+A: A function that can pause and resume its execution, producing a sequence of values.
+
+```js
+function* gen() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+const g = gen();
+console.log(g.next().value); // 1
+```
+
+**Q76: What is a Proxy in JavaScript?**  
+A: An object that wraps another object and intercepts operations (get, set, etc.).
+
+```js
+const target = { message: "hello" };
+const proxy = new Proxy(target, {
+  get(obj, prop) {
+    return prop in obj ? obj[prop] : "not found";
+  },
+});
+console.log(proxy.message); // 'hello'
+console.log(proxy.foo); // 'not found'
+```
+
+**Q77: What is the difference between `Object.assign()` and the spread operator for objects?**  
+A: Both copy properties, but spread is more concise and can be used in literals.
+
+**Q78: What is dynamic import?**  
+A: Loading modules asynchronously using `import()`.
+
+```js
+import("./module.js").then((m) => m.doSomething());
+```
+
+**Q79: What is tree shaking?**  
+A: Removing unused code during the build process (supported by ES modules and bundlers).
+
+**Q80: What is a polyfill?**  
+A: Code that implements a feature on web browsers that do not support it natively.
+
+**Q81: What is a transpiler?**  
+A: A tool that converts code from one version of JavaScript to another (e.g., Babel).
+
+**Q82: What is a callback function?**  
+A: A function passed as an argument to another function, to be executed later.
+
+**Q83: What is a promise?**  
+A: An object representing the eventual completion or failure of an asynchronous operation.
+
+**Q84: How do you handle errors in promises?**  
+A: Use `.catch()` to handle rejected promises.
+
+**Q85: What is async/await?**  
+A: Syntactic sugar over promises, allowing asynchronous code to be written like synchronous code.
+
+**Q86: How do you handle errors in async/await?**  
+A: Use try/catch blocks around await expressions.
+
+**Q87: What is the event loop?**  
+A: Allows JavaScript to handle asynchronous operations by placing callbacks in a queue and executing them after the current call stack is empty.
+
+**Q88: What are microtasks and macrotasks?**  
+A: Microtasks (e.g., promise callbacks) are executed before the next rendering, while macrotasks (e.g., setTimeout) are executed after rendering. Microtasks have higher priority.
+
+**Q89: What is debouncing?**  
+A: Delaying a function call until after a pause in events.
+
+**Q90: What is throttling?**  
+A: Limiting the number of times a function can be called in a given time frame.
+
+**Q91: What is callback hell?**  
+A: Deeply nested callbacks that make code hard to read and maintain.
+
+**Q92: How do you avoid callback hell?**  
+A: Use promises, async/await, or modularize callbacks.
+
+**Q93: What is a race condition?**  
+A: When the outcome depends on the timing or order of asynchronous operations.
+
+**Q94: What is a real-life example of using async/await?**  
+A: Fetching data from an API and updating the UI after the data is loaded.
+
+```js
+async function loadData() {
+  const res = await fetch("/api/data");
+  const data = await res.json();
+  console.log(data);
+}
+```
+
+**Q95: What is Promise.all()?**  
+A: A method that takes an array of promises and returns a single promise that resolves when all have resolved.
+
+**Q96: What is Promise.race()?**  
+A: A method that returns a promise that resolves or rejects as soon as one of the promises resolves or rejects.
+
+**Q97: What is the DOM?**  
+A: The Document Object Model is a programming interface for HTML and XML documents.
+
+**Q98: How do you select elements in the DOM?**  
+A: Use methods like `getElementById`, `querySelector`, and `getElementsByClassName`.
+
+**Q99: How do you add an event listener to a DOM element?**  
+A: Use `element.addEventListener('click', handler)`.
+
+**Q100: What is event delegation?**  
+A: Attaching a single event listener to a parent element to handle events from its children.
+
+**Q101: What is bubbling and capturing in DOM events?**  
+A: Bubbling: event propagates from child to parent; capturing: from parent to child.
+
+**Q102: How do you prevent the default action of an event?**  
+A: Use `event.preventDefault()` in the event handler.
+
+**Q103: What is a scenario where you would use event delegation?**  
+A: When you have a list of items (e.g., a todo list) and want to handle clicks on any item efficiently, even if items are added dynamically.
+
+```js
+document.getElementById("list").addEventListener("click", (e) => {
+  if (e.target.tagName === "LI") {
+    console.log("Clicked:", e.target.textContent);
+  }
+});
+```
+
+</div>
+
+---
+
+## 8. Scenario-Based Questions 🎯
+
+<div style={{ background: 'rgba(100, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(100, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q104: How would you implement a debounce function in JavaScript?**  
+A: A debounce function delays the execution of a function until after a pause in events.
+
+```js
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Usage: Search input
+const debouncedSearch = debounce((query) => {
+  console.log("Searching for:", query);
+  // API call here
+}, 300);
+
+document.getElementById("search").addEventListener("input", (e) => {
+  debouncedSearch(e.target.value);
+});
+```
+
+**Q105: How would you implement a throttle function in JavaScript?**  
+A: A throttle function limits the execution of a function to a certain number of times per interval.
+
+```js
+function throttle(func, interval) {
+  let lastTime = 0;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastTime >= interval) {
+      lastTime = now;
+      func.apply(this, args);
+    }
+  };
+}
+
+// Usage: Scroll event
+const throttledScroll = throttle(() => {
+  console.log("Scroll position:", window.scrollY);
+}, 100);
+
+window.addEventListener("scroll", throttledScroll);
+```
+
+**Q106: How would you implement a debounce function in JavaScript?**  
+A: A debounce function delays the execution of a function until after a pause in events.
+
+```js
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Usage: Search input
+const debouncedSearch = debounce((query) => {
+  console.log("Searching for:", query);
+  // API call here
+}, 300);
+
+document.getElementById("search").addEventListener("input", (e) => {
+  debouncedSearch(e.target.value);
+});
+```
+
+**Q107: How would you implement a throttle function in JavaScript?**  
+A: A throttle function limits the execution of a function to a certain number of times per interval.
+
+```js
+function throttle(func, interval) {
+  let lastTime = 0;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastTime >= interval) {
+      lastTime = now;
+      func.apply(this, args);
+    }
+  };
+}
+
+// Usage: Scroll event
+const throttledScroll = throttle(() => {
+  console.log("Scroll position:", window.scrollY);
+}, 100);
+
+window.addEventListener("scroll", throttledScroll);
+```
+
+**Q108: How would you implement a debounce function in JavaScript?**  
+A: A debounce function delays the execution of a function until after a pause in events.
+
+```js
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Usage: Search input
+const debouncedSearch = debounce((query) => {
+  console.log("Searching for:", query);
+  // API call here
+}, 300);
+
+document.getElementById("search").addEventListener("input", (e) => {
+  debouncedSearch(e.target.value);
+});
+```
+
+**Q109: How would you implement a throttle function in JavaScript?**  
+A: A throttle function limits the execution of a function to a certain number of times per interval.
+
+```js
+function throttle(func, interval) {
+  let lastTime = 0;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastTime >= interval) {
+      lastTime = now;
+      func.apply(this, args);
+    }
+  };
+}
+
+// Usage: Scroll event
+const throttledScroll = throttle(() => {
+  console.log("Scroll position:", window.scrollY);
+}, 100);
+
+window.addEventListener("scroll", throttledScroll);
+```
+
+**Q110: How would you implement a debounce function in JavaScript?**  
+A: A debounce function delays the execution of a function until after a pause in events.
+
+```js
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Usage: Search input
+const debouncedSearch = debounce((query) => {
+  console.log("Searching for:", query);
+  // API call here
+}, 300);
+
+document.getElementById("search").addEventListener("input", (e) => {
+  debouncedSearch(e.target.value);
+});
+```
+
+**Q111: How would you implement a throttle function in JavaScript?**  
+A: A throttle function limits the execution of a function to a certain number of times per interval.
+
+```js
+function throttle(func, interval) {
+  let lastTime = 0;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastTime >= interval) {
+      lastTime = now;
+      func.apply(this, args);
+    }
+  };
+}
+
+// Usage: Scroll event
+const throttledScroll = throttle(() => {
+  console.log("Scroll position:", window.scrollY);
+}, 100);
+
+window.addEventListener("scroll", throttledScroll);
+```
+
+</div>
+
+---
+
+## 9. Browser APIs 🌐
+
+<div style={{ background: 'rgba(100, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(100, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q112: How do you use the localStorage API in JavaScript?**  
+A: The localStorage API allows you to store data in the browser without an expiration date.
+
+```js
+// Storing data
+localStorage.setItem("username", "JohnDoe");
+
+// Retrieving data
+const username = localStorage.getItem("username");
+console.log(username);
+
+// Removing data
+localStorage.removeItem("username");
+```
+
+**Q113: How do you use the sessionStorage API in JavaScript?**  
+A: The sessionStorage API allows you to store data in the browser for one session.
+
+```js
+// Storing data
+sessionStorage.setItem("username", "JohnDoe");
+
+// Retrieving data
+const username = sessionStorage.getItem("username");
+console.log(username);
+
+// Removing data
+sessionStorage.removeItem("username");
+```
+
+**Q114: How do you use the history API in JavaScript?**  
+A: The history API allows you to manipulate the browser history.
+
+```js
+// Navigating back
+history.back();
+
+// Navigating forward
+history.forward();
+
+// Push a new state to the history stack
+history.pushState(null, "", "new-page.html");
+```
+
+**Q115: How do you use the navigator API in JavaScript?**  
+A: The navigator API provides information about the browser.
+
+```js
+// Browser name
+console.log(navigator.userAgent);
+
+// Platform
+console.log(navigator.platform);
+
+// Online status
+console.log(navigator.onLine);
+```
+
+**Q116: How do you use the screen API in JavaScript?**  
+A: The screen API provides information about the screen.
+
+```js
+// Screen width
+console.log(screen.width);
+
+// Screen height
+console.log(screen.height);
+
+// Screen color depth
+console.log(screen.colorDepth);
+```
+
+**Q117: How do you use the location API in JavaScript?**  
+A: The location API provides information about the URL.
+
+```js
+// Current URL
+console.log(location.href);
+
+// Protocol
+console.log(location.protocol);
+
+// Hostname
+console.log(location.hostname);
+```
+
+**Q118: How do you use the document API in JavaScript?**  
+A: The document API provides methods to manipulate the DOM.
+
+```js
+// Get element by ID
+const element = document.getElementById("myElement");
+
+// Get elements by class name
+const elements = document.getElementsByClassName("myClass");
+
+// Get elements by tag name
+const tags = document.getElementsByTagName("div");
+
+// Get elements by CSS selector
+const matches = document.querySelectorAll(".myClass");
+```
+
+**Q119: How do you use the console API in JavaScript?**  
+A: The console API provides methods to log information to the console.
+
+```js
+// Basic console logging
+console.log("Hello, world!");
+
+// Grouping console logs
+console.group("User Information");
+console.log("Name:", "John Doe");
+console.log("Age:", 30);
+console.log("City:", "New York");
+console.groupEnd();
+
+// Counting console logs
+console.count("Button clicks");
+```
+
+**Q120: How do you use the URL API in JavaScript?**  
+A: The URL API provides methods to manipulate URLs.
+
+```js
+// Parsing a URL
+const url = new URL("https://example.com/path?query=value");
+console.log(url.href);
+
+// Creating a URL
+const newUrl = new URL("https://example.com");
+newUrl.pathname = "new-path";
+console.log(newUrl.href);
+```
+
+**Q121: How do you use the Web APIs in JavaScript?**  
+A: Web APIs provide additional functionality to JavaScript.
+
+```js
+// Fetch API
+async function fetchData() {
+  const response = await fetch("/api/data");
+  const data = await response.json();
+  console.log(data);
+}
+
+// Geolocation API
+navigator.geolocation.getCurrentPosition((position) => {
+  console.log("Latitude:", position.coords.latitude);
+  console.log("Longitude:", position.coords.longitude);
+});
+
+// Web Workers
+const worker = new Worker("worker.js");
+worker.postMessage("Hello, worker!");
+```
+
+</div>
+
+---
+
+## 10. Advanced JavaScript Questions for Senior Devs 🚀
+
+<div style={{ background: 'rgba(100, 100, 200, 0.10)', padding: '15px', borderRadius: '5px', marginBottom: '20px', border: '1px solid rgba(100, 100, 200, 0.15)', color: 'inherit' }}>
+
+**Q131: What is a memory leak in JavaScript and how can you prevent it?**
+A: A memory leak happens when memory that is no longer needed is not released. Common causes: global variables, forgotten timers, detached DOM nodes, closures holding references. Prevent by cleaning up listeners, timers, and avoiding unnecessary references.
+
+```js
+// Example: Cleaning up a timer and event listener
+let timer = setInterval(() => doSomething(), 1000);
+window.addEventListener("resize", handler);
+// Later, when no longer needed:
+clearInterval(timer);
+window.removeEventListener("resize", handler);
+```
+
+**Q132: How does the event loop work in JavaScript?**
+A: The event loop allows JavaScript to handle async operations by processing the call stack and then the task/microtask queues. It ensures non-blocking behavior in a single-threaded environment.
+
+```js
+console.log("A");
+setTimeout(() => console.log("B"), 0);
+Promise.resolve().then(() => console.log("C"));
+console.log("D");
+// Output: A, D, C, B
+```
+
+**Q133: What is tail call optimization?**
+A: It's a JS engine optimization where the last function call in a function doesn't add a new stack frame. Not widely supported in browsers yet.
+
+```js
+// Example: Tail-recursive factorial
+function factorial(n, acc = 1) {
+  if (n <= 1) return acc;
+  return factorial(n - 1, n * acc); // Tail call
+}
+console.log(factorial(5)); // 120
+```
+
+**Q134: What is the difference between `Object.freeze()` and `const`?**
+A: `const` prevents reassignment of a variable, but the object can still be mutated. `Object.freeze()` makes the object immutable.
+
+```js
+const obj = { a: 1 };
+obj.a = 2; // Allowed
+Object.freeze(obj);
+obj.a = 3; // Ignored in strict mode
+```
+
+**Q135: How do you deep clone an object in JavaScript?**
+A: Use `structuredClone(obj)` (modern), or `JSON.parse(JSON.stringify(obj))` (limitations: no functions, dates, etc.), or libraries like Lodash's `cloneDeep`.
+
+```js
+const original = { a: 1, b: { c: 2 } };
+const copy = structuredClone(original);
+copy.b.c = 42;
+console.log(original.b.c); // 2
+```
+
+**Q136: What is a WeakMap and when would you use it?**
+A: A WeakMap holds weak references to keys (objects only), allowing garbage collection. Useful for storing metadata for objects without preventing their cleanup.
+
+```js
+const wm = new WeakMap();
+let obj = {};
+wm.set(obj, "metadata");
+obj = null; // Now eligible for GC, WeakMap entry is removed
+```
+
+**Q137: How do you prevent XSS (Cross-Site Scripting) in JavaScript apps?**
+A: Never inject untrusted data into the DOM using `innerHTML`. Always sanitize user input and use safe APIs like `textContent`.
+
+```js
+// Unsafe:
+div.innerHTML = userInput;
+// Safe:
+div.textContent = userInput;
+```
+
+**Q138: What is the difference between synchronous and asynchronous code?**
+A: Synchronous code blocks the main thread; async code (callbacks, promises, async/await) allows other operations to run while waiting for tasks to complete.
+
+```js
+// Synchronous
+console.log("Start");
+for (let i = 0; i < 1e8; i++) {} // Blocks UI
+console.log("End");
+// Asynchronous
+console.log("Start");
+setTimeout(() => console.log("End"), 0);
+```
+
+**Q139: How do you handle errors in async/await code?**
+A: Use `try/catch` blocks around `await` calls to catch errors.
+
+```js
+async function fetchData() {
+  try {
+    const res = await fetch("/api/data");
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error("Error:", err);
+  }
+}
+```
+
+**Q140: What is the difference between `map`, `forEach`, and `reduce`?**
+A: `map` returns a new array, `forEach` just iterates, `reduce` accumulates a single value from an array.
+
+```js
+const arr = [1, 2, 3];
+const doubled = arr.map((x) => x * 2); // [2, 4, 6]
+arr.forEach((x) => console.log(x)); // 1, 2, 3
+const sum = arr.reduce((acc, x) => acc + x, 0); // 6
+```
+
+**Q141: What is a closure and why is it useful?**
+A: A closure is a function that remembers its outer scope. Useful for data privacy and function factories.
+
+```js
+function makeCounter() {
+  let count = 0;
+  return function () {
+    return ++count;
+  };
+}
+const counter = makeCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+```
+
+**Q142: How do you debounce and throttle a function?**
+A: Debounce: delays execution until after a pause. Throttle: limits execution to once per interval. Used for optimizing events like scroll or resize.
+
+```js
+// Debounce
+function debounce(fn, delay) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
+// Throttle
+function throttle(fn, interval) {
+  let last = 0;
+  return (...args) => {
+    const now = Date.now();
+    if (now - last >= interval) {
+      last = now;
+      fn(...args);
+    }
+  };
+}
+```
+
+**Q143: What is the difference between `==` and `===`?**
+A: `==` compares values with type coercion; `===` compares both value and type (strict equality).
+
+```js
+console.log(5 == "5"); // true
+console.log(5 === "5"); // false
+```
+
+**Q144: How do you detect and fix performance bottlenecks in JS code?**
+A: Use browser dev tools (Performance tab, Memory tab, Network tab), profile code, and optimize slow parts (e.g., avoid unnecessary reflows, use efficient algorithms).
+
+```js
+// Example: Using console.time to profile
+console.time("loop");
+for (let i = 0; i < 1e6; i++) {}
+console.timeEnd("loop");
+```
+
+**Q145: What is the purpose of the `Symbol` type?**
+A: Symbols are unique and immutable values, often used as object property keys to avoid name collisions.
+
+```js
+const sym = Symbol("id");
+const obj = { [sym]: 123 };
+console.log(obj[sym]); // 123
+```
+
+**Q146: How do you make an object iterable?**
+A: Implement the `[Symbol.iterator]` method, which returns an iterator object with a `next()` method.
+
+```js
+const myIterable = {
+  *[Symbol.iterator]() {
+    yield 1;
+    yield 2;
+    yield 3;
+  },
+};
+for (const val of myIterable) {
+  console.log(val); // 1, 2, 3
+}
+```
+
+**Q147: What is the difference between `call`, `apply`, and `bind`?**
+A: All set the `this` context. `call` and `apply` invoke the function immediately (`call` uses comma args, `apply` uses an array). `bind` returns a new function with bound context.
+
+```js
+function greet(msg) {
+  console.log(msg + ", " + this.name);
+}
+const person = { name: "Alice" };
+greet.call(person, "Hi"); // Hi, Alice
+greet.apply(person, ["Hello"]); // Hello, Alice
+const bound = greet.bind(person, "Hey");
+bound(); // Hey, Alice
+```
+
+**Q148: What is a Proxy and what can you use it for?**
+A: A Proxy wraps an object and intercepts operations (get, set, etc.). Useful for validation, logging, or reactive programming.
+
+```js
+const target = { a: 1 };
+const proxy = new Proxy(target, {
+  get(obj, prop) {
+    console.log("Accessed", prop);
+    return obj[prop];
+  },
+});
+console.log(proxy.a); // Accessed a, 1
+```
+
+**Q149: How do you handle circular references in JSON serialization?**
+A: Use a custom replacer function in `JSON.stringify`, or libraries like `flatted` that support circular structures.
+
+```js
+const obj = {};
+obj.self = obj;
+function replacer(key, value) {
+  const seen = new WeakSet();
+  return function (key, value) {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) return;
+      seen.add(value);
+    }
+    return value;
+  };
+}
+JSON.stringify(obj, replacer()); // Avoids circular error
+```
+
+**Q150: What is the difference between microtasks and macrotasks?**
+A: Microtasks (Promises, MutationObserver) run after the current script, before rendering. Macrotasks (setTimeout, setInterval) run after rendering. Microtasks have higher priority.
+
+```js
+console.log("A");
+Promise.resolve().then(() => console.log("B"));
+setTimeout(() => console.log("C"), 0);
+console.log("D");
+// Output: A, D, B, C
+```
+
+**Q151: How would you handle a situation where a third-party API is slow or unreliable, but your app needs to stay responsive?**
+A: Use timeouts, retries, and fallback data. Example:
+
+```js
+async function fetchWithTimeout(url, timeout = 3000) {
+  return Promise.race([
+    fetch(url),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Timeout")), timeout)
+    ),
+  ]);
+}
+```
+
+**Q152: How do you prevent race conditions when updating shared state in a web app?**
+A: Use locks, atomic updates, or state management libraries. Example:
+
+```js
+let updating = false;
+async function safeUpdate(newValue) {
+  if (updating) return;
+  updating = true;
+  await updateState(newValue);
+  updating = false;
+}
+```
+
+**Q153: How would you debug a memory leak in a large single-page application?**
+A: Use browser dev tools (Memory tab, heap snapshots), look for detached DOM nodes, and check for unremoved event listeners. Example:
+
+```js
+// Remove event listeners when cleaning up
+function cleanup() {
+  element.removeEventListener("click", handler);
+}
+```
+
+**Q154: How do you handle stale data in a real-time collaborative app?**
+A: Use versioning, timestamps, or conflict resolution strategies. Example:
+
+```js
+if (incoming.version > local.version) {
+  updateLocalData(incoming);
+}
+```
+
+**Q155: How would you implement optimistic UI updates for a form submission?**
+A: Update the UI immediately, then revert if the server fails. Example:
+
+```js
+function submitForm(data) {
+  showSuccess(); // Optimistic
+  api.save(data).catch(() => showError());
+}
+```
+
+**Q156: How do you ensure a long-running computation doesn't block the UI?**
+A: Use Web Workers or chunk the work with setTimeout/setImmediate. Example:
+
+```js
+// In a worker.js file
+self.onmessage = function (e) {
+  const result = heavyComputation(e.data);
+  self.postMessage(result);
+};
+```
+
+**Q157: How would you securely store sensitive data in the browser?**
+A: Avoid localStorage/sessionStorage for sensitive data. Use cookies with HttpOnly/Secure flags, or encrypt data before storage. Example:
+
+```js
+// Encrypt before storing
+localStorage.setItem("token", encrypt(token));
+```
+
+**Q158: How do you handle circular dependencies in a large codebase?**
+A: Refactor to decouple modules, use dependency injection, or move shared logic to a common module. Example:
+
+```js
+// Move shared logic to utils.js
+import { shared } from "./utils.js";
+```
+
+**Q159: How would you implement feature flags in a JavaScript application?**
+A: Use a config object or remote service to toggle features. Example:
+
+```js
+const features = { newUI: true };
+if (features.newUI) {
+  renderNewUI();
+} else {
+  renderOldUI();
+}
+```
+
+**Q160: How do you handle large lists efficiently in the DOM?**
+A: Use windowing/virtualization (e.g., react-window), or render only visible items. Example:
+
+```js
+const visibleItems = items.slice(start, end);
+visibleItems.forEach(renderItem);
+```
+
+</div>
