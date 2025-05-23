@@ -1,0 +1,19 @@
+{
+  "index": {
+    "title": "জাভাস্ক্রিপ্টের মৌলিক বিষয়সমূহ"
+  },
+  "getting-started": "জাভাস্ক্রিপ্টের শুরু",
+  "variables-datatypes": "ভ্যারিয়েবল ও ডেটা টাইপ",
+  "operators": "অপারেটর ও এক্সপ্রেশন",
+  "control-flow": "কন্ট্রোল ফ্লো ও লুপ",
+  "functions": "ফাংশন ও স্কোপ",
+  "objects-arrays": "অবজেক্ট ও অ্যারে",
+  "advanced-concepts": "উন্নত জাভাস্ক্রিপ্ট ধারণা",
+  "async-programming": "অ্যাসিনক্রোনাস প্রোগ্রামিং",
+  "dom-manipulation": "DOM ম্যানিপুলেশন",
+  "error-handling": "এরর হ্যান্ডলিং ও ডিবাগিং",
+  "modern-features": "আধুনিক জাভাস্ক্রিপ্ট ফিচার",
+  "best-practices": "জাভাস্ক্রিপ্টের সেরা অনুশীলন",
+  "advanced-patterns": "উন্নত জাভাস্ক্রিপ্ট প্যাটার্ন",
+  "interview-questions": "ইন্টারভিউ প্রশ্ন"
+}
