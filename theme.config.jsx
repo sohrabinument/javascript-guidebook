@@ -1,7 +1,6 @@
 import "@/styles/custom.css";
 import { useRouter } from "next/router";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
-import SidebarToggleButton from "./components/SidebarToggleButton";
 
 const Logo = () => {
   const { asPath } = useRouter();
@@ -45,7 +44,7 @@ export default {
   sidebar: {
     defaultMenuCollapseLevel: 1,
     autoCollapse: true,
-    toggleButton: <SidebarToggleButton />,
+    toggleButton: true,
   },
   navbar: {
     extraContent: <LanguageSwitcher />,
