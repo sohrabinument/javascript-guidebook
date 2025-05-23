@@ -1,16 +1,15 @@
 {
-    "index": {
-        "title": "শুরু করুন"
-    },
-    "Github-Guide": "গিট এবং গিটহাব রিফ্রেশার",
-    "frontend-focus-topic": "ফ্রন্টএন্ড ফোকাস টপিক",
-    "javascript-refresher": "জাভাস্ক্রিপ্ট রিফ্রেশার",
-    "React-js": "রিয়েক্ট জেএস",
-    "react-router-dom": "রিয়েক্ট রাউটার ডম",
-    "Firebase": "ফায়ারবেস",
-    "tanstack-query": "ট্যানস্ট্যাক কুয়েরি / রিয়েক্ট কুয়েরি",
-    "react-hook-form": "রিয়েক্ট হুক ফর্ম",
-    "framer-motion": "ফ্রেমার মোশন",
-    "nextjs": "নেক্সট জেএস",
-    "tips-tricks": "টিপস এবং ট্রিকস"
+  "index": {
+    "title": "শুরু করুন"
+  },
+  "Github-Guide": "গিট এবং গিটহাব রিফ্রেশার",
+  "Javascript_Refresher": "জাভাস্ক্রিপ্ট রিফ্রেশার",
+  "React-js": "রিয়েক্ট জেএস",
+  "react-router-dom": "রিয়েক্ট রাউটার ডম",
+  "Firebase": "ফায়ারবেস",
+  "tanstack-query": "ট্যানস্ট্যাক কুয়েরি / রিয়েক্ট কুয়েরি",
+  "react-hook-form": "রিয়েক্ট হুক ফর্ম",
+  "framer-motion": "ফ্রেমার মোশন",
+  "nextjs": "নেক্সট জেএস",
+  "tips-tricks": "টিপস এবং ট্রিকস"
 }
