@@ -1,0 +1,450 @@
+# Refs দিয়ে Values রেফারেন্স করা
+
+import { Callout } from "nextra/components";
+import { Tabs } from "nextra/components";
+
+<div className="flex items-center gap-3 mb-6">
+  <span className="text-4xl">🎯</span>
+  <div>
+    <div className="text-gray-600 text-lg">
+      রি-রেন্ডার ট্রিগার না করে কীভাবে values মনে রাখতে হয় তা শিখুন
+    </div>
+  </div>
+</div>
+
+কল্পনা করুন আপনার React component-এর কিছু একটা মনে রাখা দরকার, কিন্তু সেই "কিছু" পরিবর্তন হলে আপনি চান না যে এটি প্রতিবার রি-রেন্ডার করুক। এটাই হল **refs**-এর কাজ!
+
+<Callout type="info" emoji="💡">
+  **Refs কে একটি নোটবুকের মতো ভাবুন**: এতে আপনি নোট লিখতে পারেন, পরে সেগুলো
+  পড়তে পারেন, এবং যেকোনো সময় আপডেট করতে পারেন - কিন্তু আপনি যখন এটা করবেন তখন
+  React আপনার component রি-রেন্ডার করার জন্য বিরক্ত করবে না।
+</Callout>
+
+---
+
+## 🏗️ আপনার Component-এ একটি Ref যোগ করা
+
+Refs দিয়ে শুরু করা খুবই সহজ। প্রথমে `useRef` hook import করুন:
+
+```jsx
+import { useRef } from "react";
+```
+
+তারপর আপনার component-এর ভিতরে একটি ref তৈরি করুন:
+
+```jsx
+function MyComponent() {
+  const myRef = useRef(0); // 0 দিয়ে শুরু করুন
+
+  // এখন myRef এরকম দেখায়: { current: 0 }
+}
+```
+
+### 🔍 Ref Object বোঝা
+
+যখন আপনি একটি ref তৈরি করেন, আপনি একটি সাধারণ object পান যাতে `current` নামে একটি property আছে:
+
+```jsx
+const ref = useRef("hello");
+console.log(ref); // { current: "hello" }
+
+// Value পড়ুন
+console.log(ref.current); // "hello"
+
+// Value পরিবর্তন করুন
+ref.current = "world";
+console.log(ref.current); // "world"
+```
+
+<Callout type="warning" emoji="⚠️">
+  **গুরুত্বপূর্ণ**: State-এর বিপরীতে, `ref.current` পরিবর্তন করলে রি-রেন্ডার
+  ট্রিগার হয় না। এটা একটি ব্যক্তিগত ডায়েরিতে লেখার মতো - React জানে না বা
+  চিন্তা করে না যখন আপনি এটা আপডেট করেন!
+</Callout>
+
+---
+
+## 🎮 আপনার প্রথম Ref উদাহরণ: Click Counter
+
+চলুন একটি সাধারণ click counter বানাই যা মনে রাখে আপনি কতবার click করেছেন, কিন্তু UI আপডেট করে না:
+
+```jsx
+import { useRef } from "react";
+
+export default function ClickCounter() {
+  const clickCount = useRef(0);
+
+  function handleClick() {
+    // Counter বাড়ান
+    clickCount.current = clickCount.current + 1;
+
+    // একটি alert-এ count দেখান
+    alert(`আপনি ${clickCount.current} বার click করেছেন!`);
+  }
+
+  return <button onClick={handleClick}>আমাকে click করুন! 🖱️</button>;
+}
+```
+
+<Callout type="default" emoji="🧪">
+  **এই উদাহরণ চেষ্টা করুন**: লক্ষ্য করুন button-এর text কখনো পরিবর্তন হয় না,
+  যদিও আমরা clicks গণনা করছি! এর কারণ হল refs রি-রেন্ডার ঘটায় না।
+</Callout>
+
+### 🤔 এখানে কেন Ref ব্যবহার করব?
+
+আপনি হয়তো ভাবছেন: "কেন শুধু একটি সাধারণ variable ব্যবহার করি না?" এই জন্য:
+
+<Tabs items={['❌ সাধারণ Variable', '✅ Ref', '🔄 State']}>
+  <Tabs.Tab>
+    ```jsx
+    function BadCounter() {
+      let count = 0; // এটা প্রতি render-এ 0 এ reset হয়ে যায়!
+      
+      function handleClick() {
+        count = count + 1;
+        alert(`Count: ${count}`); // সবসময় 1 দেখায়!
+      }
+      
+      return <button onClick={handleClick}>Click</button>;
+    }
+    ```
+    **সমস্যা**: সাধারণ variables প্রতি render-এ reset হয়ে যায়।
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```jsx
+    function GoodCounter() {
+      const count = useRef(0); // Renders-এর মধ্যে থেকে যায়!
+      
+      function handleClick() {
+        count.current = count.current + 1;
+        alert(`Count: ${count.current}`); // সঠিক count দেখায়!
+      }
+      
+      return <button onClick={handleClick}>Click</button>;
+    }
+    ```
+    **সুবিধা**: Value টিকে থাকে, কোন রি-রেন্ডার নেই।
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```jsx
+    function StateCounter() {
+      const [count, setCount] = useState(0);
+      
+      function handleClick() {
+        setCount(count + 1); // রি-রেন্ডার ট্রিগার করে!
+        alert(`Count: ${count + 1}`);
+      }
+      
+      return <button onClick={handleClick}>{count} বার clicked</button>;
+    }
+    ```
+    **কখন ব্যবহার করবেন**: যখন আপনি চান UI আপডেট হোক।
+  </Tabs.Tab>
+</Tabs>
+
+---
+
+## ⏱️ বাস্তব জীবনের উদাহরণ: একটি Stopwatch তৈরি করা
+
+চলুন আরো ব্যবহারিক কিছু বানাই - একটি stopwatch! এটা আপনাকে দেখাবে কীভাবে refs এবং state একসাথে সুন্দরভাবে কাজ করে।
+
+### 🧠 আমাদের Stopwatch পরিকল্পনা করা
+
+আমাদের stopwatch-এর জন্য আমাদের ট্র্যাক করতে হবে:
+
+- **Start time** (rendering-এর জন্য) → State ব্যবহার করুন ✅
+- **Current time** (rendering-এর জন্য) → State ব্যবহার করুন ✅
+- **Timer ID** (rendering-এর জন্য নয়) → Ref ব্যবহার করুন ✅
+
+### 🔨 ধাপে ধাপে তৈরি করা
+
+**ধাপ ১: মূল structure সেট আপ করা**
+
+```jsx
+import { useState, useRef } from "react";
+
+export default function Stopwatch() {
+  const [startTime, setStartTime] = useState(null);
+  const [now, setNow] = useState(null);
+  const timerRef = useRef(null);
+
+  // আমরা elapsed time হিসাব করব
+  let secondsPassed = 0;
+  if (startTime != null && now != null) {
+    secondsPassed = (now - startTime) / 1000;
+  }
+
+  return (
+    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg">
+      <h1 className="text-2xl font-bold text-center mb-4">⏱️ Stopwatch</h1>
+      <div className="text-4xl font-mono text-center mb-6">
+        {secondsPassed.toFixed(3)}s
+      </div>
+      {/* Buttons এখানে যাবে */}
+    </div>
+  );
+}
+```
+
+**ধাপ ২: Start functionality যোগ করা**
+
+```jsx
+function handleStart() {
+  // কখন শুরু করেছি তা রেকর্ড করুন
+  setStartTime(Date.now());
+  setNow(Date.now());
+
+  // কোন existing timer clear করুন (যদি user একাধিকবার Start click করে)
+  clearInterval(timerRef.current);
+
+  // একটি নতুন timer শুরু করুন এবং এর ID আমাদের ref-এ সংরক্ষণ করুন
+  timerRef.current = setInterval(() => {
+    setNow(Date.now()); // প্রতি 10ms-এ current time আপডেট করুন
+  }, 10);
+}
+```
+
+**ধাপ ৩: Stop functionality যোগ করা**
+
+```jsx
+function handleStop() {
+  // আমাদের ref-এ সংরক্ষিত ID ব্যবহার করে timer clear করুন
+  clearInterval(timerRef.current);
+}
+```
+
+### ✨ সম্পূর্ণ Stopwatch কোড
+
+<Tabs items={['Final Code', 'With Styling']}>
+  <Tabs.Tab>
+    ```jsx
+    import { useState, useRef } from 'react';
+
+    export default function Stopwatch() {
+      const [startTime, setStartTime] = useState(null);
+      const [now, setNow] = useState(null);
+      const timerRef = useRef(null);
+
+      function handleStart() {
+        setStartTime(Date.now());
+        setNow(Date.now());
+
+        clearInterval(timerRef.current);
+        timerRef.current = setInterval(() => {
+          setNow(Date.now());
+        }, 10);
+      }
+
+      function handleStop() {
+        clearInterval(timerRef.current);
+      }
+
+      let secondsPassed = 0;
+      if (startTime != null && now != null) {
+        secondsPassed = (now - startTime) / 1000;
+      }
+
+      return (
+        <>
+          <h1>Time passed: {secondsPassed.toFixed(3)}</h1>
+          <button onClick={handleStart}>Start</button>
+          <button onClick={handleStop}>Stop</button>
+        </>
+      );
+    }
+    ```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```jsx
+    import { useState, useRef } from 'react';
+
+    export default function Stopwatch() {
+      const [startTime, setStartTime] = useState(null);
+      const [now, setNow] = useState(null);
+      const timerRef = useRef(null);
+
+      function handleStart() {
+        setStartTime(Date.now());
+        setNow(Date.now());
+        clearInterval(timerRef.current);
+        timerRef.current = setInterval(() => setNow(Date.now()), 10);
+      }
+
+      function handleStop() {
+        clearInterval(timerRef.current);
+      }
+
+      let secondsPassed = 0;
+      if (startTime != null && now != null) {
+        secondsPassed = (now - startTime) / 1000;
+      }
+
+      return (
+        <div className="p-8 max-w-md mx-auto bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl shadow-xl">
+          <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+            ⏱️ Stopwatch
+          </h1>
+
+          <div className="text-6xl font-mono text-center mb-8 p-4 bg-black text-green-400 rounded-lg">
+            {secondsPassed.toFixed(3)}
+          </div>
+
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={handleStart}
+              className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors"
+            >
+              ▶️ Start
+            </button>
+            <button
+              onClick={handleStop}
+              className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-colors"
+            >
+              ⏹️ Stop
+            </button>
+          </div>
+        </div>
+      );
+    }
+    ```
+
+  </Tabs.Tab>
+</Tabs>
+
+### 🎯 কেন এই উদাহরণটি নিখুঁত
+
+এই stopwatch refs-এর নিখুঁত ব্যবহারের ক্ষেত্রে দেখায়:
+
+1. **Timer ID storage**: আমাদের `setInterval` ID মনে রাখতে হবে পরে এটা clear করার জন্য, কিন্তু UI-তে দেখানোর দরকার নেই
+2. **অপ্রয়োজনীয় রি-রেন্ডার নেই**: Timer ID state-এ রাখা অপচয় হতো কারণ এটা কখনো রি-রেন্ডার ট্রিগার করার দরকার নেই
+3. **Persistence**: Timer ID অবশ্যই re-renders থেকে বেঁচে থাকতে হবে (সাধারণ variables-এর বিপরীতে)
+
+<Callout type="success" emoji="🎉">
+  **মূল কথা**: "পর্দার আড়ালের" values-এর জন্য refs ব্যবহার করুন যা আপনার
+  component-এর মনে রাখা দরকার কিন্তু দেখানোর দরকার নেই!
+</Callout>
+
+---
+
+## 🆚 Refs বনাম State: কখন কোনটা ব্যবহার করবেন?
+
+| বৈশিষ্ট্য                      | 🎯 Refs (`useRef`)                                          | 🔄 State (`useState`)       |
+| ------------------------------ | ----------------------------------------------------------- | --------------------------- |
+| **রি-রেন্ডার ট্রিগার করে**     | ❌ না                                                       | ✅ হ্যাঁ                    |
+| **Mutable**                    | ✅ হ্যাঁ (`ref.current = newValue`)                         | ❌ না (setter ব্যবহার করুন) |
+| **Renders-এর মধ্যে টিকে থাকে** | ✅ হ্যাঁ                                                    | ✅ হ্যাঁ                    |
+| **Initial value**              | যেকোনো value                                                | যেকোনো value                |
+| **সেরা ব্যবহার**               | Timer IDs, UI-তে দেখানো হয় না এমন counters, DOM references | Data যা আপনার JSX-এ দেখায়  |
+
+### 🧭 সিদ্ধান্ত গাইড
+
+নিজেকে প্রশ্ন করুন: **"আমার কি এই value টা আমার component-এর JSX-এ দেখাতে হবে?"**
+
+- **হ্যাঁ** → `useState` ব্যবহার করুন 📊
+- **না** → `useRef` ব্যবহার করুন 📝
+
+---
+
+## 🎯 Refs-এর সাধারণ ব্যবহারের ক্ষেত্র
+
+### 1. 🕐 Timer IDs সংরক্ষণ করা
+
+```jsx
+const timerRef = useRef(null);
+timerRef.current = setTimeout(() => {}, 1000);
+// পরে: clearTimeout(timerRef.current);
+```
+
+### 2. 📊 রি-রেন্ডার ছাড়া Values ট্র্যাক করা
+
+```jsx
+const renderCountRef = useRef(0);
+renderCountRef.current++; // আরো render না ঘটিয়ে renders গণনা করুন!
+```
+
+### 3. 🎮 আগের Values
+
+```jsx
+const prevValueRef = useRef();
+useEffect(() => {
+  prevValueRef.current = currentValue;
+});
+```
+
+### 4. 🏃‍♂️ Performance Counters
+
+```jsx
+const performanceRef = useRef({ clicks: 0, hovers: 0 });
+performanceRef.current.clicks++; // রি-রেন্ডার ছাড়াই আপডেট করুন
+```
+
+---
+
+## 🚨 এড়িয়ে চলার সাধারণ ভুলগুলো
+
+### ❌ Rendering-এর সময় Refs পড়বেন/লিখবেন না
+
+```jsx
+// খারাপ: এটা করবেন না!
+function BadComponent() {
+  const ref = useRef(0);
+  ref.current = ref.current + 1; // ❌ Render-এর সময় mutating
+  return <div>{ref.current}</div>;
+}
+
+// ভালো: এটা করুন
+function GoodComponent() {
+  const ref = useRef(0);
+
+  function handleClick() {
+    ref.current = ref.current + 1; // ✅ Event handler-এ mutate করুন
+    console.log(ref.current);
+  }
+
+  return <button onClick={handleClick}>Click</button>;
+}
+```
+
+### ❌ যে Values দেখাতে চান সেগুলোর জন্য Refs ব্যবহার করবেন না
+
+```jsx
+// খারাপ: ref পরিবর্তন হলে UI আপডেট হবে না
+function BadCounter() {
+  const count = useRef(0);
+  return <div>{count.current}</div>; // ❌ আপডেট হবে না!
+}
+
+// ভালো: UI values-এর জন্য state ব্যবহার করুন
+function GoodCounter() {
+  const [count, setCount] = useState(0);
+  return <div>{count}</div>; // ✅ সঠিকভাবে আপডেট হয়!
+}
+```
+
+---
+
+## 🎉 মূল শিক্ষা
+
+<Callout type="info" emoji="🎯">
+**এই সোনালী নিয়মগুলো মনে রাখুন**:
+
+1. **Refs হল মনে রাখার জন্য** যে values আপনার UI প্রভাবিত করে না
+2. **State হল সেই values-এর জন্য** যা আপনার UI প্রভাবিত করে
+3. **Refs পরিবর্তন করলে** রি-রেন্ডার ট্রিগার হয় না
+4. **Refs renders-এর মধ্যে টিকে থাকে** (সাধারণ variables-এর বিপরীতে)
+5. **Timer IDs, counters এবং অন্যান্য "পর্দার আড়ালের" data সংরক্ষণের জন্য নিখুঁত**
+</Callout>
+
+---
+
+## 🚀 পরবর্তীতে কী?
+
+এখন যেহেতু আপনি refs বুঝেছেন, আপনি এগুলো অন্বেষণ করতে প্রস্তুত:
+
+- **DOM refs** - সরাসরি DOM elements অ্যাক্সেস করা
+- **forwardRef** - Child components-এ refs পাস করা
+- **useImperativeHandle** - Ref behavior কাস্টমাইজ করা
+
+আনন্দের সাথে কোডিং করুন! 🎊
