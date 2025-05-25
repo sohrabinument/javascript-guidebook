@@ -1,0 +1,191 @@
+{
+  "title": "German Grammar Rules",
+  "description": "Essential German grammar rules with translations and examples",
+  "sections": [
+    {
+      "title": "Articles and Gender",
+      "description": "Learn about German articles and gender rules",
+      "headers": [
+        { "text": "Gender", "icon": "👤" },
+        { "text": "Definite Article", "icon": "📝" },
+        { "text": "Indefinite Article", "icon": "📝" },
+        { "text": "Examples", "icon": "💡" }
+      ],
+      "rows": [
+        {
+          "gender": "Masculine",
+          "definite": "der",
+          "indefinite": "ein",
+          "examples": [
+            {
+              "german": "der Mann",
+              "bangla": "পুরুষ",
+              "english": "the man"
+            },
+            {
+              "german": "ein Mann",
+              "bangla": "একজন পুরুষ",
+              "english": "a man"
+            },
+            {
+              "german": "der Tisch",
+              "bangla": "টেবিল",
+              "english": "the table"
+            },
+            {
+              "german": "ein Tisch",
+              "bangla": "একটি টেবিল",
+              "english": "a table"
+            }
+          ]
+        },
+        {
+          "gender": "Feminine",
+          "definite": "die",
+          "indefinite": "eine",
+          "examples": [
+            {
+              "german": "die Frau",
+              "bangla": "মহিলা",
+              "english": "the woman"
+            },
+            {
+              "german": "eine Frau",
+              "bangla": "একজন মহিলা",
+              "english": "a woman"
+            },
+            {
+              "german": "die Tür",
+              "bangla": "দরজা",
+              "english": "the door"
+            },
+            {
+              "german": "eine Tür",
+              "bangla": "একটি দরজা",
+              "english": "a door"
+            }
+          ]
+        },
+        {
+          "gender": "Neuter",
+          "definite": "das",
+          "indefinite": "ein",
+          "examples": [
+            {
+              "german": "das Kind",
+              "bangla": "শিশু",
+              "english": "the child"
+            },
+            {
+              "german": "ein Kind",
+              "bangla": "একটি শিশু",
+              "english": "a child"
+            },
+            {
+              "german": "das Buch",
+              "bangla": "বই",
+              "english": "the book"
+            },
+            {
+              "german": "ein Buch",
+              "bangla": "একটি বই",
+              "english": "a book"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cases in German",
+      "description": "Learn about German cases and their usage",
+      "headers": [
+        { "text": "Case", "icon": "📚" },
+        { "text": "Usage", "icon": "📝" },
+        { "text": "Example", "icon": "💡" },
+        { "text": "Question", "icon": "❓" }
+      ],
+      "rows": [
+        {
+          "case": "Nominative",
+          "usage": [
+            "Subject of the sentence",
+            "After 'sein' (to be)"
+          ],
+          "examples": [
+            {
+              "german": "Der Hund schläft",
+              "bangla": "কুকুরটি ঘুমাচ্ছে",
+              "english": "The dog sleeps"
+            },
+            {
+              "german": "Das ist ein Buch",
+              "bangla": "এটি একটি বই",
+              "english": "This is a book"
+            }
+          ],
+          "question": "Wer? Was?"
+        },
+        {
+          "case": "Accusative",
+          "usage": [
+            "Direct object",
+            "After certain prepositions"
+          ],
+          "examples": [
+            {
+              "german": "Ich sehe den Hund",
+              "bangla": "আমি কুকুরটি দেখছি",
+              "english": "I see the dog"
+            },
+            {
+              "german": "Für das Kind",
+              "bangla": "শিশুটির জন্য",
+              "english": "For the child"
+            }
+          ],
+          "question": "Wen? Was?"
+        },
+        {
+          "case": "Dative",
+          "usage": [
+            "Indirect object",
+            "After certain prepositions"
+          ],
+          "examples": [
+            {
+              "german": "Ich gebe dem Hund einen Ball",
+              "bangla": "আমি কুকুরটিকে একটি বল দিচ্ছি",
+              "english": "I give the dog a ball"
+            },
+            {
+              "german": "Mit der Frau",
+              "bangla": "মহিলার সাথে",
+              "english": "With the woman"
+            }
+          ],
+          "question": "Wem?"
+        },
+        {
+          "case": "Genitive",
+          "usage": [
+            "Possession",
+            "After certain prepositions"
+          ],
+          "examples": [
+            {
+              "german": "Das Buch des Mannes",
+              "bangla": "পুরুষের বই",
+              "english": "The man's book"
+            },
+            {
+              "german": "Trotz des Regens",
+              "bangla": "বৃষ্টি সত্ত্বেও",
+              "english": "Despite the rain"
+            }
+          ],
+          "question": "Wessen?"
+        }
+      ]
+    }
+  ]
+} 

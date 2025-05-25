@@ -1,0 +1,981 @@
+---
+title: "React এ useImperativeHandle 🚀"
+---
+
+import { Callout } from "nextra/components";
+
+# useImperativeHandle: কাস্টম কম্পোনেন্ট API তৈরি করা 🛠️✨
+
+`useImperativeHandle` হলো একটি শক্তিশালী React Hook যা আপনাকে `forwardRef` ব্যবহার করার সময় parent components এর কাছে exposed interface কাস্টমাইজ করতে দেয়। এটিকে আপনার কম্পোনেন্টের জন্য একটি "রিমোট কন্ট্রোল" 🎮 তৈরি করার মতো ভাবুন - আপনি ঠিক করেন parent কোন বাটনগুলো চাপতে পারবে!
+
+---
+
+## useImperativeHandle কে বিশেষ করে তোলে কি? 🌟
+
+কল্পনা করুন আপনি একটি স্মার্ট টিভি 📺 তৈরি করছেন। আপনি ব্যবহারকারীদের সব internal circuits এর access দিতে চান না - আপনি তাদের একটি রিমোট দেন যাতে শুধুমাত্র প্রয়োজনীয় বাটনগুলো আছে: power, volume, channel। `useImperativeHandle` আপনার components এর জন্য ঠিক এটাই করে!
+
+<Callout type="info" emoji="🎯">
+**পারফেক্ট এর জন্য:** 
+- কাস্টম API তৈরি করা যা implementation details লুকিয়ে রাখে 🔒 
+- parent components এর কাছে শুধুমাত্র নির্দিষ্ট methods expose করা 🎪
+- clean interfaces সহ reusable component libraries তৈরি করা 📚 
+- third-party libraries এর সাথে নিরাপদে integrate করা 🤝
+</Callout>
+
+---
+
+## useImperativeHandle যে সমস্যার সমাধান করে 🤔
+
+`useImperativeHandle` ছাড়া, `forwardRef` ব্যবহার করলে parents সম্পূর্ণ DOM node এর access পায়:
+
+```jsx
+// ❌ Parent পূর্ণ DOM access পায় - সবসময় এটা আমরা চাই না
+const Input = forwardRef((props, ref) => {
+  return <input ref={ref} {...props} />;
+});
+
+function Parent() {
+  const inputRef = useRef(null);
+
+  const handleClick = () => {
+    // Parent DOM node এর সাথে যেকোনো কিছু করতে পারে
+    inputRef.current.style.backgroundColor = "red"; // 😱
+    inputRef.current.remove(); // 💥 বিপজ্জনক!
+    inputRef.current.focus(); // ✅ এটাই আমরা আসলে চাই
+  };
+}
+```
+
+---
+
+## সমাধান: নিয়ন্ত্রিত Access 🔐
+
+```jsx
+// ✅ Parent শুধুমাত্র আমরা যা explicitly expose করি তাই পায়
+const SmartInput = forwardRef((props, ref) => {
+  const inputRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    // শুধুমাত্র নিরাপদ, উদ্দেশ্যপ্রণোদিত methods expose করুন
+    focus: () => inputRef.current?.focus(),
+    clear: () => {
+      inputRef.current.value = "";
+    },
+    getValue: () => inputRef.current?.value || "",
+  }));
+
+  return <input ref={inputRef} {...props} />;
+});
+```
+
+---
+
+## ধাপে ধাপে Implementation গাইড 📋
+
+### ধাপ ১: Component Structure সেট আপ করুন
+
+```jsx
+import React, { useRef, useImperativeHandle, forwardRef } from "react";
+
+const MyComponent = forwardRef((props, ref) => {
+  // প্রকৃত DOM element এর জন্য internal ref তৈরি করুন
+  const internalRef = useRef(null);
+
+  // আপনার component JSX এখানে
+  return <div ref={internalRef}>Content</div>;
+});
+```
+
+### ধাপ ২: আপনার Custom API Define করুন
+
+```jsx
+const MyComponent = forwardRef((props, ref) => {
+  const internalRef = useRef(null);
+
+  // parent কি access করতে পারবে তা define করুন
+  useImperativeHandle(ref, () => ({
+    // Method 1: সহজ action
+    highlight: () => {
+      internalRef.current.style.backgroundColor = "yellow";
+    },
+
+    // Method 2: data return করা
+    getHeight: () => {
+      return internalRef.current.offsetHeight;
+    },
+
+    // Method 3: parameters গ্রহণ করা
+    scrollTo: (position) => {
+      internalRef.current.scrollTop = position;
+    },
+  }));
+
+  return <div ref={internalRef}>My Component</div>;
+});
+```
+
+### ধাপ ৩: Parent Component এ ব্যবহার করুন
+
+```jsx
+function Parent() {
+  const myComponentRef = useRef(null);
+
+  return (
+    <div>
+      <MyComponent ref={myComponentRef} />
+
+      <button onClick={() => myComponentRef.current?.highlight()}>
+        Highlight 🎨
+      </button>
+
+      <button
+        onClick={() => {
+          const height = myComponentRef.current?.getHeight();
+          alert(`Height: ${height}px`);
+        }}
+      >
+        Get Height 📏
+      </button>
+
+      <button onClick={() => myComponentRef.current?.scrollTo(100)}>
+        Scroll Down 📜
+      </button>
+    </div>
+  );
+}
+```
+
+---
+
+## বাস্তব জীবনের উদাহরণ 🌍
+
+### ১. Advanced Input Component 📝
+
+```jsx
+const AdvancedInput = forwardRef(({ onValueChange, ...props }, ref) => {
+  const inputRef = useRef(null);
+  const [history, setHistory] = useState([]);
+
+  useImperativeHandle(ref, () => ({
+    // মৌলিক controls
+    focus: () => inputRef.current?.focus(),
+    blur: () => inputRef.current?.blur(),
+    clear: () => {
+      inputRef.current.value = "";
+      onValueChange?.("");
+    },
+
+    // উন্নত features
+    selectAll: () => inputRef.current?.select(),
+
+    setValue: (value) => {
+      inputRef.current.value = value;
+      setHistory((prev) => [...prev, value]);
+      onValueChange?.(value);
+    },
+
+    // Utility methods
+    getValue: () => inputRef.current?.value || "",
+    getHistory: () => [...history],
+
+    // Animation methods
+    shake: () => {
+      inputRef.current.style.animation = "shake 0.5s";
+      setTimeout(() => {
+        inputRef.current.style.animation = "";
+      }, 500);
+    },
+  }));
+
+  return (
+    <div className="advanced-input-wrapper">
+      <input
+        ref={inputRef}
+        onChange={(e) => {
+          setHistory((prev) => [...prev, e.target.value]);
+          onValueChange?.(e.target.value);
+        }}
+        {...props}
+      />
+      <style jsx>{`
+        @keyframes shake {
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          25% {
+            transform: translateX(-5px);
+          }
+          75% {
+            transform: translateX(5px);
+          }
+        }
+      `}</style>
+    </div>
+  );
+});
+
+// ব্যবহার
+function Form() {
+  const nameInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+
+  const validateForm = () => {
+    const name = nameInputRef.current?.getValue();
+    const email = emailInputRef.current?.getValue();
+
+    if (!name) {
+      nameInputRef.current?.focus();
+      nameInputRef.current?.shake();
+      return false;
+    }
+
+    if (!email?.includes("@")) {
+      emailInputRef.current?.focus();
+      emailInputRef.current?.shake();
+      return false;
+    }
+
+    return true;
+  };
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (validateForm()) {
+          alert("Form is valid! 🎉");
+        }
+      }}
+    >
+      <AdvancedInput
+        ref={nameInputRef}
+        placeholder="আপনার নাম লিখুন 👤"
+        onValueChange={(value) => console.log("Name:", value)}
+      />
+
+      <AdvancedInput
+        ref={emailInputRef}
+        type="email"
+        placeholder="আপনার ইমেইল লিখুন 📧"
+        onValueChange={(value) => console.log("Email:", value)}
+      />
+
+      <div className="form-actions">
+        <button type="submit">Submit 🚀</button>
+        <button
+          type="button"
+          onClick={() => {
+            nameInputRef.current?.clear();
+            emailInputRef.current?.clear();
+          }}
+        >
+          সব Clear করুন 🧹
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            console.log("Name history:", nameInputRef.current?.getHistory());
+            console.log("Email history:", emailInputRef.current?.getHistory());
+          }}
+        >
+          History দেখান 📊
+        </button>
+      </div>
+    </form>
+  );
+}
+```
+
+### ২. Media Player Component 🎵
+
+```jsx
+const MediaPlayer = forwardRef(({ src, ...props }, ref) => {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  useImperativeHandle(ref, () => ({
+    // Playback controls
+    play: async () => {
+      try {
+        await videoRef.current?.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error("Play করতে ব্যর্থ:", error);
+      }
+    },
+
+    pause: () => {
+      videoRef.current?.pause();
+      setIsPlaying(false);
+    },
+
+    toggle: () => {
+      if (isPlaying) {
+        ref.current.pause();
+      } else {
+        ref.current.play();
+      }
+    },
+
+    // Seeking
+    seekTo: (time) => {
+      if (videoRef.current) {
+        videoRef.current.currentTime = time;
+        setCurrentTime(time);
+      }
+    },
+
+    skipForward: (seconds = 10) => {
+      const current = videoRef.current?.currentTime || 0;
+      ref.current.seekTo(current + seconds);
+    },
+
+    skipBackward: (seconds = 10) => {
+      const current = videoRef.current?.currentTime || 0;
+      ref.current.seekTo(Math.max(0, current - seconds));
+    },
+
+    // Volume control
+    setVolume: (volume) => {
+      if (videoRef.current) {
+        videoRef.current.volume = Math.max(0, Math.min(1, volume));
+      }
+    },
+
+    mute: () => {
+      if (videoRef.current) {
+        videoRef.current.muted = true;
+      }
+    },
+
+    unmute: () => {
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+      }
+    },
+
+    // Information getters
+    getDuration: () => videoRef.current?.duration || 0,
+    getCurrentTime: () => videoRef.current?.currentTime || 0,
+    getVolume: () => videoRef.current?.volume || 1,
+    isPlaying: () => isPlaying,
+
+    // উন্নত features
+    takeScreenshot: () => {
+      const canvas = document.createElement("canvas");
+      const video = videoRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0);
+      return canvas.toDataURL();
+    },
+  }));
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
+      onPlay={() => setIsPlaying(true)}
+      onPause={() => setIsPlaying(false)}
+      {...props}
+    />
+  );
+});
+
+// ব্যবহার
+function VideoApp() {
+  const playerRef = useRef(null);
+
+  return (
+    <div className="video-app">
+      <MediaPlayer
+        ref={playerRef}
+        src="/sample-video.mp4"
+        controls={false}
+        width="100%"
+      />
+
+      <div className="custom-controls">
+        <button onClick={() => playerRef.current?.play()}>▶️ Play</button>
+        <button onClick={() => playerRef.current?.pause()}>⏸️ Pause</button>
+        <button onClick={() => playerRef.current?.skipBackward()}>
+          ⏪ -10s
+        </button>
+        <button onClick={() => playerRef.current?.skipForward()}>
+          ⏩ +10s
+        </button>
+
+        <button
+          onClick={() => {
+            const screenshot = playerRef.current?.takeScreenshot();
+            if (screenshot) {
+              const link = document.createElement("a");
+              link.download = "screenshot.png";
+              link.href = screenshot;
+              link.click();
+            }
+          }}
+        >
+          📸 Screenshot
+        </button>
+
+        <button
+          onClick={() => {
+            const duration = playerRef.current?.getDuration();
+            const currentTime = playerRef.current?.getCurrentTime();
+            alert(`${currentTime.toFixed(1)}s / ${duration.toFixed(1)}s`);
+          }}
+        >
+          ⏱️ Time Info
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+### ৩. Imperative API সহ Chart Component 📊
+
+```jsx
+const InteractiveChart = forwardRef(({ data, type = "bar" }, ref) => {
+  const chartRef = useRef(null);
+  const [chartData, setChartData] = useState(data);
+  const [selectedPoint, setSelectedPoint] = useState(null);
+
+  useImperativeHandle(ref, () => ({
+    // Data manipulation
+    updateData: (newData) => {
+      setChartData(newData);
+    },
+
+    addDataPoint: (point) => {
+      setChartData((prev) => [...prev, point]);
+    },
+
+    removeDataPoint: (index) => {
+      setChartData((prev) => prev.filter((_, i) => i !== index));
+    },
+
+    // Visual controls
+    highlightPoint: (index) => {
+      setSelectedPoint(index);
+      // highlight animation যোগ করুন
+      const point = chartRef.current?.querySelector(`[data-index="${index}"]`);
+      if (point) {
+        point.style.transform = "scale(1.2)";
+        point.style.transition = "transform 0.3s ease";
+      }
+    },
+
+    clearHighlight: () => {
+      setSelectedPoint(null);
+      const points = chartRef.current?.querySelectorAll("[data-index]");
+      points?.forEach((point) => {
+        point.style.transform = "scale(1)";
+      });
+    },
+
+    // Export functionality
+    exportAsImage: () => {
+      // Chart কে canvas এ convert করে export করুন
+      const svg = chartRef.current?.querySelector("svg");
+      if (svg) {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const data = new XMLSerializer().serializeToString(svg);
+        const img = new Image();
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const link = document.createElement("a");
+          link.download = "chart.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        };
+        img.src = "data:image/svg+xml;base64," + btoa(data);
+      }
+    },
+
+    // Animation controls
+    animateIn: () => {
+      const chart = chartRef.current;
+      if (chart) {
+        chart.style.opacity = "0";
+        chart.style.transform = "translateY(20px)";
+        chart.style.transition = "all 0.5s ease";
+
+        setTimeout(() => {
+          chart.style.opacity = "1";
+          chart.style.transform = "translateY(0)";
+        }, 100);
+      }
+    },
+
+    // Data getters
+    getData: () => [...chartData],
+    getSelectedPoint: () => selectedPoint,
+    getStats: () => ({
+      min: Math.min(...chartData.map((d) => d.value)),
+      max: Math.max(...chartData.map((d) => d.value)),
+      average:
+        chartData.reduce((sum, d) => sum + d.value, 0) / chartData.length,
+    }),
+  }));
+
+  return (
+    <div ref={chartRef} className="interactive-chart">
+      {/* সরলীকৃত chart rendering */}
+      <svg width="400" height="300">
+        {chartData.map((point, index) => (
+          <rect
+            key={index}
+            data-index={index}
+            x={index * 40 + 20}
+            y={300 - point.value * 2}
+            width="30"
+            height={point.value * 2}
+            fill={selectedPoint === index ? "#ff6b6b" : "#4ecdc4"}
+            style={{ cursor: "pointer" }}
+            onClick={() => setSelectedPoint(index)}
+          />
+        ))}
+      </svg>
+    </div>
+  );
+});
+
+// ব্যবহার
+function Dashboard() {
+  const chartRef = useRef(null);
+  const [data] = useState([
+    { label: "Jan", value: 65 },
+    { label: "Feb", value: 80 },
+    { label: "Mar", value: 95 },
+    { label: "Apr", value: 70 },
+  ]);
+
+  return (
+    <div className="dashboard">
+      <InteractiveChart ref={chartRef} data={data} />
+
+      <div className="chart-controls">
+        <button onClick={() => chartRef.current?.animateIn()}>
+          ✨ Animate
+        </button>
+
+        <button onClick={() => chartRef.current?.highlightPoint(2)}>
+          🎯 March Highlight করুন
+        </button>
+
+        <button onClick={() => chartRef.current?.clearHighlight()}>
+          🧹 Highlight Clear করুন
+        </button>
+
+        <button onClick={() => chartRef.current?.exportAsImage()}>
+          💾 PNG Export করুন
+        </button>
+
+        <button
+          onClick={() => {
+            const stats = chartRef.current?.getStats();
+            alert(
+              `Min: ${stats.min}, Max: ${
+                stats.max
+              }, Avg: ${stats.average.toFixed(1)}`
+            );
+          }}
+        >
+          📊 Stats দেখান
+        </button>
+
+        <button
+          onClick={() => {
+            chartRef.current?.addDataPoint({ label: "May", value: 85 });
+          }}
+        >
+          ➕ Data যোগ করুন
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## উন্নত Patterns ও Tips 🔥
+
+### ১. একাধিক Refs একসাথে করা
+
+```jsx
+const ComplexComponent = forwardRef((props, ref) => {
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    // একাধিক element controls expose করুন
+    focusInput: () => inputRef.current?.focus(),
+    clickButton: () => buttonRef.current?.click(),
+    scrollContainer: (top) => {
+      containerRef.current.scrollTop = top;
+    },
+
+    // জটিল operations expose করুন
+    performComplexAction: async () => {
+      inputRef.current?.focus();
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      containerRef.current?.scrollIntoView();
+      buttonRef.current?.click();
+    },
+  }));
+
+  return (
+    <div ref={containerRef}>
+      <input ref={inputRef} />
+      <button ref={buttonRef}>Action</button>
+    </div>
+  );
+});
+```
+
+### ২. শর্তসাপেক্ষ API Exposure
+
+```jsx
+const ConditionalComponent = forwardRef(({ mode = "basic" }, ref) => {
+  const elementRef = useRef(null);
+
+  useImperativeHandle(
+    ref,
+    () => {
+      const basicAPI = {
+        focus: () => elementRef.current?.focus(),
+        getValue: () => elementRef.current?.value || "",
+      };
+
+      const advancedAPI = {
+        ...basicAPI,
+        clear: () => {
+          elementRef.current.value = "";
+        },
+        selectAll: () => elementRef.current?.select(),
+        // বিপজ্জনক methods শুধুমাত্র advanced mode এ
+        dangerouslySetHTML: (html) => {
+          elementRef.current.innerHTML = html;
+        },
+      };
+
+      return mode === "advanced" ? advancedAPI : basicAPI;
+    },
+    [mode]
+  );
+
+  return <input ref={elementRef} />;
+});
+```
+
+### ৩. Event-Based API
+
+```jsx
+const EventDrivenComponent = forwardRef((props, ref) => {
+  const [subscribers, setSubscribers] = useState([]);
+
+  useImperativeHandle(ref, () => ({
+    // Event subscription methods
+    addEventListener: (event, callback) => {
+      setSubscribers((prev) => [...prev, { event, callback }]);
+    },
+
+    removeEventListener: (event, callback) => {
+      setSubscribers((prev) =>
+        prev.filter(
+          (sub) => !(sub.event === event && sub.callback === callback)
+        )
+      );
+    },
+
+    // কাস্টম events trigger করুন
+    emit: (event, data) => {
+      subscribers
+        .filter((sub) => sub.event === event)
+        .forEach((sub) => sub.callback(data));
+    },
+
+    // Component actions যা events trigger করে
+    doSomething: () => {
+      // Action সম্পাদন করুন
+      const result = "Action completed";
+
+      // Subscribers কে notify করুন
+      ref.current.emit("actionComplete", { result, timestamp: Date.now() });
+    },
+  }));
+
+  return <div>Event-driven component</div>;
+});
+```
+
+---
+
+## Performance বিবেচনাসমূহ ⚡
+
+<Callout type="warning" emoji="⚡">
+{<>
+**Performance Tips:** - ব্যয়বহুল imperative methods এর জন্য `useCallback`
+ব্যবহার করুন recreation প্রতিরোধ করতে - আপনার imperative API তে জটিল
+calculations memoize করুন - ঘন ঘন DOM manipulations এর ব্যাপারে সতর্ক থাকুন -
+DOM measurements এর জন্য `useLayoutEffect` ব্যবহার করার কথা বিবেচনা করুন
+</>}
+</Callout>
+
+```jsx
+const OptimizedComponent = forwardRef((props, ref) => {
+  const elementRef = useRef(null);
+  const expensiveCalculation = useCallback(() => {
+    // এখানে ভারী computation
+    return elementRef.current?.getBoundingClientRect();
+  }, []);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getPosition: expensiveCalculation,
+      // অন্যান্য methods...
+    }),
+    [expensiveCalculation]
+  );
+
+  return <div ref={elementRef}>Optimized Component</div>;
+});
+```
+
+---
+
+## useImperativeHandle Testing 🧪
+
+```jsx
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
+test("কাস্টম API methods expose করা উচিত", () => {
+  let componentRef;
+
+  function TestWrapper() {
+    componentRef = useRef(null);
+    return <CustomInput ref={componentRef} />;
+  }
+
+  render(<TestWrapper />);
+
+  // Exposed methods test করুন
+  expect(typeof componentRef.current.focus).toBe("function");
+  expect(typeof componentRef.current.clear).toBe("function");
+  expect(typeof componentRef.current.getValue).toBe("function");
+
+  // Method functionality test করুন
+  componentRef.current.focus();
+  expect(screen.getByRole("textbox")).toHaveFocus();
+
+  // Test করুন যে internal DOM expose হয়নি
+  expect(componentRef.current.style).toBeUndefined();
+  expect(componentRef.current.innerHTML).toBeUndefined();
+});
+```
+
+---
+
+## সাধারণ ভুল ও এড়ানোর উপায় ⚠️
+
+<Callout type="error" emoji="🚫">
+**এই ভুলগুলো এড়িয়ে চলুন:**
+
+1. **অতিরিক্ত expose করা** - Internal implementation details expose করবেন না
+2. **forwardRef ভুলে যাওয়া** - `useImperativeHandle` শুধুমাত্র `forwardRef` এর সাথে কাজ করে
+3. **null refs check না করা** - সবসময় optional chaining (`?.`) ব্যবহার করুন
+4. **imperative APIs অতিরিক্ত ব্যবহার** - সম্ভব হলে declarative patterns পছন্দ করুন
+5. **API documentation না করা** - আপনার কাস্টম API এর স্পষ্ট documentation প্রয়োজন
+</Callout>
+
+### ❌ খারাপ উদাহরণ
+
+```jsx
+const BadComponent = forwardRef((props, ref) => {
+  const elementRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    // অতিরিক্ত internal stuff expose করা
+    element: elementRef.current,
+    _internalState: someInternalState,
+    dangerousMethod: () => {
+      // নিরাপত্তা ব্যবস্থা ছাড়াই বিপজ্জনক operation
+      elementRef.current.remove();
+    },
+  }));
+
+  return <div ref={elementRef}>Bad Component</div>;
+});
+```
+
+### ✅ ভালো উদাহরণ
+
+```jsx
+const GoodComponent = forwardRef((props, ref) => {
+  const elementRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    // পরিষ্কার, উদ্দেশ্যপ্রণোদিত API
+    focus: () => elementRef.current?.focus(),
+
+    scrollIntoView: (options = { behavior: "smooth" }) => {
+      elementRef.current?.scrollIntoView(options);
+    },
+
+    getMetrics: () => ({
+      width: elementRef.current?.offsetWidth || 0,
+      height: elementRef.current?.offsetHeight || 0,
+      visible: elementRef.current?.offsetParent !== null,
+    }),
+  }));
+
+  return <div ref={elementRef}>Good Component</div>;
+});
+```
+
+---
+
+## TypeScript সাপোর্ট 💙
+
+```tsx
+import React, { useRef, useImperativeHandle, forwardRef } from "react";
+
+// Imperative API interface define করুন
+interface CustomInputRef {
+  focus: () => void;
+  clear: () => void;
+  getValue: () => string;
+  setValue: (value: string) => void;
+}
+
+interface CustomInputProps {
+  placeholder?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+}
+
+const CustomInput = forwardRef<CustomInputRef, CustomInputProps>(
+  ({ placeholder, defaultValue, onValueChange }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        inputRef.current?.focus();
+      },
+
+      clear: () => {
+        if (inputRef.current) {
+          inputRef.current.value = "";
+          onValueChange?.("");
+        }
+      },
+
+      getValue: () => {
+        return inputRef.current?.value || "";
+      },
+
+      setValue: (value: string) => {
+        if (inputRef.current) {
+          inputRef.current.value = value;
+          onValueChange?.(value);
+        }
+      },
+    }));
+
+    return (
+      <input
+        ref={inputRef}
+        type="text"
+        placeholder={placeholder}
+        defaultValue={defaultValue}
+        onChange={(e) => onValueChange?.(e.target.value)}
+      />
+    );
+  }
+);
+
+// সম্পূর্ণ type safety সহ ব্যবহার
+function TypedParent() {
+  const inputRef = useRef<CustomInputRef>(null);
+
+  return (
+    <div>
+      <CustomInput
+        ref={inputRef}
+        placeholder="কিছু টাইপ করুন..."
+        onValueChange={(value) => console.log("Value:", value)}
+      />
+
+      <button onClick={() => inputRef.current?.focus()}>
+        Input Focus করুন
+      </button>
+
+      <button
+        onClick={() => {
+          const value = inputRef.current?.getValue();
+          alert(`বর্তমান value: ${value}`);
+        }}
+      >
+        Value পান
+      </button>
+    </div>
+  );
+}
+```
+
+---
+
+নিচে দেওয়া হলো উপরের লেখা বাংলায় অনুবাদ করা সংস্করণ:
+
+---
+
+## সেরা অনুশীলনের সারসংক্ষেপ 📝
+
+<Callout type="info" emoji="💡">
+**সোনালী নিয়মাবলি:**
+
+1. **যেটুকু প্রয়োজন, শুধুমাত্র সেটুকুই প্রকাশ করুন** 🎯
+2. **নিরাপদ রাখুন** - উপযুক্ত ত্রুটি ব্যবস্থাপনা এবং যাচাই যোগ করুন 🛡️
+3. **সবকিছু ডকুমেন্ট করুন** - আপনার API-র পরিষ্কার ডকুমেন্টেশন থাকা আবশ্যক 📚
+4. **প্রথমে ভাবুন ডিক্লেয়ারেটিভ ভাবে** - ইম্পেরেটিভ API কেবল তখনই ব্যবহার করুন যখন জরুরি 🤔
+5. **পর্যাপ্তভাবে টেস্ট করুন** - API এবং এর প্রান্তিক কেসগুলোও পরীক্ষা করুন 🧪
+6. **TypeScript ব্যবহার করুন** - টাইপ সেফটি অনেক বাগ রোধ করে 💙
+
+</Callout>
+
+---
+
+## রিসোর্স ও আরও পড়াশোনা 📚
+
+- [React ডকুমেন্টেশন: useImperativeHandle](https://react.dev/reference/react/useImperativeHandle) 📖
+- [React ডকুমেন্টেশন: forwardRef](https://react.dev/reference/react/forwardRef) 🔗
+- [React ডকুমেন্টেশন: Refs দিয়ে DOM ম্যানিপুলেশন](https://react.dev/learn/manipulating-the-dom-with-refs) 🎯
+- [Advanced Patterns with useImperativeHandle – Kent C. Dodds](https://kentcdodds.com/blog/imperative-react) 🔥
+
+---
+
+## সারাংশ 🎉
+
+`useImperativeHandle` হল আপনার গোপন অস্ত্র — যা আপনাকে React কম্পোনেন্টে পরিশীলিত, নিয়ন্ত্রিত API তৈরি করতে সাহায্য করে! এটি আপনাকে সক্ষম করে:
+
+- **নিয়ন্ত্রিত অ্যাক্সেস** 🔐 — প্যারেন্ট কম্পোনেন্টের জন্য শুধুমাত্র প্রয়োজনীয় অংশ প্রকাশ করতে
+- **জটিলতা গোপন করা** 🎭 — অভ্যন্তরীণ বাস্তবায়নের বিস্তারিত বাইরের থেকে আড়াল রাখতে
+- **উত্তম API তৈরি** 🛠️ — কম্পোনেন্টের জন্য স্বজ্ঞাত ইন্টারফেস ডিজাইন করতে
+- **এনক্যাপসুলেশন বজায় রাখা** 📦 — সফটওয়্যার ইঞ্জিনিয়ারিংয়ের সঠিক নিয়ম মেনে চলতে
+
+এই হুকটি আয়ত্তে আনুন, আর তৈরি করুন আরও প্রফেশনাল, সহজ-রক্ষণযোগ্য React অ্যাপ্লিকেশন! 🚀✨
+
+**শুভ কোডিং! 💻💖**

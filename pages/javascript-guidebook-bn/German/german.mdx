@@ -1,0 +1,127 @@
+---
+title: German Language Learning Guide
+---
+
+import TranslationCell from '../../../components/TranslationCell'
+import germanWords from '../../../data/german-words.json'
+import germanAlphabet from '../../../data/german-alphabet.json'
+import germanNumbers from '../../../data/german-numbers.json'
+
+# ✨ German Language Learning Guide
+
+Welcome to your German language learning journey! This guide will help you learn German step by step, with interactive features to practice pronunciation and understanding.
+
+## 🎯 How to Use This Guide
+
+1. **Interactive Learning**: Hover over any text to hear its pronunciation
+2. **Multiple Languages**: Each entry is shown in Bangla, German, and English
+3. **Practice**: Try to repeat the words after hearing them
+4. **Progressive Learning**: Start with the alphabet, then move to numbers and words
+
+## 🔤 {germanAlphabet.title}
+
+{germanAlphabet.description}
+
+<div className="overflow-x-auto">
+  <table className="w-full border-collapse">
+    <thead>
+      <tr>
+        {germanAlphabet.headers.map((header, index) => (
+          <th key={index} className="border border-gray-300 bg-gray-100 p-2">
+            {header.icon} {header.text}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {germanAlphabet.rows.map((row, index) => (
+        <tr key={index}>
+          <TranslationCell 
+            word={row.word}
+            bangla={row.bangla}
+            german={row.german}
+            english={row.english}
+          />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+## 🔢 {germanNumbers.title}
+
+{germanNumbers.description}
+
+<div className="overflow-x-auto">
+  <table className="w-full border-collapse">
+    <thead>
+      <tr>
+        {germanNumbers.headers.map((header, index) => (
+          <th key={index} className="border border-gray-300 bg-gray-100 p-2">
+            {header.icon} {header.text}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {germanNumbers.rows.map((row, index) => (
+        <tr key={index}>
+          <TranslationCell 
+            word={row.word}
+            bangla={row.bangla}
+            german={row.german}
+            english={row.english}
+          />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+## 📚 {germanWords.title}
+
+Learn common German words and phrases with their translations.
+
+<div className="overflow-x-auto">
+  <table className="w-full border-collapse">
+    <thead>
+      <tr>
+        {germanWords.headers.map((header, index) => (
+          <th key={index} className="border border-gray-300 bg-gray-100 p-2">
+            {header.icon} {header.text}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {germanWords.rows.map((row, index) => (
+        <tr key={index}>
+          <TranslationCell 
+            word={row.word}
+            bangla={row.bangla}
+            german={row.german}
+            english={row.english}
+          />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+## 💡 Tips for Learning German
+
+1. **Practice Daily**: Even 10 minutes a day helps
+2. **Listen and Repeat**: Use the hover feature to practice pronunciation
+3. **Learn in Context**: Words are easier to remember in sentences
+4. **Start with Basics**: Master the alphabet and numbers first
+5. **Use the Language**: Try to form simple sentences with the words you learn
+
+## 🎯 Next Steps
+
+1. Practice the alphabet pronunciation
+2. Learn to count from 1 to 20
+3. Start using basic words in sentences
+4. Build your vocabulary with more words
+5. Practice speaking with native speakers
+
+Remember: Learning a language takes time and practice. Be patient with yourself and enjoy the journey!

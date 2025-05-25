@@ -1,0 +1,191 @@
+{
+  "title": "Basic German Sentence Table",
+  "headers": [
+    { "icon": "🟡", "text": "Word" },
+    { "icon": "📖", "text": "Bangla" },
+    { "icon": "🇩🇪", "text": "German" },
+    { "icon": "🇬🇧", "text": "English" }
+  ],
+  "rows": [
+    {
+      "word": "Hallo",
+      "bangla": "হ্যালো মা!",
+      "german": "Hallo Mama!",
+      "english": "Hello Mom!"
+    },
+    {
+      "word": "",
+      "bangla": "হ্যালো বন্ধু!",
+      "german": "Hallo Freund!",
+      "english": "Hello friend!"
+    },
+    {
+      "word": "",
+      "bangla": "হ্যালো, তুমি কেমন আছো?",
+      "german": "Hallo, wie geht es dir?",
+      "english": "Hello, how are you?"
+    },
+    {
+      "word": "Danke",
+      "bangla": "ধন্যবাদ মা!",
+      "german": "Danke Mama!",
+      "english": "Thank you, Mom!"
+    },
+    {
+      "word": "",
+      "bangla": "ধন্যবাদ বন্ধু!",
+      "german": "Danke Freund!",
+      "english": "Thank you, friend!"
+    },
+    {
+      "word": "",
+      "bangla": "খাবারের জন্য ধন্যবাদ।",
+      "german": "Danke für das Essen.",
+      "english": "Thanks for the food."
+    },
+    {
+      "word": "Tschüss",
+      "bangla": "বিদায় বন্ধু!",
+      "german": "Tschüss Freund!",
+      "english": "Bye, friend!"
+    },
+    {
+      "word": "",
+      "bangla": "আমি এখন যাচ্ছি, বিদায়!",
+      "german": "Ich gehe jetzt, tschüss!",
+      "english": "I'm going now, bye!"
+    },
+    {
+      "word": "",
+      "bangla": "স্কুল শেষে সবাই বললো বিদায়।",
+      "german": "Nach der Schule sagten alle tschüss.",
+      "english": "After school, everyone said bye."
+    },
+    {
+      "word": "Ja",
+      "bangla": "হ্যাঁ, আমি আসবো।",
+      "german": "Ja, ich komme.",
+      "english": "Yes, I will come."
+    },
+    {
+      "word": "",
+      "bangla": "তুমি কি ক্লান্ত? হ্যাঁ।",
+      "german": "Bist du müde? Ja.",
+      "english": "Are you tired? Yes."
+    },
+    {
+      "word": "",
+      "bangla": "হ্যাঁ, এটা আমার বই।",
+      "german": "Ja, das ist mein Buch.",
+      "english": "Yes, this is my book."
+    },
+    {
+      "word": "Nein",
+      "bangla": "না, আমি আসবো না।",
+      "german": "Nein, ich komme nicht.",
+      "english": "No, I won't come."
+    },
+    {
+      "word": "",
+      "bangla": "তুমি কি এটা পছন্দ করো? না।",
+      "german": "Magst du das? Nein.",
+      "english": "Do you like it? No."
+    },
+    {
+      "word": "",
+      "bangla": "না, এটা ঠিক না।",
+      "german": "Nein, das ist nicht richtig.",
+      "english": "No, this is not right."
+    },
+    {
+      "word": "Zucker",
+      "bangla": "আমি চায়ে চিনি দিতে চাই।",
+      "german": "Ich möchte Zucker in meinen Tee.",
+      "english": "I want sugar in my tea."
+    },
+    {
+      "word": "",
+      "bangla": "আপনি কি চিনি চান?",
+      "german": "Möchten Sie Zucker?",
+      "english": "Would you like sugar?"
+    },
+    {
+      "word": "Oder",
+      "bangla": "আপনি কি চা নেবেন, না কি কফি?",
+      "german": "Möchten Sie Tee oder Kaffee?",
+      "english": "Would you like tea or coffee?"
+    },
+    {
+      "word": "",
+      "bangla": "আপনি কি চিনি নেবেন, না কি মধু?",
+      "german": "Zucker oder Honig?",
+      "english": "Sugar or honey?"
+    },
+    {
+      "word": "Milch",
+      "bangla": "আমি দুধ দিয়ে কফি পছন্দ করি।",
+      "german": "Ich trinke Kaffee mit Milch.",
+      "english": "I drink coffee with milk."
+    },
+    {
+      "word": "",
+      "bangla": "দুধ ছাড়া চা খাবেন?",
+      "german": "Tee ohne Milch?",
+      "english": "Tea without milk?"
+    },
+    {
+      "word": "Mit",
+      "bangla": "আমি চিনি দিয়ে চা খাই।",
+      "german": "Ich trinke Tee mit Zucker.",
+      "english": "I drink tea with sugar."
+    },
+    {
+      "word": "",
+      "bangla": "আমি দুধ দিয়ে কফি খাই।",
+      "german": "Ich trinke Kaffee mit Milch.",
+      "english": "I drink coffee with milk."
+    },
+    {
+      "word": "Kaffee",
+      "bangla": "আমি সকালে কফি খাই।",
+      "german": "Ich trinke morgens Kaffee.",
+      "english": "I drink coffee in the morning."
+    },
+    {
+      "word": "",
+      "bangla": "আপনি কি কফি চান?",
+      "german": "Möchten Sie Kaffee?",
+      "english": "Would you like coffee?"
+    },
+    {
+      "word": "",
+      "bangla": "কফি চিনি দিয়ে খাবেন?",
+      "german": "Kaffee mit Zucker?",
+      "english": "Coffee with sugar?"
+    },
+    {
+      "word": "",
+      "bangla": "কফি দুধ দিয়ে খাবেন?",
+      "german": "Kaffee mit Milch?",
+      "english": "Coffee with milk?"
+    },
+    {
+      "word": "",
+      "bangla": "আমি কফি চিনি এবং দুধ দিয়ে খাই।",
+      "german": "Ich trinke Kaffee mit Zucker und Milch.",
+      "english": "I drink coffee with sugar and milk."
+    },
+    {
+      "word": "",
+      "bangla": "আপনি কি কফি নেবেন, না কি চা?",
+      "german": "Kaffee oder Tee?",
+      "english": "Coffee or tea?"
+    },
+    {
+      "word": "",
+      "bangla": "আমি দুধ দিয়ে কফি পছন্দ করি, চিনি ছাড়া।",
+      "german": "Ich mag Kaffee mit Milch, ohne Zucker.",
+      "english": "I like coffee with milk, without sugar."
+    }
+  ]
+} 

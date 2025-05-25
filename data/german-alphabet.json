@@ -1,0 +1,202 @@
+{
+  "title": "German Alphabet and Special Characters",
+  "description": "Learn the German alphabet and special characters (Umlauts and Eszett)",
+  "headers": [{
+      "icon": "🔤",
+      "text": "Character"
+    },
+    {
+      "icon": "📖",
+      "text": "Bangla"
+    },
+    {
+      "icon": "🇩🇪",
+      "text": "German"
+    },
+    {
+      "icon": "🇬🇧",
+      "text": "English"
+    }
+  ],
+  "rows": [{
+      "word": "A",
+      "bangla": "আ",
+      "german": "Ah",
+      "english": "A"
+    },
+    {
+      "word": "B",
+      "bangla": "বে",
+      "german": "Beh",
+      "english": "B"
+    },
+    {
+      "word": "C",
+      "bangla": "সে",
+      "german": "Tseh",
+      "english": "C"
+    },
+    {
+      "word": "D",
+      "bangla": "ডে",
+      "german": "Deh",
+      "english": "D"
+    },
+    {
+      "word": "E",
+      "bangla": "এ",
+      "german": "Eh",
+      "english": "E"
+    },
+    {
+      "word": "F",
+      "bangla": "এফ",
+      "german": "Eff",
+      "english": "F"
+    },
+    {
+      "word": "G",
+      "bangla": "গে",
+      "german": "Gay",
+      "english": "G"
+    },
+    {
+      "word": "H",
+      "bangla": "হা",
+      "german": "Hah",
+      "english": "H"
+    },
+    {
+      "word": "I",
+      "bangla": "ই",
+      "german": "Ee",
+      "english": "I"
+    },
+    {
+      "word": "J",
+      "bangla": "য়ট",
+      "german": "Yot",
+      "english": "J"
+    },
+    {
+      "word": "K",
+      "bangla": "কা",
+      "german": "Kah",
+      "english": "K"
+    },
+    {
+      "word": "L",
+      "bangla": "এল",
+      "german": "Ell",
+      "english": "L"
+    },
+    {
+      "word": "M",
+      "bangla": "এম",
+      "german": "Emm",
+      "english": "M"
+    },
+    {
+      "word": "N",
+      "bangla": "এন",
+      "german": "Enn",
+      "english": "N"
+    },
+    {
+      "word": "O",
+      "bangla": "ও",
+      "german": "Oh",
+      "english": "O"
+    },
+    {
+      "word": "P",
+      "bangla": "পে",
+      "german": "Pay",
+      "english": "P"
+    },
+    {
+      "word": "Q",
+      "bangla": "কু",
+      "german": "Koo",
+      "english": "Q"
+    },
+    {
+      "word": "R",
+      "bangla": "এর",
+      "german": "Err",
+      "english": "R"
+    },
+    {
+      "word": "S",
+      "bangla": "এস",
+      "german": "Ess",
+      "english": "S"
+    },
+    {
+      "word": "T",
+      "bangla": "টে",
+      "german": "Tay",
+      "english": "T"
+    },
+    {
+      "word": "U",
+      "bangla": "উ",
+      "german": "Ooh",
+      "english": "U"
+    },
+    {
+      "word": "V",
+      "bangla": "ফাউ",
+      "german": "Fau",
+      "english": "V"
+    },
+    {
+      "word": "W",
+      "bangla": "ভে",
+      "german": "Vay",
+      "english": "W"
+    },
+    {
+      "word": "X",
+      "bangla": "ইক্স",
+      "german": "Ix",
+      "english": "X"
+    },
+    {
+      "word": "Y",
+      "bangla": "ইপসিলন",
+      "german": "Ypsilon",
+      "english": "Y"
+    },
+    {
+      "word": "Z",
+      "bangla": "সেট",
+      "german": "Tzett",
+      "english": "Z"
+    },
+    {
+      "word": "Ä",
+      "bangla": "আ-উমলাউট",
+      "german": "A-Umlaut",
+      "english": "Ä"
+    },
+    {
+      "word": "Ö",
+      "bangla": "ও-উমলাউট",
+      "german": "O-Umlaut",
+      "english": "Ö"
+    },
+    {
+      "word": "Ü",
+      "bangla": "উ-উমলাউট",
+      "german": "U-Umlaut",
+      "english": "Ü"
+    },
+    {
+      "word": "ß",
+      "bangla": "এসজেট",
+      "german": "Eszett",
+      "english": "ß"
+    }
+  ]
+}

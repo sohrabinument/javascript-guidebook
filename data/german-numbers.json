@@ -1,0 +1,738 @@
+{
+  "title": "German Numbers (1-100 and Large Numbers)",
+  "description": "Learn to count in German from 1 to 100 and important large numbers",
+  "headers": [
+    { "icon": "🔢", "text": "Number" },
+    { "icon": "📖", "text": "Bangla" },
+    { "icon": "🇩🇪", "text": "German" },
+    { "icon": "🇬🇧", "text": "English" }
+  ],
+  "rows": [
+    {
+      "word": "1",
+      "bangla": "এক",
+      "german": "Eins",
+      "english": "One"
+    },
+    {
+      "word": "2",
+      "bangla": "দুই",
+      "german": "Zwei",
+      "english": "Two"
+    },
+    {
+      "word": "3",
+      "bangla": "তিন",
+      "german": "Drei",
+      "english": "Three"
+    },
+    {
+      "word": "4",
+      "bangla": "চার",
+      "german": "Vier",
+      "english": "Four"
+    },
+    {
+      "word": "5",
+      "bangla": "পাঁচ",
+      "german": "Fünf",
+      "english": "Five"
+    },
+    {
+      "word": "6",
+      "bangla": "ছয়",
+      "german": "Sechs",
+      "english": "Six"
+    },
+    {
+      "word": "7",
+      "bangla": "সাত",
+      "german": "Sieben",
+      "english": "Seven"
+    },
+    {
+      "word": "8",
+      "bangla": "আট",
+      "german": "Acht",
+      "english": "Eight"
+    },
+    {
+      "word": "9",
+      "bangla": "নয়",
+      "german": "Neun",
+      "english": "Nine"
+    },
+    {
+      "word": "10",
+      "bangla": "দশ",
+      "german": "Zehn",
+      "english": "Ten"
+    },
+    {
+      "word": "11",
+      "bangla": "এগারো",
+      "german": "Elf",
+      "english": "Eleven"
+    },
+    {
+      "word": "12",
+      "bangla": "বারো",
+      "german": "Zwölf",
+      "english": "Twelve"
+    },
+    {
+      "word": "13",
+      "bangla": "তেরো",
+      "german": "Dreizehn",
+      "english": "Thirteen"
+    },
+    {
+      "word": "14",
+      "bangla": "চৌদ্দ",
+      "german": "Vierzehn",
+      "english": "Fourteen"
+    },
+    {
+      "word": "15",
+      "bangla": "পনেরো",
+      "german": "Fünfzehn",
+      "english": "Fifteen"
+    },
+    {
+      "word": "16",
+      "bangla": "ষোল",
+      "german": "Sechzehn",
+      "english": "Sixteen"
+    },
+    {
+      "word": "17",
+      "bangla": "সতেরো",
+      "german": "Siebzehn",
+      "english": "Seventeen"
+    },
+    {
+      "word": "18",
+      "bangla": "আঠারো",
+      "german": "Achtzehn",
+      "english": "Eighteen"
+    },
+    {
+      "word": "19",
+      "bangla": "উনিশ",
+      "german": "Neunzehn",
+      "english": "Nineteen"
+    },
+    {
+      "word": "20",
+      "bangla": "বিশ",
+      "german": "Zwanzig",
+      "english": "Twenty"
+    },
+    {
+      "word": "21",
+      "bangla": "একুশ",
+      "german": "Einundzwanzig",
+      "english": "Twenty-one"
+    },
+    {
+      "word": "22",
+      "bangla": "বাইশ",
+      "german": "Zweiundzwanzig",
+      "english": "Twenty-two"
+    },
+    {
+      "word": "23",
+      "bangla": "তেইশ",
+      "german": "Dreiundzwanzig",
+      "english": "Twenty-three"
+    },
+    {
+      "word": "24",
+      "bangla": "চব্বিশ",
+      "german": "Vierundzwanzig",
+      "english": "Twenty-four"
+    },
+    {
+      "word": "25",
+      "bangla": "পঁচিশ",
+      "german": "Fünfundzwanzig",
+      "english": "Twenty-five"
+    },
+    {
+      "word": "26",
+      "bangla": "ছাব্বিশ",
+      "german": "Sechsundzwanzig",
+      "english": "Twenty-six"
+    },
+    {
+      "word": "27",
+      "bangla": "সাতাশ",
+      "german": "Siebenundzwanzig",
+      "english": "Twenty-seven"
+    },
+    {
+      "word": "28",
+      "bangla": "আঠাশ",
+      "german": "Achtundzwanzig",
+      "english": "Twenty-eight"
+    },
+    {
+      "word": "29",
+      "bangla": "ঊনত্রিশ",
+      "german": "Neunundzwanzig",
+      "english": "Twenty-nine"
+    },
+    {
+      "word": "30",
+      "bangla": "ত্রিশ",
+      "german": "Dreißig",
+      "english": "Thirty"
+    },
+    {
+      "word": "31",
+      "bangla": "একত্রিশ",
+      "german": "Einunddreißig",
+      "english": "Thirty-one"
+    },
+    {
+      "word": "32",
+      "bangla": "বত্রিশ",
+      "german": "Zweiunddreißig",
+      "english": "Thirty-two"
+    },
+    {
+      "word": "33",
+      "bangla": "তেত্রিশ",
+      "german": "Dreiunddreißig",
+      "english": "Thirty-three"
+    },
+    {
+      "word": "34",
+      "bangla": "চৌত্রিশ",
+      "german": "Vierunddreißig",
+      "english": "Thirty-four"
+    },
+    {
+      "word": "35",
+      "bangla": "পঁয়ত্রিশ",
+      "german": "Fünfunddreißig",
+      "english": "Thirty-five"
+    },
+    {
+      "word": "36",
+      "bangla": "ছত্রিশ",
+      "german": "Sechsunddreißig",
+      "english": "Thirty-six"
+    },
+    {
+      "word": "37",
+      "bangla": "সাঁইত্রিশ",
+      "german": "Siebenunddreißig",
+      "english": "Thirty-seven"
+    },
+    {
+      "word": "38",
+      "bangla": "আটত্রিশ",
+      "german": "Achtunddreißig",
+      "english": "Thirty-eight"
+    },
+    {
+      "word": "39",
+      "bangla": "ঊনচল্লিশ",
+      "german": "Neununddreißig",
+      "english": "Thirty-nine"
+    },
+    {
+      "word": "40",
+      "bangla": "চল্লিশ",
+      "german": "Vierzig",
+      "english": "Forty"
+    },
+    {
+      "word": "41",
+      "bangla": "একচল্লিশ",
+      "german": "Einundvierzig",
+      "english": "Forty-one"
+    },
+    {
+      "word": "42",
+      "bangla": "বিয়াল্লিশ",
+      "german": "Zweiundvierzig",
+      "english": "Forty-two"
+    },
+    {
+      "word": "43",
+      "bangla": "তেতাল্লিশ",
+      "german": "Dreiundvierzig",
+      "english": "Forty-three"
+    },
+    {
+      "word": "44",
+      "bangla": "চুয়াল্লিশ",
+      "german": "Vierundvierzig",
+      "english": "Forty-four"
+    },
+    {
+      "word": "45",
+      "bangla": "পঁয়তাল্লিশ",
+      "german": "Fünfundvierzig",
+      "english": "Forty-five"
+    },
+    {
+      "word": "46",
+      "bangla": "ছেচল্লিশ",
+      "german": "Sechsundvierzig",
+      "english": "Forty-six"
+    },
+    {
+      "word": "47",
+      "bangla": "সাতচল্লিশ",
+      "german": "Siebenundvierzig",
+      "english": "Forty-seven"
+    },
+    {
+      "word": "48",
+      "bangla": "আটচল্লিশ",
+      "german": "Achtundvierzig",
+      "english": "Forty-eight"
+    },
+    {
+      "word": "49",
+      "bangla": "ঊনপঞ্চাশ",
+      "german": "Neunundvierzig",
+      "english": "Forty-nine"
+    },
+    {
+      "word": "50",
+      "bangla": "পঞ্চাশ",
+      "german": "Fünfzig",
+      "english": "Fifty"
+    },
+    {
+      "word": "51",
+      "bangla": "একান্ন",
+      "german": "Einundfünfzig",
+      "english": "Fifty-one"
+    },
+    {
+      "word": "52",
+      "bangla": "বাহান্ন",
+      "german": "Zweiundfünfzig",
+      "english": "Fifty-two"
+    },
+    {
+      "word": "53",
+      "bangla": "তিপ্পান্ন",
+      "german": "Dreiundfünfzig",
+      "english": "Fifty-three"
+    },
+    {
+      "word": "54",
+      "bangla": "চুয়ান্ন",
+      "german": "Vierundfünfzig",
+      "english": "Fifty-four"
+    },
+    {
+      "word": "55",
+      "bangla": "পঞ্চান্ন",
+      "german": "Fünfundfünfzig",
+      "english": "Fifty-five"
+    },
+    {
+      "word": "56",
+      "bangla": "ছাপ্পান্ন",
+      "german": "Sechsundfünfzig",
+      "english": "Fifty-six"
+    },
+    {
+      "word": "57",
+      "bangla": "সাতান্ন",
+      "german": "Siebenundfünfzig",
+      "english": "Fifty-seven"
+    },
+    {
+      "word": "58",
+      "bangla": "আটান্ন",
+      "german": "Achtundfünfzig",
+      "english": "Fifty-eight"
+    },
+    {
+      "word": "59",
+      "bangla": "ঊনষাট",
+      "german": "Neunundfünfzig",
+      "english": "Fifty-nine"
+    },
+    {
+      "word": "60",
+      "bangla": "ষাট",
+      "german": "Sechzig",
+      "english": "Sixty"
+    },
+    {
+      "word": "61",
+      "bangla": "একষট্টি",
+      "german": "Einundsechzig",
+      "english": "Sixty-one"
+    },
+    {
+      "word": "62",
+      "bangla": "বাষট্টি",
+      "german": "Zweiundsechzig",
+      "english": "Sixty-two"
+    },
+    {
+      "word": "63",
+      "bangla": "তেষট্টি",
+      "german": "Dreiundsechzig",
+      "english": "Sixty-three"
+    },
+    {
+      "word": "64",
+      "bangla": "চৌষট্টি",
+      "german": "Vierundsechzig",
+      "english": "Sixty-four"
+    },
+    {
+      "word": "65",
+      "bangla": "পঁয়ষট্টি",
+      "german": "Fünfundsechzig",
+      "english": "Sixty-five"
+    },
+    {
+      "word": "66",
+      "bangla": "ছেষট্টি",
+      "german": "Sechsundsechzig",
+      "english": "Sixty-six"
+    },
+    {
+      "word": "67",
+      "bangla": "সাতষট্টি",
+      "german": "Siebenundsechzig",
+      "english": "Sixty-seven"
+    },
+    {
+      "word": "68",
+      "bangla": "আটষট্টি",
+      "german": "Achtundsechzig",
+      "english": "Sixty-eight"
+    },
+    {
+      "word": "69",
+      "bangla": "ঊনসত্তর",
+      "german": "Neunundsechzig",
+      "english": "Sixty-nine"
+    },
+    {
+      "word": "70",
+      "bangla": "সত্তর",
+      "german": "Siebzig",
+      "english": "Seventy"
+    },
+    {
+      "word": "71",
+      "bangla": "একাত্তর",
+      "german": "Einundsiebzig",
+      "english": "Seventy-one"
+    },
+    {
+      "word": "72",
+      "bangla": "বাহাত্তর",
+      "german": "Zweiundsiebzig",
+      "english": "Seventy-two"
+    },
+    {
+      "word": "73",
+      "bangla": "তিয়াত্তর",
+      "german": "Dreiundsiebzig",
+      "english": "Seventy-three"
+    },
+    {
+      "word": "74",
+      "bangla": "চুয়াত্তর",
+      "german": "Vierundsiebzig",
+      "english": "Seventy-four"
+    },
+    {
+      "word": "75",
+      "bangla": "পঁচাত্তর",
+      "german": "Fünfundsiebzig",
+      "english": "Seventy-five"
+    },
+    {
+      "word": "76",
+      "bangla": "ছিয়াত্তর",
+      "german": "Sechsundsiebzig",
+      "english": "Seventy-six"
+    },
+    {
+      "word": "77",
+      "bangla": "সাতাত্তর",
+      "german": "Siebenundsiebzig",
+      "english": "Seventy-seven"
+    },
+    {
+      "word": "78",
+      "bangla": "আটাত্তর",
+      "german": "Achtundsiebzig",
+      "english": "Seventy-eight"
+    },
+    {
+      "word": "79",
+      "bangla": "ঊনআশি",
+      "german": "Neunundsiebzig",
+      "english": "Seventy-nine"
+    },
+    {
+      "word": "80",
+      "bangla": "আশি",
+      "german": "Achtzig",
+      "english": "Eighty"
+    },
+    {
+      "word": "81",
+      "bangla": "একাশি",
+      "german": "Einundachtzig",
+      "english": "Eighty-one"
+    },
+    {
+      "word": "82",
+      "bangla": "বিরাশি",
+      "german": "Zweiundachtzig",
+      "english": "Eighty-two"
+    },
+    {
+      "word": "83",
+      "bangla": "তিরাশি",
+      "german": "Dreiundachtzig",
+      "english": "Eighty-three"
+    },
+    {
+      "word": "84",
+      "bangla": "চুরাশি",
+      "german": "Vierundachtzig",
+      "english": "Eighty-four"
+    },
+    {
+      "word": "85",
+      "bangla": "পঁচাশি",
+      "german": "Fünfundachtzig",
+      "english": "Eighty-five"
+    },
+    {
+      "word": "86",
+      "bangla": "ছিয়াশি",
+      "german": "Sechsundachtzig",
+      "english": "Eighty-six"
+    },
+    {
+      "word": "87",
+      "bangla": "সাতাশি",
+      "german": "Siebenundachtzig",
+      "english": "Eighty-seven"
+    },
+    {
+      "word": "88",
+      "bangla": "আটাশি",
+      "german": "Achtundachtzig",
+      "english": "Eighty-eight"
+    },
+    {
+      "word": "89",
+      "bangla": "ঊননব্বই",
+      "german": "Neunundachtzig",
+      "english": "Eighty-nine"
+    },
+    {
+      "word": "90",
+      "bangla": "নব্বই",
+      "german": "Neunzig",
+      "english": "Ninety"
+    },
+    {
+      "word": "91",
+      "bangla": "একানব্বই",
+      "german": "Einundneunzig",
+      "english": "Ninety-one"
+    },
+    {
+      "word": "92",
+      "bangla": "বিরানব্বই",
+      "german": "Zweiundneunzig",
+      "english": "Ninety-two"
+    },
+    {
+      "word": "93",
+      "bangla": "তিরানব্বই",
+      "german": "Dreiundneunzig",
+      "english": "Ninety-three"
+    },
+    {
+      "word": "94",
+      "bangla": "চুরানব্বই",
+      "german": "Vierundneunzig",
+      "english": "Ninety-four"
+    },
+    {
+      "word": "95",
+      "bangla": "পঁচানব্বই",
+      "german": "Fünfundneunzig",
+      "english": "Ninety-five"
+    },
+    {
+      "word": "96",
+      "bangla": "ছিয়ানব্বই",
+      "german": "Sechsundneunzig",
+      "english": "Ninety-six"
+    },
+    {
+      "word": "97",
+      "bangla": "সাতানব্বই",
+      "german": "Siebenundneunzig",
+      "english": "Ninety-seven"
+    },
+    {
+      "word": "98",
+      "bangla": "আটানব্বই",
+      "german": "Achtundneunzig",
+      "english": "Ninety-eight"
+    },
+    {
+      "word": "99",
+      "bangla": "নিরানব্বই",
+      "german": "Neunundneunzig",
+      "english": "Ninety-nine"
+    },
+    {
+      "word": "100",
+      "bangla": "একশ",
+      "german": "Hundert",
+      "english": "One hundred"
+    },
+    {
+      "word": "150",
+      "bangla": "একশ পঞ্চাশ",
+      "german": "Hundertfünfzig",
+      "english": "One hundred fifty"
+    },
+    {
+      "word": "200",
+      "bangla": "দুইশ",
+      "german": "Zweihundert",
+      "english": "Two hundred"
+    },
+    {
+      "word": "300",
+      "bangla": "তিনশ",
+      "german": "Dreihundert",
+      "english": "Three hundred"
+    },
+    {
+      "word": "400",
+      "bangla": "চারশ",
+      "german": "Vierhundert",
+      "english": "Four hundred"
+    },
+    {
+      "word": "500",
+      "bangla": "পাঁচশ",
+      "german": "Fünfhundert",
+      "english": "Five hundred"
+    },
+    {
+      "word": "600",
+      "bangla": "ছয়শ",
+      "german": "Sechshundert",
+      "english": "Six hundred"
+    },
+    {
+      "word": "700",
+      "bangla": "সাতশ",
+      "german": "Siebenhundert",
+      "english": "Seven hundred"
+    },
+    {
+      "word": "800",
+      "bangla": "আটশ",
+      "german": "Achthundert",
+      "english": "Eight hundred"
+    },
+    {
+      "word": "900",
+      "bangla": "নয়শ",
+      "german": "Neunhundert",
+      "english": "Nine hundred"
+    },
+    {
+      "word": "1000",
+      "bangla": "এক হাজার",
+      "german": "Eintausend",
+      "english": "One thousand"
+    },
+    {
+      "word": "1500",
+      "bangla": "এক হাজার পাঁচশ",
+      "german": "Eintausendfünfhundert",
+      "english": "One thousand five hundred"
+    },
+    {
+      "word": "2000",
+      "bangla": "দুই হাজার",
+      "german": "Zweitausend",
+      "english": "Two thousand"
+    },
+    {
+      "word": "3000",
+      "bangla": "তিন হাজার",
+      "german": "Dreitausend",
+      "english": "Three thousand"
+    },
+    {
+      "word": "4000",
+      "bangla": "চার হাজার",
+      "german": "Viertausend",
+      "english": "Four thousand"
+    },
+    {
+      "word": "5000",
+      "bangla": "পাঁচ হাজার",
+      "german": "Fünftausend",
+      "english": "Five thousand"
+    },
+    {
+      "word": "6000",
+      "bangla": "ছয় হাজার",
+      "german": "Sechstausend",
+      "english": "Six thousand"
+    },
+    {
+      "word": "7000",
+      "bangla": "সাত হাজার",
+      "german": "Siebentausend",
+      "english": "Seven thousand"
+    },
+    {
+      "word": "8000",
+      "bangla": "আট হাজার",
+      "german": "Achttausend",
+      "english": "Eight thousand"
+    },
+    {
+      "word": "9000",
+      "bangla": "নয় হাজার",
+      "german": "Neuntausend",
+      "english": "Nine thousand"
+    },
+    {
+      "word": "10000",
+      "bangla": "দশ হাজার",
+      "german": "Zehntausend",
+      "english": "Ten thousand"
+    },
+    {
+      "word": "100000",
+      "bangla": "এক লক্ষ",
+      "german": "Hunderttausend",
+      "english": "One hundred thousand"
+    }
+  ]
+} 
