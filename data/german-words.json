@@ -1,191 +1,285 @@
 {
   "title": "Basic German Sentence Table",
-  "headers": [
-    { "icon": "🟡", "text": "Word" },
-    { "icon": "📖", "text": "Bangla" },
-    { "icon": "🇩🇪", "text": "German" },
-    { "icon": "🇬🇧", "text": "English" }
+  "headers": [{
+      "icon": "🟡",
+      "text": "Word"
+    },
+    {
+      "icon": "📖",
+      "text": "Bangla"
+    },
+    {
+      "icon": "🇩🇪",
+      "text": "German"
+    },
+    {
+      "icon": "🇬🇧",
+      "text": "English"
+    },
+    {
+      "icon": "📚",
+      "text": "Examples"
+    }
   ],
-  "rows": [
-    {
-      "word": "Hallo",
-      "bangla": "হ্যালো মা!",
-      "german": "Hallo Mama!",
-      "english": "Hello Mom!"
+  "rows": [{
+      "word": "Hallo (hello/হ্যালো)",
+      "bangla": "হ্যালো",
+      "german": "Hallo",
+      "english": "Hello",
+      "examples": [
+        "Hallo Mama! - হ্যালো মা!",
+        "Hallo Freund! - হ্যালো বন্ধু!",
+        "Hallo, wie geht es dir? - হ্যালো, তুমি কেমন আছো?",
+        "Hallo Peter, schön dich zu sehen! - হ্যালো পিটার, তোমাকে দেখে খুশি হলাম!",
+        "Hallo alle zusammen! - সবাইকে হ্যালো!"
+      ]
     },
     {
-      "word": "",
-      "bangla": "হ্যালো বন্ধু!",
-      "german": "Hallo Freund!",
-      "english": "Hello friend!"
+      "word": "Danke (thank you/ধন্যবাদ)",
+      "bangla": "ধন্যবাদ",
+      "german": "Danke",
+      "english": "Thank you",
+      "examples": [
+        "Danke Mama! - ধন্যবাদ মা!",
+        "Danke Freund! - ধন্যবাদ বন্ধু!",
+        "Danke für das Essen. - খাবারের জন্য ধন্যবাদ।",
+        "Vielen Dank für Ihre Hilfe! - আপনার সাহায্যের জন্য অনেক ধন্যবাদ!",
+        "Danke schön! - অনেক ধন্যবাদ!"
+      ]
     },
     {
-      "word": "",
-      "bangla": "হ্যালো, তুমি কেমন আছো?",
-      "german": "Hallo, wie geht es dir?",
-      "english": "Hello, how are you?"
+      "word": "Tschüss (bye/বিদায়)",
+      "bangla": "বিদায়",
+      "german": "Tschüss",
+      "english": "Bye",
+      "examples": [
+        "Tschüss Freund! - বিদায় বন্ধু!",
+        "Ich gehe jetzt, tschüss! - আমি এখন যাচ্ছি, বিদায়!",
+        "Nach der Schule sagten alle tschüss. - স্কুল শেষে সবাই বললো বিদায়।",
+        "Tschüss, bis morgen! - বিদায়, কাল দেখা হবে!",
+        "Tschüss Mama, ich bin bald zurück! - বিদায় মা, আমি শীঘ্রই ফিরে আসবো!"
+      ]
     },
     {
-      "word": "Danke",
-      "bangla": "ধন্যবাদ মা!",
-      "german": "Danke Mama!",
-      "english": "Thank you, Mom!"
+      "word": "Ja (yes/হ্যাঁ)",
+      "bangla": "হ্যাঁ",
+      "german": "Ja",
+      "english": "Yes",
+      "examples": [
+        "Ja, ich komme. - হ্যাঁ, আমি আসবো।",
+        "Bist du müde? Ja. - তুমি কি ক্লান্ত? হ্যাঁ।",
+        "Ja, das ist mein Buch. - হ্যাঁ, এটা আমার বই।",
+        "Magst du Schokolade? Ja, sehr! - তুমি কি চকলেট পছন্দ করো? হ্যাঁ, খুবই!",
+        "Ja, gerne! - হ্যাঁ, খুশিতে!"
+      ]
     },
     {
-      "word": "",
-      "bangla": "ধন্যবাদ বন্ধু!",
-      "german": "Danke Freund!",
-      "english": "Thank you, friend!"
+      "word": "Nein (no/না)",
+      "bangla": "না",
+      "german": "Nein",
+      "english": "No",
+      "examples": [
+        "Nein, ich komme nicht. - না, আমি আসবো না।",
+        "Magst du das? Nein. - তুমি কি এটা পছন্দ করো? না।",
+        "Nein, das ist nicht richtig. - না, এটা ঠিক না।",
+        "Möchtest du Kaffee? Nein, danke. - তুমি কি কফি চাও? না, ধন্যবাদ।",
+        "Nein, ich habe keine Zeit. - না, আমার সময় নেই।"
+      ]
     },
     {
-      "word": "",
-      "bangla": "খাবারের জন্য ধন্যবাদ।",
-      "german": "Danke für das Essen.",
-      "english": "Thanks for the food."
+      "word": "Kaffee (coffee/কফি)",
+      "bangla": "কফি",
+      "german": "Kaffee",
+      "english": "Coffee",
+      "examples": [
+        "Ich trinke morgens Kaffee. - আমি সকালে কফি খাই।",
+        "Möchten Sie Kaffee? - আপনি কি কফি চান?",
+        "Kaffee mit Zucker? - কফি চিনি দিয়ে খাবেন?",
+        "Kaffee mit Milch? - কফি দুধ দিয়ে খাবেন?",
+        "Der Kaffee ist heiß und lecker. - কফি গরম এবং সুস্বাদু।"
+      ]
     },
     {
-      "word": "Tschüss",
-      "bangla": "বিদায় বন্ধু!",
-      "german": "Tschüss Freund!",
-      "english": "Bye, friend!"
+      "word": "Zucker (sugar/চিনি)",
+      "bangla": "চিনি",
+      "german": "Zucker",
+      "english": "Sugar",
+      "examples": [
+        "Ich möchte Zucker in meinen Tee. - আমি চায়ে চিনি দিতে চাই।",
+        "Möchten Sie Zucker? - আপনি কি চিনি চান?",
+        "Zucker oder Honig? - আপনি কি চিনি নেবেন, না কি মধু?",
+        "Der Kuchen hat viel Zucker. - কেকে অনেক চিনি আছে।",
+        "Ich nehme keinen Zucker im Kaffee. - আমি কফিতে চিনি নিই না।"
+      ]
     },
     {
-      "word": "",
-      "bangla": "আমি এখন যাচ্ছি, বিদায়!",
-      "german": "Ich gehe jetzt, tschüss!",
-      "english": "I'm going now, bye!"
+      "word": "Milch (milk/দুধ)",
+      "bangla": "দুধ",
+      "german": "Milch",
+      "english": "Milk",
+      "examples": [
+        "Ich trinke Kaffee mit Milch. - আমি দুধ দিয়ে কফি পছন্দ করি।",
+        "Tee ohne Milch? - দুধ ছাড়া চা খাবেন?",
+        "Die Milch ist frisch. - দুধ তাজা।",
+        "Kinder trinken gerne Milch. - বাচ্চারা দুধ পছন্দ করে।",
+        "Ich kaufe Milch im Supermarkt. - আমি সুপার মার্কেট থেকে দুধ কিনি।"
+      ]
     },
     {
-      "word": "",
-      "bangla": "স্কুল শেষে সবাই বললো বিদায়।",
-      "german": "Nach der Schule sagten alle tschüss.",
-      "english": "After school, everyone said bye."
+      "word": "Mit (with/সাথে)",
+      "bangla": "সাথে",
+      "german": "Mit",
+      "english": "With",
+      "examples": [
+        "Ich trinke Tee mit Zucker. - আমি চিনি দিয়ে চা খাই।",
+        "Ich trinke Kaffee mit Milch. - আমি দুধ দিয়ে কফি খাই।",
+        "Ich gehe mit meinem Freund. - আমি আমার বন্ধুর সাথে যাই।",
+        "Mit wem gehst du? - তুমি কার সাথে যাচ্ছো?",
+        "Ich arbeite mit dem Computer. - আমি কম্পিউটার দিয়ে কাজ করি।"
+      ]
     },
     {
-      "word": "Ja",
-      "bangla": "হ্যাঁ, আমি আসবো।",
-      "german": "Ja, ich komme.",
-      "english": "Yes, I will come."
+      "word": "Oder (or/অথবা)",
+      "bangla": "অথবা",
+      "german": "Oder",
+      "english": "Or",
+      "examples": [
+        "Möchten Sie Tee oder Kaffee? - আপনি কি চা নেবেন, না কি কফি?",
+        "Zucker oder Honig? - আপনি কি চিনি নেবেন, না কি মধু?",
+        "Gehst du heute oder morgen? - তুমি কি আজ যাবে নাকি কাল?",
+        "Auto oder Bus? - গাড়ি নাকি বাস?",
+        "Rot oder blau? - লাল নাকি নীল?"
+      ]
     },
     {
-      "word": "",
-      "bangla": "তুমি কি ক্লান্ত? হ্যাঁ।",
-      "german": "Bist du müde? Ja.",
-      "english": "Are you tired? Yes."
+      "word": "Wasser (water/পানি)",
+      "bangla": "পানি",
+      "german": "Wasser",
+      "english": "Water",
+      "examples": [
+        "Ich trinke viel Wasser. - আমি অনেক পানি পান করি।",
+        "Das Wasser ist kalt. - পানি ঠান্ডা।",
+        "Können Sie mir Wasser geben? - আপনি কি আমাকে পানি দিতে পারেন?",
+        "Wasser ist wichtig für die Gesundheit. - স্বাস্থ্যের জন্য পানি গুরুত্বপূর্ণ।",
+        "Ich schwimme gerne im Wasser. - আমি পানিতে সাঁতার কাটতে পছন্দ করি।"
+      ]
     },
     {
-      "word": "",
-      "bangla": "হ্যাঁ, এটা আমার বই।",
-      "german": "Ja, das ist mein Buch.",
-      "english": "Yes, this is my book."
+      "word": "Brot (bread/রুটি)",
+      "bangla": "রুটি",
+      "german": "Brot",
+      "english": "Bread",
+      "examples": [
+        "Ich esse Brot zum Frühstück. - আমি সকালের নাস্তায় রুটি খাই।",
+        "Das Brot ist frisch. - রুটি তাজা।",
+        "Möchten Sie Brot mit Butter? - আপনি কি মাখন দিয়ে রুটি খাবেন?",
+        "Deutsches Brot ist sehr lecker. - জার্মান রুটি খুবই সুস্বাদু।",
+        "Ich kaufe Brot beim Bäcker. - আমি বেকারির দোকান থেকে রুটি কিনি।"
+      ]
     },
     {
-      "word": "Nein",
-      "bangla": "না, আমি আসবো না।",
-      "german": "Nein, ich komme nicht.",
-      "english": "No, I won't come."
+      "word": "Haus (house/বাড়ি)",
+      "bangla": "বাড়ি",
+      "german": "Haus",
+      "english": "House",
+      "examples": [
+        "Das ist mein Haus. - এটা আমার বাড়ি।",
+        "Ich gehe nach Hause. - আমি বাড়ি যাচ্ছি।",
+        "Unser Haus ist groß. - আমাদের বাড়ি বড়।",
+        "Das Haus hat einen schönen Garten. - বাড়িতে একটা সুন্দর বাগান আছে।",
+        "Wir wohnen in einem alten Haus. - আমরা একটা পুরাতন বাড়িতে থাকি।"
+      ]
     },
     {
-      "word": "",
-      "bangla": "তুমি কি এটা পছন্দ করো? না।",
-      "german": "Magst du das? Nein.",
-      "english": "Do you like it? No."
+      "word": "Auto (car/গাড়ি)",
+      "bangla": "গাড়ি",
+      "german": "Auto",
+      "english": "Car",
+      "examples": [
+        "Mein Auto ist blau. - আমার গাড়ি নীল।",
+        "Ich fahre mit dem Auto. - আমি গাড়িতে যাই।",
+        "Das Auto ist sehr schnell. - গাড়িটি খুবই দ্রুত।",
+        "Ich wasche mein Auto jeden Samstag. - আমি প্রতি শনিবার আমার গাড়ি ধুই।",
+        "Das neue Auto kostet viel Geld. - নতুন গাড়ির দাম অনেক।"
+      ]
     },
     {
-      "word": "",
-      "bangla": "না, এটা ঠিক না।",
-      "german": "Nein, das ist nicht richtig.",
-      "english": "No, this is not right."
+      "word": "Schule (school/স্কুল)",
+      "bangla": "স্কুল",
+      "german": "Schule",
+      "english": "School",
+      "examples": [
+        "Ich gehe zur Schule. - আমি স্কুলে যাই।",
+        "Die Schule beginnt um acht. - স্কুল আটটায় শুরু হয়।",
+        "Nach der Schule spiele ich. - স্কুলের পর আমি খেলি।",
+        "Meine Schule ist sehr groß. - আমার স্কুল খুবই বড়।",
+        "In der Schule lerne ich Deutsch. - স্কুলে আমি জার্মান শিখি।"
+      ]
     },
     {
-      "word": "Zucker",
-      "bangla": "আমি চায়ে চিনি দিতে চাই।",
-      "german": "Ich möchte Zucker in meinen Tee.",
-      "english": "I want sugar in my tea."
+      "word": "Buch (book/বই)",
+      "bangla": "বই",
+      "german": "Buch",
+      "english": "Book",
+      "examples": [
+        "Das ist ein gutes Buch. - এটা একটা ভাল বই।",
+        "Ich lese ein Buch. - আমি একটা বই পড়ছি।",
+        "Mein Lieblingsbuch ist interessant. - আমার প্রিয় বই আকর্ষণীয়।",
+        "Ich kaufe Bücher in der Buchhandlung. - আমি বইয়ের দোকান থেকে বই কিনি।",
+        "Das Buch hat 200 Seiten. - বইটিতে ২০০ পাতা আছে।"
+      ]
     },
     {
-      "word": "",
-      "bangla": "আপনি কি চিনি চান?",
-      "german": "Möchten Sie Zucker?",
-      "english": "Would you like sugar?"
+      "word": "Zeit (time/সময়)",
+      "bangla": "সময়",
+      "german": "Zeit",
+      "english": "Time",
+      "examples": [
+        "Ich habe keine Zeit. - আমার সময় নেই।",
+        "Wie spät ist es? - এখন কয়টা বাজে?",
+        "Die Zeit vergeht schnell. - সময় দ্রুত কেটে যায়।",
+        "Wir haben viel Zeit. - আমাদের অনেক সময় আছে।",
+        "Zeit ist Geld. - সময়ই অর্থ।"
+      ]
     },
     {
-      "word": "Oder",
-      "bangla": "আপনি কি চা নেবেন, না কি কফি?",
-      "german": "Möchten Sie Tee oder Kaffee?",
-      "english": "Would you like tea or coffee?"
+      "word": "Geld (money/টাকা)",
+      "bangla": "টাকা",
+      "german": "Geld",
+      "english": "Money",
+      "examples": [
+        "Ich brauche Geld. - আমার টাকা দরকার।",
+        "Das kostet viel Geld. - এটার দাম অনেক টাকা।",
+        "Haben Sie Geld dabei? - আপনার কাছে টাকা আছে?",
+        "Geld macht nicht glücklich. - টাকা সুখ দেয় না।",
+        "Ich spare Geld für den Urlaub. - আমি ছুটির জন্য টাকা জমাচ্ছি।"
+      ]
     },
     {
-      "word": "",
-      "bangla": "আপনি কি চিনি নেবেন, না কি মধু?",
-      "german": "Zucker oder Honig?",
-      "english": "Sugar or honey?"
+      "word": "Arbeit (work/কাজ)",
+      "bangla": "কাজ",
+      "german": "Arbeit",
+      "english": "Work",
+      "examples": [
+        "Ich gehe zur Arbeit. - আমি কাজে যাই।",
+        "Die Arbeit ist schwer. - কাজটা কঠিন।",
+        "Nach der Arbeit bin ich müde. - কাজের পর আমি ক্লান্ত।",
+        "Meine Arbeit macht mir Spaß. - আমার কাজ আমার ভালো লাগে।",
+        "Arbeit beginnt um neun Uhr. - কাজ নয়টায় শুরু হয়।"
+      ]
     },
     {
-      "word": "Milch",
-      "bangla": "আমি দুধ দিয়ে কফি পছন্দ করি।",
-      "german": "Ich trinke Kaffee mit Milch.",
-      "english": "I drink coffee with milk."
-    },
-    {
-      "word": "",
-      "bangla": "দুধ ছাড়া চা খাবেন?",
-      "german": "Tee ohne Milch?",
-      "english": "Tea without milk?"
-    },
-    {
-      "word": "Mit",
-      "bangla": "আমি চিনি দিয়ে চা খাই।",
-      "german": "Ich trinke Tee mit Zucker.",
-      "english": "I drink tea with sugar."
-    },
-    {
-      "word": "",
-      "bangla": "আমি দুধ দিয়ে কফি খাই।",
-      "german": "Ich trinke Kaffee mit Milch.",
-      "english": "I drink coffee with milk."
-    },
-    {
-      "word": "Kaffee",
-      "bangla": "আমি সকালে কফি খাই।",
-      "german": "Ich trinke morgens Kaffee.",
-      "english": "I drink coffee in the morning."
-    },
-    {
-      "word": "",
-      "bangla": "আপনি কি কফি চান?",
-      "german": "Möchten Sie Kaffee?",
-      "english": "Would you like coffee?"
-    },
-    {
-      "word": "",
-      "bangla": "কফি চিনি দিয়ে খাবেন?",
-      "german": "Kaffee mit Zucker?",
-      "english": "Coffee with sugar?"
-    },
-    {
-      "word": "",
-      "bangla": "কফি দুধ দিয়ে খাবেন?",
-      "german": "Kaffee mit Milch?",
-      "english": "Coffee with milk?"
-    },
-    {
-      "word": "",
-      "bangla": "আমি কফি চিনি এবং দুধ দিয়ে খাই।",
-      "german": "Ich trinke Kaffee mit Zucker und Milch.",
-      "english": "I drink coffee with sugar and milk."
-    },
-    {
-      "word": "",
-      "bangla": "আপনি কি কফি নেবেন, না কি চা?",
-      "german": "Kaffee oder Tee?",
-      "english": "Coffee or tea?"
-    },
-    {
-      "word": "",
-      "bangla": "আমি দুধ দিয়ে কফি পছন্দ করি, চিনি ছাড়া।",
-      "german": "Ich mag Kaffee mit Milch, ohne Zucker.",
-      "english": "I like coffee with milk, without sugar."
+      "word": "Familie (family/পরিবার)",
+      "bangla": "পরিবার",
+      "german": "Familie",
+      "english": "Family",
+      "examples": [
+        "Meine Familie ist groß. - আমার পরিবার বড়।",
+        "Ich liebe meine Familie. - আমি আমার পরিবারকে ভালোবাসি।",
+        "Die Familie isst zusammen. - পরিবার একসাথে খায়।",
+        "Am Wochenende besuche ich meine Familie. - সপ্তাহান্তে আমি আমার পরিবারের সাথে দেখা করি।",
+        "Familie ist das Wichtigste im Leben. - জীবনে পরিবারই সবচেয়ে গুরুত্বপূর্ণ।"
+      ]
     }
   ]
-} 
+}

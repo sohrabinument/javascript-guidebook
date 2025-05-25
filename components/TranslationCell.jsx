@@ -122,15 +122,21 @@ export default function TranslationCell({
   }, [isDropdownOpen]);
 
   // Render a single table cell with hover functionality
-  const renderCell = (content, lang, isBold = false) => (
-    <td
-      className="p-2 border border-gray-300 cursor-pointer hover:bg-gray-100"
-      onMouseEnter={() => handleCellHover(content, lang)}
-      onMouseLeave={handleCellLeave}
-    >
-      {isBold ? <strong>{content}</strong> : content}
-    </td>
-  );
+  const renderCell = (content, lang, isBold = false) => {
+    // Extract the German word part before parentheses if it exists
+    const germanWord = content.split(" (")[0];
+    const displayText = content;
+
+    return (
+      <td
+        className="p-2 border border-gray-300 cursor-pointer hover:bg-gray-100"
+        onMouseEnter={() => handleCellHover(germanWord, lang)}
+        onMouseLeave={handleCellLeave}
+      >
+        {isBold ? <strong>{displayText}</strong> : displayText}
+      </td>
+    );
+  };
 
   // Render example item
   const renderExampleItem = (example, index, isDefault = false) => {
