@@ -1,0 +1,178 @@
+{
+  "title": "German Greetings and Introductions",
+  "description": "Learn common German greetings and how to introduce yourself",
+  "headers": [{
+      "icon": "👋",
+      "text": "English"
+    },
+    {
+      "icon": "📖",
+      "text": "Bangla"
+    },
+    {
+      "icon": "🇩🇪",
+      "text": "German"
+    },
+    {
+      "icon": "💬",
+      "text": "Examples"
+    },
+    {
+      "icon": "🎯",
+      "text": "Usage"
+    }
+  ],
+  "rows": [{
+      "word": "Greetings",
+      "bangla": "শুভেচ্ছা",
+      "german": "Begrüßungen",
+      "english": "Greetings",
+      "examples": [
+        "Guten Morgen - শুভ সকাল 🌅",
+        "Guten Tag - শুভ দিন ☀️",
+        "Guten Abend - শুভ সন্ধ্যা 🌆",
+        "Gute Nacht - শুভ রাত্রি 🌙",
+        "Hallo - হ্যালো 👋",
+        "Servus - হ্যালো 👋",
+        "Moin - হ্যালো 👋",
+        "Grüß Gott - ঈশ্বরের শুভেচ্ছা 🙏",
+        "Willkommen - স্বাগতম 🎉",
+        "Auf Wiedersehen - বিদায় 👋"
+      ],
+      "usage": "Use 'Guten Morgen' until 11 AM, 'Guten Tag' until 6 PM, and 'Guten Abend' after 6 PM"
+    },
+    {
+      "word": "Introductions",
+      "bangla": "পরিচয়",
+      "german": "Vorstellungen",
+      "english": "Introductions",
+      "examples": [
+        "Ich heiße... - আমার নাম... 👤",
+        "Mein Name ist... - আমার নাম... 📝",
+        "Freut mich - আনন্দিত হলাম 😊",
+        "Wie heißen Sie? - আপনার নাম কি? ❓",
+        "Woher kommen Sie? - আপনি কোথা থেকে এসেছেন? 🌍",
+        "Ich komme aus... - আমি... থেকে এসেছি 🗺️",
+        "Ich bin... Jahre alt - আমার বয়স... বছর 📅",
+        "Ich wohne in... - আমি... তে থাকি 🏠",
+        "Ich lerne Deutsch - আমি জার্মান শিখছি 📚",
+        "Ich arbeite als... - আমি... হিসেবে কাজ করি 💼"
+      ],
+      "usage": "Use 'Sie' for formal situations and 'du' for informal situations"
+    },
+    {
+      "word": "Polite Expressions",
+      "bangla": "ভদ্রতা",
+      "german": "Höflichkeit",
+      "english": "Politeness",
+      "examples": [
+        "Bitte - অনুগ্রহ করে 🙏",
+        "Danke - ধন্যবাদ 🙏",
+        "Danke schön - অনেক ধন্যবাদ 🙏",
+        "Gern geschehen - স্বাগতম 😊",
+        "Entschuldigung - দুঃখিত 😔",
+        "Es tut mir leid - আমি দুঃখিত 😔",
+        "Kein Problem - কোন সমস্যা নেই ✅",
+        "Alles Gute - শুভকামনা 🌟",
+        "Bis später - পরে দেখা হবে 👋",
+        "Auf Wiederhören - শুনতে পাবেন 👋"
+      ],
+      "usage": "Always use 'Bitte' when asking for something and 'Danke' when receiving something"
+    },
+    {
+      "word": "Farewells",
+      "bangla": "বিদায়",
+      "german": "Abschied",
+      "english": "Farewells",
+      "examples": [
+        "Tschüss - বিদায় 👋",
+        "Bis bald - শীঘ্রই দেখা হবে 👋",
+        "Bis morgen - কাল দেখা হবে 👋",
+        "Gute Reise - শুভ যাত্রা ✈️",
+        "Mach's gut - ভালো থাকুন 👋",
+        "Auf Wiedersehen - বিদায় 👋",
+        "Bis zum nächsten Mal - পরের বার দেখা হবে 👋",
+        "Schönen Tag noch - আপনার দিনটি শুভ হোক 🌟",
+        "Gute Nacht - শুভ রাত্রি 🌙",
+        "Bis dann - তাহলে দেখা হবে 👋"
+      ],
+      "usage": "Use 'Tschüss' for informal situations and 'Auf Wiedersehen' for formal situations"
+    },
+    {
+      "word": "Special Occasions",
+      "bangla": "বিশেষ উপলক্ষ",
+      "german": "Besondere Anlässe",
+      "english": "Special Occasions",
+      "examples": [
+        "Frohe Weihnachten - শুভ বড়দিন 🎄",
+        "Frohes Neues Jahr - শুভ নববর্ষ 🎆",
+        "Alles Gute zum Geburtstag - জন্মদিনের শুভেচ্ছা 🎂",
+        "Herzlichen Glückwunsch - অভিনন্দন 🎉",
+        "Gute Besserung - শুভ আরোগ্য কামনা 💊",
+        "Willkommen zurück - ফিরে আসার জন্য স্বাগতম 🎊",
+        "Guten Appetit - খাবার উপভোগ করুন 🍽️",
+        "Prost - চিয়ার্স 🍻",
+        "Viel Glück - শুভকামনা 🍀",
+        "Gute Fahrt - শুভ যাত্রা 🚗"
+      ],
+      "usage": "Use these greetings for specific occasions and celebrations"
+    },
+    {
+      "word": "Practice Conversations",
+      "bangla": "অনুশীলন কথোপকথন",
+      "german": "Übungsgespräche",
+      "english": "Practice Conversations",
+      "examples": [
+        "Guten Morgen! Wie geht es Ihnen? - শুভ সকাল! আপনি কেমন আছেন? 🌅",
+        "Guten Tag! Ich heiße Maria. - শুভ দিন! আমার নাম মারিয়া। 👤",
+        "Freut mich, Sie kennenzulernen! - আপনার সাথে পরিচিত হয়ে আনন্দিত হলাম! 😊",
+        "Woher kommen Sie? - আপনি কোথা থেকে এসেছেন? 🌍",
+        "Ich komme aus Bangladesch. - আমি বাংলাদেশ থেকে এসেছি। 🇧🇩",
+        "Wie lange lernen Sie Deutsch? - আপনি কতদিন ধরে জার্মান শিখছেন? 📚",
+        "Ich lerne seit drei Monaten. - আমি তিন মাস ধরে শিখছি। ⏰",
+        "Das ist sehr gut! - এটা খুব ভালো! 👍",
+        "Danke schön! - অনেক ধন্যবাদ! 🙏",
+        "Bis später! - পরে দেখা হবে! 👋"
+      ],
+      "usage": "Practice these conversations to improve your speaking skills"
+    },
+    {
+      "word": "Business Greetings",
+      "bangla": "ব্যবসায়িক শুভেচ্ছা",
+      "german": "Geschäftsgrüße",
+      "english": "Business Greetings",
+      "examples": [
+        "Guten Tag, Herr Schmidt - শুভ দিন, মিস্টার স্মিট 👔",
+        "Guten Morgen, Frau Müller - শুভ সকাল, মিসেস মুলার 👔",
+        "Wie kann ich Ihnen helfen? - আমি আপনাকে কিভাবে সাহায্য করতে পারি? 💼",
+        "Danke für Ihre Zeit - আপনার সময়ের জন্য ধন্যবাদ ⏰",
+        "Es freut mich, Sie kennenzulernen - আপনার সাথে পরিচিত হয়ে আনন্দিত হলাম 🤝",
+        "Auf ein erfolgreiches Projekt - সফল প্রকল্পের জন্য 🎯",
+        "Bis zum nächsten Meeting - পরের মিটিংয়ে দেখা হবে 📊",
+        "Gute Zusammenarbeit - ভালো সহযোগিতার জন্য 🤝",
+        "Vielen Dank für die Zusammenarbeit - সহযোগিতার জন্য অনেক ধন্যবাদ 🙏",
+        "Bis zum nächsten Mal - পরের বার দেখা হবে 👋"
+      ],
+      "usage": "Use these greetings in professional and business settings"
+    },
+    {
+      "word": "Phone Conversations",
+      "bangla": "ফোন কথোপকথন",
+      "german": "Telefongespräche",
+      "english": "Phone Conversations",
+      "examples": [
+        "Hallo, hier ist Maria - হ্যালো, এখানে মারিয়া 🎧",
+        "Kann ich mit Herrn Schmidt sprechen? - আমি কি মিস্টার স্মিটের সাথে কথা বলতে পারি? 📞",
+        "Einen Moment bitte - একটু অপেক্ষা করুন ⏳",
+        "Wer spricht bitte? - কে কথা বলছেন? ❓",
+        "Entschuldigung, ich habe mich verwählt - দুঃখিত, আমি ভুল নম্বরে ফোন করেছি 😔",
+        "Können Sie das bitte wiederholen? - আপনি কি এটা আবার বলতে পারবেন? 🔄",
+        "Ich verstehe nicht - আমি বুঝতে পারছি না 🤔",
+        "Können Sie langsamer sprechen? - আপনি কি ধীরে ধীরে বলতে পারবেন? 🐢",
+        "Danke für Ihren Anruf - আপনার ফোনের জন্য ধন্যবাদ 📞",
+        "Auf Wiederhören - শুনতে পাবেন 👋"
+      ],
+      "usage": "Use these phrases during phone conversations"
+    }
+  ]
+}

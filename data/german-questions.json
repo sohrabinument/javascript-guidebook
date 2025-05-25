@@ -1,0 +1,406 @@
+{
+  "title": "German Questions and Answers",
+  "description": "Learn common German questions and how to answer them",
+  "headers": [{
+      "icon": "❓",
+      "text": "English"
+    },
+    {
+      "icon": "📖",
+      "text": "Bangla"
+    },
+    {
+      "icon": "DE",
+      "text": "German"
+    },
+    {
+      "icon": "💬",
+      "text": "Examples"
+    },
+    {
+      "icon": "🎯",
+      "text": "Usage"
+    }
+  ],
+  "rows": [{
+      "word": "Basic Questions",
+      "bangla": "মৌলিক প্রশ্ন",
+      "german": "Grundfragen",
+      "english": "Basic Questions",
+      "examples": [
+        "Wie geht es Ihnen? - আপনি কেমন আছেন? ❓",
+        "Was machen Sie? - আপনি কি করছেন? ❓",
+        "Wo wohnen Sie? - আপনি কোথায় থাকেন? 🏠",
+        "Wie alt sind Sie? - আপনার বয়স কত? 📅",
+        "Sprechen Sie Englisch? - আপনি কি ইংরেজি বলতে পারেন? 💬",
+        "Woher kommen Sie? - আপনি কোথা থেকে এসেছেন? 🌍",
+        "Was ist Ihr Beruf? - আপনার পেশা কি? 💼",
+        "Haben Sie Geschwister? - আপনার ভাইবোন আছে? 👨‍👧",
+        "Was ist das? - এটা কি? ❓",
+        "Wie viel kostet das? - এটার দাম কত? 💰"
+      ],
+      "usage": "Use these questions in formal situations with 'Sie' form"
+    },
+    {
+      "word": "Common Answers",
+      "bangla": "সাধারণ উত্তর",
+      "german": "Antworten",
+      "english": "Common Answers",
+      "examples": [
+        "Mir geht es gut - আমি ভালো আছি 😊",
+        "Ich bin Student - আমি ছাত্র 👨‍🎓",
+        "Ich wohne in Berlin - আমি বার্লিনে থাকি 🏙️",
+        "Ich bin 25 Jahre alt - আমার বয়স 25 বছর 📅",
+        "Ja, ich spreche Englisch - হ্যাঁ, আমি ইংরেজি বলতে পারি 💬",
+        "Ich komme aus Bangladesch - আমি বাংলাদেশ থেকে এসেছি 🇧🇩",
+        "Ich bin Lehrer - আমি শিক্ষক 👨‍🏫",
+        "Ja, ich habe zwei Geschwister - হ্যাঁ, আমার দুই ভাইবোন আছে 👨‍👧",
+        "Das ist ein Buch - এটা একটি বই 📚",
+        "Das kostet 10 Euro - এটার দাম 10 ইউরো 💶"
+      ],
+      "usage": "Use these answers in both formal and informal situations"
+    },
+    {
+      "word": "Time Questions",
+      "bangla": "সময় সংক্রান্ত প্রশ্ন",
+      "german": "Zeitfragen",
+      "english": "Time Questions",
+      "examples": [
+        "Wie spät ist es? - ক'টা বাজে? ⏰",
+        "Wann kommst du? - তুমি কখন আসবে? 🕒",
+        "Wie lange dauert das? - এটা কতক্ষণ লাগবে? ⏳",
+        "Um wie viel Uhr? - ক'টায়? 🕐",
+        "Welcher Tag ist heute? - আজ কোন দিন? 📅",
+        "Welcher Monat ist jetzt? - এখন কোন মাস? 📆",
+        "In welchem Jahr sind wir? - আমরা কোন বছরে আছি? 📅",
+        "Wie lange bleibst du? - তুমি কতক্ষণ থাকবে? ⏱️",
+        "Bis wann? - কতক্ষণ পর্যন্ত? ⏲️",
+        "Seit wann? - কখন থেকে? 🕰️"
+      ],
+      "usage": "Use these questions to ask about time and duration"
+    },
+    {
+      "word": "Location Questions",
+      "bangla": "অবস্থান সংক্রান্ত প্রশ্ন",
+      "german": "Ortsfragen",
+      "english": "Location Questions",
+      "examples": [
+        "Wo ist die Toilette? - টয়লেট কোথায়? 🚻",
+        "Wie komme ich zum Bahnhof? - রেলস্টেশনে যাবো কিভাবে? 🚉",
+        "Ist es weit von hier? - এখান থেকে অনেক দূরে? 🗺️",
+        "Wo kann ich parken? - কোথায় পার্ক করতে পারি? 🅿️",
+        "Gibt es hier einen Supermarkt? - এখানে সুপারমার্কেট আছে? 🏪",
+        "Wo ist der nächste Bus? - পরের বাস কোথায়? 🚌",
+        "Wie weit ist es? - কত দূরে? 📏",
+        "Wo wohnst du? - তুমি কোথায় থাকো? 🏠",
+        "Wo arbeitest du? - তুমি কোথায় কাজ করো? 💼",
+        "Wo ist der Ausgang? - বের হওয়ার পথ কোথায়? 🚪"
+      ],
+      "usage": "Use these questions to ask about locations and directions"
+    },
+    {
+      "word": "Personal Questions",
+      "bangla": "ব্যক্তিগত প্রশ্ন",
+      "german": "Persönliche Fragen",
+      "english": "Personal Questions",
+      "examples": [
+        "Was sind deine Hobbys? - তোমার শখ কি? 🎨",
+        "Was isst du gerne? - তুমি কি খেতে পছন্দ করো? 🍽️",
+        "Welche Musik hörst du? - তুমি কি ধরনের গান শোনো? 🎵",
+        "Was machst du in deiner Freizeit? - অবসর সময়ে কি করো? ⏰",
+        "Hast du Haustiere? - তোমার পোষা প্রাণী আছে? 🐾",
+        "Was ist dein Lieblingsfilm? - তোমার প্রিয় সিনেমা কি? 🎬",
+        "Welche Bücher liest du? - তুমি কি ধরনের বই পড়ো? 📚",
+        "Was ist dein Traumjob? - তোমার স্বপ্নের চাকরি কি? 💭",
+        "Wo möchtest du reisen? - তুমি কোথায় ভ্রমণ করতে চাও? ✈️",
+        "Was ist dein Lieblingsessen? - তোমার প্রিয় খাবার কি? 🍕"
+      ],
+      "usage": "Use these questions in informal situations with friends"
+    },
+    {
+      "word": "Shopping Questions",
+      "bangla": "কেনাকাটা সংক্রান্ত প্রশ্ন",
+      "german": "Einkaufsfragen",
+      "english": "Shopping Questions",
+      "examples": [
+        "Wo ist der nächste Supermarkt? - নিকটতম সুপারমার্কেট কোথায়? 🏪",
+        "Wie spät machen Sie zu? - আপনি কখন বন্ধ করবেন? ⏰",
+        "Haben Sie das in einer anderen Größe? - এটা অন্য সাইজে আছে? 📏",
+        "Kann ich mit Karte bezahlen? - আমি কি কার্ড দিয়ে পেমেন্ট করতে পারি? 💳",
+        "Gibt es einen Rabatt? - কোন ছাড় আছে? 🏷️",
+        "Wo ist die Kasse? - ক্যাশ কাউন্টার কোথায়? 💰",
+        "Kann ich das umtauschen? - আমি কি এটা বদলাতে পারি? 🔄",
+        "Haben Sie das in einer anderen Farbe? - এটা অন্য রঙে আছে? 🎨",
+        "Wo ist die Umkleidekabine? - চেঞ্জিং রুম কোথায়? 👕",
+        "Kann ich das reservieren? - আমি কি এটা রিজার্ভ করতে পারি? 📝"
+      ],
+      "usage": "Use these questions when shopping in stores and markets"
+    },
+    {
+      "word": "Restaurant Questions",
+      "bangla": "রেস্তোরাঁ সংক্রান্ত প্রশ্ন",
+      "german": "Restaurantfragen",
+      "english": "Restaurant Questions",
+      "examples": [
+        "Haben Sie einen Tisch frei? - আপনার কাছে টেবিল খালি আছে? 🪑",
+        "Kann ich die Speisekarte sehen? - আমি কি মেনু দেখতে পারি? 📋",
+        "Was empfehlen Sie? - আপনি কি রেকমেন্ড করবেন? 👨‍🍳",
+        "Ist das Gericht scharf? - এই খাবার ঝাল? 🌶️",
+        "Gibt es vegetarische Optionen? - নিরামিষ অপশন আছে? 🥗",
+        "Kann ich die Rechnung haben? - আমি কি বিল পেতে পারি? 💰",
+        "Ist das Trinkgeld inklusive? - টিপস অন্তর্ভুক্ত? 💸",
+        "Haben Sie glutenfreie Gerichte? - গ্লুটেন-ফ্রি খাবার আছে? 🍽️",
+        "Kann ich das Gericht ändern? - আমি কি এই খাবার পরিবর্তন করতে পারি? 🔄",
+        "Wo ist die Toilette? - টয়লেট কোথায়? 🚻"
+      ],
+      "usage": "Use these questions when dining in restaurants"
+    },
+    {
+      "word": "Travel Questions",
+      "bangla": "ভ্রমণ সংক্রান্ত প্রশ্ন",
+      "german": "Reisefragen",
+      "english": "Travel Questions",
+      "examples": [
+        "Wie komme ich zum Flughafen? - বিমানবন্দরে যাবো কিভাবে? ✈️",
+        "Wann fährt der nächste Zug? - পরের ট্রেন কখন যাবে? 🚉",
+        "Wie viel kostet ein Ticket? - টিকেটের দাম কত? 🎫",
+        "Gibt es eine Direktverbindung? - সরাসরি সংযোগ আছে? 🚂",
+        "Wo ist der Bahnhof? - রেলস্টেশন কোথায়? 🚉",
+        "Kann ich das Gepäck aufgeben? - আমি কি লাগেজ চেক করতে পারি? 🛄",
+        "Wie lange dauert die Fahrt? - যাত্রা কতক্ষণ লাগবে? ⏱️",
+        "Gibt es einen Shuttle-Service? - শাটল সার্ভিস আছে? 🚌",
+        "Wo kann ich ein Taxi finden? - ট্যাক্সি কোথায় পাবো? 🚕",
+        "Ist der Flug pünktlich? - ফ্লাইট সময়মত? ⏰"
+      ],
+      "usage": "Use these questions when traveling and using public transportation"
+    },
+    {
+      "word": "Health Questions",
+      "bangla": "স্বাস্থ্য সংক্রান্ত প্রশ্ন",
+      "german": "Gesundheitsfragen",
+      "english": "Health Questions",
+      "examples": [
+        "Wo ist die nächste Apotheke? - নিকটতম ফার্মেসি কোথায়? 💊",
+        "Haben Sie Schmerzen? - আপনার ব্যথা আছে? 🤕",
+        "Seit wann fühlen Sie sich krank? - কখন থেকে আপনি অসুস্থ বোধ করছেন? 🤒",
+        "Haben Sie Fieber? - আপনার জ্বর আছে? 🌡️",
+        "Sind Sie allergisch gegen etwas? - আপনার কোন অ্যালার্জি আছে? 🤧",
+        "Nehmen Sie regelmäßig Medikamente? - আপনি কি নিয়মিত ওষুধ খান? 💊",
+        "Haben Sie eine Krankenversicherung? - আপনার স্বাস্থ্য বীমা আছে? 📋",
+        "Wo ist das nächste Krankenhaus? - নিকটতম হাসপাতাল কোথায়? 🏥",
+        "Kann ich einen Termin beim Arzt bekommen? - আমি কি ডাক্তারের অ্যাপয়েন্টমেন্ট পেতে পারি? 👨‍⚕️",
+        "Wie lange dauert die Behandlung? - চিকিৎসা কতক্ষণ লাগবে? ⏱️"
+      ],
+      "usage": "Use these questions when seeking medical help or at pharmacies"
+    },
+    {
+      "word": "Education Questions",
+      "bangla": "শিক্ষা সংক্রান্ত প্রশ্ন",
+      "german": "Bildungsfragen",
+      "english": "Education Questions",
+      "examples": [
+        "Welche Fächer studieren Sie? - আপনি কোন বিষয় পড়ছেন? 📚",
+        "An welcher Universität sind Sie? - আপনি কোন বিশ্ববিদ্যালয়ে আছেন? 🏫",
+        "Wie lange studieren Sie schon? - আপনি কতদিন ধরে পড়ছেন? ⏳",
+        "Haben Sie einen Abschluss? - আপনার ডিগ্রি আছে? 🎓",
+        "Welche Sprachen sprechen Sie? - আপনি কোন ভাষাগুলো বলতে পারেন? 💬",
+        "Möchten Sie im Ausland studieren? - আপনি কি বিদেশে পড়তে চান? 🌍",
+        "Was ist Ihr Hauptfach? - আপনার মূল বিষয় কি? 📖",
+        "Haben Sie Stipendien? - আপনার স্কলারশিপ আছে? 💰",
+        "Wie sind die Studiengebühren? - টিউশন ফি কত? 💸",
+        "Gibt es Sprachkurse? - ভাষা কোর্স আছে? 🗣️"
+      ],
+      "usage": "Use these questions when discussing education and studies"
+    },
+    {
+      "word": "Work Questions",
+      "bangla": "কাজ সংক্রান্ত প্রশ্ন",
+      "german": "Arbeitsfragen",
+      "english": "Work Questions",
+      "examples": [
+        "Was ist Ihr Beruf? - আপনার পেশা কি? 💼",
+        "Wo arbeiten Sie? - আপনি কোথায় কাজ করেন? 🏢",
+        "Wie lange arbeiten Sie schon hier? - আপনি এখানে কতদিন ধরে কাজ করছেন? ⏰",
+        "Haben Sie Erfahrung in diesem Bereich? - এই ক্ষেত্রে আপনার অভিজ্ঞতা আছে? 📋",
+        "Was sind Ihre Arbeitszeiten? - আপনার কাজের সময় কখন? 🕒",
+        "Bekommen Sie Urlaub? - আপনি কি ছুটি পান? 🏖️",
+        "Wie ist die Bezahlung? - বেতন কেমন? 💰",
+        "Gibt es Weiterbildungsmöglichkeiten? - প্রশিক্ষণের সুযোগ আছে? 📚",
+        "Wie ist die Arbeitsatmosphäre? - কাজের পরিবেশ কেমন? 😊",
+        "Haben Sie flexible Arbeitszeiten? - আপনার ফ্লেক্সিবল কাজের সময় আছে? ⏱️"
+      ],
+      "usage": "Use these questions in professional and work-related situations"
+    },
+    {
+      "word": "Housing Questions",
+      "bangla": "বাসস্থান সংক্রান্ত প্রশ্ন",
+      "german": "Wohnungsfragen",
+      "english": "Housing Questions",
+      "examples": [
+        "Wie groß ist die Wohnung? - ফ্ল্যাটের সাইজ কত? 📏",
+        "Ist die Miete inklusive Nebenkosten? - ভাড়া সহ অতিরিক্ত খরচ অন্তর্ভুক্ত? 💰",
+        "Gibt es einen Aufzug? - লিফট আছে? 🛗",
+        "Wie viele Zimmer hat die Wohnung? - ফ্ল্যাটে কয়টি রুম আছে? 🏠",
+        "Ist die Küche eingerichtet? - রান্নাঘর সাজানো? 🍳",
+        "Gibt es einen Balkon? - বারান্দা আছে? 🌿",
+        "Wie ist die Heizung? - হিটিং কেমন? 🔥",
+        "Ist die Wohnung möbliert? - ফ্ল্যাটে আসবাবপত্র আছে? 🛋️",
+        "Wie sind die Nachbarn? - প্রতিবেশীরা কেমন? 👥",
+        "Gibt es einen Parkplatz? - পার্কিং আছে? 🅿️"
+      ],
+      "usage": "Use these questions when looking for accommodation"
+    },
+    {
+      "word": "Technology Questions",
+      "bangla": "প্রযুক্তি সংক্রান্ত প্রশ্ন",
+      "german": "Technologiefragen",
+      "english": "Technology Questions",
+      "examples": [
+        "Wie funktioniert das Gerät? - এই ডিভাইস কিভাবে কাজ করে? 📱",
+        "Haben Sie WLAN? - ওয়াইফাই আছে? 📶",
+        "Wie kann ich das Programm installieren? - প্রোগ্রামটি কিভাবে ইনস্টল করব? 💻",
+        "Gibt es technischen Support? - টেকনিক্যাল সাপোর্ট আছে? 🛠️",
+        "Wie aktualisiere ich das System? - সিস্টেম কিভাবে আপডেট করব? 🔄",
+        "Ist das Gerät kompatibel? - ডিভাইসটি সামঞ্জস্যপূর্ণ? 🔌",
+        "Wie lange hält der Akku? - ব্যাটারি কতক্ষণ চলে? 🔋",
+        "Gibt es eine Garantie? - ওয়ারেন্টি আছে? 📄",
+        "Wie verbinde ich das Gerät? - ডিভাইসটি কিভাবে কানেক্ট করব? 🔗",
+        "Ist das Programm sicher? - প্রোগ্রামটি নিরাপদ? 🔒"
+      ],
+      "usage": "Use these questions when dealing with technology and devices"
+    },
+    {
+      "word": "Weather Questions",
+      "bangla": "আবহাওয়া সংক্রান্ত প্রশ্ন",
+      "german": "Wetterfragen",
+      "english": "Weather Questions",
+      "examples": [
+        "Wie ist das Wetter heute? - আজকের আবহাওয়া কেমন? 🌤️",
+        "Wird es regnen? - বৃষ্টি হবে? 🌧️",
+        "Wie warm ist es? - তাপমাত্রা কত? 🌡️",
+        "Wie ist die Wettervorhersage? - আবহাওয়ার পূর্বাভাস কেমন? 📊",
+        "Wird es schneien? - তুষারপাত হবে? ❄️",
+        "Wie ist der Wind? - বাতাস কেমন? 💨",
+        "Wie ist die Luftfeuchtigkeit? - আর্দ্রতা কেমন? 💧",
+        "Wann wird die Sonne scheinen? - সূর্য কখন উঠবে? ☀️",
+        "Wie ist das Wetter morgen? - কালকের আবহাওয়া কেমন? 🌅",
+        "Gibt es Gewitter? - বজ্রপাত হবে? ⛈️"
+      ],
+      "usage": "Use these questions when discussing weather conditions"
+    },
+    {
+      "word": "Entertainment Questions",
+      "bangla": "বিনোদন সংক্রান্ত প্রশ্ন",
+      "german": "Unterhaltungsfragen",
+      "english": "Entertainment Questions",
+      "examples": [
+        "Was läuft im Kino? - সিনেমা হলে কি চলছে? 🎬",
+        "Gibt es Konzerte? - কনসার্ট আছে? 🎵",
+        "Wo ist das Theater? - থিয়েটার কোথায়? 🎭",
+        "Was für Musik spielen Sie? - আপনি কি ধরনের গান বাজান? 🎸",
+        "Gibt es eine Ausstellung? - প্রদর্শনী আছে? 🖼️",
+        "Wo kann ich tanzen gehen? - আমি কোথায় নাচতে যেতে পারি? 💃",
+        "Was für Filme sehen Sie gerne? - আপনি কি ধরনের সিনেমা দেখতে পছন্দ করেন? 🎥",
+        "Gibt es Festivals? - উৎসব আছে? 🎪",
+        "Wo ist der nächste Club? - নিকটতম ক্লাব কোথায়? 🎉",
+        "Was für Hobbys haben Sie? - আপনার কি কি শখ আছে? 🎨"
+      ],
+      "usage": "Use these questions when discussing entertainment and leisure activities"
+    },
+    {
+      "word": "Sports Questions",
+      "bangla": "ক্রীড়া সংক্রান্ত প্রশ্ন",
+      "german": "Sportfragen",
+      "english": "Sports Questions",
+      "examples": [
+        "Welchen Sport treiben Sie? - আপনি কোন খেলা খেলেন? ⚽",
+        "Wo kann ich schwimmen gehen? - আমি কোথায় সাঁতার কাটতে যেতে পারি? 🏊",
+        "Gibt es einen Fitnessraum? - জিম আছে? 💪",
+        "Wie oft trainieren Sie? - আপনি কতবার প্রশিক্ষণ নেন? 🏋️",
+        "Welche Mannschaft unterstützen Sie? - আপনি কোন দল সমর্থন করেন? 🏆",
+        "Wo ist der nächste Sportplatz? - নিকটতম খেলার মাঠ কোথায়? 🏟️",
+        "Kann ich Tennis spielen? - আমি কি টেনিস খেলতে পারি? 🎾",
+        "Gibt es einen Schwimmbad? - সুইমিং পুল আছে? 🏊‍♂️",
+        "Wie lange dauert das Spiel? - খেলা কতক্ষণ চলে? ⏱️",
+        "Wo kann ich joggen? - আমি কোথায় জগিং করতে পারি? 🏃"
+      ],
+      "usage": "Use these questions when discussing sports and physical activities"
+    },
+    {
+      "word": "Food Questions",
+      "bangla": "খাদ্য সংক্রান্ত প্রশ্ন",
+      "german": "Essensfragen",
+      "english": "Food Questions",
+      "examples": [
+        "Was ist das typische Gericht? - সাধারণ খাবার কি? 🍽️",
+        "Ist das scharf? - এটা ঝাল? 🌶️",
+        "Was für Zutaten sind drin? - এতে কি কি উপাদান আছে? 🥘",
+        "Gibt es vegetarische Optionen? - নিরামিষ অপশন আছে? 🥗",
+        "Wie wird das zubereitet? - এটা কিভাবে রান্না করা হয়? 👨‍🍳",
+        "Was für Gewürze verwenden Sie? - আপনি কি কি মসলা ব্যবহার করেন? 🧂",
+        "Ist das frisch? - এটা তাজা? 🥬",
+        "Wie lange dauert die Zubereitung? - রান্না করতে কতক্ষণ লাগে? ⏱️",
+        "Was für Desserts haben Sie? - আপনার কাছে কি কি মিষ্টি আছে? 🍰",
+        "Kann ich das Rezept haben? - আমি কি রেসিপি পেতে পারি? 📝"
+      ],
+      "usage": "Use these questions when discussing food and cooking"
+    },
+    {
+      "word": "Transportation Questions",
+      "bangla": "পরিবহন সংক্রান্ত প্রশ্ন",
+      "german": "Transportfragen",
+      "english": "Transportation Questions",
+      "examples": [
+        "Wo ist die nächste Bushaltestelle? - নিকটতম বাস স্টপ কোথায়? 🚏",
+        "Wie komme ich zum Bahnhof? - রেলস্টেশনে যাবো কিভাবে? 🚉",
+        "Wann fährt der nächste Zug? - পরের ট্রেন কখন যাবে? 🚂",
+        "Wie viel kostet ein Taxi? - ট্যাক্সির ভাড়া কত? 🚕",
+        "Gibt es eine U-Bahn? - মেট্রো আছে? 🚇",
+        "Wo kann ich ein Fahrrad mieten? - আমি কোথায় সাইকেল ভাড়া করতে পারি? 🚲",
+        "Wie lange dauert die Fahrt? - যাত্রা কতক্ষণ লাগবে? ⏱️",
+        "Gibt es einen Shuttle-Service? - শাটল সার্ভিস আছে? 🚌",
+        "Wo ist der Parkplatz? - পার্কিং কোথায়? 🅿️",
+        "Kann ich ein Auto mieten? - আমি কি গাড়ি ভাড়া করতে পারি? 🚗"
+      ],
+      "usage": "Use these questions when using public transportation or renting vehicles"
+    },
+    {
+      "word": "Banking Questions",
+      "bangla": "ব্যাংকিং সংক্রান্ত প্রশ্ন",
+      "german": "Bankfragen",
+      "english": "Banking Questions",
+      "examples": [
+        "Wo ist die nächste Bank? - নিকটতম ব্যাংক কোথায়? 🏦",
+        "Wie kann ich ein Konto eröffnen? - আমি কিভাবে অ্যাকাউন্ট খুলতে পারি? 💳",
+        "Was sind die Öffnungszeiten? - খোলার সময় কখন? ⏰",
+        "Kann ich Geld abheben? - আমি কি টাকা তুলতে পারি? 💰",
+        "Wie hoch sind die Gebühren? - ফি কত? 💸",
+        "Gibt es einen Geldautomaten? - এটিএম আছে? 🏧",
+        "Wie kann ich Geld überweisen? - আমি কিভাবে টাকা পাঠাতে পারি? 📤",
+        "Was ist der Wechselkurs? - এক্সচেঞ্জ রেট কত? 💱",
+        "Kann ich eine Kreditkarte bekommen? - আমি কি ক্রেডিট কার্ড পেতে পারি? 💳",
+        "Wie sicher ist Online-Banking? - অনলাইন ব্যাংকিং কতটা নিরাপদ? 🔒"
+      ],
+      "usage": "Use these questions when dealing with banking and financial matters"
+    },
+    {
+      "word": "Emergency Questions",
+      "bangla": "জরুরি সংক্রান্ত প্রশ্ন",
+      "german": "Notfallfragen",
+      "english": "Emergency Questions",
+      "examples": [
+        "Wo ist das nächste Krankenhaus? - নিকটতম হাসপাতাল কোথায়? 🏥",
+        "Wie rufe ich die Polizei? - আমি কিভাবে পুলিশ ডাকব? 👮",
+        "Was ist die Notrufnummer? - জরুরি নম্বর কি? 🚨",
+        "Wo ist die nächste Apotheke? - নিকটতম ফার্মেসি কোথায়? 💊",
+        "Gibt es einen Arzt in der Nähe? - কাছে কোন ডাক্তার আছে? 👨‍⚕️",
+        "Wie komme ich zum Rettungsdienst? - আমি কিভাবে অ্যাম্বুলেন্স পাব? 🚑",
+        "Wo ist der nächste Feuerwehr? - নিকটতম ফায়ার স্টেশন কোথায়? 🚒",
+        "Kann ich einen Krankenwagen rufen? - আমি কি অ্যাম্বুলেন্স ডাকতে পারি? 🚑",
+        "Wo ist der Notausgang? - জরুরি প্রস্থানের পথ কোথায়? 🚪",
+        "Wie bekomme ich Erste Hilfe? - আমি কিভাবে প্রাথমিক চিকিৎসা পাব? 🏥"
+      ],
+      "usage": "Use these questions in emergency situations"
+    }
+  ]
+}

@@ -7,6 +7,9 @@ import germanWords from "../../../data/german-words.json";
 import germanAlphabet from "../../../data/german-alphabet.json";
 import germanNumbers from "../../../data/german-numbers.json";
 import germanGrammar from "../../../data/german-grammar.json";
+import germanGreetings from "../../../data/german-greetings.json";
+import germanQuestions from "../../../data/german-questions.json";
+import germanVocabulary from "../../../data/german-vocabulary.json";
 
 # ✨ German Language Learning Guide
 
@@ -163,6 +166,99 @@ Learn essential German grammar rules with examples and translations.
             bangla={row.bangla}
             german={row.german}
             english={row.english}
+          />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+## 👋 German Greetings and Introductions
+
+Learn common German greetings and how to introduce yourself.
+
+<div className="overflow-x-auto">
+  <table className="w-full border-collapse">
+    <thead>
+      <tr>
+        {germanGreetings.headers.map((header, index) => (
+          <th key={index} className="border border-gray-300 bg-gray-100 p-2">
+            {header.icon} {header.text}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {germanGreetings.rows.map((row, index) => (
+        <tr key={index}>
+          <TranslationCell
+            word={row.word}
+            bangla={row.bangla}
+            german={row.german}
+            english={row.english}
+            examples={row.examples}
+          />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+## ❓ German Questions and Answers
+
+Learn common German questions and how to answer them.
+
+<div className="overflow-x-auto">
+  <table className="w-full border-collapse">
+    <thead>
+      <tr>
+        {germanQuestions.headers.map((header, index) => (
+          <th key={index} className="border border-gray-300 bg-gray-100 p-2">
+            {header.icon} {header.text}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {germanQuestions.rows.map((row, index) => (
+        <tr key={index}>
+          <TranslationCell
+            word={row.word}
+            bangla={row.bangla}
+            german={row.german}
+            english={row.english}
+            examples={row.examples}
+          />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+## 📚 Essential German Vocabulary
+
+Learn essential German vocabulary for daily life.
+
+<div className="overflow-x-auto">
+  <table className="w-full border-collapse">
+    <thead>
+      <tr>
+        {germanVocabulary.headers.map((header, index) => (
+          <th key={index} className="border border-gray-300 bg-gray-100 p-2">
+            {header.icon} {header.text}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {germanVocabulary.rows.map((row, index) => (
+        <tr key={index}>
+          <TranslationCell
+            word={row.word}
+            bangla={row.bangla}
+            german={row.german}
+            english={row.english}
+            examples={row.examples}
           />
         </tr>
       ))}

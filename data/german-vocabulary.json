@@ -1,0 +1,140 @@
+{
+  "title": "Essential German Vocabulary",
+  "description": "Learn essential German vocabulary for daily life",
+  "headers": [{
+      "icon": "📚",
+      "text": "English"
+    },
+    {
+      "icon": "📖",
+      "text": "Bangla"
+    },
+    {
+      "icon": "DE",
+      "text": "German"
+    },
+    {
+      "icon": "💬",
+      "text": "Examples"
+    },
+    {
+      "icon": "🎯",
+      "text": "Usage"
+    }
+  ],
+  "rows": [{
+      "word": "Food and Drinks",
+      "bangla": "খাদ্য ও পানীয়",
+      "german": "Essen und Getränke",
+      "english": "Food and Drinks",
+      "examples": [
+        "Brot - রুটি 🍞",
+        "Wasser - পানি 💧",
+        "Kaffee - কফি ☕",
+        "Milch - দুধ 🥛",
+        "Obst - ফল 🍎",
+        "Gemüse - সবজি 🥦",
+        "Fleisch - মাংস 🥩",
+        "Reis - ভাত 🍚",
+        "Suppe - স্যুপ 🥣",
+        "Salat - সালাদ 🥗"
+      ],
+      "usage": "Use these words when ordering food or shopping for groceries"
+    },
+    {
+      "word": "Numbers and Time",
+      "bangla": "সংখ্যা ও সময়",
+      "german": "Zahlen und Zeit",
+      "english": "Numbers and Time",
+      "examples": [
+        "Eins - এক 1️⃣",
+        "Zwei - দুই 2️⃣",
+        "Drei - তিন 3️⃣",
+        "Vier - চার 4️⃣",
+        "Fünf - পাঁচ 5️⃣",
+        "Sechs - ছয় 6️⃣",
+        "Sieben - সাত 7️⃣",
+        "Acht - আট 8️⃣",
+        "Neun - নয় 9️⃣",
+        "Zehn - দশ 🔟"
+      ],
+      "usage": "Use these numbers for counting, telling time, and giving quantities"
+    },
+    {
+      "word": "Places and Directions",
+      "bangla": "স্থান ও দিকনির্দেশ",
+      "german": "Orte und Richtungen",
+      "english": "Places and Directions",
+      "examples": [
+        "Supermarkt - সুপারমার্কেট 🏪",
+        "Apotheke - ফার্মেসি 💊",
+        "Bahnhof - রেলস্টেশন 🚉",
+        "Krankenhaus - হাসপাতাল 🏥",
+        "Schule - স্কুল 🏫",
+        "Restaurant - রেস্তোরাঁ 🍽️",
+        "Park - পার্ক 🌳",
+        "Museum - জাদুঘর 🏛️",
+        "Bibliothek - গ্রন্থাগার 📚",
+        "Markt - বাজার 🛒"
+      ],
+      "usage": "Use these words when asking for directions or describing locations"
+    },
+    {
+      "word": "Family and Relationships",
+      "bangla": "পরিবার ও সম্পর্ক",
+      "german": "Familie und Beziehungen",
+      "english": "Family and Relationships",
+      "examples": [
+        "Mutter - মা 👩",
+        "Vater - বাবা 👨",
+        "Bruder - ভাই 👦",
+        "Schwester - বোন 👧",
+        "Oma - দাদী 👵",
+        "Opa - দাদা 👴",
+        "Tante - খালা/চাচি 👩",
+        "Onkel - চাচা/মামা 👨",
+        "Cousin - চাচাতো/মামাতো ভাই 👦",
+        "Cousine - চাচাতো/মামাতো বোন 👧"
+      ],
+      "usage": "Use these words when talking about family members and relationships"
+    },
+    {
+      "word": "Weather and Seasons",
+      "bangla": "আবহাওয়া ও ঋতু",
+      "german": "Wetter und Jahreszeiten",
+      "english": "Weather and Seasons",
+      "examples": [
+        "Sonne - সূর্য ☀️",
+        "Regen - বৃষ্টি 🌧️",
+        "Schnee - তুষার ❄️",
+        "Wind - বাতাস 💨",
+        "Wolken - মেঘ ☁️",
+        "Frühling - বসন্ত 🌸",
+        "Sommer - গ্রীষ্ম ☀️",
+        "Herbst - শরৎ 🍂",
+        "Winter - শীত ❄️",
+        "Gewitter - বজ্রপাত ⛈️"
+      ],
+      "usage": "Use these words when discussing weather and seasons"
+    },
+    {
+      "word": "Emotions and Feelings",
+      "bangla": "আবেগ ও অনুভূতি",
+      "german": "Gefühle und Emotionen",
+      "english": "Emotions and Feelings",
+      "examples": [
+        "Glücklich - সুখী 😊",
+        "Traurig - দুঃখিত 😢",
+        "Wütend - রাগান্বিত 😠",
+        "Müde - ক্লান্ত 😴",
+        "Nervös - উদ্বিগ্ন 😰",
+        "Aufgeregt - উত্তেজিত 😃",
+        "Enttäuscht - হতাশ 😞",
+        "Stolz - গর্বিত 😌",
+        "Angst - ভয় 😨",
+        "Liebe - ভালোবাসা ❤️"
+      ],
+      "usage": "Use these words to express emotions and feelings"
+    }
+  ]
+}
