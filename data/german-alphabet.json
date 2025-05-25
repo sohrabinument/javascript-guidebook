@@ -30,16 +30,16 @@
       "german": "Ah",
       "english": "A",
       "examples": [
-        "Apfel (Apple) - আপেল",
-        "Auto (Car) - গাড়ি",
-        "Anfang (Beginning) - শুরু",
-        "Arbeit (Work) - কাজ",
-        "Abend (Evening) - সন্ধ্যা",
-        "Auge (Eye) - চোখ",
-        "Arm (Arm) - বাহু",
-        "Alt (Old) - পুরানো",
-        "Anzug (Suit) - স্যুট",
-        "Anker (Anchor) - নোঙ্গর"
+        "Apfel (Apple) - আপেল 🍎",
+        "Auto (Car) - গাড়ি 🚗",
+        "Anfang (Beginning) - শুরু 🌅",
+        "Arbeit (Work) - কাজ 💼",
+        "Abend (Evening) - সন্ধ্যা 🌆",
+        "Auge (Eye) - চোখ 👁️",
+        "Arm (Arm) - বাহু 💪",
+        "Alt (Old) - পুরানো 👴",
+        "Anzug (Suit) - স্যুট 👔",
+        "Anker (Anchor) - নোঙ্গর ⚓"
       ]
     },
     {
@@ -48,16 +48,16 @@
       "german": "Beh",
       "english": "B",
       "examples": [
-        "Brot (Bread) - রুটি",
-        "Buch (Book) - বই",
-        "Baum (Tree) - গাছ",
-        "Ball (Ball) - বল",
-        "Blume (Flower) - ফুল",
-        "Berg (Mountain) - পর্বত",
-        "Bruder (Brother) - ভাই",
-        "Bank (Bank) - ব্যাংক",
-        "Brief (Letter) - চিঠি",
-        "Bett (Bed) - বিছানা"
+        "Brot (Bread) - রুটি 🍞",
+        "Buch (Book) - বই 📚",
+        "Baum (Tree) - গাছ 🌳",
+        "Ball (Ball) - বল ⚽",
+        "Blume (Flower) - ফুল 🌸",
+        "Berg (Mountain) - পর্বত ⛰️",
+        "Bruder (Brother) - ভাই 👨‍👦",
+        "Bank (Bank) - ব্যাংক 🏦",
+        "Brief (Letter) - চিঠি ✉️",
+        "Bett (Bed) - বিছানা 🛏️"
       ]
     },
     {
@@ -66,16 +66,16 @@
       "german": "Tseh",
       "english": "C",
       "examples": [
-        "Computer - কম্পিউটার",
-        "Café - ক্যাফে",
-        "Celsius - সেলসিয়াস",
-        "Chance (Chance) - সুযোগ",
-        "Chor (Choir) - গায়কদল",
-        "Chirurg (Surgeon) - সার্জন",
-        "Chronik (Chronicle) - ইতিহাস",
-        "Charme (Charm) - আকর্ষণ",
-        "Champagner (Champagne) - শ্যাম্পেন",
-        "Champion (Champion) - চ্যাম্পিয়ন"
+        "Computer - কম্পিউটার 💻",
+        "Café - ক্যাফে ☕",
+        "Celsius - সেলসিয়াস 🌡️",
+        "Chance (Chance) - সুযোগ 🎯",
+        "Chor (Choir) - গায়কদল 🎵",
+        "Chirurg (Surgeon) - সার্জন 👨‍⚕️",
+        "Chronik (Chronicle) - ইতিহাস 📜",
+        "Charme (Charm) - আকর্ষণ ✨",
+        "Champagner (Champagne) - শ্যাম্পেন 🍾",
+        "Champion (Champion) - চ্যাম্পিয়ন 🏆"
       ]
     },
     {
@@ -84,16 +84,16 @@
       "german": "Deh",
       "english": "D",
       "examples": [
-        "Deutsch (German) - জার্মান",
-        "Danke (Thank you) - ধন্যবাদ",
-        "Dorf (Village) - গ্রাম",
-        "Datum (Date) - তারিখ",
-        "Drucker (Printer) - প্রিন্টার",
-        "Dusche (Shower) - ঝরনা",
-        "Doktor (Doctor) - ডাক্তার",
-        "Druck (Pressure) - চাপ",
-        "Durch (Through) - মাধ্যমে",
-        "Dunkel (Dark) - অন্ধকার"
+        "Deutsch (German) - জার্মান 🇩🇪",
+        "Danke (Thank you) - ধন্যবাদ 🙏",
+        "Dorf (Village) - গ্রাম 🏡",
+        "Datum (Date) - তারিখ 📅",
+        "Drucker (Printer) - প্রিন্টার 🖨️",
+        "Dusche (Shower) - ঝরনা 🚿",
+        "Doktor (Doctor) - ডাক্তার 👨‍⚕️",
+        "Druck (Pressure) - চাপ 💪",
+        "Durch (Through) - মাধ্যমে ➡️",
+        "Dunkel (Dark) - অন্ধকার 🌑"
       ]
     },
     {
@@ -102,16 +102,16 @@
       "german": "Eh",
       "english": "E",
       "examples": [
-        "Eis (Ice) - বরফ",
-        "Eule (Owl) - পেঁচা",
-        "Eimer (Bucket) - বালতি",
-        "Elefant (Elephant) - হাতি",
-        "Ecke (Corner) - কোণ",
-        "Ehe (Marriage) - বিবাহ",
-        "Echo (Echo) - প্রতিধ্বনি",
-        "Erde (Earth) - পৃথিবী",
-        "Energie (Energy) - শক্তি",
-        "Erfolg (Success) - সাফল্য"
+        "Eis (Ice) - বরফ ❄️",
+        "Eule (Owl) - পেঁচা 🦉",
+        "Eimer (Bucket) - বালতি 🪣",
+        "Elefant (Elephant) - হাতি 🐘",
+        "Ecke (Corner) - কোণ 📐",
+        "Ehe (Marriage) - বিবাহ 💑",
+        "Echo (Echo) - প্রতিধ্বনি 📢",
+        "Erde (Earth) - পৃথিবী 🌍",
+        "Energie (Energy) - শক্তি ⚡",
+        "Erfolg (Success) - সাফল্য 🎯"
       ]
     },
     {
@@ -120,16 +120,16 @@
       "german": "Eff",
       "english": "F",
       "examples": [
-        "Fisch (Fish) - মাছ",
-        "Freund (Friend) - বন্ধু",
-        "Fenster (Window) - জানালা",
-        "Frage (Question) - প্রশ্ন",
-        "Frucht (Fruit) - ফল",
-        "Feder (Feather) - পালক",
-        "Flamme (Flame) - শিখা",
-        "Familie (Family) - পরিবার",
-        "Farbe (Color) - রং",
-        "Foto (Photo) - ছবি"
+        "Fisch (Fish) - মাছ 🐟",
+        "Freund (Friend) - বন্ধু 👥",
+        "Fenster (Window) - জানালা 🪟",
+        "Frage (Question) - প্রশ্ন ❓",
+        "Frucht (Fruit) - ফল 🍎",
+        "Feder (Feather) - পালক 🪶",
+        "Flamme (Flame) - শিখা 🔥",
+        "Familie (Family) - পরিবার 👨‍👩‍👧‍👦",
+        "Farbe (Color) - রং 🎨",
+        "Foto (Photo) - ছবি 📸"
       ]
     },
     {
@@ -138,16 +138,16 @@
       "german": "Gay",
       "english": "G",
       "examples": [
-        "Garten (Garden) - বাগান",
-        "Geld (Money) - টাকা",
-        "Glas (Glass) - কাচ",
-        "Geschichte (History) - ইতিহাস",
-        "Gesicht (Face) - মুখ",
-        "Gewitter (Thunderstorm) - বজ্রঝড়",
-        "Geschwister (Siblings) - ভাইবোন",
-        "Gitarre (Guitar) - গিটার",
-        "Glück (Happiness) - সুখ",
-        "Grün (Green) - সবুজ"
+        "Garten (Garden) - বাগান 🌺",
+        "Geld (Money) - টাকা 💰",
+        "Glas (Glass) - কাচ 🥃",
+        "Geschichte (History) - ইতিহাস 📚",
+        "Gesicht (Face) - মুখ 😊",
+        "Gewitter (Thunderstorm) - বজ্রঝড় ⛈️",
+        "Geschwister (Siblings) - ভাইবোন 👨‍👧",
+        "Gitarre (Guitar) - গিটার 🎸",
+        "Glück (Happiness) - সুখ 😊",
+        "Grün (Green) - সবুজ 🟢"
       ]
     },
     {
@@ -156,16 +156,16 @@
       "german": "Hah",
       "english": "H",
       "examples": [
-        "Haus (House) - বাড়ি",
-        "Hund (Dog) - কুকুর",
-        "Himmel (Sky) - আকাশ",
-        "Hand (Hand) - হাত",
-        "Herz (Heart) - হৃদয়",
-        "Hoffnung (Hope) - আশা",
-        "Hilfe (Help) - সাহায্য",
-        "Hunger (Hunger) - ক্ষুধা",
-        "Hotel (Hotel) - হোটেল",
-        "Hose (Pants) - প্যান্ট"
+        "Haus (House) - বাড়ি 🏠",
+        "Hund (Dog) - কুকুর 🐕",
+        "Himmel (Sky) - আকাশ ☁️",
+        "Hand (Hand) - হাত ✋",
+        "Herz (Heart) - হৃদয় ❤️",
+        "Hoffnung (Hope) - আশা 🌟",
+        "Hilfe (Help) - সাহায্য 🤝",
+        "Hunger (Hunger) - ক্ষুধা 🍽️",
+        "Hotel (Hotel) - হোটেল 🏨",
+        "Hose (Pants) - প্যান্ট 👖"
       ]
     },
     {
@@ -174,16 +174,16 @@
       "german": "Ee",
       "english": "I",
       "examples": [
-        "Ich (I) - আমি",
-        "Insel (Island) - দ্বীপ",
-        "Idee (Idea) - ধারণা",
-        "Information (Information) - তথ্য",
-        "Instrument (Instrument) - বাদ্যযন্ত্র",
-        "Interesse (Interest) - আগ্রহ",
-        "International (International) - আন্তর্জাতিক",
-        "Internet (Internet) - ইন্টারনেট",
-        "Italien (Italy) - ইতালি",
-        "Industrie (Industry) - শিল্প"
+        "Ich (I) - আমি 👤",
+        "Insel (Island) - দ্বীপ 🏝️",
+        "Idee (Idea) - ধারণা 💡",
+        "Information (Information) - তথ্য ℹ️",
+        "Instrument (Instrument) - বাদ্যযন্ত্র 🎵",
+        "Interesse (Interest) - আগ্রহ 👀",
+        "International (International) - আন্তর্জাতিক 🌍",
+        "Internet (Internet) - ইন্টারনেট 🌐",
+        "Italien (Italy) - ইতালি 🇮🇹",
+        "Industrie (Industry) - শিল্প 🏭"
       ]
     },
     {
@@ -192,16 +192,16 @@
       "german": "Yot",
       "english": "J",
       "examples": [
-        "Jahr (Year) - বছর",
-        "Junge (Boy) - ছেলে",
-        "Jetzt (Now) - এখন",
-        "Jugend (Youth) - যুবক",
-        "Jagd (Hunt) - শিকার",
-        "Juwel (Jewel) - রত্ন",
-        "Jalousie (Blind) - পর্দা",
-        "Januar (January) - জানুয়ারি",
-        "Jacke (Jacket) - জ্যাকেট",
-        "Japan (Japan) - জাপান"
+        "Jahr (Year) - বছর 📅",
+        "Junge (Boy) - ছেলে 👦",
+        "Jetzt (Now) - এখন ⏰",
+        "Jugend (Youth) - যুবক 👨‍🦱",
+        "Jagd (Hunt) - শিকার 🏹",
+        "Juwel (Jewel) - রত্ন 💎",
+        "Jalousie (Blind) - পর্দা 🪟",
+        "Januar (January) - জানুয়ারি 1️⃣",
+        "Jacke (Jacket) - জ্যাকেট 🧥",
+        "Japan (Japan) - জাপান 🇯🇵"
       ]
     },
     {
@@ -210,16 +210,16 @@
       "german": "Kah",
       "english": "K",
       "examples": [
-        "Kaffee (Coffee) - কফি",
-        "Kuchen (Cake) - কেক",
-        "Kinder (Children) - শিশু",
-        "Krankenhaus (Hospital) - হাসপাতাল",
-        "Kleidung (Clothing) - পোশাক",
-        "König (King) - রাজা",
-        "Kunst (Art) - শিল্প",
-        "Küche (Kitchen) - রান্নাঘর",
-        "Katze (Cat) - বিড়াল",
-        "Kino (Cinema) - সিনেমা"
+        "Kaffee (Coffee) - কফি ☕",
+        "Kuchen (Cake) - কেক 🍰",
+        "Kinder (Children) - শিশু 👶",
+        "Krankenhaus (Hospital) - হাসপাতাল 🏥",
+        "Kleidung (Clothing) - পোশাক 👕",
+        "König (King) - রাজা 👑",
+        "Kunst (Art) - শিল্প 🎨",
+        "Küche (Kitchen) - রান্নাঘর 🍳",
+        "Katze (Cat) - বিড়াল 🐱",
+        "Kino (Cinema) - সিনেমা 🎬"
       ]
     },
     {
@@ -228,16 +228,16 @@
       "german": "Ell",
       "english": "L",
       "examples": [
-        "Licht (Light) - আলো",
-        "Löwe (Lion) - সিংহ",
-        "Lernen (Learn) - শেখা",
-        "Liebe (Love) - ভালোবাসা",
-        "Leben (Life) - জীবন",
-        "Lächeln (Smile) - হাসি",
-        "Lösung (Solution) - সমাধান",
-        "Land (Country) - দেশ",
-        "Luft (Air) - বাতাস",
-        "Lampe (Lamp) - বাতি"
+        "Licht (Light) - আলো 💡",
+        "Löwe (Lion) - সিংহ 🦁",
+        "Lernen (Learn) - শেখা 📚",
+        "Liebe (Love) - ভালোবাসা ❤️",
+        "Leben (Life) - জীবন 🌱",
+        "Lächeln (Smile) - হাসি 😊",
+        "Lösung (Solution) - সমাধান ✅",
+        "Land (Country) - দেশ 🗺️",
+        "Luft (Air) - বাতাস 💨",
+        "Lampe (Lamp) - বাতি 💡"
       ]
     },
     {
@@ -246,16 +246,16 @@
       "german": "Emm",
       "english": "M",
       "examples": [
-        "Mutter (Mother) - মা",
-        "Milch (Milk) - দুধ",
-        "Mond (Moon) - চাঁদ",
-        "Musik (Music) - সঙ্গীত",
-        "Mensch (Human) - মানুষ",
-        "Möglichkeit (Possibility) - সম্ভাবনা",
-        "Mittag (Noon) - দুপুর",
-        "Markt (Market) - বাজার",
-        "Meer (Sea) - সমুদ্র",
-        "Medizin (Medicine) - ওষুধ"
+        "Mutter (Mother) - মা 👩",
+        "Milch (Milk) - দুধ 🥛",
+        "Mond (Moon) - চাঁদ 🌙",
+        "Musik (Music) - সঙ্গীত 🎵",
+        "Mensch (Human) - মানুষ 👤",
+        "Möglichkeit (Possibility) - সম্ভাবনা ✨",
+        "Mittag (Noon) - দুপুর ☀️",
+        "Markt (Market) - বাজার 🛒",
+        "Meer (Sea) - সমুদ্র 🌊",
+        "Medizin (Medicine) - ওষুধ 💊"
       ]
     },
     {
@@ -264,16 +264,16 @@
       "german": "Enn",
       "english": "N",
       "examples": [
-        "Nacht (Night) - রাত",
-        "Name (Name) - নাম",
-        "Nase (Nose) - নাক",
-        "Natur (Nature) - প্রকৃতি",
-        "Norden (North) - উত্তর",
-        "Nahrung (Food) - খাদ্য",
-        "Nummer (Number) - নম্বর",
-        "November (November) - নভেম্বর",
-        "Nachricht (Message) - বার্তা",
-        "Nähe (Nearness) - কাছাকাছি"
+        "Nacht (Night) - রাত 🌙",
+        "Name (Name) - নাম 📝",
+        "Nase (Nose) - নাক 👃",
+        "Natur (Nature) - প্রকৃতি 🌿",
+        "Norden (North) - উত্তর ⬆️",
+        "Nahrung (Food) - খাদ্য 🍽️",
+        "Nummer (Number) - নম্বর 🔢",
+        "November (November) - নভেম্বর 1️⃣1️⃣",
+        "Nachricht (Message) - বার্তা 📨",
+        "Nähe (Nearness) - কাছাকাছি 📍"
       ]
     },
     {
@@ -282,16 +282,16 @@
       "german": "Oh",
       "english": "O",
       "examples": [
-        "Ohr (Ear) - কান",
-        "Orange - কমলা",
-        "Ostern (Easter) - ইস্টার",
-        "Obst (Fruit) - ফল",
-        "Ozean (Ocean) - মহাসাগর",
-        "Offen (Open) - খোলা",
-        "Oktober (October) - অক্টোবর",
-        "Oper (Opera) - অপেরা",
-        "Operation (Operation) - অপারেশন",
-        "Organisation (Organization) - সংস্থা"
+        "Ohr (Ear) - কান 👂",
+        "Orange - কমলা 🍊",
+        "Ostern (Easter) - ইস্টার 🐰",
+        "Obst (Fruit) - ফল 🍎",
+        "Ozean (Ocean) - মহাসাগর 🌊",
+        "Offen (Open) - খোলা 🚪",
+        "Oktober (October) - অক্টোবর 1️⃣0️⃣",
+        "Oper (Opera) - অপেরা 🎭",
+        "Operation (Operation) - অপারেশন 🏥",
+        "Organisation (Organization) - সংস্থা 🏢"
       ]
     },
     {
@@ -300,16 +300,16 @@
       "german": "Pay",
       "english": "P",
       "examples": [
-        "Pferd (Horse) - ঘোড়া",
-        "Pflanze (Plant) - গাছপালা",
-        "Punkt (Point) - বিন্দু",
-        "Politik (Politics) - রাজনীতি",
-        "Programm (Program) - প্রোগ্রাম",
-        "Problem (Problem) - সমস্যা",
-        "Papier (Paper) - কাগজ",
-        "Park (Park) - পার্ক",
-        "Polizei (Police) - পুলিশ",
-        "Preis (Price) - দাম"
+        "Pferd (Horse) - ঘোড়া 🐎",
+        "Pflanze (Plant) - গাছপালা 🌱",
+        "Punkt (Point) - বিন্দু ⚪",
+        "Politik (Politics) - রাজনীতি 🏛️",
+        "Programm (Program) - প্রোগ্রাম 💻",
+        "Problem (Problem) - সমস্যা ❓",
+        "Papier (Paper) - কাগজ 📄",
+        "Park (Park) - পার্ক 🌳",
+        "Polizei (Police) - পুলিশ 👮",
+        "Preis (Price) - দাম 💰"
       ]
     },
     {
@@ -318,16 +318,16 @@
       "german": "Koo",
       "english": "Q",
       "examples": [
-        "Qualität (Quality) - গুণমান",
-        "Quelle (Source) - উৎস",
-        "Quadrat (Square) - বর্গ",
-        "Quittung (Receipt) - রসিদ",
-        "Quatsch (Nonsense) - বাজে কথা",
-        "Qual (Torment) - যন্ত্রণা",
-        "Quantität (Quantity) - পরিমাণ",
-        "Quiz (Quiz) - কুইজ",
-        "Quarz (Quartz) - কোয়ার্জ",
-        "Quote (Quote) - উদ্ধৃতি"
+        "Qualität (Quality) - গুণমান ⭐",
+        "Quelle (Source) - উৎস 💧",
+        "Quadrat (Square) - বর্গ ⬛",
+        "Quittung (Receipt) - রসিদ 🧾",
+        "Quatsch (Nonsense) - বাজে কথা 🤪",
+        "Qual (Torment) - যন্ত্রণা 😫",
+        "Quantität (Quantity) - পরিমাণ 📊",
+        "Quiz (Quiz) - কুইজ ❓",
+        "Quarz (Quartz) - কোয়ার্জ 💎",
+        "Quote (Quote) - উদ্ধৃতি 💭"
       ]
     },
     {
@@ -336,16 +336,16 @@
       "german": "Err",
       "english": "R",
       "examples": [
-        "Regen (Rain) - বৃষ্টি",
-        "Rose (Rose) - গোলাপ",
-        "Reise (Journey) - ভ্রমণ",
-        "Recht (Right) - অধিকার",
-        "Regierung (Government) - সরকার",
-        "Religion (Religion) - ধর্ম",
-        "Radio (Radio) - রেডিও",
-        "Restaurant (Restaurant) - রেস্তোরাঁ",
-        "Raum (Room/Space) - স্থান",
-        "Rot (Red) - লাল"
+        "Regen (Rain) - বৃষ্টি 🌧️",
+        "Rose (Rose) - গোলাপ 🌹",
+        "Reise (Journey) - ভ্রমণ ✈️",
+        "Recht (Right) - অধিকার ⚖️",
+        "Regierung (Government) - সরকার 🏛️",
+        "Religion (Religion) - ধর্ম ⛪",
+        "Radio (Radio) - রেডিও 📻",
+        "Restaurant (Restaurant) - রেস্তোরাঁ 🍽️",
+        "Raum (Room/Space) - স্থান 🏠",
+        "Rot (Red) - লাল 🔴"
       ]
     },
     {
@@ -354,16 +354,16 @@
       "german": "Ess",
       "english": "S",
       "examples": [
-        "Sonne (Sun) - সূর্য",
-        "Schule (School) - স্কুল",
-        "Stadt (City) - শহর",
-        "Sprache (Language) - ভাষা",
-        "Sport (Sports) - খেলাধুলা",
-        "Sicherheit (Safety) - নিরাপত্তা",
-        "Stern (Star) - তারা",
-        "Stuhl (Chair) - চেয়ার",
-        "Schwester (Sister) - বোন",
-        "Schlaf (Sleep) - ঘুম"
+        "Sonne (Sun) - সূর্য ☀️",
+        "Schule (School) - স্কুল 🏫",
+        "Stadt (City) - শহর 🏙️",
+        "Sprache (Language) - ভাষা 💬",
+        "Sport (Sports) - খেলাধুলা ⚽",
+        "Sicherheit (Safety) - নিরাপত্তা 🛡️",
+        "Stern (Star) - তারা ⭐",
+        "Stuhl (Chair) - চেয়ার 🪑",
+        "Schwester (Sister) - বোন 👧",
+        "Schlaf (Sleep) - ঘুম 😴"
       ]
     },
     {
@@ -372,16 +372,16 @@
       "german": "Tay",
       "english": "T",
       "examples": [
-        "Tisch (Table) - টেবিল",
-        "Tag (Day) - দিন",
-        "Tür (Door) - দরজা",
-        "Technik (Technology) - প্রযুক্তি",
-        "Theater (Theater) - থিয়েটার",
-        "Traum (Dream) - স্বপ্ন",
-        "Telefon (Phone) - টেলিফোন",
-        "Tier (Animal) - পশু",
-        "Tee (Tea) - চা",
-        "Transport (Transport) - পরিবহন"
+        "Tisch (Table) - টেবিল 🪑",
+        "Tag (Day) - দিন ☀️",
+        "Tür (Door) - দরজা 🚪",
+        "Technik (Technology) - প্রযুক্তি 💻",
+        "Theater (Theater) - থিয়েটার 🎭",
+        "Traum (Dream) - স্বপ্ন 💭",
+        "Telefon (Phone) - টেলিফোন 📱",
+        "Tier (Animal) - পশু 🐾",
+        "Tee (Tea) - চা 🫖",
+        "Transport (Transport) - পরিবহন 🚌"
       ]
     },
     {
@@ -390,16 +390,16 @@
       "german": "Ooh",
       "english": "U",
       "examples": [
-        "Uhr (Clock) - ঘড়ি",
-        "Unter (Under) - নিচে",
-        "Ursprung (Origin) - উৎপত্তি",
-        "Universität (University) - বিশ্ববিদ্যালয়",
-        "Umwelt (Environment) - পরিবেশ",
-        "Unterricht (Lesson) - পাঠ",
-        "Unternehmen (Company) - কোম্পানি",
-        "Urlaub (Vacation) - ছুটি",
-        "Unterschied (Difference) - পার্থক্য",
-        "Unglück (Misfortune) - দুর্ভাগ্য"
+        "Uhr (Clock) - ঘড়ি ⏰",
+        "Unter (Under) - নিচে ⬇️",
+        "Ursprung (Origin) - উৎপত্তি 🌱",
+        "Universität (University) - বিশ্ববিদ্যালয় 🎓",
+        "Umwelt (Environment) - পরিবেশ 🌍",
+        "Unterricht (Lesson) - পাঠ 📚",
+        "Unternehmen (Company) - কোম্পানি 🏢",
+        "Urlaub (Vacation) - ছুটি 🏖️",
+        "Unterschied (Difference) - পার্থক্য ↔️",
+        "Unglück (Misfortune) - দুর্ভাগ্য 😔"
       ]
     },
     {
@@ -408,16 +408,16 @@
       "german": "Fau",
       "english": "V",
       "examples": [
-        "Vater (Father) - বাবা",
-        "Vogel (Bird) - পাখি",
-        "Vergessen (Forget) - ভুলে যাওয়া",
-        "Verantwortung (Responsibility) - দায়িত্ব",
-        "Verständnis (Understanding) - বোধগম্যতা",
-        "Vergangenheit (Past) - অতীত",
-        "Verkehr (Traffic) - যান চলাচল",
-        "Versuch (Attempt) - চেষ্টা",
-        "Viel (Much/Many) - অনেক",
-        "Volk (People) - জনগণ"
+        "Vater (Father) - বাবা 👨",
+        "Vogel (Bird) - পাখি 🐦",
+        "Vergessen (Forget) - ভুলে যাওয়া 🤔",
+        "Verantwortung (Responsibility) - দায়িত্ব ⚖️",
+        "Verständnis (Understanding) - বোধগম্যতা 🧠",
+        "Vergangenheit (Past) - অতীত ⏪",
+        "Verkehr (Traffic) - যান চলাচল 🚦",
+        "Versuch (Attempt) - চেষ্টা 💪",
+        "Viel (Much/Many) - অনেক 📦",
+        "Volk (People) - জনগণ 👥"
       ]
     },
     {
@@ -426,16 +426,16 @@
       "german": "Vay",
       "english": "W",
       "examples": [
-        "Wasser (Water) - পানি",
-        "Wald (Forest) - বন",
-        "Wort (Word) - শব্দ",
-        "Wissenschaft (Science) - বিজ্ঞান",
-        "Wirtschaft (Economy) - অর্থনীতি",
-        "Wahrheit (Truth) - সত্য",
-        "Wetter (Weather) - আবহাওয়া",
-        "Welt (World) - বিশ্ব",
-        "Woche (Week) - সপ্তাহ",
-        "Wind (Wind) - বাতাস"
+        "Wasser (Water) - পানি 💧",
+        "Wald (Forest) - বন 🌲",
+        "Wort (Word) - শব্দ 💬",
+        "Wissenschaft (Science) - বিজ্ঞান 🔬",
+        "Wirtschaft (Economy) - অর্থনীতি 💹",
+        "Wahrheit (Truth) - সত্য ✅",
+        "Wetter (Weather) - আবহাওয়া 🌤️",
+        "Welt (World) - বিশ্ব 🌍",
+        "Woche (Week) - সপ্তাহ 📅",
+        "Wind (Wind) - বাতাস 💨"
       ]
     },
     {
@@ -444,16 +444,16 @@
       "german": "Ix",
       "english": "X",
       "examples": [
-        "Xylophon - জাইলোফোন",
-        "Xenon - জেনন",
-        "Xylit - জাইলিট",
-        "Xenophobie (Xenophobia) - বিদেশী ভীতি",
-        "Xerox - জেরক্স",
-        "Xylographie (Xylography) - কাঠখোদাই",
-        "Xanthophyll - জ্যান্থোফিল",
-        "Xenial (Hospitable) - আতিথেয়তাপূর্ণ",
-        "Xerophyt (Xerophyte) - মরুদ্ভিদ",
-        "Xylem - জাইলেম"
+        "Xylophon - জাইলোফোন 🎵",
+        "Xenon - জেনন 💨",
+        "Xylit - জাইলিট 🍬",
+        "Xenophobie (Xenophobia) - বিদেশী ভীতি 😨",
+        "Xerox - জেরক্স 📄",
+        "Xylographie (Xylography) - কাঠখোদাই 🎨",
+        "Xanthophyll - জ্যান্থোফিল 🍃",
+        "Xenial (Hospitable) - আতিথেয়তাপূর্ণ 🏠",
+        "Xerophyt (Xerophyte) - মরুদ্ভিদ 🌵",
+        "Xylem - জাইলেম 🌱"
       ]
     },
     {
@@ -462,16 +462,16 @@
       "german": "Ypsilon",
       "english": "Y",
       "examples": [
-        "Yoga - যোগ",
-        "Yacht - ইয়ট",
-        "Yen - ইয়েন",
-        "Yak - ইয়াক",
-        "Yucca - ইউক্কা",
-        "Yuppie - ইয়াপি",
-        "Yeti - ইয়েতি",
-        "Yin-Yang - ইয়িন-ইয়াং",
-        "Yankee - ইয়াঙ্কি",
-        "YouTube - ইউটিউব"
+        "Yoga - যোগ 🧘",
+        "Yacht - ইয়ট ⛵",
+        "Yen - ইয়েন 💴",
+        "Yak - ইয়াক 🦬",
+        "Yucca - ইউক্কা 🌵",
+        "Yuppie - ইয়াপি 👔",
+        "Yeti - ইয়েতি 🦍",
+        "Yin-Yang - ইয়িন-ইয়াং ☯️",
+        "Yankee - ইয়াঙ্কি 🇺🇸",
+        "YouTube - ইউটিউব 📺"
       ]
     },
     {
@@ -480,16 +480,16 @@
       "german": "Tzett",
       "english": "Z",
       "examples": [
-        "Zeit (Time) - সময়",
-        "Zimmer (Room) - ঘর",
-        "Zahl (Number) - সংখ্যা",
-        "Zukunft (Future) - ভবিষ্যৎ",
-        "Zusammen (Together) - একসাথে",
-        "Zufrieden (Satisfied) - সন্তুষ্ট",
-        "Zeitung (Newspaper) - সংবাদপত্র",
-        "Zug (Train) - ট্রেন",
-        "Zoo (Zoo) - চিড়িয়াখানা",
-        "Ziel (Goal) - লক্ষ্য"
+        "Zeit (Time) - সময় ⏰",
+        "Zimmer (Room) - ঘর 🏠",
+        "Zahl (Number) - সংখ্যা 🔢",
+        "Zukunft (Future) - ভবিষ্যৎ 🔮",
+        "Zusammen (Together) - একসাথে 👥",
+        "Zufrieden (Satisfied) - সন্তুষ্ট 😊",
+        "Zeitung (Newspaper) - সংবাদপত্র 📰",
+        "Zug (Train) - ট্রেন 🚂",
+        "Zoo (Zoo) - চিড়িয়াখানা 🦁",
+        "Ziel (Goal) - লক্ষ্য 🎯"
       ]
     },
     {
@@ -498,16 +498,16 @@
       "german": "A-Umlaut",
       "english": "Ä",
       "examples": [
-        "Äpfel (Apples) - আপেল",
-        "Änderung (Change) - পরিবর্তন",
-        "Ärger (Anger) - রাগ",
-        "Ähnlich (Similar) - অনুরূপ",
-        "Ärzte (Doctors) - ডাক্তার",
-        "Ästhetik (Aesthetics) - নন্দনতত্ত্ব",
-        "Älter (Older) - বয়স্ক",
-        "Ärmel (Sleeve) - হাতা",
-        "Äquator (Equator) - বিষুবরেখা",
-        "Atmosphäre (Atmosphere) - বায়ুমণ্ডল"
+        "Äpfel (Apples) - আপেল 🍎",
+        "Änderung (Change) - পরিবর্তন 🔄",
+        "Ärger (Anger) - রাগ 😠",
+        "Ähnlich (Similar) - অনুরূপ ↔️",
+        "Ärzte (Doctors) - ডাক্তার 👨‍⚕️",
+        "Ästhetik (Aesthetics) - নন্দনতত্ত্ব 🎨",
+        "Älter (Older) - বয়স্ক 👴",
+        "Ärmel (Sleeve) - হাতা 👕",
+        "Äquator (Equator) - বিষুবরেখা 🌍",
+        "Atmosphäre (Atmosphere) - বায়ুমণ্ডল 🌫️"
       ]
     },
     {
@@ -516,16 +516,16 @@
       "german": "O-Umlaut",
       "english": "Ö",
       "examples": [
-        "Öl (Oil) - তেল",
-        "Österreich (Austria) - অস্ট্রিয়া",
-        "Öffentlich (Public) - জনসাধারণ",
-        "Ökologie (Ecology) - বাস্তুসংস্থান",
-        "Ökonomie (Economy) - অর্থনীতি",
-        "Öffnung (Opening) - খোলা",
-        "Höhe (Height) - উচ্চতা",
-        "Größe (Size) - আকার",
-        "Röntgen (X-ray) - এক্স-রে",
-        "König (King) - রাজা"
+        "Öl (Oil) - তেল 🛢️",
+        "Österreich (Austria) - অস্ট্রিয়া 🇦🇹",
+        "Öffentlich (Public) - জনসাধারণ 👥",
+        "Ökologie (Ecology) - বাস্তুসংস্থান 🌱",
+        "Ökonomie (Economy) - অর্থনীতি 💹",
+        "Öffnung (Opening) - খোলা 🚪",
+        "Höhe (Height) - উচ্চতা 📏",
+        "Größe (Size) - আকার 📐",
+        "Röntgen (X-ray) - এক্স-রে 📷",
+        "König (King) - রাজা 👑"
       ]
     },
     {
@@ -534,16 +534,16 @@
       "german": "U-Umlaut",
       "english": "Ü",
       "examples": [
-        "Über (Over) - উপরে",
-        "Übung (Exercise) - ব্যায়াম",
-        "Überraschung (Surprise) - বিস্ময়",
-        "Überzeugung (Conviction) - বিশ্বাস",
-        "Übersetzung (Translation) - অনুবাদ",
-        "Überwindung (Overcoming) - অতিক্রম",
-        "Tür (Door) - দরজা",
-        "Für (For) - জন্য",
-        "Früh (Early) - তাড়াতাড়ি",
-        "Grün (Green) - সবুজ"
+        "Über (Over) - উপরে ⬆️",
+        "Übung (Exercise) - ব্যায়াম 💪",
+        "Überraschung (Surprise) - বিস্ময় 😲",
+        "Überzeugung (Conviction) - বিশ্বাস 💭",
+        "Übersetzung (Translation) - অনুবাদ 🔤",
+        "Überwindung (Overcoming) - অতিক্রম 🏃",
+        "Tür (Door) - দরজা 🚪",
+        "Für (For) - জন্য 🎁",
+        "Früh (Early) - তাড়াতাড়ি ⏰",
+        "Grün (Green) - সবুজ 🟢"
       ]
     },
     {
@@ -552,16 +552,16 @@
       "german": "Eszett",
       "english": "ß",
       "examples": [
-        "Straße (Street) - রাস্তা",
-        "Fuß (Foot) - পা",
-        "Maß (Measure) - পরিমাপ",
-        "Groß (Big) - বড়",
-        "Spaß (Fun) - মজা",
-        "Schluss (End) - শেষ",
-        "Weiß (White) - সাদা",
-        "Heiß (Hot) - গরম",
-        "Süß (Sweet) - মিষ্টি",
-        "Gruß (Greeting) - শুভেচ্ছা"
+        "Straße (Street) - রাস্তা 🛣️",
+        "Fuß (Foot) - পা 👣",
+        "Maß (Measure) - পরিমাপ 📏",
+        "Groß (Big) - বড় 📏",
+        "Spaß (Fun) - মজা 😄",
+        "Schluss (End) - শেষ ⏹️",
+        "Weiß (White) - সাদা ⚪",
+        "Heiß (Hot) - গরম 🔥",
+        "Süß (Sweet) - মিষ্টি 🍬",
+        "Gruß (Greeting) - শুভেচ্ছা 👋"
       ]
     }
   ]
