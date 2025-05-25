@@ -1,191 +1,204 @@
 {
   "title": "German Grammar Rules",
   "description": "Essential German grammar rules with translations and examples",
-  "sections": [
+  "headers": [
+    { "icon": "📝", "text": "Rule" },
+    { "icon": "📖", "text": "Bangla" },
+    { "icon": "🇩🇪", "text": "German" },
+    { "icon": "🇬🇧", "text": "English" }
+  ],
+  "rows": [
     {
-      "title": "Articles and Gender",
-      "description": "Learn about German articles and gender rules",
-      "headers": [
-        { "text": "Gender", "icon": "👤" },
-        { "text": "Definite Article", "icon": "📝" },
-        { "text": "Indefinite Article", "icon": "📝" },
-        { "text": "Examples", "icon": "💡" }
-      ],
-      "rows": [
-        {
-          "gender": "Masculine",
-          "definite": "der",
-          "indefinite": "ein",
-          "examples": [
-            {
-              "german": "der Mann",
-              "bangla": "পুরুষ",
-              "english": "the man"
-            },
-            {
-              "german": "ein Mann",
-              "bangla": "একজন পুরুষ",
-              "english": "a man"
-            },
-            {
-              "german": "der Tisch",
-              "bangla": "টেবিল",
-              "english": "the table"
-            },
-            {
-              "german": "ein Tisch",
-              "bangla": "একটি টেবিল",
-              "english": "a table"
-            }
-          ]
-        },
-        {
-          "gender": "Feminine",
-          "definite": "die",
-          "indefinite": "eine",
-          "examples": [
-            {
-              "german": "die Frau",
-              "bangla": "মহিলা",
-              "english": "the woman"
-            },
-            {
-              "german": "eine Frau",
-              "bangla": "একজন মহিলা",
-              "english": "a woman"
-            },
-            {
-              "german": "die Tür",
-              "bangla": "দরজা",
-              "english": "the door"
-            },
-            {
-              "german": "eine Tür",
-              "bangla": "একটি দরজা",
-              "english": "a door"
-            }
-          ]
-        },
-        {
-          "gender": "Neuter",
-          "definite": "das",
-          "indefinite": "ein",
-          "examples": [
-            {
-              "german": "das Kind",
-              "bangla": "শিশু",
-              "english": "the child"
-            },
-            {
-              "german": "ein Kind",
-              "bangla": "একটি শিশু",
-              "english": "a child"
-            },
-            {
-              "german": "das Buch",
-              "bangla": "বই",
-              "english": "the book"
-            },
-            {
-              "german": "ein Buch",
-              "bangla": "একটি বই",
-              "english": "a book"
-            }
-          ]
-        }
-      ]
+      "word": "Present Tense - ich",
+      "bangla": "বর্তমান কাল - আমি",
+      "german": "Ich spiele, Ich lerne",
+      "english": "I play, I learn"
     },
     {
-      "title": "Cases in German",
-      "description": "Learn about German cases and their usage",
-      "headers": [
-        { "text": "Case", "icon": "📚" },
-        { "text": "Usage", "icon": "📝" },
-        { "text": "Example", "icon": "💡" },
-        { "text": "Question", "icon": "❓" }
-      ],
-      "rows": [
-        {
-          "case": "Nominative",
-          "usage": [
-            "Subject of the sentence",
-            "After 'sein' (to be)"
-          ],
-          "examples": [
-            {
-              "german": "Der Hund schläft",
-              "bangla": "কুকুরটি ঘুমাচ্ছে",
-              "english": "The dog sleeps"
-            },
-            {
-              "german": "Das ist ein Buch",
-              "bangla": "এটি একটি বই",
-              "english": "This is a book"
-            }
-          ],
-          "question": "Wer? Was?"
-        },
-        {
-          "case": "Accusative",
-          "usage": [
-            "Direct object",
-            "After certain prepositions"
-          ],
-          "examples": [
-            {
-              "german": "Ich sehe den Hund",
-              "bangla": "আমি কুকুরটি দেখছি",
-              "english": "I see the dog"
-            },
-            {
-              "german": "Für das Kind",
-              "bangla": "শিশুটির জন্য",
-              "english": "For the child"
-            }
-          ],
-          "question": "Wen? Was?"
-        },
-        {
-          "case": "Dative",
-          "usage": [
-            "Indirect object",
-            "After certain prepositions"
-          ],
-          "examples": [
-            {
-              "german": "Ich gebe dem Hund einen Ball",
-              "bangla": "আমি কুকুরটিকে একটি বল দিচ্ছি",
-              "english": "I give the dog a ball"
-            },
-            {
-              "german": "Mit der Frau",
-              "bangla": "মহিলার সাথে",
-              "english": "With the woman"
-            }
-          ],
-          "question": "Wem?"
-        },
-        {
-          "case": "Genitive",
-          "usage": [
-            "Possession",
-            "After certain prepositions"
-          ],
-          "examples": [
-            {
-              "german": "Das Buch des Mannes",
-              "bangla": "পুরুষের বই",
-              "english": "The man's book"
-            },
-            {
-              "german": "Trotz des Regens",
-              "bangla": "বৃষ্টি সত্ত্বেও",
-              "english": "Despite the rain"
-            }
-          ],
-          "question": "Wessen?"
-        }
-      ]
+      "word": "Present Tense - du",
+      "bangla": "বর্তমান কাল - তুমি",
+      "german": "Du spielst, Du lernst",
+      "english": "You play, You learn"
+    },
+    {
+      "word": "Present Tense - er/sie/es",
+      "bangla": "বর্তমান কাল - সে",
+      "german": "Er spielt, Sie lernt",
+      "english": "He plays, She learns"
+    },
+    {
+      "word": "Present Tense - wir",
+      "bangla": "বর্তমান কাল - আমরা",
+      "german": "Wir spielen, Wir lernen",
+      "english": "We play, We learn"
+    },
+    {
+      "word": "Present Tense - ihr",
+      "bangla": "বর্তমান কাল - তোমরা",
+      "german": "Ihr spielt, Ihr lernt",
+      "english": "You (plural) play, You learn"
+    },
+    {
+      "word": "Present Tense - sie/Sie",
+      "bangla": "বর্তমান কাল - তারা/আপনি",
+      "german": "Sie spielen, Sie lernen",
+      "english": "They play, They learn"
+    },
+    {
+      "word": "Articles - Masculine",
+      "bangla": "লিঙ্গ - পুংলিঙ্গ",
+      "german": "der Mann, ein Mann",
+      "english": "the man, a man"
+    },
+    {
+      "word": "Articles - Feminine",
+      "bangla": "লিঙ্গ - স্ত্রীলিঙ্গ",
+      "german": "die Frau, eine Frau",
+      "english": "the woman, a woman"
+    },
+    {
+      "word": "Articles - Neuter",
+      "bangla": "লিঙ্গ - ক্লীবলিঙ্গ",
+      "german": "das Kind, ein Kind",
+      "english": "the child, a child"
+    },
+    {
+      "word": "Cases - Nominative",
+      "bangla": "কারক - কর্তা",
+      "german": "Der Hund schläft",
+      "english": "The dog sleeps"
+    },
+    {
+      "word": "Cases - Accusative",
+      "bangla": "কারক - কর্ম",
+      "german": "Ich sehe den Hund",
+      "english": "I see the dog"
+    },
+    {
+      "word": "Cases - Dative",
+      "bangla": "কারক - সম্প্রদান",
+      "german": "Ich gebe dem Hund einen Ball",
+      "english": "I give the dog a ball"
+    },
+    {
+      "word": "Cases - Genitive",
+      "bangla": "কারক - সম্বন্ধ",
+      "german": "Das Buch des Mannes",
+      "english": "The man's book"
+    },
+    {
+      "word": "Modal Verbs - können",
+      "bangla": "সহায়ক ক্রিয়া - পারা",
+      "german": "Ich kann Deutsch sprechen",
+      "english": "I can speak German"
+    },
+    {
+      "word": "Modal Verbs - müssen",
+      "bangla": "সহায়ক ক্রিয়া - বাধ্য",
+      "german": "Ich muss lernen",
+      "english": "I must study"
+    },
+    {
+      "word": "Modal Verbs - wollen",
+      "bangla": "সহায়ক ক্রিয়া - চাওয়া",
+      "german": "Ich will reisen",
+      "english": "I want to travel"
+    },
+    {
+      "word": "Modal Verbs - sollen",
+      "bangla": "সহায়ক ক্রিয়া - উচিত",
+      "german": "Du sollst üben",
+      "english": "You should practice"
+    },
+    {
+      "word": "Past Tense - Regular",
+      "bangla": "অতীত কাল - নিয়মিত",
+      "german": "Ich spielte, Du lerntest",
+      "english": "I played, You learned"
+    },
+    {
+      "word": "Past Tense - Irregular",
+      "bangla": "অতীত কাল - অনিয়মিত",
+      "german": "Ich ging, Du kamst",
+      "english": "I went, You came"
+    },
+    {
+      "word": "Past Tense - sein",
+      "bangla": "অতীত কাল - হওয়া",
+      "german": "Ich war, Du warst",
+      "english": "I was, You were"
+    },
+    {
+      "word": "Past Tense - haben",
+      "bangla": "অতীত কাল - থাকা",
+      "german": "Ich hatte, Du hattest",
+      "english": "I had, You had"
+    },
+    {
+      "word": "Perfect Tense - Regular",
+      "bangla": "পুরাঘটিত কাল - নিয়মিত",
+      "german": "Ich habe gespielt",
+      "english": "I have played"
+    },
+    {
+      "word": "Perfect Tense - Irregular",
+      "bangla": "পুরাঘটিত কাল - অনিয়মিত",
+      "german": "Ich bin gegangen",
+      "english": "I have gone"
+    },
+    {
+      "word": "Prepositions - Accusative",
+      "bangla": "অব্যয় - কর্ম কারক",
+      "german": "für, um, durch, gegen",
+      "english": "for, around, through, against"
+    },
+    {
+      "word": "Prepositions - Dative",
+      "bangla": "অব্যয় - সম্প্রদান কারক",
+      "german": "mit, nach, von, zu",
+      "english": "with, after, from, to"
+    },
+    {
+      "word": "Prepositions - Two-way",
+      "bangla": "অব্যয় - দ্বিমুখী",
+      "german": "in, an, auf, über",
+      "english": "in, at, on, over"
+    },
+    {
+      "word": "Word Order - Main Clause",
+      "bangla": "শব্দক্রম - মুখ্য বাক্য",
+      "german": "Ich gehe heute zur Schule",
+      "english": "I go to school today"
+    },
+    {
+      "word": "Word Order - Subordinate Clause",
+      "bangla": "শব্দক্রম - গৌণ বাক্য",
+      "german": "weil ich müde bin",
+      "english": "because I am tired"
+    },
+    {
+      "word": "Word Order - Questions",
+      "bangla": "শব্দক্রম - প্রশ্ন",
+      "german": "Wo wohnst du?",
+      "english": "Where do you live?"
+    },
+    {
+      "word": "Adjectives - Strong",
+      "bangla": "বিশেষণ - শক্তিশালী",
+      "german": "ein guter Mann",
+      "english": "a good man"
+    },
+    {
+      "word": "Adjectives - Weak",
+      "bangla": "বিশেষণ - দুর্বল",
+      "german": "der gute Mann",
+      "english": "the good man"
+    },
+    {
+      "word": "Adjectives - Mixed",
+      "bangla": "বিশেষণ - মিশ্র",
+      "german": "ein guter alter Mann",
+      "english": "a good old man"
     }
   ]
 } 

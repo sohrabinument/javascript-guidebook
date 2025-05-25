@@ -6,6 +6,7 @@ import TranslationCell from "../../../components/TranslationCell";
 import germanWords from "../../../data/german-words.json";
 import germanAlphabet from "../../../data/german-alphabet.json";
 import germanNumbers from "../../../data/german-numbers.json";
+import germanGrammar from "../../../data/german-grammar.json";
 
 # ✨ German Language Learning Guide
 
@@ -132,6 +133,36 @@ Learn common German words and phrases with their translations.
             german={row.german}
             english={row.english}
             examples={row.examples}
+          />
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+## 📚 German Grammar
+
+Learn essential German grammar rules with examples and translations.
+
+<div className="overflow-x-auto">
+  <table className="w-full border-collapse">
+    <thead>
+      <tr>
+        {germanGrammar.headers.map((header, index) => (
+          <th key={index} className="border border-gray-300 bg-gray-100 p-2">
+            {header.icon} {header.text}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {germanGrammar.rows.map((row, index) => (
+        <tr key={index}>
+          <TranslationCell
+            word={row.word}
+            bangla={row.bangla}
+            german={row.german}
+            english={row.english}
           />
         </tr>
       ))}
