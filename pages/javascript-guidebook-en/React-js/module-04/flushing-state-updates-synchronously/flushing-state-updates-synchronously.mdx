@@ -1,0 +1,309 @@
+import { Callout } from "nextra/components";
+import { Cards, Card } from "nextra/components";
+import { Steps } from "nextra/components";
+import { Tabs, Tab } from "nextra/components";
+
+# ⚡ React flushSync: Synchronous State Updates
+
+## What is flushSync? 🤔
+
+React normally batches state updates for better performance 📦. But sometimes, you need the DOM to update immediately ⚡ - like when you're scrolling to a newly added item 📜 or measuring element dimensions right after a state change 📏.
+
+<Callout type="info" emoji="💡">
+  **flushSync** forces React to flush any pending updates synchronously,
+  ensuring the DOM is updated immediately.
+</Callout>
+
+## The Problem: Async State Updates
+
+Here's a common scenario that doesn't work as expected:
+
+```jsx filename="TodoList.jsx" {3}
+function addTodo() {
+  setTodos([...todos, newTodo]);
+  listRef.current.lastChild.scrollIntoView(); // ❌ Won't work!
+}
+```
+
+<Callout type="error">
+  The new todo item isn't in the DOM yet when `scrollIntoView()` is called, so
+  the scroll behavior is inconsistent.
+</Callout>
+
+## The Solution: flushSync to the Rescue! 🦸‍♀️
+
+<Tabs items={['Problem', 'Solution']}>
+  <Tab>
+    ```jsx
+    // ❌ This doesn't work reliably
+    function addTodo() {
+      setTodos([...todos, newTodo]);
+      // DOM hasn't updated yet!
+      listRef.current.lastChild.scrollIntoView();
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```jsx
+    import { flushSync } from 'react-dom';
+    
+    // ✅ This works perfectly!
+    function addTodo() {
+      flushSync(() => {
+        setTodos([...todos, newTodo]);
+      });
+      // DOM is now updated!
+      listRef.current.lastChild.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+      });
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Complete Example
+
+Here's a full implementation of a todo list that automatically scrolls to new items:
+
+```jsx filename="TodoList.jsx" showLineNumbers
+import { useState, useRef } from "react";
+import { flushSync } from "react-dom";
+
+export default function TodoList() {
+  const listRef = useRef(null);
+  const [text, setText] = useState("");
+  const [todos, setTodos] = useState(initialTodos);
+
+  function handleAdd() {
+    if (!text.trim()) return;
+
+    const newTodo = {
+      id: Date.now(),
+      text: text.trim(),
+    };
+
+    // 🔥 The magic happens here
+    flushSync(() => {
+      setText("");
+      setTodos([...todos, newTodo]);
+    });
+
+    // DOM is guaranteed to be updated now
+    listRef.current.lastChild.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
+  }
+
+  return (
+    <div className="max-w-md mx-auto p-6">
+      <div className="mb-4">
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleAdd()}
+          placeholder="Add a new todo..."
+          className="w-full p-3 border rounded-lg"
+        />
+        <button
+          onClick={handleAdd}
+          className="w-full mt-2 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        >
+          Add Todo ➕
+        </button>
+      </div>
+
+      <div className="h-64 overflow-y-auto border rounded-lg p-4">
+        <ul ref={listRef} className="space-y-2">
+          {todos.map((todo) => (
+            <li key={todo.id} className="p-3 bg-gray-50 rounded border">
+              {todo.text}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+// Initial data
+const initialTodos = Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  text: `Todo item #${i + 1}`,
+}));
+```
+
+## When to Use flushSync
+
+<Cards>
+  <Card icon="📏" title="DOM Measurements" href="#">
+    When you need to measure element dimensions immediately after a state change
+  </Card>
+  <Card icon="🎯" title="Scrolling & Focus" href="#">
+    For scrolling to new elements or focusing inputs right after updates
+  </Card>
+  <Card icon="🎨" title="Animations" href="#">
+    When coordinating animations that depend on DOM changes
+  </Card>
+  <Card icon="🔄" title="Third-party Integration" href="#">
+    Integrating with libraries that need immediate DOM updates
+  </Card>
+</Cards>
+
+## Best Practices & Performance Tips
+
+<Steps>
+### Use Sparingly
+flushSync can hurt performance if overused. Only use it when you truly need synchronous updates.
+
+### Batch Multiple Updates
+
+If you need multiple state updates to be synchronous, put them all in one flushSync call:
+
+```jsx
+flushSync(() => {
+  setCount(count + 1);
+  setName("New name");
+  setItems([...items, newItem]);
+});
+```
+
+### Avoid in Event Handlers
+
+Don't use flushSync in every event handler - React's batching is usually better for performance.
+
+</Steps>
+
+<Callout type="warning" emoji="⚠️">
+  **Performance Warning**: flushSync bypasses React's optimizations. Use it only
+  when necessary!
+</Callout>
+
+## Common Use Cases
+
+### Scrolling to New Content
+
+```jsx
+function addMessage(message) {
+  flushSync(() => {
+    setMessages((prev) => [...prev, message]);
+  });
+
+  // Scroll to the new message
+  chatRef.current.scrollTop = chatRef.current.scrollHeight;
+}
+```
+
+### Focus Management
+
+```jsx
+function addInput() {
+  flushSync(() => {
+    setInputs((prev) => [...prev, { id: Date.now(), value: "" }]);
+  });
+
+  // Focus the newly added input
+  const newInput = document.getElementById(`input-${inputs.length}`);
+  newInput?.focus();
+}
+```
+
+### Animation Coordination
+
+```jsx
+function expandCard() {
+  flushSync(() => {
+    setExpanded(true);
+  });
+
+  // Start animation after DOM update
+  cardRef.current.animate([{ height: "100px" }, { height: "300px" }], {
+    duration: 300,
+  });
+}
+```
+
+## What NOT to Do
+
+<Callout type="error" emoji="🚫">
+  **Don't manipulate the DOM directly!** Always let React handle DOM updates.
+</Callout>
+
+## Comparison with Other Approaches
+
+<Tabs items={['flushSync', 'useLayoutEffect', 'setTimeout']}>
+  <Tab>
+    ```jsx
+    // ✅ Immediate, synchronous
+    flushSync(() => {
+      setState(newValue);
+    });
+    doSomethingWithDOM();
+    ```
+  </Tab>
+  <Tab>
+    ```jsx
+    // ⚠️ Runs after DOM update, but asynchronous
+    useLayoutEffect(() => {
+      doSomethingWithDOM();
+    }, [state]);
+    ```
+  </Tab>
+  <Tab>
+    ```jsx
+    // ❌ Unreliable timing
+    setState(newValue);
+    setTimeout(() => {
+      doSomethingWithDOM(); // Might be too early or late
+    }, 0);
+    ```
+  </Tab>
+</Tabs>
+
+## Learn More
+
+Ready to dive deeper? Check out these resources:
+
+<Cards>
+  <Card
+    icon="📚"
+    title="Official React Docs"
+    href="https://react.dev/reference/react-dom/flushSync"
+  >
+    The definitive guide to flushSync from the React team
+  </Card>
+  <Card
+    icon="🎓"
+    title="React DOM Manipulation"
+    href="https://react.dev/learn/manipulating-the-dom-with-refs"
+  >
+    Learn more about working with refs and DOM manipulation
+  </Card>
+  <Card
+    icon="⚡"
+    title="React Performance"
+    href="https://react.dev/learn/render-and-commit"
+  >
+    Understanding React's rendering process
+  </Card>
+</Cards>
+
+---
+
+<div className="text-center p-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+  <div className="text-4xl mb-4">🎉</div>
+  <h3 className="text-2xl font-bold mb-2">You're Now a flushSync Expert!</h3>
+  <div className="text-gray-600">
+    Use this power wisely to create smooth, responsive user experiences.
+  </div>
+</div>
+
+<style jsx>{`
+  .hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: -2rem -2rem 3rem -2rem;
+    color: white;
+  }
+`}</style>
