@@ -1,50 +1,50 @@
 import { Callout, Tabs, Tab } from 'nextra/components'
 
-# 🔄 The Complete Guide to Mastering React Effects: Advanced Patterns & Best Practices
+# 🔄 React Effects আয়ত্ত করার সম্পূর্ণ গাইড: উন্নত প্যাটার্ন ও সর্বোত্তম অনুশীলন
 
-_The second part of our comprehensive guide to mastering React's useEffect hook_
-
----
-
-## 📋 Table of Contents
-
-1. 🔄 Effect Lifecycle and Dependencies
-2. ⚡ Effects React to Reactive Values
-3. 🖱️ Separating Events from Effects
-4. ✂️ Removing Effect Dependencies
-5. 🪝 Reusing Logic with Custom Hooks
-6. 🛠️ Advanced Patterns
-7. 🐛 Common Mistakes & Debugging
-8. 📚 Complete Reference
+_React-এর useEffect হুক আয়ত্ত করার আমাদের বিস্তৃত গাইডের দ্বিতীয় অংশ_
 
 ---
 
-## 🔄 Effect Lifecycle and Dependencies
+## 📋 সূচিপত্র
 
-### 🎭 Understanding the Effect Lifecycle
+1. 🔄 Effect জীবনচক্র এবং Dependencies
+2. ⚡ Effects Reactive Values এর প্রতি সাড়া দেয়
+3. 🖱️ Events কে Effects থেকে আলাদা করা
+4. ✂️ Effect Dependencies অপসারণ করা
+5. 🪝 Custom Hooks দিয়ে Logic পুনঃব্যবহার করা
+6. 🛠️ অ্যাডভান্সড প্যাটার্ন
+7. 🐛 সাধারণ ভুল এবং ডিবাগিং
+8. 📚 সম্পূর্ণ রেফারেন্স
 
-Think of Effects like a stage manager in a theater production. They coordinate behind-the-scenes activities while the main performance (rendering) happens on stage.
+---
+
+## 🔄 Effect জীবনচক্র এবং Dependencies
+
+### 🎭 Effect জীবনচক্র বোঝা
+
+Effects কে নাট্য প্রযোজনার একজন স্টেজ ম্যানেজারের মতো ভাবুন। মূল পারফরমেন্স (রেন্ডারিং) মঞ্চে ঘটার সময় তারা পর্দার আড়ালের কার্যক্রম সমন্বয় করে।
 
 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-8 p-6 border-2 border-slate-300 rounded-xl bg-slate-50 text-black">
 
 <div className="p-4 bg-green-100 rounded-lg border-2 border-green-600 text-center">
   <div className="font-bold text-lg">🟢 MOUNT</div>
-  <div className="text-sm mt-2">Component renders for the first time ↓ Effect runs</div>
+  <div className="text-sm mt-2">কম্পোনেন্ট প্রথমবার রেন্ডার হয় ↓ Effect চালু হয়</div>
 </div>
 
 <div className="p-4 bg-amber-100 rounded-lg border-2 border-amber-500 text-center">
   <div className="font-bold text-lg">🔄 UPDATE</div>
-  <div className="text-sm mt-2">Dependencies change ↓ Cleanup runs ↓ Effect runs</div>
+  <div className="text-sm mt-2">Dependencies পরিবর্তন হয় ↓ Cleanup চালু হয় ↓ Effect চালু হয়</div>
 </div>
 
 <div className="p-4 bg-red-200 rounded-lg border-2 border-red-500 text-center">
   <div className="font-bold text-lg">🔴 UNMOUNT</div>
-  <div className="text-sm mt-2">Component is removed ↓ Cleanup runs</div>
+  <div className="text-sm mt-2">কম্পোনেন্ট সরানো হয় ↓ Cleanup চালু হয়</div>
 </div>
 
 </div>
 
-### 📊 Effect Lifecycle Flow
+### 📊 Effect জীবনচক্র প্রবাহ
 
 ```mermaid
 graph TD
@@ -72,27 +72,27 @@ graph TD
     style I fill:#f87171,color:#000
 ```
 
-#### 🔍 Understanding the Flow
+#### 🔍 প্রবাহ বোঝা
 
-1. **Component Mount (🟢)**
-   - Component is first rendered
-   - Effect setup begins
-   - Effect runs for the first time
+1. **কম্পোনেন্ট Mount (🟢)**
+   - কম্পোনেন্ট প্রথমবার রেন্ডার হয়
+   - Effect সেটআপ শুরু হয়
+   - Effect প্রথমবার চালু হয়
 
-2. **Update Cycle (🔄)**
-   - When dependencies change:
-     - Previous effect's cleanup runs
-     - New effect runs
-   - When no dependencies change:
-     - Component updates normally
-     - Effect doesn't re-run
+2. **আপডেট চক্র (🔄)**
+   - যখন dependencies পরিবর্তন হয়:
+     - পূর্ববর্তী effect এর cleanup চালু হয়
+     - নতুন effect চালু হয়
+   - যখন কোনো dependencies পরিবর্তন হয় না:
+     - কম্পোনেন্ট স্বাভাবিকভাবে আপডেট হয়
+     - Effect পুনরায় চালু হয় না
 
 3. **Unmount (🔴)**
-   - Component is removed from DOM
-   - Final cleanup runs
-   - All subscriptions and listeners are cleaned up
+   - কম্পোনেন্ট DOM থেকে সরানো হয়
+   - চূড়ান্ত cleanup চালু হয়
+   - সমস্ত subscription এবং listener পরিষ্কার করা হয়
 
-### 🔬 Interactive Lifecycle Demo
+### 🔬 ইন্টারঅ্যাক্টিভ জীবনচক্র ডেমো
 
 ```jsx
 function LifecycleDemo() {
@@ -102,10 +102,10 @@ function LifecycleDemo() {
   function LifecycleChild() {
     useEffect(
       () => {
-        console.log('🟢 MOUNT: Effect running, count is:', count)
+        console.log('🟢 MOUNT: Effect চালু হচ্ছে, count হল:', count)
 
         return () => {
-          console.log('🔴 CLEANUP: Effect cleaning up, count was:', count)
+          console.log('🔴 CLEANUP: Effect পরিষ্কার হচ্ছে, count ছিল:', count)
         }
       },
       [count],
@@ -113,9 +113,9 @@ function LifecycleDemo() {
 
     return (
       <div>
-        <h3>Child Component</h3>
+        <h3>চাইল্ড কম্পোনেন্ট</h3>
         <p>Count: {count}</p>
-        <button onClick={() => setCount(c => c + 1)}>Increment (triggers UPDATE)</button>
+        <button onClick={() => setCount(c => c + 1)}>বৃদ্ধি করুন (UPDATE ট্রিগার করে)</button>
       </div>
     )
   }
@@ -124,18 +124,18 @@ function LifecycleDemo() {
     <div>
       <div style={{ marginBottom: '1rem' }}>
         <button onClick={() => setMounted(!mounted)}>
-          {mounted ? '🔴 Unmount Child' : '🟢 Mount Child'}
+          {mounted ? '🔴 চাইল্ড Unmount করুন' : '🟢 চাইল্ড Mount করুন'}
         </button>
       </div>
 
       {mounted && <LifecycleChild />}
 
       <div>
-        <strong>🔍 Watch the console to see:</strong>
+        <strong>🔍 দেখার জন্য কনসোল দেখুন:</strong>
         <ul>
-          <li>Mount: Effect runs when child appears</li>
-          <li>Update: Cleanup → Effect when count changes</li>
-          <li>Unmount: Cleanup when child disappears</li>
+          <li>Mount: চাইল্ড আবির্ভূত হলে Effect চালু হয়</li>
+          <li>Update: count পরিবর্তন হলে Cleanup → Effect</li>
+          <li>Unmount: চাইল্ড অদৃশ্য হলে Cleanup</li>
         </ul>
       </div>
     </div>
@@ -143,61 +143,61 @@ function LifecycleDemo() {
 }
 ```
 
-### 📚 Dependency Array Deep Dive
+### 📚 Dependency Array গভীর বিশ্লেষণ
 
-The dependency array is React's way of asking: "When should I re-run this Effect?"
+Dependency array হল React এর জিজ্ঞাসা করার উপায়: "কখন আমার এই Effect পুনরায় চালু করা উচিত?"
 
 <div className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 my-6 text-black">
 
 <div className="p-4 bg-red-50 rounded-lg border border-red-500">
-<div className="font-bold text-lg text-red-600">🚫 No Array</div>
+<div className="font-bold text-lg text-red-600">🚫 কোনো Array নেই</div>
 ```jsx
 useEffect(() => {
-  console.log('Runs after EVERY render')
+  console.log('প্রতিটি রেন্ডারের পরে চালু হয়')
 })
 ```
 <div className="text-sm mt-2">
-  <strong>When:</strong> After every single render<br/>
-  <strong>Use case:</strong> Rarely needed, usually a mistake
+  <strong>কখন:</strong> প্রতিটি একক রেন্ডারের পরে<br/>
+  <strong>ব্যবহারের ক্ষেত্র:</strong> খুব কমই প্রয়োজন, সাধারণত একটি ভুল
 </div>
 </div>
 
 <div className="p-4 bg-green-50 rounded-lg border border-green-600">
-<div className="font-bold text-lg text-green-600">✅ Empty Array</div>
+<div className="font-bold text-lg text-green-600">✅ খালি Array</div>
 ```jsx
 useEffect(() => {
-  console.log('Runs only on mount')
+  console.log('শুধুমাত্র mount এ চালু হয়')
 }, [])
 ```
 <div className="text-sm mt-2">
-  <strong>When:</strong> Only once, when component mounts<br/>
-  <strong>Use case:</strong> API calls, subscriptions, timers
+  <strong>কখন:</strong> শুধুমাত্র একবার, যখন কম্পোনেন্ট mount হয়<br/>
+  <strong>ব্যবহারের ক্ষেত্র:</strong> API কল, subscription, timer
 </div>
 </div>
 
 <div className="p-4 bg-sky-50 rounded-lg border border-sky-600">
-<div className="font-bold text-lg text-sky-600">🎯 With Dependencies</div>
+<div className="font-bold text-lg text-sky-600">🎯 Dependencies সহ</div>
 ```jsx
 useEffect(() => {
-  console.log("Runs when deps change");
+  console.log("deps পরিবর্তন হলে চালু হয়");
 }, [count, name]);
 ```
 <div className="text-sm mt-2">
-  <strong>When:</strong> When any dependency changes<br/>
-  <strong>Use case:</strong> Data fetching based on props/state
+  <strong>কখন:</strong> যেকোনো dependency পরিবর্তন হলে<br/>
+  <strong>ব্যবহারের ক্ষেত্র:</strong> props/state এর উপর ভিত্তি করে ডেটা fetch করা
 </div>
 </div>
 
 </div>
 
 <Callout type="warning" emoji="⚠️">
-  **Reference Equality Trap!** React compares dependencies using `Object.is()`: - Primitives
-  (numbers, strings): compared by value ✅ - Objects/arrays: compared by reference ⚠️
+  **Reference Equality ফাঁদ!** React dependencies তুলনা করে `Object.is()` ব্যবহার করে: - Primitives
+  (সংখ্যা, স্ট্রিং): মান দ্বারা তুলনা ✅ - Objects/arrays: reference দ্বারা তুলনা ⚠️
 </Callout>
 
-### 🔍 Dependency Comparison Examples
+### 🔍 Dependency তুলনার উদাহরণ
 
-<Tabs items={['Primitives (Safe)', 'Objects (Dangerous)', 'Functions (Tricky)']}>
+<Tabs items={['Primitives (নিরাপদ)', 'Objects (বিপজ্জনক)', 'Functions (জটিল)']}>
 <Tab>
 ```jsx
 function SafeDependencies() {
@@ -207,10 +207,10 @@ function SafeDependencies() {
   useEffect(
     () => {
       console.log(`Count: ${count}, Name: ${name}`)
-      // This works perfectly because count and name are primitives
+      // এটি নিখুঁতভাবে কাজ করে কারণ count এবং name হল primitives
     },
     [count, name],
-  ) // ✅ Safe - compared by value
+  ) // ✅ নিরাপদ - মান দ্বারা তুলনা
 
   return (
     <div>
@@ -226,7 +226,7 @@ function SafeDependencies() {
 function DangerousObjects() {
   const [user, setUser] = useState({ name: 'John', age: 30 })
 
-  // ❌ PROBLEM: New object created every render
+  // ❌ সমস্যা: প্রতিটি রেন্ডারে নতুন object তৈরি হয়
   const userSettings = {
     theme: user.theme || 'light',
     notifications: true,
@@ -234,13 +234,13 @@ function DangerousObjects() {
 
   useEffect(
     () => {
-      console.log('Saving settings...')
+      console.log('সেটিংস সংরক্ষণ করা হচ্ছে...')
       saveUserSettings(userSettings)
     },
     [userSettings],
-  ) // 🚫 Runs every render!
+  ) // 🚫 প্রতিটি রেন্ডারে চালু হয়!
 
-  // ✅ SOLUTION 1: Use useMemo
+  // ✅ সমাধান ১: useMemo ব্যবহার করুন
   const memoizedSettings = useMemo(
     () => ({
       theme: user.theme || 'light',
@@ -251,24 +251,24 @@ function DangerousObjects() {
 
   useEffect(
     () => {
-      console.log('Saving memoized settings...')
+      console.log('মেমোয়াইজড সেটিংস সংরক্ষণ করা হচ্ছে...')
       saveUserSettings(memoizedSettings)
     },
     [memoizedSettings],
-  ) // ✅ Only runs when theme changes
+  ) // ✅ শুধুমাত্র theme পরিবর্তন হলে চালু হয়
 
-  // ✅ SOLUTION 2: Use primitive dependencies
+  // ✅ সমাধান ২: primitive dependencies ব্যবহার করুন
   useEffect(
     () => {
       const settings = {
         theme: user.theme || 'light',
         notifications: true,
       }
-      console.log('Saving settings with primitives...')
+      console.log('primitives দিয়ে সেটিংস সংরক্ষণ করা হচ্ছে...')
       saveUserSettings(settings)
     },
     [user.theme],
-  ) // ✅ Best solution!
+  ) // ✅ সেরা সমাধান!
 
   return <div>User: {user.name}</div>
 }
@@ -280,32 +280,32 @@ function DangerousObjects() {
 function TrickyFunctions({ onDataLoad }) {
   const [data, setData] = useState(null)
 
-  // ❌ PROBLEM: onDataLoad might be recreated every render
+  // ❌ সমস্যা: onDataLoad প্রতিটি রেন্ডারে পুনর্সৃষ্টি হতে পারে
   useEffect(
     () => {
       fetchData().then(result => {
         setData(result)
-        onDataLoad(result) // Function might be stale
+        onDataLoad(result) // Function পুরানো হতে পারে
       })
     },
     [onDataLoad],
-  ) // Could cause unnecessary re-runs
+  ) // অপ্রয়োজনীয় পুনঃ-রান হতে পারে
 
-  // ✅ SOLUTION 1: Use useCallback in parent
-  // Parent should wrap onDataLoad with useCallback
+  // ✅ সমাধান ১: parent এ useCallback ব্যবহার করুন
+  // Parent এর onDataLoad কে useCallback দিয়ে wrap করা উচিত
 
-  // ✅ SOLUTION 2: Use a ref for callback
+  // ✅ সমাধান ২: callback এর জন্য একটি ref ব্যবহার করুন
   const callbackRef = useRef(onDataLoad)
   callbackRef.current = onDataLoad
 
   useEffect(() => {
     fetchData().then(result => {
       setData(result)
-      callbackRef.current(result) // Always current
+      callbackRef.current(result) // সবসময় বর্তমান
     })
-  }, []) // No dependency needed
+  }, []) // কোনো dependency প্রয়োজন নেই
 
-  return <div>{data ? 'Data loaded!' : 'Loading...'}</div>
+  return <div>{data ? 'ডেটা লোড হয়েছে!' : 'লোড হচ্ছে...'}</div>
 }
 ````
 </Tab>
@@ -313,93 +313,93 @@ function TrickyFunctions({ onDataLoad }) {
 
 ---
 
-## ⚡ Effects React to Reactive Values
+## ⚡ Effects Reactive Values এর প্রতি সাড়া দেয়
 
-### 🌊 Understanding Reactive Values
+### 🌊 Reactive Values বোঝা
 
-Think of reactive values like water flowing through pipes. When the source changes, the flow affects everything downstream.
+Reactive values কে পাইপের মধ্য দিয়ে প্রবাহিত পানির মতো ভাবুন। যখন উৎস পরিবর্তন হয়, প্রবাহ নিচের দিকে সবকিছুকে প্রভাবিত করে।
 
 <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center my-8 p-6 border-2 border-slate-300 rounded-xl bg-slate-50 text-black">
 
 <div className="p-4 bg-blue-100 rounded-lg border-2 border-blue-500">
-  <div className="font-bold text-lg">🌊 REACTIVE SOURCES</div>
+  <div className="font-bold text-lg">🌊 REACTIVE উৎস</div>
   <ul className="text-sm m-0">
-    <li>• useState values</li>
-    <li>• Props from parent</li>
-    <li>• Context values</li>
-    <li>• Derived calculations</li>
-    <li>• Custom hook returns</li>
+    <li>• useState মান</li>
+    <li>• parent থেকে Props</li>
+    <li>• Context মান</li>
+    <li>• উৎপন্ন গণনা</li>
+    <li>• Custom hook রিটার্ন</li>
   </ul>
 </div>
 
 <div className="text-2xl font-bold text-indigo-500">
   ⚡<br/>
-  Flow
+  প্রবাহ
 </div>
 
 <div className="p-4 bg-amber-100 rounded-lg border-2 border-amber-500">
-  <div className="font-bold text-lg">🎯 EFFECTS REACT</div>
+  <div className="font-bold text-lg">🎯 EFFECTS সাড়া দেয়</div>
   <ul className="text-sm m-0">
-    <li>• Data fetching</li>
-    <li>• Subscriptions</li>
-    <li>• DOM updates</li>
-    <li>• Analytics tracking</li>
+    <li>• ডেটা fetch করা</li>
+    <li>• Subscription</li>
+    <li>• DOM আপডেট</li>
+    <li>• Analytics ট্র্যাকিং</li>
     <li>• Cache invalidation</li>
   </ul>
 </div>
 
 </div>
 
-### 🧪 Reactive Values Laboratory
+### 🧪 রিঅ্যাক্টিভ ভ্যালু ল্যাবরেটরি
 
 ```jsx
 function ReactiveValuesDemo() {
-  // 🌊 Reactive sources
+  // 🌊 রিঅ্যাক্টিভ উৎস
   const [userId, setUserId] = useState(1)
   const [filterType, setFilterType] = useState('all')
   const [refreshCount, setRefreshCount] = useState(0)
 
-  // 🧮 Derived reactive value
+  // 🧮 উৎপন্ন রিঅ্যাক্টিভ ভ্যালু
   const apiUrl = useMemo(
     () => `/api/users/${userId}/posts?filter=${filterType}&t=${refreshCount}`,
     [userId, filterType, refreshCount],
   )
 
-  // 📊 State for our data
+  // 📊 আমাদের ডেটার জন্য স্টেট
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(false)
   const [lastFetch, setLastFetch] = useState(null)
 
-  // ⚡ Effect reacts to reactive values
+  // ⚡ ইফেক্ট রিঅ্যাক্টিভ ভ্যালুতে প্রতিক্রিয়া করে
   useEffect(
     () => {
-      console.log('🌊 Reactive effect triggered!')
-      console.log('📊 API URL changed to:', apiUrl)
+      console.log('🌊 রিঅ্যাক্টিভ ইফেক্ট ট্রিগার হয়েছে!')
+      console.log('📊 API URL পরিবর্তিত হয়েছে:', apiUrl)
 
       setLoading(true)
       const startTime = Date.now()
 
-      // Simulate API call
+      // API কল সিমুলেট করা
       setTimeout(() => {
         const mockPosts = [
-          `Post 1 for user ${userId} (${filterType})`,
-          `Post 2 for user ${userId} (${filterType})`,
-          `Post 3 for user ${userId} (${filterType})`,
+          `পোস্ট ১ ইউজার ${userId} এর জন্য (${filterType})`,
+          `পোস্ট ২ ইউজার ${userId} এর জন্য (${filterType})`,
+          `পোস্ট ৩ ইউজার ${userId} এর জন্য (${filterType})`,
         ]
 
         setPosts(mockPosts)
         setLoading(false)
         setLastFetch(new Date().toLocaleTimeString())
 
-        console.log(`⏱️ Fetch completed in ${Date.now() - startTime}ms`)
+        console.log(`⏱️ ফেচ সম্পন্ন হয়েছে ${Date.now() - startTime}ms এ`)
       }, 1000)
     },
     [apiUrl],
-  ) // Reacts to the derived URL
+  ) // উৎপন্ন URL এর প্রতি প্রতিক্রিয়া
 
   return (
     <div style={{ padding: '1rem', border: '1px solid #e5e7eb', borderRadius: '0.5rem' }}>
-      <h3>🧪 Reactive Values Laboratory</h3>
+      <h3>🧪 রিঅ্যাক্টিভ ভ্যালু ল্যাবরেটরি</h3>
 
       <div
         style={{
@@ -410,41 +410,41 @@ function ReactiveValuesDemo() {
         }}
       >
         <div>
-          <label>👤 User ID:</label>
+          <label>👤 ইউজার আইডি:</label>
           <select value={userId} onChange={e => setUserId(Number(e.target.value))}>
-            <option value={1}>User 1</option>
-            <option value={2}>User 2</option>
-            <option value={3}>User 3</option>
+            <option value={1}>ইউজার ১</option>
+            <option value={2}>ইউজার ২</option>
+            <option value={3}>ইউজার ৩</option>
           </select>
         </div>
 
         <div>
-          <label>🔍 Filter:</label>
+          <label>🔍 ফিল্টার:</label>
           <select value={filterType} onChange={e => setFilterType(e.target.value)}>
-            <option value="all">All Posts</option>
-            <option value="popular">Popular</option>
-            <option value="recent">Recent</option>
+            <option value="all">সমস্ত পোস্ট</option>
+            <option value="popular">জনপ্রিয়</option>
+            <option value="recent">সাম্প্রতিক</option>
           </select>
         </div>
 
         <div>
           <button onClick={() => setRefreshCount(c => c + 1)}>
-            🔄 Force Refresh ({refreshCount})
+            🔄 জোরপূর্বক রিফ্রেশ ({refreshCount})
           </button>
         </div>
       </div>
 
       <div>
-        <strong>📡 Current API URL:</strong> {apiUrl}
+        <strong>📡 বর্তমান API URL:</strong> {apiUrl}
         <br />
-        <strong>⏰ Last Fetch:</strong> {lastFetch || 'Never'}
+        <strong>⏰ শেষ ফেচ:</strong> {lastFetch || 'কখনো না'}
       </div>
 
       {loading ? (
-        <div style={{ textAlign: 'center', padding: '2rem' }}>🌀 Loading posts...</div>
+        <div style={{ textAlign: 'center', padding: '2rem' }}>🌀 পোস্ট লোড হচ্ছে...</div>
       ) : (
         <div>
-          <h4>📝 Posts:</h4>
+          <h4>📝 পোস্টসমূহ:</h4>
           <ul>
             {posts.map((post, index) => (
               <li key={index}>{post}</li>
@@ -455,11 +455,11 @@ function ReactiveValuesDemo() {
     </div>
   )
 }
-````
+```
 
-### 🎯 Reactive Patterns Showcase
+### 🎯 রিঅ্যাক্টিভ প্যাটার্ন প্রদর্শনী
 
-<Tabs items={['State-Driven Effects', 'Props-Driven Effects', 'Context-Driven Effects', 'Multi-Source Effects']}>
+<Tabs items={['স্টেট-চালিত ইফেক্টস', 'প্রপ্স-চালিত ইফেক্টস', 'কনটেক্সট-চালিত ইফেক্টস', 'বহু-উৎস ইফেক্টস']}>
 <Tab>
 ```jsx
 function StateReactiveEffect() {
@@ -467,7 +467,7 @@ function StateReactiveEffect() {
   const [sortBy, setSortBy] = useState('name')
   const [results, setResults] = useState([])
 
-  // Effect reacts to state changes
+  // ইফেক্ট স্টেট পরিবর্তনে প্রতিক্রিয়া করে
   useEffect(
     () => {
       if (!searchTerm.trim()) {
@@ -475,14 +475,14 @@ function StateReactiveEffect() {
         return
       }
 
-      console.log(`🔍 Searching for "${searchTerm}" sorted by ${sortBy}`)
+      console.log(`🔍 "${searchTerm}" খোঁজা হচ্ছে ${sortBy} অনুসারে সর্ট করে`)
 
       const timeoutId = setTimeout(() => {
-        // Simulated search with sorting
+        // সর্টিং সহ সিমুলেটেড সার্চ
         const mockResults = [
-          { name: 'Alice', score: 95 },
-          { name: 'Bob', score: 87 },
-          { name: 'Charlie', score: 92 },
+          { name: 'আলিস', score: 95 },
+          { name: 'বব', score: 87 },
+          { name: 'চার্লি', score: 92 },
         ]
           .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
           .sort((a, b) => {
@@ -496,24 +496,24 @@ function StateReactiveEffect() {
       return () => clearTimeout(timeoutId)
     },
     [searchTerm, sortBy],
-  ) // Reacts to both state values
+  ) // উভয় স্টেট ভ্যালুতে প্রতিক্রিয়া
 
   return (
     <div>
       <input
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
-        placeholder="Search users..."
+        placeholder="ইউজার খুঁজুন..."
       />
       <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
-        <option value="name">Sort by Name</option>
-        <option value="score">Sort by Score</option>
+        <option value="name">নাম অনুসারে সর্ট</option>
+        <option value="score">স্কোর অনুসারে সর্ট</option>
       </select>
 
       <div>
         {results.map((user, index) => (
           <div key={index}>
-            {user.name} - Score: {user.score}
+            {user.name} - স্কোর: {user.score}
           </div>
         ))}
       </div>
@@ -521,7 +521,7 @@ function StateReactiveEffect() {
   )
 }
 
-````
+```
 </Tab>
 <Tab>
 ```jsx
@@ -529,7 +529,7 @@ function PropsReactiveEffect({ userId, includePrivate = false }) {
   const [userProfile, setUserProfile] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  // Effect reacts to prop changes
+  // ইফেক্ট প্রপ্স পরিবর্তনে প্রতিক্রিয়া করে
   useEffect(
     () => {
       if (!userId) {
@@ -537,11 +537,11 @@ function PropsReactiveEffect({ userId, includePrivate = false }) {
         return
       }
 
-      console.log(`👤 Loading profile for user ${userId}, private: ${includePrivate}`)
+      console.log(`👤 ইউজার ${userId} এর প্রোফাইল লোড হচ্ছে, প্রাইভেট: ${includePrivate}`)
 
       setLoading(true)
 
-      // Simulate API call that depends on props
+      // প্রপ্সের উপর নির্ভরশীল API কল সিমুলেট করা
       const controller = new AbortController()
 
       async function fetchProfile() {
@@ -553,7 +553,7 @@ function PropsReactiveEffect({ userId, includePrivate = false }) {
           setUserProfile(profile)
         } catch (error) {
           if (error.name !== 'AbortError') {
-            console.error('Failed to fetch profile:', error)
+            console.error('প্রোফাইল ফেচ করতে ব্যর্থ:', error)
           }
         } finally {
           setLoading(false)
@@ -565,20 +565,20 @@ function PropsReactiveEffect({ userId, includePrivate = false }) {
       return () => controller.abort()
     },
     [userId, includePrivate],
-  ) // Reacts to props
+  ) // প্রপ্সে প্রতিক্রিয়া
 
-  if (loading) return <div>Loading profile...</div>
-  if (!userProfile) return <div>No user selected</div>
+  if (loading) return <div>প্রোফাইল লোড হচ্ছে...</div>
+  if (!userProfile) return <div>কোন ইউজার নির্বাচিত নয়</div>
 
   return (
     <div>
       <h3>{userProfile.name}</h3>
-      <p>Email: {userProfile.email}</p>
-      {includePrivate && userProfile.privateInfo && <p>Private: {userProfile.privateInfo}</p>}
+      <p>ইমেইল: {userProfile.email}</p>
+      {includePrivate && userProfile.privateInfo && <p>প্রাইভেট: {userProfile.privateInfo}</p>}
     </div>
   )
 }
-````
+```
 
 </Tab>
 <Tab>
@@ -588,12 +588,12 @@ function ContextReactiveEffect() {
   const user = useContext(UserContext)
   const [analytics, setAnalytics] = useState([])
 
-  // Effect reacts to context changes
+  // ইফেক্ট কনটেক্সট পরিবর্তনে প্রতিক্রিয়া করে
   useEffect(
     () => {
-      console.log(`📊 Tracking: theme=${theme.name}, user=${user.id}`)
+      console.log(`📊 ট্র্যাকিং: থিম=${theme.name}, ইউজার=${user.id}`)
 
-      // Track theme and user changes for analytics
+      // অ্যানালিটিক্সের জন্য থিম এবং ইউজার পরিবর্তন ট্র্যাক করা
       const event = {
         type: 'context_change',
         theme: theme.name,
@@ -601,14 +601,14 @@ function ContextReactiveEffect() {
         timestamp: Date.now(),
       }
 
-      // Send to analytics service
+      // অ্যানালিটিক্স সার্ভিসে পাঠানো
       sendAnalytics(event)
 
-      // Update local analytics for demo
+      // ডেমোর জন্য স্থানীয় অ্যানালিটিক্স আপডেট করা
       setAnalytics(prev => [...prev.slice(-4), event])
     },
     [theme.name, user.id],
-  ) // Reacts to context values
+  ) // কনটেক্সট ভ্যালুতে প্রতিক্রিয়া
 
   return (
     <div
@@ -619,15 +619,15 @@ function ContextReactiveEffect() {
         borderRadius: '0.5rem',
       }}
     >
-      <h3>Welcome, {user.name}!</h3>
-      <p>Current theme: {theme.name}</p>
+      <h3>স্বাগতম, {user.name}!</h3>
+      <p>বর্তমান থিম: {theme.name}</p>
 
       <div>
-        <h4>Recent Analytics:</h4>
+        <h4>সাম্প্রতিক অ্যানালিটিক্স:</h4>
         {analytics.map((event, index) => (
           <div key={index} style={{ fontSize: '0.8rem' }}>
-            {new Date(event.timestamp).toLocaleTimeString()}: theme=
-            {event.theme}, user=
+            {new Date(event.timestamp).toLocaleTimeString()}: থিম=
+            {event.theme}, ইউজার=
             {event.userId}
           </div>
         ))}
@@ -636,12 +636,12 @@ function ContextReactiveEffect() {
   )
 }
 
-````
+```
 </Tab>
 <Tab>
 ```jsx
 function MultiSourceReactiveEffect({ productId }) {
-  // Multiple reactive sources
+  // একাধিক রিঅ্যাক্টিভ উৎস
   const [user, setUser] = useState(null)
   const [preferences, setPreferences] = useState({})
   const [location, setLocation] = useState(null)
@@ -649,20 +649,20 @@ function MultiSourceReactiveEffect({ productId }) {
 
   const currentTheme = useContext(ThemeContext)
 
-  // Effect reacts to multiple sources
+  // ইফেক্ট একাধিক উৎসে প্রতিক্রিয়া করে
   useEffect(
     () => {
-      // Only run if we have all required data
+      // শুধুমাত্র তখনই চালান যদি আমাদের কাছে সব প্রয়োজনীয় ডেটা থাকে
       if (!productId || !user || !location) {
         setRecommendations([])
         return
       }
 
-      console.log('🎯 Generating recommendations from multiple sources:')
-      console.log('- Product ID:', productId)
-      console.log('- User preferences:', preferences)
-      console.log('- Location:', location)
-      console.log('- Theme:', currentTheme.name)
+      console.log('🎯 একাধিক উৎস থেকে সুপারিশ তৈরি করা হচ্ছে:')
+      console.log('- প্রোডাক্ট আইডি:', productId)
+      console.log('- ইউজার পছন্দ:', preferences)
+      console.log('- অবস্থান:', location)
+      console.log('- থিম:', currentTheme.name)
 
       const controller = new AbortController()
 
@@ -685,7 +685,7 @@ function MultiSourceReactiveEffect({ productId }) {
           setRecommendations(recs)
         } catch (error) {
           if (error.name !== 'AbortError') {
-            console.error('Failed to get recommendations:', error)
+            console.error('সুপারিশ পেতে ব্যর্থ:', error)
           }
         }
       }
@@ -695,107 +695,107 @@ function MultiSourceReactiveEffect({ productId }) {
       return () => controller.abort()
     },
     [
-      productId, // Prop
-      user?.id, // State (with optional chaining)
-      preferences, // State (object)
-      location, // State
-      currentTheme.name, // Context
+      productId, // প্রপ
+      user?.id, // স্টেট (ঐচ্ছিক চেইনিং সহ)
+      preferences, // স্টেট (অবজেক্ট)
+      location, // স্টেট
+      currentTheme.name, // কনটেক্সট
     ],
   )
 
   return (
     <div>
-      <h3>🎯 Smart Recommendations</h3>
+      <h3>🎯 স্মার্ট সুপারিশ</h3>
       {recommendations.length > 0 ? (
         <ul>
           {recommendations.map((rec, index) => (
             <li key={index}>
-              {rec.title} - Score: {rec.score}
+              {rec.title} - স্কোর: {rec.score}
             </li>
           ))}
         </ul>
       ) : (
-        <p>No recommendations available</p>
+        <p>কোন সুপারিশ উপলব্ধ নেই</p>
       )}
     </div>
   )
 }
-````
+```
 
 </Tab>
 </Tabs>
 
 ---
 
-## 🖱️ Separating Events from Effects
+## 🖱️ ইভেন্ট থেকে ইফেক্ট আলাদা করা
 
-### 🎭 The Event vs Effect Philosophy
+### 🎭 ইভেন্ট বনাম ইফেক্ট দর্শন
 
-Think of your React component like a restaurant:
+আপনার React কম্পোনেন্টকে একটি রেস্তোরাঁর মতো ভাবুন:
 
 <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center my-8 p-6 border-2 border-slate-300 rounded-xl bg-slate-50 text-black">
 
 <div className="p-4 bg-amber-100 rounded-lg border-2 border-amber-500">
-  <div className="font-bold text-lg">🖱️ EVENTS</div>
+  <div className="font-bold text-lg">🖱️ ইভেন্ট</div>
   <div className="text-sm mt-2">
-    <strong>Like customer orders:</strong>
+    <strong>গ্রাহকের অর্ডারের মতো:</strong>
   </div>
   <ul className="text-sm m-0">
-    <li>• Button clicks</li>
-    <li>• Form submissions</li>
-    <li>• Menu selections</li>
-    <li>• Specific user actions</li>
+    <li>• বাটন ক্লিক</li>
+    <li>• ফর্ম সাবমিশন</li>
+    <li>• মেনু নির্বাচন</li>
+    <li>• নির্দিষ্ট ব্যবহারকারীর কার্যক্রম</li>
   </ul>
-  <div className="text-xs text-amber-700 mt-2">Happen when user does something</div>
+  <div className="text-xs text-amber-700 mt-2">ব্যবহারকারী কিছু করলে ঘটে</div>
 </div>
 
-<div className="text-2xl font-bold text-indigo-500">vs</div>
+<div className="text-2xl font-bold text-indigo-500">বনাম</div>
 
 <div className="p-4 bg-blue-100 rounded-lg border-2 border-blue-500">
-  <div className="font-bold text-lg">⚡ EFFECTS</div>
+  <div className="font-bold text-lg">⚡ ইফেক্ট</div>
   <div className="text-sm mt-2">
-    <strong>Like background services:</strong>
+    <strong>পটভূমি সেবার মতো:</strong>
   </div>
   <ul className="text-sm m-0">
-    <li>• Keep kitchen stocked</li>
-    <li>• Monitor temperature</li>
-    <li>• Update menu displays</li>
-    <li>• Sync with suppliers</li>
+    <li>• রান্নাঘর পূর্ণ রাখা</li>
+    <li>• তাপমাত্রা নিরীক্ষণ</li>
+    <li>• মেনু ডিসপ্লে আপডেট</li>
+    <li>• সরবরাহকারীদের সাথে সিঙ্ক</li>
   </ul>
-  <div className="text-xs text-blue-700 mt-2">Happen when state changes</div>
+  <div className="text-xs text-blue-700 mt-2">স্টেট পরিবর্তিত হলে ঘটে</div>
 </div>
 
 </div>
 
-### 🚫 Common Anti-Pattern: Mixing Events and Effects
+### 🚫 সাধারণ অ্যান্টি-প্যাটার্ন: ইভেন্ট এবং ইফেক্ট মিশ্রণ
 
-<Tabs items={['❌ Wrong Way', '✅ Right Way', '🎯 Best Practice']}>
+<Tabs items={['❌ ভুল উপায়', '✅ সঠিক উপায়', '🎯 সর্বোত্তম অনুশীলন']}>
 <Tab>
 ```jsx
-// ❌ DON'T DO THIS - Using Effects for user interactions
+// ❌ এটি করবেন না - ব্যবহারকারীর ইন্টারঅ্যাকশনের জন্য ইফেক্ট ব্যবহার
 function BadSearchForm() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
 
-  // ❌ PROBLEM: Using Effect for what should be an event
+  // ❌ সমস্যা: যা ইভেন্ট হওয়া উচিত তার জন্য ইফেক্ট ব্যবহার
   useEffect(
     () => {
       if (query) {
-        console.log('Searching automatically as user types...')
+        console.log('ব্যবহারকারী টাইপ করার সাথে সাথে স্বয়ংক্রিয় অনুসন্ধান...')
         searchAPI(query).then(setResults)
       }
     },
     [query],
-  ) // Searches on every keystroke!
+  ) // প্রতিটি কীস্ট্রোকে অনুসন্ধান!
 
   return (
     <div>
       <input
         value={query}
         onChange={e => setQuery(e.target.value)}
-        placeholder="Search automatically..."
+        placeholder="স্বয়ংক্রিয় অনুসন্ধান..."
       />
-      <button type="submit">Search</button> {/* Button does nothing! */}
+      <button type="submit">অনুসন্ধান</button> {/* বাটন কিছুই করে না! */}
       <div>
         {results.map(r => (
           <div key={r.id}>{r.title}</div>
@@ -808,44 +808,44 @@ function BadSearchForm() {
 ````
 
 <div className="p-4 bg-red-50 rounded-lg border border-red-500 mt-4 text-black">
-  <strong>🚫 Problems with this approach:</strong>
+  <strong>🚫 এই পদ্ধতির সমস্যা:</strong>
   <ul>
-    <li>Searches on every keystroke (expensive!)</li>
-    <li>No way to search on demand</li>
-    <li>Button doesn't work as expected</li>
-    <li>Difficult to add loading states</li>
-    <li>Hard to handle errors properly</li>
+    <li>প্রতি কীস্ট্রোকে অনুসন্ধান (ব্যয়বহুল!)</li>
+    <li>চাহিদামতো অনুসন্ধানের কোনো উপায় নেই</li>
+    <li>বাটন প্রত্যাশিত মতো কাজ করে না</li>
+    <li>লোডিং স্টেট যোগ করা কঠিন</li>
+    <li>এরর সঠিকভাবে হ্যান্ডল করা কঠিন</li>
   </ul>
 </div>
 </Tab>
 
 <Tab>
 ```jsx
-// ✅ BETTER - Separate events and effects
+// ✅ আরো ভাল - ইভেন্ট এবং ইফেক্ট আলাদা
 function GoodSearchForm() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
   const [isSearching, setIsSearching] = useState(false)
 
-  // ✅ EVENT: Explicit search when user submits
+  // ✅ ইভেন্ট: ব্যবহারকারী সাবমিট করলে স্পষ্ট অনুসন্ধান
   async function handleSubmit(e) {
     e.preventDefault()
     if (!query.trim()) return
 
     setIsSearching(true)
     try {
-      console.log('🔍 User initiated search for:', query)
+      console.log('🔍 ব্যবহারকারী অনুসন্ধান শুরু করেছেন:', query)
       const data = await searchAPI(query)
       setResults(data)
     } catch (error) {
-      console.error('Search failed:', error)
-      // Handle error state
+      console.error('অনুসন্ধান ব্যর্থ:', error)
+      // এরর স্টেট হ্যান্ডল করুন
     } finally {
       setIsSearching(false)
     }
   }
 
-  // ✅ EFFECT: Debounced search for convenience
+  // ✅ ইফেক্ট: সুবিধার জন্য ডিবাউন্সড অনুসন্ধান
   useEffect(
     () => {
       if (!query.trim()) {
@@ -853,10 +853,10 @@ function GoodSearchForm() {
         return
       }
 
-      console.log('⏱️ Auto-search triggered by typing')
+      console.log('⏱️ টাইপিং দ্বারা স্বয়ংক্রিয় অনুসন্ধান চালু')
       const timeoutId = setTimeout(() => {
         searchAPI(query).then(setResults)
-      }, 500) // Debounced
+      }, 500) // ডিবাউন্সড
 
       return () => clearTimeout(timeoutId)
     },
@@ -868,10 +868,10 @@ function GoodSearchForm() {
       <input
         value={query}
         onChange={e => setQuery(e.target.value)}
-        placeholder="Type to search automatically or press Enter"
+        placeholder="স্বয়ংক্রিয় অনুসন্ধানের জন্য টাইপ করুন বা এন্টার চাপুন"
       />
       <button type="submit" disabled={isSearching}>
-        {isSearching ? '🔍 Searching...' : '🔍 Search'}
+        {isSearching ? '🔍 অনুসন্ধান চলছে...' : '🔍 অনুসন্ধান'}
       </button>
 
       <div>
@@ -885,20 +885,20 @@ function GoodSearchForm() {
 ````
 
 <div className="p-4 bg-green-50 rounded-lg border border-green-600 mt-4">
-  <strong className="text-black">✅ Benefits of this approach:</strong>
+  <strong className="text-black">✅ এই পদ্ধতির সুবিধা:</strong>
   <ul className="text-black">
-    <li>Button works as expected (event)</li>
-    <li>Auto-search is debounced (effect)</li>
-    <li>Clear loading states</li>
-    <li>Proper error handling</li>
-    <li>User has control over when to search</li>
+    <li>বাটন প্রত্যাশিত মতো কাজ করে (ইভেন্ট)</li>
+    <li>স্বয়ংক্রিয় অনুসন্ধান ডিবাউন্সড (ইফেক্ট)</li>
+    <li>স্পষ্ট লোডিং স্টেট</li>
+    <li>সঠিক এরর হ্যান্ডলিং</li>
+    <li>কখন অনুসন্ধান করবেন তার ওপর ব্যবহারকারীর নিয়ন্ত্রণ</li>
   </ul>
 </div>
 
 </Tab>
 <Tab>
 ```jsx
-// 🎯 BEST PRACTICE - Using useEvent (React 18.3+)
+// 🎯 সর্বোত্তম অনুশীলন - useEvent ব্যবহার (React 18.3+)
 import { useEvent } from 'react'
 
 function BestSearchForm() {
@@ -906,9 +906,9 @@ function BestSearchForm() {
   const [results, setResults] = useState([])
   const [searchHistory, setSearchHistory] = useState([])
 
-  // 🎯 useEvent - Stable function reference that doesn't trigger effects
+  // 🎯 useEvent - স্থিতিশীল ফাংশন রেফারেন্স যা ইফেক্ট ট্রিগার করে না
   const logSearch = useEvent((searchTerm, source) => {
-    console.log(`📊 Search logged: "${searchTerm}" from ${source}`)
+    console.log(`📊 অনুসন্ধান লগ: "${searchTerm}" থেকে ${source}`)
     setSearchHistory(prev => [
       ...prev.slice(-9),
       {
@@ -919,17 +919,17 @@ function BestSearchForm() {
     ])
   })
 
-  // ✅ EVENT: Manual search
+  // ✅ ইভেন্ট: ম্যানুয়াল অনুসন্ধান
   async function handleSubmit(e) {
     e.preventDefault()
     if (!query.trim()) return
 
     const data = await searchAPI(query)
     setResults(data)
-    logSearch(query, 'manual') // Won't trigger effect re-runs
+    logSearch(query, 'manual') // ইফেক্ট পুনরায় চালনা ট্রিগার করবে না
   }
 
-  // ✅ EFFECT: Auto-search with stable logging
+  // ✅ ইফেক্ট: স্থিতিশীল লগিং সহ স্বয়ংক্রিয় অনুসন্ধান
   useEffect(
     () => {
       if (!query.trim()) {
@@ -940,13 +940,13 @@ function BestSearchForm() {
       const timeoutId = setTimeout(async () => {
         const data = await searchAPI(query)
         setResults(data)
-        logSearch(query, 'auto') // Stable reference!
+        logSearch(query, 'auto') // স্থিতিশীল রেফারেন্স!
       }, 500)
 
       return () => clearTimeout(timeoutId)
     },
     [query],
-  ) // logSearch is NOT needed in dependencies!
+  ) // logSearch নির্ভরতায় প্রয়োজন নেই!
 
   return (
     <div>
@@ -954,20 +954,20 @@ function BestSearchForm() {
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Smart search with history"
+          placeholder="ইতিহাসসহ স্মার্ট অনুসন্ধান"
         />
-        <button type="submit">🔍 Search</button>
+        <button type="submit">🔍 অনুসন্ধান</button>
       </form>
 
       <div>
-        <h4>Results:</h4>
+        <h4>ফলাফল:</h4>
         {results.map(r => (
           <div key={r.id}>{r.title}</div>
         ))}
       </div>
 
       <div>
-        <h4>Search History:</h4>
+        <h4>অনুসন্ধান ইতিহাস:</h4>
         {searchHistory.map((entry, index) => (
           <div key={index} style={{ fontSize: '0.8rem' }}>
             {entry.term} ({entry.source}) - {new Date(entry.timestamp).toLocaleTimeString()}
@@ -983,182 +983,182 @@ function BestSearchForm() {
 </Tab>
 </Tabs>
 
-### 🎯 Event vs Effect Decision Tree
+### 🎯 ইভেন্ট বনাম ইফেক্ট সিদ্ধান্ত ট্রি
 
 ```mermaid
 graph TD
-    A[Something needs to happen] --> B{Is it triggered by user action?}
-    B -->|Yes| C[🖱️ Use Event Handler]
-    B -->|No| D{Does it depend on state/props?}
-    D -->|Yes| E[⚡ Use Effect]
-    D -->|No| F[🤔 Consider if it belongs in React at all]
+    A[কিছু ঘটতে হবে] --> B{এটি কি ব্যবহারকারীর কার্যকলাপ দ্বারা চালু হয়েছে?}
+    B -->|হ্যাঁ| C[🖱️ ইভেন্ট হ্যান্ডলার ব্যবহার করুন]
+    B -->|না| D{এটি কি স্টেট/প্রপসের ওপর নির্ভর করে?}
+    D -->|হ্যাঁ| E[⚡ ইফেক্ট ব্যবহার করুন]
+    D -->|না| F[🤔 এটি আদৌ React-এ থাকার প্রয়োজন আছে কিনা বিবেচনা করুন]
 ```
 
-#### 🔍 Understanding the Decision Tree
+#### 🔍 সিদ্ধান্ত ট্রি বোঝা
 
-1. **User Action Triggered (🖱️ Event Handler)**
-   - Use for: Button clicks, form submissions, user interactions
-   - Example: `onClick`, `onSubmit`, `onChange`
-   - These are direct responses to user actions
+1. **ব্যবহারকারীর কার্যকলাপে চালিত (🖱️ ইভেন্ট হ্যান্ডলার)**
+   - ব্যবহার করুন: বাটন ক্লিক, ফর্ম সাবমিশন, ব্যবহারকারীর ইন্টারঅ্যাকশনের জন্য
+   - উদাহরণ: `onClick`, `onSubmit`, `onChange`
+   - এগুলো ব্যবহারকারীর কর্মের সরাসরি প্রতিক্রিয়া
 
-2. **State/Props Dependent (⚡ Effect)**
-   - Use for: Data fetching, subscriptions, DOM updates
-   - Example: `useEffect` with dependencies
-   - These react to changes in your component's data
+2. **স্টেট/প্রপসের ওপর নির্ভরশীল (⚡ ইফেক্ট)**
+   - ব্যবহার করুন: ডেটা ফেচিং, সাবস্ক্রিপশন, DOM আপডেটের জন্য
+   - উদাহরণ: নির্ভরতা সহ `useEffect`
+   - এগুলো আপনার কম্পোনেন্টের ডেটার পরিবর্তনে প্রতিক্রিয়া করে
 
-3. **Neither (🤔 Consider Alternatives)**
-   - Use for: Utility functions, service layer logic
-   - Example: Pure functions, API calls
-   - These might not need to be in React at all
+3. **কোনোটিই নয় (🤔 বিকল্প বিবেচনা করুন)**
+   - ব্যবহার করুন: ইউটিলিটি ফাংশন, সার্ভিস লেয়ার লজিকের জন্য
+   - উদাহরণ: বিশুদ্ধ ফাংশন, API কল
+   - এগুলো হয়তো React-এ থাকার প্রয়োজনই নেই
 
-### 🌊 Reactive Values Flow
+### 🌊 রিঅ্যাক্টিভ ভ্যালু ফ্লো
 
 ```mermaid
 graph LR
-    A[Reactive Sources] --> B[Flow] --> C[Effects React]
+    A[রিঅ্যাক্টিভ উৎস] --> B[প্রবাহ] --> C[ইফেক্ট প্রতিক্রিয়া]
 ```
 
-#### 🔍 Understanding Reactive Flow
+#### 🔍 রিঅ্যাক্টিভ ফ্লো বোঝা
 
-1. **Reactive Sources (🌊)**
-   - `useState` values
-   - Props from parent
-   - Context values
-   - Derived calculations
-   - Custom hook returns
+1. **রিঅ্যাক্টিভ উৎস (🌊)**
+   - `useState` ভ্যালু
+   - প্যারেন্ট থেকে প্রপস
+   - কনটেক্সট ভ্যালু
+   - ডেরাইভড ক্যালকুলেশন
+   - কাস্টম হুক রিটার্ন
 
-2. **Flow (⚡)**
-   - Data changes trigger updates
-   - Updates flow through the component tree
-   - Changes propagate to effects
+2. **প্রবাহ (⚡)**
+   - ডেটা পরিবর্তন আপডেট ট্রিগার করে
+   - আপডেট কম্পোনেন্ট ট্রিতে প্রবাহিত হয়
+   - পরিবর্তনগুলো ইফেক্টে প্রচারিত হয়
 
-3. **Effects React (🎯)**
-   - Data fetching
-   - Subscriptions
-   - DOM updates
-   - Analytics tracking
-   - Cache invalidation
+3. **ইফেক্ট প্রতিক্রিয়া (🎯)**
+   - ডেটা ফেচিং
+   - সাবস্ক্রিপশন
+   - DOM আপডেট
+   - অ্যানালিটিক্স ট্র্যাকিং
+   - ক্যাশ অবৈধকরণ
 
-### 🎨 Effect Composition Patterns
+### 🎨 ইফেক্ট কম্পোজিশন প্যাটার্ন
 
-#### 1. Sequential Effects
+#### 1. ক্রমিক ইফেক্ট
 ```jsx
-// Effects that run in sequence
+// ক্রমানুসারে চালিত ইফেক্ট
 useEffect(() => {
-  // First effect
+  // প্রথম ইফেক্ট
   const data = fetchData();
   setData(data);
 }, []);
 
 useEffect(() => {
-  // Second effect depends on first
+  // দ্বিতীয় ইফেক্ট প্রথমটির ওপর নির্ভর করে
   if (data) {
     processData(data);
   }
 }, [data]);
 ```
 
-#### 2. Parallel Effects
+#### 2. সমান্তরাল ইফেক্ট
 ```jsx
-// Independent effects running simultaneously
+// একসাথে চালিত স্বাধীন ইফেক্ট
 useEffect(() => {
-  // Fetch user data
+  // ব্যবহারকারীর ডেটা ফেচ
   fetchUserData();
 }, []);
 
 useEffect(() => {
-  // Fetch posts
+  // পোস্ট ফেচ
   fetchPosts();
 }, []);
 
 useEffect(() => {
-  // Fetch notifications
+  // নোটিফিকেশন ফেচ
   fetchNotifications();
 }, []);
 ```
 
-#### 3. Conditional Effects
+#### 3. শর্তসাপেক্ষ ইফেক্ট
 ```jsx
-// Effects that only run under certain conditions
+// নির্দিষ্ট শর্তে চালিত ইফেক্ট
 useEffect(() => {
   if (isFeatureEnabled) {
-    // Subscribe to data
+    // ডেটা সাবস্ক্রাইব
     const subscription = subscribeToData();
     return () => subscription.unsubscribe();
   }
 }, [isFeatureEnabled]);
 ```
 
-### 💡 Best Practices
+### 💡 সর্বোত্তম অনুশীলন
 
-1. **Keep Effects Focused**
-   - Each effect should do one thing
-   - Split complex effects into smaller ones
-   - Use descriptive names for effect functions
+1. **ইফেক্ট ফোকাসড রাখুন**
+   - প্রতিটি ইফেক্ট একটি কাজ করবে
+   - জটিল ইফেক্টগুলোকে ছোট ছোট ভাগে বিভক্ত করুন
+   - ইফেক্ট ফাংশনের জন্য বর্ণনামূলক নাম ব্যবহার করুন
 
-2. **Handle Cleanup Properly**
-   - Always return cleanup function when needed
-   - Clean up subscriptions and listeners
-   - Prevent memory leaks
+2. **ক্লিনআপ সঠিকভাবে হ্যান্ডল করুন**
+   - প্রয়োজনে সর্বদা ক্লিনআপ ফাংশন রিটার্ন করুন
+   - সাবস্ক্রিপশন এবং লিসনার ক্লিন করুন
+   - মেমরি লিক প্রতিরোধ করুন
 
-3. **Optimize Dependencies**
-   - Include all reactive values
-   - Use dependency arrays correctly
-   - Consider using `useCallback` and `useMemo`
+3. **নির্ভরতা অপ্টিমাইজ করুন**
+   - সব রিঅ্যাক্টিভ ভ্যালু অন্তর্ভুক্ত করুন
+   - নির্ভরতা অ্যারে সঠিকভাবে ব্যবহার করুন
+   - `useCallback` এবং `useMemo` ব্যবহার বিবেচনা করুন
 
-4. **Debug Effect Issues**
-   - Use React DevTools
-   - Add console logs
-   - Check dependency arrays
-   - Verify cleanup functions
-
+4. **ইফেক্ট সমস্যা ডিবাগ করুন**
+   - React DevTools ব্যবহার করুন
+   - কনসোল লগ যোগ করুন
+   - নির্ভরতা অ্যারে পরীক্ষা করুন
+   - ক্লিনআপ ফাংশন যাচাই করুন
+   
 ---
 
-## ✂️ Removing Effect Dependencies
+## ✂️ Effect Dependencies অপসারণ করা
 
-### 🎯 The Art of Dependency Minimization
+### 🎯 Dependency কমানোর শিল্প
 
-The best Effect is one with the fewest dependencies. Here's how to achieve dependency zen:
+সবচেয়ে ভালো Effect হলো যার সবচেয়ে কম dependencies আছে। এখানে dependency zen অর্জন করার উপায়:
 
 <div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
 
 <div className="p-4 bg-green-50 rounded-md border border-green-600">
-  <div className="font-bold text-lg text-black">✅ Move Inside Effect</div>
+  <div className="font-bold text-lg text-black">✅ Effect এর ভিতরে সরান</div>
   <div className="text-sm mt-2 text-black">
-    If it's only used inside the effect, define it there
+    যদি এটি শুধুমাত্র effect এর ভিতরে ব্যবহৃত হয়, সেখানেই define করুন
   </div>
 </div>
 
 <div className="p-4 bg-sky-50 rounded-md border border-sky-600">
-  <div className="font-bold text-lg text-black">🔧 Use Refs</div>
-  <div className="text-sm mt-2 text-black">For values that don't need to trigger re-runs</div>
+  <div className="font-bold text-lg text-black">🔧 Refs ব্যবহার করুন</div>
+  <div className="text-sm mt-2 text-black">যে values গুলো re-run trigger করার প্রয়োজন নেই</div>
 </div>
 
 <div className="p-4 bg-amber-100 rounded-md border border-amber-500">
-  <div className="font-bold text-lg text-black">🧮 Use Reducers</div>
+  <div className="font-bold text-lg text-black">🧮 Reducers ব্যবহার করুন</div>
   <div className="text-sm mt-2 text-black">
-    For complex state updates that depend on previous state
+    জটিল state updates এর জন্য যা previous state এর উপর নির্ভর করে
   </div>
 </div>
 
 <div className="p-4 bg-purple-100 rounded-md border border-purple-700">
-  <div className="font-bold text-lg text-black">🎭 Extract Non-Reactive</div>
-  <div className="text-sm mt-2 text-black">Move constants and pure functions outside component</div>
+  <div className="font-bold text-lg text-black">🎭 Non-Reactive Extract করুন</div>
+  <div className="text-sm mt-2 text-black">constants এবং pure functions কে component এর বাইরে সরান</div>
 </div>
 
 </div>
 
-### 🔬 Dependency Reduction Techniques
+### 🔬 Dependency কমানোর কৌশল
 
-<Tabs items={['Move Inside Effect', 'Use Refs for Non-Reactive', 'Extract Constants', 'Use Reducers', 'Functional Updates']}>
+<Tabs items={['Effect এর ভিতরে সরানো', 'Non-Reactive এর জন্য Refs ব্যবহার', 'Constants Extract করা', 'Reducers ব্যবহার', 'Functional Updates']}>
 <Tab>
 ```jsx
-// ❌ Unnecessary dependency
+// ❌ অপ্রয়োজনীয় dependency
 function BadTimer() {
   const [count, setCount] = useState(0)
   const [delay, setDelay] = useState(1000)
 
-  // ❌ formatTime is recreated every render
+  // ❌ formatTime প্রতি render এ পুনর্নির্মিত হয়
   const formatTime = seconds => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
@@ -1169,25 +1169,25 @@ function BadTimer() {
     () => {
       const intervalId = setInterval(() => {
         setCount(c => c + 1)
-        console.log(formatTime(count)) // Uses stale count!
+        console.log(formatTime(count)) // পুরানো count ব্যবহার করে!
       }, delay)
 
       return () => clearInterval(intervalId)
     },
     [count, delay, formatTime],
-  ) // ❌ formatTime changes every render
+  ) // ❌ formatTime প্রতি render এ পরিবর্তিত হয়
 
-  return <div>Time: {formatTime(count)}</div>
+  return <div>সময়: {formatTime(count)}</div>
 }
 
-// ✅ Move function inside effect
+// ✅ function কে effect এর ভিতরে সরান
 function GoodTimer() {
   const [count, setCount] = useState(0)
   const [delay, setDelay] = useState(1000)
 
   useEffect(
     () => {
-      // ✅ Define function inside effect
+      // ✅ function টি effect এর ভিতরে define করুন
       const formatTime = seconds => {
         const mins = Math.floor(seconds / 60)
         const secs = seconds % 60
@@ -1197,7 +1197,7 @@ function GoodTimer() {
       const intervalId = setInterval(() => {
         setCount(c => {
           const newCount = c + 1
-          console.log(formatTime(newCount)) // Always current!
+          console.log(formatTime(newCount)) // সবসময় বর্তমান!
           return newCount
         })
       }, delay)
@@ -1205,23 +1205,23 @@ function GoodTimer() {
       return () => clearInterval(intervalId)
     },
     [delay],
-  ) // ✅ Only depends on delay
+  ) // ✅ শুধুমাত্র delay এর উপর নির্ভর করে
 
-  // ✅ Format for display (could also be inside effect if only used there)
+  // ✅ প্রদর্শনের জন্য Format (এটিও effect এর ভিতরে হতে পারে যদি শুধুমাত্র সেখানে ব্যবহৃত হয়)
   const formatTime = seconds => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
-  return <div>Time: {formatTime(count)}</div>
+  return <div>সময়: {formatTime(count)}</div>
 }
 
 ````
 </Tab>
 <Tab>
 ```jsx
-// ❌ Callback triggers unnecessary re-runs
+// ❌ Callback অপ্রয়োজনীয় re-runs trigger করে
 function BadDataLogger({ onDataReceived }) {
   const [data, setData] = useState([])
 
@@ -1232,23 +1232,23 @@ function BadDataLogger({ onDataReceived }) {
       ws.onmessage = event => {
         const newData = JSON.parse(event.data)
         setData(prev => [...prev, newData])
-        onDataReceived(newData) // Might be recreated each render
+        onDataReceived(newData) // প্রতি render এ পুনর্নির্মিত হতে পারে
       }
 
       return () => ws.close()
     },
     [onDataReceived],
-  ) // ❌ Re-connects when callback changes
+  ) // ❌ callback পরিবর্তিত হলে পুনরায় connect করে
 
-  return <div>Data points: {data.length}</div>
+  return <div>ডেটা পয়েন্ট: {data.length}</div>
 }
 
-// ✅ Use ref for callback
+// ✅ callback এর জন্য ref ব্যবহার করুন
 function GoodDataLogger({ onDataReceived }) {
   const [data, setData] = useState([])
   const callbackRef = useRef(onDataReceived)
 
-  // Keep ref current
+  // ref কে বর্তমান রাখুন
   callbackRef.current = onDataReceived
 
   useEffect(() => {
@@ -1257,16 +1257,16 @@ function GoodDataLogger({ onDataReceived }) {
     ws.onmessage = event => {
       const newData = JSON.parse(event.data)
       setData(prev => [...prev, newData])
-      callbackRef.current(newData) // Always current callback
+      callbackRef.current(newData) // সবসময় বর্তমান callback
     }
 
     return () => ws.close()
-  }, []) // ✅ No dependencies - only connects once
+  }, []) // ✅ কোন dependencies নেই - শুধুমাত্র একবার connect করে
 
-  return <div>Data points: {data.length}</div>
+  return <div>ডেটা পয়েন্ট: {data.length}</div>
 }
 
-// 🎯 Even better with useEvent (React 18.3+)
+// 🎯 useEvent এর সাথে আরও ভালো (React 18.3+)
 function BestDataLogger({ onDataReceived }) {
   const [data, setData] = useState([])
   const handleDataReceived = useEvent(onDataReceived)
@@ -1277,25 +1277,25 @@ function BestDataLogger({ onDataReceived }) {
     ws.onmessage = event => {
       const newData = JSON.parse(event.data)
       setData(prev => [...prev, newData])
-      handleDataReceived(newData) // Stable but always current
+      handleDataReceived(newData) // স্থিতিশীল কিন্তু সবসময় বর্তমান
     }
 
     return () => ws.close()
-  }, []) // ✅ No dependencies needed
+  }, []) // ✅ কোন dependencies প্রয়োজন নেই
 
-  return <div>Data points: {data.length}</div>
+  return <div>ডেটা পয়েন্ট: {data.length}</div>
 }
 ````
 
 </Tab>
 <Tab>
 ```jsx
-// ❌ Constant inside component
+// ❌ component এর ভিতরে Constant
 function BadApiClient() {
   const [data, setData] = useState(null)
   const [userId, setUserId] = useState(1)
 
-  // ❌ Recreated every render
+  // ❌ প্রতি render এ পুনর্নির্মিত
   const API_CONFIG = {
     baseURL: 'https://api.example.com',
     timeout: 5000,
@@ -1317,12 +1317,12 @@ function BadApiClient() {
       fetchData()
     },
     [userId, API_CONFIG],
-  ) // ❌ API_CONFIG changes every render
+  ) // ❌ API_CONFIG প্রতি render এ পরিবর্তিত হয়
 
   return <div>{data?.name}</div>
 }
 
-// ✅ Extract constants outside component
+// ✅ constants কে component এর বাইরে extract করুন
 const API_CONFIG = {
   baseURL: 'https://api.example.com',
   timeout: 5000,
@@ -1348,19 +1348,19 @@ function GoodApiClient() {
       fetchData()
     },
     [userId],
-  ) // ✅ Only depends on userId
+  ) // ✅ শুধুমাত্র userId এর উপর নির্ভর করে
 
   return <div>{data?.name}</div>
 }
 
-// 🎯 Alternative: Move inside effect if only used there
+// 🎯 বিকল্প: effect এর ভিতরে সরান যদি শুধুমাত্র সেখানে ব্যবহৃত হয়
 function AlternativeApiClient() {
   const [data, setData] = useState(null)
   const [userId, setUserId] = useState(1)
 
   useEffect(
     () => {
-      // ✅ Define inside effect if only used here
+      // ✅ effect এর ভিতরে define করুন যদি শুধুমাত্র এখানে ব্যবহৃত হয়
       const API_CONFIG = {
         baseURL: 'https://api.example.com',
         timeout: 5000,
@@ -1380,7 +1380,7 @@ function AlternativeApiClient() {
       fetchData()
     },
     [userId],
-  ) // ✅ Only depends on userId
+  ) // ✅ শুধুমাত্র userId এর উপর নির্ভর করে
 
   return <div>{data?.name}</div>
 }
@@ -1389,13 +1389,13 @@ function AlternativeApiClient() {
 </Tab>
 <Tab>
 ```jsx
-// ❌ Complex state updates with dependencies
+// ❌ dependencies সহ জটিল state updates
 function BadShoppingCart() {
   const [items, setItems] = useState([])
   const [discounts, setDiscounts] = useState([])
   const [total, setTotal] = useState(0)
 
-  // ❌ Multiple effects with overlapping dependencies
+  // ❌ overlapping dependencies সহ একাধিক effects
   useEffect(
     () => {
       const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -1403,7 +1403,7 @@ function BadShoppingCart() {
       setTotal(subtotal - discountAmount)
     },
     [items, discounts],
-  ) // Complex dependency management
+  ) // জটিল dependency management
 
   const addItem = product => {
     setItems(prev => [...prev, { ...product, quantity: 1 }])
@@ -1413,10 +1413,10 @@ function BadShoppingCart() {
     setItems(prev => prev.map(item => (item.id === itemId ? { ...item, quantity } : item)))
   }
 
-  return <div>Total: ${total}</div>
+  return <div>মোট: ${total}</div>
 }
 
-// ✅ Use reducer to consolidate state logic
+// ✅ state logic একত্রিত করতে reducer ব্যবহার করুন
 function cartReducer(state, action) {
   switch (action.type) {
     case 'ADD_ITEM':
@@ -1463,7 +1463,7 @@ function GoodShoppingCart() {
     total: 0,
   })
 
-  // ✅ No effects needed - state is always consistent
+  // ✅ কোন effects প্রয়োজন নেই - state সবসময় সামঞ্জস্যপূর্ণ
 
   const addItem = product => {
     dispatch({ type: 'ADD_ITEM', product })
@@ -1473,14 +1473,14 @@ function GoodShoppingCart() {
     dispatch({ type: 'UPDATE_QUANTITY', itemId, quantity })
   }
 
-  return <div>Total: ${cart.total}</div>
+  return <div>মোট: ${cart.total}</div>
 }
 ````
 
 </Tab>
 <Tab>
 ```jsx
-// ❌ Reading current state in effect
+// ❌ effect এ বর্তমান state পাঠ করা
 function BadCounter() {
   const [count, setCount] = useState(0)
   const [step, setStep] = useState(1)
@@ -1488,23 +1488,23 @@ function BadCounter() {
   useEffect(
     () => {
       const intervalId = setInterval(() => {
-        setCount(count + step) // ❌ Reads current count - stale closure
+        setCount(count + step) // ❌ বর্তমান count পড়ে - stale closure
       }, 1000)
 
       return () => clearInterval(intervalId)
     },
     [count, step],
-  ) // ❌ Depends on count - recreates interval constantly
+  ) // ❌ count এর উপর নির্ভর করে - ক্রমাগত interval পুনর্নির্মাণ করে
 
   return (
     <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setStep(s => s + 1)}>Step: {step}</button>
+      <p>গণনা: {count}</p>
+      <button onClick={() => setStep(s => s + 1)}>ধাপ: {step}</button>
     </div>
   )
 }
 
-// ✅ Use functional updates
+// ✅ functional updates ব্যবহার করুন
 function GoodCounter() {
   const [count, setCount] = useState(0)
   const [step, setStep] = useState(1)
@@ -1512,23 +1512,23 @@ function GoodCounter() {
   useEffect(
     () => {
       const intervalId = setInterval(() => {
-        setCount(prevCount => prevCount + step) // ✅ Uses current step, doesn't depend on count
+        setCount(prevCount => prevCount + step) // ✅ বর্তমান step ব্যবহার করে, count এর উপর নির্ভর করে না
       }, 1000)
 
       return () => clearInterval(intervalId)
     },
     [step],
-  ) // ✅ Only depends on step
+  ) // ✅ শুধুমাত্র step এর উপর নির্ভর করে
 
   return (
     <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setStep(s => s + 1)}>Step: {step}</button>
+      <p>গণনা: {count}</p>
+      <button onClick={() => setStep(s => s + 1)}>ধাপ: {step}</button>
     </div>
   )
 }
 
-// 🎯 Even better - eliminate step dependency too
+// 🎯 আরও ভালো - step dependency ও দূর করুন
 function BestCounter() {
   const [count, setCount] = useState(0)
   const [step, setStep] = useState(1)
@@ -1537,16 +1537,16 @@ function BestCounter() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCount(prevCount => prevCount + stepRef.current) // ✅ Always current step
+      setCount(prevCount => prevCount + stepRef.current) // ✅ সবসময় বর্তমান step
     }, 1000)
 
     return () => clearInterval(intervalId)
-  }, []) // ✅ No dependencies - never recreates
+  }, []) // ✅ কোন dependencies নেই - কখনো পুনর্নির্মাণ করে না
 
   return (
     <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setStep(s => s + 1)}>Step: {step}</button>
+      <p>গণনা: {count}</p>
+      <button onClick={() => setStep(s => s + 1)}>ধাপ: {step}</button>
     </div>
   )
 }
@@ -1556,52 +1556,52 @@ function BestCounter() {
 
 ---
 
-## 🪝 Reusing Logic with Custom Hooks
+## 🪝 Custom Hooks দিয়ে Logic পুনর্ব্যবহার
 
-### 🎭 The Philosophy of Custom Hooks
+### 🎭 Custom Hooks এর দর্শন
 
-Custom hooks are like creating your own magical spells in React. They encapsulate complex stateful logic and make it reusable across components.
+Custom hooks হলো React এ আপনার নিজস্ব জাদুকরী মন্ত্র তৈরি করার মতো। এগুলো জটিল stateful logic কে encapsulate করে এবং components জুড়ে এটিকে পুনর্ব্যবহারযোগ্য করে তোলে।
 
 <div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
 
   <div className="p-4 bg-green-50 rounded-md border border-green-600 text-center">
     <div className="text-4xl">🔄</div>
-    <div className="font-bold text-black">Reusability</div>
-    <div className="text-sm text-black">Share logic between components</div>
+    <div className="font-bold text-black">পুনর্ব্যবহারযোগ্যতা</div>
+    <div className="text-sm text-black">components এর মধ্যে logic ভাগাভাগি</div>
   </div>
 
   <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-center">
     <div className="text-4xl">🧹</div>
-    <div className="font-bold text-black">Separation</div>
-    <div className="text-sm text-black">Separate concerns cleanly</div>
+    <div className="font-bold text-black">পৃথকীকরণ</div>
+    <div className="text-sm text-black">পরিষ্কারভাবে concerns আলাদা করা</div>
   </div>
 
   <div className="p-4 bg-amber-100 rounded-md border border-amber-500 text-center">
     <div className="text-4xl">🧪</div>
-    <div className="font-bold text-black">Testability</div>
-    <div className="text-sm text-black">Test logic in isolation</div>
+    <div className="font-bold text-black">পরীক্ষাযোগ্যতা</div>
+    <div className="text-sm text-black">logic কে আলাদাভাবে পরীক্ষা করা</div>
   </div>
 
   <div className="p-4 bg-purple-100 rounded-md border border-purple-700 text-center">
     <div className="text-4xl">📦</div>
     <div className="font-bold text-black">Encapsulation</div>
-    <div className="text-sm text-black">Hide implementation details</div>
+    <div className="text-sm text-black">implementation details লুকিয়ে রাখা</div>
   </div>
 
 </div>
 
-### 🎨 Custom Hook Patterns
+### 🎨 কাস্টম হুক প্যাটার্নসমূহ
 
-<Tabs items={['Data Fetching', 'Local Storage', 'WebSocket', 'Geolocation', 'Timer/Interval']}>
+<Tabs items={['ডেটা ফেচিং', 'লোকাল স্টোরেজ', 'ওয়েবসকেট', 'জিওলোকেশন', 'টাইমার/ইন্টারভ্যাল']}>
 <Tab>
 ```jsx
-// 🎣 useApi - Smart data fetching hook
+// 🎣 useApi - স্মার্ট data fetching hook
 function useApi(url, options = {}) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  // Stable reference for options
+  // options এর জন্য স্থিতিশীল reference
   const optionsRef = useRef(options)
   optionsRef.current = options
 
@@ -1637,7 +1637,7 @@ function useApi(url, options = {}) {
     [url],
   )
 
-  // Auto-fetch on mount and URL changes
+  // mount এবং URL পরিবর্তনে Auto-fetch
   useEffect(
     () => {
       fetchData()
@@ -1656,18 +1656,18 @@ function useApi(url, options = {}) {
   }
 }
 
-// 📱 Usage in components
+// 📱 components এ ব্যবহার
 function UserProfile({ userId }) {
   const { data: user, loading, error, refetch } = useApi(`/api/users/${userId}`)
 
-  if (loading) return <div>Loading user...</div>
-  if (error) return <div>Error: {error}</div>
+  if (loading) return <div>ব্যবহারকারী লোড হচ্ছে...</div>
+  if (error) return <div>ত্রুটি: {error}</div>
 
   return (
     <div>
       <h1>{user?.name}</h1>
       <p>{user?.email}</p>
-      <button onClick={refetch}>Refresh Profile</button>
+      <button onClick={refetch}>প্রোফাইল রিফ্রেশ করুন</button>
     </div>
   )
 }
@@ -1677,8 +1677,8 @@ function PostsList() {
     headers: { Authorization: 'Bearer token' },
   })
 
-  if (loading) return <div>Loading posts...</div>
-  if (error) return <div>Error: {error}</div>
+  if (loading) return <div>পোস্ট লোড হচ্ছে...</div>
+  if (error) return <div>ত্রুটি: {error}</div>
 
   return (
     <div>
@@ -1696,9 +1696,9 @@ function PostsList() {
 </Tab>
 <Tab>
 ```jsx
-// 💾 useLocalStorage - Persistent state hook
+// 💾 useLocalStorage - স্থায়ী state hook
 function useLocalStorage(key, initialValue) {
-  // Get initial value from localStorage or use provided initial value
+  // localStorage থেকে প্রাথমিক মান পান বা প্রদত্ত প্রাথমিক মান ব্যবহার করুন
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.localStorage.getItem(key)
@@ -1709,16 +1709,16 @@ function useLocalStorage(key, initialValue) {
     }
   })
 
-  // Return a wrapped version of useState's setter function that persists the new value to localStorage
+  // useState এর setter function এর একটি wrapped version return করুন যা নতুন মানকে localStorage এ persist করে
   const setValue = useCallback(
     value => {
       try {
-        // Allow value to be a function so we have the same API as useState
+        // value কে একটি function হতে দিন যাতে আমাদের useState এর মতো একই API থাকে
         const valueToStore = value instanceof Function ? value(storedValue) : value
 
         setStoredValue(valueToStore)
 
-        // Save to localStorage
+        // localStorage এ সংরক্ষণ করুন
         if (valueToStore === undefined) {
           window.localStorage.removeItem(key)
         } else {
@@ -1731,7 +1731,7 @@ function useLocalStorage(key, initialValue) {
     [key, storedValue],
   )
 
-  // Listen for changes in other tabs/windows
+  // অন্যান্য tabs/windows এ পরিবর্তনের জন্য শুনুন
   useEffect(
     () => {
       const handleStorageChange = e => {
@@ -1753,7 +1753,7 @@ function useLocalStorage(key, initialValue) {
   return [storedValue, setValue]
 }
 
-// 📱 Usage examples
+// 📱 ব্যবহারের উদাহরণ
 function SettingsPanel() {
   const [theme, setTheme] = useLocalStorage('theme', 'light')
   const [language, setLanguage] = useLocalStorage('language', 'en')
@@ -1767,25 +1767,25 @@ function SettingsPanel() {
         padding: '1rem',
       }}
     >
-      <h2>Settings</h2>
+      <h2>সেটিংস</h2>
 
       <div>
         <label>
-          Theme:
+          থিম:
           <select value={theme} onChange={e => setTheme(e.target.value)}>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
+            <option value="light">হালকা</option>
+            <option value="dark">গাঢ়</option>
           </select>
         </label>
       </div>
 
       <div>
         <label>
-          Language:
+          ভাষা:
           <select value={language} onChange={e => setLanguage(e.target.value)}>
-            <option value="en">English</option>
-            <option value="es">Español</option>
-            <option value="fr">Français</option>
+            <option value="en">ইংরেজি</option>
+            <option value="es">স্প্যানিশ</option>
+            <option value="fr">ফরাসি</option>
           </select>
         </label>
       </div>
@@ -1797,7 +1797,7 @@ function SettingsPanel() {
             checked={notifications}
             onChange={e => setNotifications(e.target.checked)}
           />
-          Enable notifications
+          নোটিফিকেশন সক্রিয় করুন
         </label>
       </div>
     </div>
@@ -1821,113 +1821,83 @@ function ShoppingCart() {
 
   return (
     <div>
-      <h2>Shopping Cart ({cartItems.length} items)</h2>
+      <h2>শপিং কার্ট ({cartItems.length} আইটেম)</h2>
       {cartItems.map(item => (
         <div key={item.id}>
           {item.name} - ${item.price}
-          <button onClick={() => removeItem(item.id)}>Remove</button>
+          <button onClick={() => removeItem(item.id)}>সরান</button>
         </div>
       ))}
-      <button onClick={clearCart}>Clear Cart</button>
+      <button onClick={clearCart}>কার্ট খালি করুন</button>
     </div>
   )
 }
-
 ````
 
 </Tab>
 <Tab>
 ```jsx
-// 🔌 useWebSocket - Real-time connection hook
+// 🌐 useWebSocket - WebSocket connection hook
 function useWebSocket(url, options = {}) {
   const [socket, setSocket] = useState(null)
   const [lastMessage, setLastMessage] = useState(null)
   const [readyState, setReadyState] = useState(WebSocket.CONNECTING)
-  const [messageHistory, setMessageHistory] = useState([])
+  const [error, setError] = useState(null)
 
+  // options এর জন্য stable reference
   const optionsRef = useRef(options)
   optionsRef.current = options
 
-  // Connect to WebSocket
-  useEffect(
-    () => {
-      if (!url) return
+  // Connection স্থাপন
+  useEffect(() => {
+    if (!url) return
 
-      console.log('🔌 Connecting to WebSocket:', url)
-      const ws = new WebSocket(url)
+    const ws = new WebSocket(url)
+    setSocket(ws)
+    setReadyState(WebSocket.CONNECTING)
+    setError(null)
 
-      ws.onopen = event => {
-        console.log('✅ WebSocket connected')
-        setReadyState(WebSocket.OPEN)
-        optionsRef.current.onOpen?.(event)
-      }
+    ws.onopen = () => {
+      setReadyState(WebSocket.OPEN)
+      optionsRef.current.onOpen?.(event)
+    }
 
-      ws.onmessage = event => {
-        const message = {
-          data: event.data,
-          timestamp: Date.now(),
-          id: Math.random()
-            .toString(36)
-            .substr(2, 9),
-        }
+    ws.onmessage = event => {
+      setLastMessage(event.data)
+      optionsRef.current.onMessage?.(event)
+    }
 
-        setLastMessage(message)
-        setMessageHistory(prev => [...prev.slice(-99), message]) // Keep last 100 messages
-        optionsRef.current.onMessage?.(event)
-      }
+    ws.onerror = error => {
+      setError(error)
+      optionsRef.current.onError?.(error)
+    }
 
-      ws.onerror = error => {
-        console.error('❌ WebSocket error:', error)
-        optionsRef.current.onError?.(error)
-      }
+    ws.onclose = () => {
+      setReadyState(WebSocket.CLOSED)
+      optionsRef.current.onClose?.(event)
+    }
 
-      ws.onclose = event => {
-        console.log('🔌 WebSocket disconnected:', event.code, event.reason)
-        setReadyState(WebSocket.CLOSED)
-        optionsRef.current.onClose?.(event)
-      }
+    return () => {
+      ws.close()
+    }
+  }, [url])
 
-      setSocket(ws)
-      setReadyState(WebSocket.CONNECTING)
-
-      return () => {
-        console.log('🧹 Cleaning up WebSocket connection')
-        ws.close()
-      }
-    },
-    [url],
-  )
-
-  // Send message function
+  // বার্তা পাঠানোর function
   const sendMessage = useCallback(
     message => {
       if (socket && readyState === WebSocket.OPEN) {
-        socket.send(typeof message === 'string' ? message : JSON.stringify(message))
-        return true
-      } else {
-        console.warn('⚠️ WebSocket not connected. Message not sent:', message)
-        return false
+        socket.send(message)
       }
     },
     [socket, readyState],
   )
 
-  // Connection status helpers
-  const connectionStatus = {
-    [WebSocket.CONNECTING]: 'Connecting',
-    [WebSocket.OPEN]: 'Connected',
-    [WebSocket.CLOSING]: 'Closing',
-    [WebSocket.CLOSED]: 'Closed',
-  }[readyState]
-
   return {
     socket,
     lastMessage,
-    messageHistory,
     readyState,
-    connectionStatus,
+    error,
     sendMessage,
-    isConnected: readyState === WebSocket.OPEN,
   }
 }
 
@@ -2582,48 +2552,48 @@ function PomodoroTimer() {
 
 ---
 
-## 🎯 Custom Hook Best Practices
+## 🎯 কাস্টম হুক সেরা অনুশীলন
 
-### ✅ Do's and ❌ Don'ts
+### ✅ করণীয় এবং ❌ করণীয় নয়
 
 <div className="grid grid-cols-2 gap-8 my-8">
 
   <div className="p-6 bg-green-50 rounded-md border border-green-600 text-black">
-    <div className="text-green-600 mt-0 font-bold text-[1.1em]">✅ Best Practices</div>
+    <div className="text-green-600 mt-0 font-bold text-[1.1em]">✅ সেরা অনুশীলন</div>
 
-    - **Start with "use"** - Follow naming convention
-    - **Return objects** - More flexible than arrays
-    - **Use useCallback** - For functions that might be dependencies
-    - **Handle cleanup** - Always clean up side effects
-    - **Provide stable APIs** - Don't change return structure
-    - **Document well** - Custom hooks should be self-explanatory
-    - **Keep focused** - One responsibility per hook
-    - **Test independently** - Hooks should be unit testable
+    - **"use" দিয়ে শুরু করুন** - নামকরণের নিয়ম অনুসরণ করুন
+    - **অবজেক্ট রিটার্ন করুন** - অ্যারের চেয়ে বেশি নমনীয়
+    - **useCallback ব্যবহার করুন** - ফাংশনের জন্য যা dependency হতে পারে
+    - **ক্লিনআপ পরিচালনা করুন** - সবসময় সাইড ইফেক্ট পরিষ্কার করুন
+    - **স্থিতিশীল API প্রদান করুন** - রিটার্ন স্ট্রাকচার পরিবর্তন করবেন না
+    - **ভালো ডকুমেন্টেশন** - কাস্টম হুক স্ব-ব্যাখ্যামূলক হওয়া উচিত
+    - **ফোকাসড রাখুন** - প্রতি হুকের একটি দায়বদ্ধতা
+    - **স্বাধীনভাবে টেস্ট করুন** - হুক ইউনিট টেস্টযোগ্য হওয়া উচিত
 
   </div>
 
   <div className="p-6 bg-red-50 rounded-md border border-red-600 text-black">
-    <div className="text-red-600 mt-0 font-bold text-[1.1em]">❌ Common Mistakes</div>
+    <div className="text-red-600 mt-0 font-bold text-[1.1em]">❌ সাধারণ ভুল</div>
 
-    - **Don't call conditionally** - Hooks must be called in same order
-    - **Don't return different shapes** - Breaks component expectations
-    - **Don't forget dependencies** - Causes stale closures
-    - **Don't make too complex** - Split into smaller hooks
-    - **Don't ignore cleanup** - Memory leaks and bugs
-    - **Don't mutate state directly** - Always use setters
-    - **Don't call outside components** - Only in React functions
-    - **Don't make everything a hook** - Some logic belongs elsewhere
+    - **শর্তসাপেক্ষে কল করবেন না** - হুক একই ক্রমে কল করতে হবে
+    - **ভিন্ন আকার রিটার্ন করবেন না** - কম্পোনেন্টের প্রত্যাশা ভাঙে
+    - **dependency ভুলবেন না** - stale closure সৃষ্টি করে
+    - **খুব জটিল করবেন না** - ছোট হুকে বিভক্ত করুন
+    - **ক্লিনআপ উপেক্ষা করবেন না** - মেমরি লিক এবং বাগ
+    - **সরাসরি state পরিবর্তন করবেন না** - সবসময় setter ব্যবহার করুন
+    - **কম্পোনেন্টের বাইরে কল করবেন না** - শুধু React ফাংশনে
+    - **সবকিছু হুক করবেন না** - কিছু লজিক অন্যত্র থাকে
 
   </div>
 
 </div>
 
-### 🎪 Hook Composition Example
+### 🎪 হুক কম্পোজিশন উদাহরণ
 
 ```jsx
-// 🎭 Composing multiple hooks for complex functionality
+// 🎭 জটিল কার্যকারিতার জন্য একাধিক হুক একত্রিত করা
 function useAdvancedSearch() {
-  // Combine multiple simpler hooks
+  // একাধিক সহজ হুক একত্রিত করা
   const [query, setQuery] = useLocalStorage('searchQuery', '')
   const [filters, setFilters] = useLocalStorage('searchFilters', {})
   const [history, setHistory] = useLocalStorage('searchHistory', [])
@@ -2635,17 +2605,17 @@ function useAdvancedSearch() {
 
   const { time: searchTime, start: startTimer, stop: stopTimer } = useTimer(0)
 
-  // Enhanced search function
+  // উন্নত সার্চ ফাংশন
   const performSearch = useCallback(
     async (newQuery, newFilters = {}) => {
       setQuery(newQuery)
       setFilters(newFilters)
 
-      // Add to history
+      // ইতিহাসে যোগ করা
       if (newQuery.trim()) {
         setHistory(prev => [
           { query: newQuery, filters: newFilters, timestamp: Date.now() },
-          ...prev.slice(0, 9), // Keep last 10 searches
+          ...prev.slice(0, 9), // শেষ ১০টি সার্চ রাখা
         ])
       }
 
@@ -2673,32 +2643,32 @@ function useAdvancedSearch() {
 }
 ```
 
-## 🛠️ Advanced Patterns
+## 🛠️ Advanced প্যাটার্ন
 
-### 🎭 Effect Composition Patterns
+### 🎭 ইফেক্ট কম্পোজিশন প্যাটার্ন
 
 <div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
 
   <div className="p-4 bg-green-50 rounded-md border border-green-600 text-black">
-    <div className="font-bold text-lg text-green-600">🎯 Sequential Effects</div>
+    <div className="font-bold text-lg text-green-600">🎯 ক্রমিক ইফেক্ট</div>
     ```jsx
     function SequentialEffects() {
       const [step, setStep] = useState(1)
       const [data, setData] = useState(null)
 
-      // First effect: Fetch initial data
+      // প্রথম ইফেক্ট: প্রাথমিক ডেটা আনা
       useEffect(() => {
         fetchInitialData().then(setData)
       }, [])
 
-      // Second effect: Process data when available
+      // দ্বিতীয় ইফেক্ট: ডেটা উপলব্ধ হলে প্রক্রিয়া করা
       useEffect(() => {
         if (data) {
           processData(data)
         }
       }, [data])
 
-      // Third effect: Update UI based on processed data
+      // তৃতীয় ইফেক্ট: প্রক্রিয়াকৃত ডেটার ভিত্তিতে UI আপডেট
       useEffect(() => {
         if (data && step > 1) {
           updateUI(data)
@@ -2710,14 +2680,14 @@ function useAdvancedSearch() {
   </div>
 
   <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-black">
-    <div className="font-bold text-lg text-sky-600">🔄 Parallel Effects</div>
+    <div className="font-bold text-lg text-sky-600">🔄 সমান্তরাল ইফেক্ট</div>
     ```jsx
     function ParallelEffects() {
       const [user, setUser] = useState(null)
       const [posts, setPosts] = useState([])
       const [notifications, setNotifications] = useState([])
 
-      // Independent effects running in parallel
+      // স্বাধীন ইফেক্ট সমান্তরালে চলছে
       useEffect(() => {
         fetchUser().then(setUser)
       }, [])
@@ -2735,13 +2705,13 @@ function useAdvancedSearch() {
   </div>
 
   <div className="p-4 bg-amber-100 rounded-md border border-amber-500 text-black">
-    <div className="font-bold text-lg text-amber-500">🎭 Conditional Effects</div>
+    <div className="font-bold text-lg text-amber-500">🎭 শর্তসাপেক্ষ ইফেক্ট</div>
     ```jsx
     function ConditionalEffects() {
       const [isEnabled, setIsEnabled] = useState(false)
       const [data, setData] = useState(null)
 
-      // Only run effect when enabled
+      // শুধুমাত্র সক্রিয় হলে ইফেক্ট চালানো
       useEffect(() => {
         if (!isEnabled) return
 
@@ -2756,12 +2726,12 @@ function useAdvancedSearch() {
 
 </div>
 
-### 🔄 Advanced Effect Patterns
+### 🔄 Advanced ইফেক্ট প্যাটার্ন
 
 <Tabs items={['Race Conditions', 'Debouncing', 'Throttling', 'Polling']}>
 <Tab>
 ```jsx
-// 🏃‍♂️ Handling Race Conditions
+// 🏃‍♂️ Race Condition পরিচালনা
 function RaceConditionExample() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -2790,15 +2760,14 @@ function RaceConditionExample() {
     }
   }, [])
 
-  return <div>{loading ? 'Loading...' : data}</div>
+  return <div>{loading ? 'লোড হচ্ছে...' : data}</div>
 }
-
-````
+```
 
 </Tab>
 <Tab>
 ```jsx
-// ⏱️ Debouncing Effects
+// ⏱️ Debouncing ইফেক্ট
 function DebouncedSearch() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
@@ -2818,7 +2787,7 @@ function DebouncedSearch() {
 
   return (
     <div>
-      <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search..." />
+      <input value={query} onChange={e => setQuery(e.target.value)} placeholder="খুঁজুন..." />
       <div>
         {results.map(r => (
           <div key={r.id}>{r.title}</div>
@@ -2827,12 +2796,12 @@ function DebouncedSearch() {
     </div>
   )
 }
-````
+```
 
 </Tab>
 <Tab>
 ```jsx
-// 🚦 Throttling Effects
+// 🚦 Throttling ইফেক্ট
 function ThrottledScroll() {
   const [scrollCount, setScrollCount] = useState(0)
   const lastScrollTime = useRef(0)
@@ -2850,15 +2819,14 @@ function ThrottledScroll() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  return <div>Scroll events: {scrollCount}</div>
+  return <div>স্ক্রল ইভেন্ট: {scrollCount}</div>
 }
-
-````
+```
 
 </Tab>
 <Tab>
 ```jsx
-// 🔄 Polling with Effects
+// 🔄 ইফেক্ট দিয়ে Polling
 function PollingExample() {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
@@ -2889,67 +2857,66 @@ function PollingExample() {
     }
   }, [])
 
-  return <div>{error ? <div>Error: {error.message}</div> : <div>Status: {data}</div>}</div>
+  return <div>{error ? <div>ত্রুটি: {error.message}</div> : <div>অবস্থা: {data}</div>}</div>
 }
-
-````
+```
 
 </Tab>
 </Tabs>
 
-## 🐛 Common Mistakes & Debugging
+## 🐛 সাধারণ ভুল এবং ডিবাগিং
 
-### 🚫 Common Effect Mistakes
+### 🚫 সাধারণ ইফেক্ট ভুল
 
 <div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
 
   <div className="p-4 bg-red-50 rounded-md border border-red-600 text-black">
-    <div className="font-bold text-lg text-red-600">❌ Missing Dependencies</div>
+    <div className="font-bold text-lg text-red-600">❌ অনুপস্থিত Dependency</div>
     ```jsx
-    // ❌ Wrong
+    // ❌ ভুল
     useEffect(() => {
-      console.log(count) // Uses count but not in deps
-    }, []) // Missing count dependency
+      console.log(count) // count ব্যবহার করে কিন্তু deps এ নেই
+    }, []) // count dependency অনুপস্থিত
 
-    // ✅ Correct
+    // ✅ সঠিক
     useEffect(() => {
       console.log(count)
-    }, [count]) // Include all dependencies
+    }, [count]) // সব dependency অন্তর্ভুক্ত করা
     ```
 
   </div>
 
   <div className="p-4 bg-red-50 rounded-md border border-red-600 text-black">
-    <div className="font-bold text-lg text-red-600">❌ Infinite Loops</div>
+    <div className="font-bold text-lg text-red-600">❌ অসীম লুপ</div>
     ```jsx
-    // ❌ Wrong
+    // ❌ ভুল
     useEffect(() => {
-      setCount(count + 1) // Updates state, triggers re-render
-    }, [count]) // Depends on count, creates loop
+      setCount(count + 1) // state আপডেট, re-render ট্রিগার
+    }, [count]) // count এর উপর নির্ভর, লুপ তৈরি করে
 
-    // ✅ Correct
+    // ✅ সঠিক
     useEffect(() => {
       const timer = setInterval(() => {
-        setCount(c => c + 1) // Functional update
+        setCount(c => c + 1) // ফাংশনাল আপডেট
       }, 1000)
       return () => clearInterval(timer)
-    }, []) // No dependencies
+    }, []) // কোন dependency নেই
     ```
 
   </div>
 
   <div className="p-4 bg-red-50 rounded-md border border-red-600 text-black">
-    <div className="font-bold text-lg text-red-600">❌ Missing Cleanup</div>
+    <div className="font-bold text-lg text-red-600">❌ ক্লিনআপ অনুপস্থিত</div>
     ```jsx
-    // ❌ Wrong
+    // ❌ ভুল
     useEffect(() => {
-      const subscription = subscribe() // No cleanup
+      const subscription = subscribe() // কোন cleanup নেই
     }, [])
 
-    // ✅ Correct
+    // ✅ সঠিক
     useEffect(() => {
       const subscription = subscribe()
-      return () => subscription.unsubscribe() // Proper cleanup
+      return () => subscription.unsubscribe() // সঠিক cleanup
     }, [])
     ```
 
@@ -2957,67 +2924,65 @@ function PollingExample() {
 
 </div>
 
-### 🔍 Debugging Techniques
+### 🔍 ডিবাগিং কৌশল
 
 <Tabs items={['Console Logging', 'React DevTools', 'Error Boundaries', 'Performance Profiling']}>
 <Tab>
 ```jsx
-// 📝 Console Logging Strategy
+// 📝 Console Logging কৌশল
 function DebuggingExample() {
   const [count, setCount] = useState(0)
 
   useEffect(
     () => {
-      console.log('🔄 Effect running with count:', count)
+      console.log('🔄 ইফেক্ট চলছে count এর সাথে:', count)
 
       return () => {
-        console.log('🧹 Cleanup running with count:', count)
+        console.log('🧹 Cleanup চলছে count এর সাথে:', count)
       }
     },
     [count],
   )
 
-  // Debug render
-  console.log('🎨 Rendering with count:', count)
+  // রেন্ডার ডিবাগ
+  console.log('🎨 রেন্ডার হচ্ছে count এর সাথে:', count)
 
   return <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
 }
-
-````
+```
 
 </Tab>
 <Tab>
 ```jsx
-// 🛠️ Using React DevTools
+// 🛠️ React DevTools ব্যবহার
 function DevToolsExample() {
   const [state, setState] = useState({
     count: 0,
     step: 1,
   })
 
-  // Effect with complex state
+  // জটিল state সহ ইফেক্ট
   useEffect(
     () => {
-      console.log('State changed:', state)
+      console.log('State পরিবর্তিত:', state)
     },
     [state],
   )
 
-  // Use React DevTools to:
-  // 1. Inspect component state
-  // 2. Monitor effect runs
-  // 3. Check component tree
-  // 4. Profile renders
+  // React DevTools ব্যবহার করুন:
+  // 1. Component state পরীক্ষা করুন
+  // 2. Effect রান মনিটর করুন
+  // 3. Component tree চেক করুন
+  // 4. Render প্রোফাইল করুন
 
   return <div>Count: {state.count}</div>
 }
-
-````
+```
 
 </Tab>
 <Tab>
 ```jsx
-// 🛡️ Error Boundary for Effects
+// 🛡️ ইফেক্টের জন্য Error Boundary
 class EffectErrorBoundary extends React.Component {
   state = { hasError: false, error: null }
 
@@ -3026,18 +2991,18 @@ class EffectErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('Effect Error:', error, errorInfo)
+    console.error('ইফেক্ট ত্রুটি:', error, errorInfo)
   }
 
   render() {
     if (this.state.hasError) {
-      return <div>Something went wrong: {this.state.error.message}</div>
+      return <div>কিছু ভুল হয়েছে: {this.state.error.message}</div>
     }
     return this.props.children
   }
 }
 
-// Usage
+// ব্যবহার
 
 <EffectErrorBoundary>
   <ComponentWithEffects />
@@ -3051,59 +3016,58 @@ function ProfilingExample() {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    // Use React Profiler to measure:
-    // 1. Effect execution time
-    // 2. Re-render frequency
+    // React Profiler ব্যবহার করে পরিমাপ করুন:
+    // 1. ইফেক্ট execution time
+    // 2. Re-render frequency 
     // 3. Component mount/unmount
-    // 4. State updates
+    // 4. State update
 
     const fetchData = async () => {
       const start = performance.now()
       const result = await fetch('/api/data')
       const end = performance.now()
-      console.log(`Fetch took ${end - start}ms`)
+      console.log(`Fetch সময় ${end - start}ms`)
       setData(result)
     }
 
     fetchData()
   }, [])
 
-  return <div>{data.length} items</div>
+  return <div>{data.length} আইটেম</div>
 }
-
-````
+```
 
 </Tab>
 </Tabs>
 
-## 📚 Complete Reference
+## 📚 সম্পূর্ণ রেফারেন্স
 
-### 🎯 Effect API Reference
+### 🎯 ইফেক্ট API রেফারেন্স
 
 <div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
 
   <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-black">
-    <div className="font-bold text-lg text-sky-600">📝 Basic Usage</div>
+    <div className="font-bold text-lg text-sky-600">📝 মৌলিক ব্যবহার</div>
     ```jsx
     useEffect(() => {
-      // Effect code
+      // ইফেক্ট কোড
       return () => {
-        // Cleanup code
+        // ক্লিনআপ কোড
       }
     }, [/* dependencies */])
     ```
   </div>
 
   <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-black">
-    <div className="font-bold text-lg text-sky-600">⚡ Common Patterns</div>
+    <div className="font-bold text-lg text-sky-600">⚡ সাধারণ প্যাটার্ন</div>
     ```jsx
-    // Mount only
+    // শুধু mount এ
     useEffect(() => {}, [])
 
-    // On dependency change
+    // Dependency পরিবর্তনে
     useEffect(() => {}, [dep1, dep2])
 
-    // Cleanup on unmount
+    // Unmount এ cleanup
     useEffect(() => {
       return () => {}
     }, [])
@@ -3111,9 +3075,9 @@ function ProfilingExample() {
   </div>
 
   <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-black">
-    <div className="font-bold text-lg text-sky-600">🔧 Advanced Usage</div>
+    <div className="font-bold text-lg text-sky-600">🔧 উন্নত ব্যবহার</div>
     ```jsx
-    // Async effect
+    // Async ইফেক্ট
     useEffect(() => {
       async function fetchData() {
         const result = await api.getData()
@@ -3122,7 +3086,7 @@ function ProfilingExample() {
       fetchData()
     }, [])
 
-    // Multiple effects
+    // একাধিক ইফেক্ট
     useEffect(() => {}, [dep1])
     useEffect(() => {}, [dep2])
     ```
@@ -3130,10 +3094,9 @@ function ProfilingExample() {
 
 </div>
 
+### 📋 ইফেক্ট জীবনচক্র
 
-### 📋 Effect Lifecycle
-
-Think of the Effect Lifecycle like a restaurant's daily operations:
+ইফেক্ট জীবনচক্রকে একটি রেস্তোরাঁর দৈনন্দিন কার্যক্রমের মতো ভাবুন:
 
 ```mermaid
 graph TD
@@ -3147,132 +3110,132 @@ graph TD
     D -->|Unmount| G[Final Cleanup]
 ```
 
-#### 🎯 Understanding the Flow
+#### 🎯 প্রবাহ বোঝা
 
-1. **Component Mount (A) - Opening the Restaurant**
-   - Like opening a restaurant for the day
-   - Component is first added to the page
-   - Ready to start operations
+1. **Component Mount (A) - রেস্তোরাঁ খোলা**
+   - দিনের জন্য রেস্তোরাঁ খোলার মতো
+   - কম্পোনেন্ট প্রথমবার পৃষ্ঠায় যোগ করা হয়
+   - কার্যক্রম শুরু করার জন্য প্রস্তুত
 
-2. **Effect Setup (B) - Preparing the Kitchen**
-   - Like getting the kitchen ready
-   - React prepares to run your effect
-   - Sets up necessary resources
+2. **Effect Setup (B) - রান্নাঘর প্রস্তুত করা**
+   - রান্নাঘর তৈরি করার মতো
+   - React আপনার ইফেক্ট চালানোর জন্য প্রস্তুত করে
+   - প্রয়োজনীয় সংস্থান সেটআপ করে
 
-3. **Effect Runs (C) - Cooking and Serving**
-   - Like actually cooking and serving food
-   - Your effect code executes
-   - Performs the main task (data fetching, subscriptions, etc.)
+3. **Effect Runs (C) - রান্না এবং পরিবেশন**
+   - আসলে রান্না এবং খাবার পরিবেশনের মতো
+   - আপনার ইফেক্ট কোড কার্যকর হয়
+   - মূল কাজ সম্পাদন (ডেটা আনা, সাবস্ক্রিপশন ইত্যাদি)
 
-4. **Dependencies Check (D) - Checking for Changes**
-   - Like checking if menu items need updating
-   - React checks if anything important changed
-   - Three possible outcomes:
-     - Dependencies changed → Clean up and start over
-     - No changes → Continue normal operation
-     - Component unmounting → Close up shop
+4. **Dependencies Check (D) - পরিবর্তন পরীক্ষা**
+   - মেনু আইটেম আপডেট প্রয়োজন কিনা পরীক্ষার মতো
+   - React পরীক্ষা করে কোন গুরুত্বপূর্ণ পরিবর্তন হয়েছে
+   - তিনটি সম্ভাব্য ফলাফল:
+     - Dependency পরিবর্তিত → পরিষ্কার করে নতুনভাবে শুরু
+     - কোন পরিবর্তন নেই → স্বাভাবিক কার্যক্রম চালিয়ে যান
+     - কম্পোনেন্ট unmount → দোকান বন্ধ করুন
 
-5. **Cleanup Previous Effect (E) - Cleaning Up**
-   - Like cleaning the kitchen between orders
-   - Runs cleanup code (unsubscribe, disconnect, etc.)
-   - Prepares for fresh start
+5. **Cleanup Previous Effect (E) - পরিষ্কার করা**
+   - অর্ডারের মধ্যে রান্নাঘর পরিষ্কার করার মতো
+   - ক্লিনআপ কোড চালায় (unsubscribe, disconnect ইত্যাদি)
+   - নতুন শুরুর জন্য প্রস্তুত করে
 
-6. **Component Update (F) - Regular Operations**
-   - Like normal restaurant operations
-   - Component updates without re-running effect
-   - Keeps things running smoothly
+6. **Component Update (F) - নিয়মিত কার্যক্রম**
+   - রেস্তোরাঁর স্বাভাবিক কার্যক্রমের মতো
+   - ইফেক্ট পুনরায় চালানো ছাড়াই কম্পোনেন্ট আপডেট
+   - সব কিছু মসৃণভাবে চালু রাখে
 
-7. **Final Cleanup (G) - Closing Time**
-   - Like closing the restaurant
-   - Component is being removed
-   - Final cleanup of all resources
+7. **Final Cleanup (G) - বন্ধের সময়**
+   - রেস্তোরাঁ বন্ধ করার মতো
+   - কম্পোনেন্ট সরানো হচ্ছে
+   - সব সংস্থানের চূড়ান্ত পরিষ্কার
 
-#### 🔬 Real-World Example
+#### 🔬 বাস্তব উদাহরণ
 
 ```jsx
 function ChatRoom({ roomId }) {
   useEffect(() => {
-    // Effect Setup (B) - Preparing the connection
-    console.log('🟢 Setting up chat connection for room:', roomId);
+    // Effect Setup (B) - সংযোগ প্রস্তুত করা
+    console.log('🟢 চ্যাট সংযোগ সেটআপ রুমের জন্য:', roomId);
     const connection = createConnection(roomId);
     
-    // Effect Runs (C) - Starting the connection
-    console.log('🔵 Connecting to chat room...');
+    // Effect Runs (C) - সংযোগ শুরু করা
+    console.log('🔵 চ্যাট রুমে সংযোগ করা হচ্ছে...');
     connection.connect();
     
-    // Cleanup function - Will run for both dependency changes and unmount
+    // ক্লিনআপ ফাংশন - dependency পরিবর্তন এবং unmount উভয়ের জন্য চলবে
     return () => {
-      console.log('🔴 Cleaning up connection...');
+      console.log('🔴 সংযোগ পরিষ্কার করা হচ্ছে...');
       connection.disconnect();
     };
   }, [roomId]); // Dependencies Check (D)
 }
 ```
 
-#### 📝 What Happens When:
+#### 📝 কী ঘটে যখন:
 
-1. **Component First Mounts:**
+1. **কম্পোনেন্ট প্রথম Mount:**
    ```jsx
    // 1. Component Mount (A)
    <ChatRoom roomId="general" />
    // 2. Effect Setup (B)
    // 3. Effect Runs (C)
-   // Console: 🟢 Setting up chat connection for room: general
-   // Console: 🔵 Connecting to chat room...
+   // Console: 🟢 চ্যাট সংযোগ সেটআপ রুমের জন্য: general
+   // Console: 🔵 চ্যাট রুমে সংযোগ করা হচ্ছে...
    ```
 
-2. **Dependencies Change:**
+2. **Dependencies পরিবর্তন:**
    ```jsx
-   // User switches to different room
+   // ব্যবহারকারী ভিন্ন রুমে পরিবর্তন
    <ChatRoom roomId="random" />
-   // 1. Dependencies Check (D) - roomId changed
+   // 1. Dependencies Check (D) - roomId পরিবর্তিত
    // 2. Cleanup Previous Effect (E)
-   // Console: 🔴 Cleaning up connection...
-   // 3. Effect Runs Again (C)
-   // Console: 🟢 Setting up chat connection for room: random
-   // Console: 🔵 Connecting to chat room...
+   // Console: 🔴 সংযোগ পরিষ্কার করা হচ্ছে...
+   // 3. Effect আবার Runs (C)
+   // Console: 🟢 চ্যাট সংযোগ সেটআপ রুমের জন্য: random
+   // Console: 🔵 চ্যাট রুমে সংযোগ করা হচ্ছে...
    ```
 
-3. **Component Unmounts:**
+3. **কম্পোনেন্ট Unmount:**
    ```jsx
-   // User navigates away
+   // ব্যবহারকারী অন্যত্র চলে গেলে
    // 1. Dependencies Check (D) - unmounting
    // 2. Final Cleanup (G)
-   // Console: 🔴 Cleaning up connection...
+   // Console: 🔴 সংযোগ পরিষ্কার করা হচ্ছে...
    ```
 
-#### 💡 Key Points to Remember
+#### 💡 মনে রাখার মূল বিষয়
 
-1. **Effects Run After Render**
-   - Effects always run after the component renders
-   - This ensures the DOM is up to date
+1. **ইফেক্ট রেন্ডারের পরে চলে**
+   - ইফেক্ট সবসময় কম্পোনেন্ট রেন্ডারের পরে চলে
+   - এটি নিশ্চিত করে DOM আপ টু ডেট আছে
 
-2. **Cleanup is Important**
-   - Always clean up resources
-   - Prevents memory leaks
-   - Keeps your app running smoothly
+2. **ক্লিনআপ গুরুত্বপূর্ণ**
+   - সবসময় সংস্থান পরিষ্কার করুন
+   - মেমরি লিক প্রতিরোধ করে
+   - আপনার অ্যাপ মসৃণভাবে চালু রাখে
 
-3. **Dependencies Matter**
-   - Include all values your effect uses
-   - Missing dependencies can cause bugs
-   - Extra dependencies can cause unnecessary re-runs
+3. **Dependency গুরুত্বপূর্ণ**
+   - আপনার ইফেক্ট যা ব্যবহার করে সব value অন্তর্ভুক্ত করুন
+   - অনুপস্থিত dependency বাগ সৃষ্টি করতে পারে
+   - অতিরিক্ত dependency অপ্রয়োজনীয় পুনরাবৃত্তি সৃষ্টি করতে পারে
 
-4. **Order of Operations**
+4. **কার্যক্রমের ক্রম**
    - Mount → Setup → Run
    - Change → Cleanup → Run
    - Unmount → Final Cleanup
 
-#### 🎯 Best Practices
+#### 🎯 সর্বোত্তম অনুশীলন
 
-1. **Keep Effects Focused**
+1. **ইফেক্টগুলি ফোকাসড রাখুন**
    ```jsx
-   // ✅ Good: One effect, one purpose
+   // ✅ ভাল: একটি ইফেক্ট, একটি উদ্দেশ্য
    useEffect(() => {
      const subscription = subscribe();
      return () => subscription.unsubscribe();
    }, []);
    
-   // ❌ Bad: Multiple unrelated effects
+   // ❌ খারাপ: একাধিক অসম্পর্কিত ইফেক্ট
    useEffect(() => {
      subscribe();
      fetchData();
@@ -3280,66 +3243,67 @@ function ChatRoom({ roomId }) {
    }, []);
    ```
 
-2. **Handle Cleanup Properly**
+2. **ক্লিনআপ সঠিকভাবে পরিচালনা করুন**
    ```jsx
-   // ✅ Good: Proper cleanup
+   // ✅ ভাল: সঠিক ক্লিনআপ
    useEffect(() => {
      const timer = setInterval(() => {}, 1000);
      return () => clearInterval(timer);
    }, []);
    
-   // ❌ Bad: Missing cleanup
+   // ❌ খারাপ: ক্লিনআপ অনুপস্থিত
    useEffect(() => {
      setInterval(() => {}, 1000);
    }, []);
    ```
 
-3. **Use Dependencies Correctly**
+3. **ডিপেন্ডেন্সি সঠিকভাবে ব্যবহার করুন**
    ```jsx
-   // ✅ Good: All dependencies included
+   // ✅ ভাল: সমস্ত ডিপেন্ডেন্সি অন্তর্ভুক্ত
    useEffect(() => {
      document.title = `${user.name}'s Profile`;
    }, [user.name]);
    
-   // ❌ Bad: Missing dependency
+   // ❌ খারাপ: ডিপেন্ডেন্সি অনুপস্থিত
    useEffect(() => {
      document.title = `${user.name}'s Profile`;
-   }, []); // Missing user.name dependency
+   }, []); // user.name ডিপেন্ডেন্সি অনুপস্থিত
    ```
-## Guidelines and Best Practices
 
-### 1. Performance Optimization Guidelines
+## নির্দেশিকা এবং সর্বোত্তম অনুশীলন
 
-<Callout type="info">Follow these guidelines to ensure optimal performance with effects:</Callout>
+### ১. পারফরম্যান্স অপটিমাইজেশন নির্দেশিকা
 
-1. **Dependency Management**
+<Callout type="info">ইফেক্টের সাথে সর্বোত্তম পারফরম্যান্স নিশ্চিত করতে এই নির্দেশিকাগুলি অনুসরণ করুন:</Callout>
 
-   - Keep dependency arrays as small as possible
-   - Use the ESLint exhaustive-deps rule
-   - Consider using `useCallback` and `useMemo` for complex dependencies
-   - Avoid unnecessary dependencies
+1. **ডিপেন্ডেন্সি ব্যবস্থাপনা**
 
-2. **Effect Cleanup**
+   - ডিপেন্ডেন্সি অ্যারে যতটা সম্ভব ছোট রাখুন
+   - ESLint exhaustive-deps নিয়ম ব্যবহার করুন
+   - জটিল ডিপেন্ডেন্সির জন্য `useCallback` এবং `useMemo` ব্যবহার বিবেচনা করুন
+   - অনাবশ্যক ডিপেন্ডেন্সি এড়িয়ে চলুন
 
-   - Always clean up subscriptions and event listeners
-   - Handle race conditions in async effects
-   - Clean up timers and intervals
-   - Reset state in cleanup when necessary
+2. **ইফেক্ট ক্লিনআপ**
 
-3. **Effect Organization**
-   - Group related effects together
-   - Separate concerns into different effects
-   - Keep effects focused and single-purpose
-   - Use custom hooks for reusable effect logic
+   - সর্বদা সাবস্ক্রিপশন এবং ইভেন্ট লিসেনার পরিষ্কার করুন
+   - অ্যাসিঙ্ক ইফেক্টে রেস কন্ডিশন পরিচালনা করুন
+   - টাইমার এবং ইন্টারভাল পরিষ্কার করুন
+   - প্রয়োজনে ক্লিনআপে স্টেট রিসেট করুন
 
-### 2. Testing Guidelines
+3. **ইফেক্ট সংগঠন**
+   - সম্পর্কিত ইফেক্টগুলি একসাথে গ্রুপ করুন
+   - বিভিন্ন ইফেক্টে উদ্বেগ আলাদা করুন
+   - ইফেক্টগুলি ফোকাসড এবং একক-উদ্দেশ্য রাখুন
+   - পুনঃব্যবহারযোগ্য ইফেক্ট লজিকের জন্য কাস্টম হুক ব্যবহার করুন
 
-<Callout type="warning">Testing effects requires special consideration:</Callout>
+### ২. টেস্টিং নির্দেশিকা
 
-1. **Unit Testing**
+<Callout type="warning">ইফেক্ট টেস্টিং বিশেষ বিবেচনার প্রয়োজন:</Callout>
+
+1. **ইউনিট টেস্টিং**
 
    ```jsx
-   // Example of testing an effect
+   // ইফেক্ট টেস্টিংয়ের উদাহরণ
    test('effect runs on mount', () => {
      const { result } = renderHook(() => {
        const [count, setCount] = useState(0)
@@ -3352,138 +3316,138 @@ function ChatRoom({ roomId }) {
    })
    ```
 
-2. **Integration Testing**
+2. **ইন্টিগ্রেশন টেস্টিং**
 
-   - Test effect interactions with other components
-   - Verify cleanup functions
-   - Test async effects
-   - Mock external dependencies
+   - অন্যান্য কম্পোনেন্টের সাথে ইফেক্ট ইন্টারঅ্যাকশন টেস্ট করুন
+   - ক্লিনআপ ফাংশন যাচাই করুন
+   - অ্যাসিঙ্ক ইফেক্ট টেস্ট করুন
+   - বাহ্যিক ডিপেন্ডেন্সি মক করুন
 
-3. **Custom Hook Testing**
-   - Test hook behavior in isolation
-   - Verify hook dependencies
-   - Test cleanup functions
-   - Test error handling
+3. **কাস্টম হুক টেস্টিং**
+   - হুক আচরণ বিচ্ছিন্নভাবে টেস্ট করুন
+   - হুক ডিপেন্ডেন্সি যাচাই করুন
+   - ক্লিনআপ ফাংশন টেস্ট করুন
+   - ত্রুটি পরিচালনা টেস্ট করুন
 
-### 3. Security Guidelines
+### ৩. নিরাপত্তা নির্দেশিকা
 
-<Callout type="warning">Security considerations for effects:</Callout>
+<Callout type="warning">ইফেক্টের জন্য নিরাপত্তা বিবেচনা:</Callout>
 
-1. **Data Fetching**
+1. **ডেটা ফেচিং**
 
-   - Validate API responses
-   - Handle errors gracefully
-   - Sanitize user input
-   - Use proper authentication
+   - API রেসপন্স যাচাই করুন
+   - ত্রুটি সুন্দরভাবে পরিচালনা করুন
+   - ব্যবহারকারীর ইনপুট স্যানিটাইজ করুন
+   - যথাযথ প্রমাণীকরণ ব্যবহার করুন
 
-2. **Event Handling**
-   - Prevent memory leaks
-   - Handle edge cases
-   - Validate event data
-   - Implement proper error boundaries
+2. **ইভেন্ট হ্যান্ডলিং**
+   - মেমোরি লিক প্রতিরোধ করুন
+   - এজ কেস পরিচালনা করুন
+   - ইভেন্ট ডেটা যাচাই করুন
+   - যথাযথ ত্রুটি সীমানা প্রয়োগ করুন
 
-### 4. Accessibility Guidelines
+### ৪. অ্যাক্সেসিবিলিটি নির্দেশিকা
 
-<Callout type="info">Ensure effects don't impact accessibility:</Callout>
+<Callout type="info">নিশ্চিত করুন যে ইফেক্টগুলি অ্যাক্সেসিবিলিটিতে প্রভাব ফেলে না:</Callout>
 
-1. **Focus Management**
+1. **ফোকাস ব্যবস্থাপনা**
 
-   - Maintain focus after effects
-   - Handle keyboard navigation
-   - Preserve screen reader context
-   - Manage focus traps
+   - ইফেক্টের পরে ফোকাস বজায় রাখুন
+   - কীবোর্ড নেভিগেশন পরিচালনা করুন
+   - স্ক্রিন রিডার প্রসঙ্গ সংরক্ষণ করুন
+   - ফোকাস ফাঁদ পরিচালনা করুন
 
-2. **State Announcements**
-   - Announce state changes
-   - Handle loading states
-   - Manage error states
-   - Provide feedback for user actions
+2. **স্টেট ঘোষণা**
+   - স্টেট পরিবর্তন ঘোষণা করুন
+   - লোডিং স্টেট পরিচালনা করুন
+   - ত্রুটি স্টেট পরিচালনা করুন
+   - ব্যবহারকারীর ক্রিয়াকলাপের জন্য প্রতিক্রিয়া প্রদান করুন
 
-### 5. Migration Guidelines
+### ৫. মাইগ্রেশন নির্দেশিকা
 
-<Callout type="warning">When migrating from class components or older patterns:</Callout>
+<Callout type="warning">ক্লাস কম্পোনেন্ট বা পুরাতন প্যাটার্ন থেকে মাইগ্রেট করার সময়:</Callout>
 
-1. **Class to Function Components**
+1. **ক্লাস থেকে ফাংশন কম্পোনেন্ট**
 
-   - Convert lifecycle methods to effects
-   - Handle state properly
-   - Manage refs correctly
-   - Update event handlers
+   - লাইফসাইকেল মেথড ইফেক্টে রূপান্তর করুন
+   - স্টেট সঠিকভাবে পরিচালনা করুন
+   - রেফ সঠিকভাবে পরিচালনা করুন
+   - ইভেন্ট হ্যান্ডলার আপডেট করুন
 
-2. **Legacy Code Updates**
-   - Update deprecated patterns
-   - Modernize effect usage
-   - Implement proper cleanup
-   - Use modern React patterns
+2. **লিগেসি কোড আপডেট**
+   - অবচিত প্যাটার্ন আপডেট করুন
+   - ইফেক্ট ব্যবহার আধুনিকীকরণ করুন
+   - যথাযথ ক্লিনআপ প্রয়োগ করুন
+   - আধুনিক React প্যাটার্ন ব্যবহার করুন
 
-### 6. Debugging Guidelines
+### ৬. ডিবাগিং নির্দেশিকা
 
-<Callout type="info">Effective debugging strategies for effects:</Callout>
+<Callout type="info">ইফেক্টের জন্য কার্যকর ডিবাগিং কৌশল:</Callout>
 
-1. **Common Issues**
+1. **সাধারণ সমস্যা**
 
-   - Infinite loops
-   - Missing dependencies
-   - Race conditions
-   - Memory leaks
+   - অসীম লুপ
+   - অনুপস্থিত ডিপেন্ডেন্সি
+   - রেস কন্ডিশন
+   - মেমোরি লিক
 
-2. **Debugging Tools**
+2. **ডিবাগিং টুলস**
    - React DevTools
-   - Console logging
-   - Error boundaries
-   - Performance profiling
+   - কনসোল লগিং
+   - ত্রুটি সীমানা
+   - পারফরম্যান্স প্রোফাইলিং
 
-### 7. Documentation Guidelines
+### ৭. ডকুমেন্টেশন নির্দেশিকা
 
-<Callout type="info">Best practices for documenting effects:</Callout>
+<Callout type="info">ইফেক্ট ডকুমেন্ট করার জন্য সর্বোত্তম অনুশীলন:</Callout>
 
-1. **Code Comments**
+1. **কোড মন্তব্য**
 
-   - Document complex logic
-   - Explain dependencies
-   - Note cleanup requirements
-   - Document side effects
+   - জটিল লজিক ডকুমেন্ট করুন
+   - ডিপেন্ডেন্সি ব্যাখ্যা করুন
+   - ক্লিনআপ প্রয়োজনীয়তা নোট করুন
+   - পার্শ্ব প্রতিক্রিয়া ডকুমেন্ট করুন
 
-2. **Component Documentation**
-   - Document effect purposes
-   - Explain dependencies
-   - Note cleanup requirements
-   - Document side effects
+2. **কম্পোনেন্ট ডকুমেন্টেশন**
+   - ইফেক্টের উদ্দেশ্য ডকুমেন্ট করুন
+   - ডিপেন্ডেন্সি ব্যাখ্যা করুন
+   - ক্লিনআপ প্রয়োজনীয়তা নোট করুন
+   - পার্শ্ব প্রতিক্রিয়া ডকুমেন্ট করুন
 
-### 8. Performance Monitoring
+### ৮. পারফরম্যান্স মনিটরিং
 
-<Callout type="warning">Monitor effect performance:</Callout>
+<Callout type="warning">ইফেক্ট পারফরম্যান্স মনিটর করুন:</Callout>
 
-1. **Metrics to Track**
+1. **ট্র্যাক করার জন্য মেট্রিক্স**
 
-   - Effect execution time
-   - Re-render frequency
-   - Memory usage
-   - Network requests
+   - ইফেক্ট এক্সিকিউশন সময়
+   - রি-রেন্ডার ফ্রিকোয়েন্সি
+   - মেমোরি ব্যবহার
+   - নেটওয়ার্ক অনুরোধ
 
-2. **Optimization Strategies**
-   - Use React.memo
-   - Implement proper cleanup
-   - Optimize dependencies
-   - Use proper state management
+2. **অপটিমাইজেশন কৌশল**
+   - React.memo ব্যবহার করুন
+   - যথাযথ ক্লিনআপ প্রয়োগ করুন
+   - ডিপেন্ডেন্সি অপটিমাইজ করুন
+   - যথাযথ স্টেট ব্যবস্থাপনা ব্যবহার করুন
 
-### 🎨 Effect Best Practices Checklist
+### 🎨 ইফেক্ট সর্বোত্তম অনুশীলন চেকলিস্ট
 
-- [ ] Include all dependencies in dependency array
-- [ ] Implement proper cleanup functions
-- [ ] Handle async operations correctly
-- [ ] Avoid infinite loops
-- [ ] Use appropriate effect patterns
-- [ ] Consider performance implications
-- [ ] Test effect behavior
-- [ ] Document effect purposes
-- [ ] Handle error cases
-- [ ] Consider race conditions
+- [ ] ডিপেন্ডেন্সি অ্যারেতে সমস্ত ডিপেন্ডেন্সি অন্তর্ভুক্ত করুন
+- [ ] যথাযথ ক্লিনআপ ফাংশন প্রয়োগ করুন
+- [ ] অ্যাসিঙ্ক অপারেশন সঠিকভাবে পরিচালনা করুন
+- [ ] অসীম লুপ এড়িয়ে চলুন
+- [ ] উপযুক্ত ইফেক্ট প্যাটার্ন ব্যবহার করুন
+- [ ] পারফরম্যান্স প্রভাব বিবেচনা করুন
+- [ ] ইফেক্ট আচরণ টেস্ট করুন
+- [ ] ইফেক্টের উদ্দেশ্য ডকুমেন্ট করুন
+- [ ] ত্রুটির ক্ষেত্রে পরিচালনা করুন
+- [ ] রেস কন্ডিশন বিবেচনা করুন
 
-### 📚 Additional Resources
+### 📚 অতিরিক্ত সংস্থান
 
-- [React Documentation](https://reactjs.org/docs/hooks-effect.html)
-- [useEffect Complete Guide](https://overreacted.io/a-complete-guide-to-useeffect/)
+- [React ডকুমেন্টেশন](https://reactjs.org/docs/hooks-effect.html)
+- [useEffect সম্পূর্ণ গাইড](https://overreacted.io/a-complete-guide-to-useeffect/)
 - [React Hooks FAQ](https://reactjs.org/docs/hooks-faq.html)
-- [Effect Patterns](https://reactpatterns.com/#effect-patterns)
-- [Effect Testing](https://reactjs.org/docs/testing-recipes.html#testing-hooks)
+- [ইফেক্ট প্যাটার্ন](https://reactpatterns.com/#effect-patterns)
+- [ইফেক্ট টেস্টিং](https://reactjs.org/docs/testing-recipes.html#testing-hooks)
