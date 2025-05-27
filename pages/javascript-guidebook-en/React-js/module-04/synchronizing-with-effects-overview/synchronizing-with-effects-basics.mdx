@@ -61,28 +61,11 @@ These are **side effects** because they affect something outside the pure render
 
 ### 🌍 The Two Worlds Visualization
 
-<div style={{
-  display: 'grid',
-  gridTemplateColumns: '1fr auto 1fr',
-  gap: '1rem',
-  alignItems: 'center',
-  margin: '2rem 0',
-  padding: '1.5rem',
-  border: '2px solid #e2e8f0',
-  borderRadius: '0.75rem',
-  backgroundColor: '#f8fafc'
-}}>
+<div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center my-8 p-6 border-2 border-slate-200 rounded-xl bg-slate-50">
 
-<div
-  style={{
-    padding: '1.5rem',
-    backgroundColor: '#dbeafe',
-    borderRadius: '0.5rem',
-    border: '2px solid #3b82f6',
-  }}
->
-  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🌟 REACT WORLD</div>
-  <ul style={{ fontSize: '0.9rem', margin: 0 }}>
+<div className="p-6 bg-blue-100 rounded-lg border-2 border-blue-500">
+  <div className="font-bold text-xl text-slate-900">🌟 REACT WORLD</div>
+  <ul className="text-sm mt-2 m-0 text-slate-700">
     <li>• Components</li>
     <li>• Props & State</li>
     <li>• JSX Elements</li>
@@ -90,44 +73,30 @@ These are **side effects** because they affect something outside the pure render
     <li>• Render Cycle</li>
     <li>• Virtual DOM</li>
   </ul>
-  <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: '#059669' }}>
+  <div className="mt-4 text-xs text-emerald-600">
     <div>✅ Predictable</div>
     <div>✅ Pure Functions</div>
     <div>✅ Testable</div>
   </div>
 </div>
 
-<div
-  style={{
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    color: '#6366f1',
-  }}
->
+<div className="text-3xl font-bold text-indigo-500 text-center">
   🌉
   <br />
   useEffect
 </div>
 
-<div
-  style={{
-    padding: '1.5rem',
-    backgroundColor: '#fef3c7',
-    borderRadius: '0.5rem',
-    border: '2px solid #f59e0b',
-  }}
->
-  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🌍 OUTSIDE WORLD</div>
-  <ul style={{ fontSize: '0.9rem', margin: 0 }}>
-    <li>• REST APIs</li>
-    <li>• WebSocket connections</li>
-    <li>• Browser APIs</li>
-    <li>• LocalStorage</li>
-    <li>• Timers & Intervals</li>
-    <li>• Analytics Services</li>
-  </ul>
-</div>
-
+  <div className="p-6 bg-yellow-100 rounded-lg border-2 border-amber-500">
+    <div className="font-bold text-xl text-slate-900">🌍 OUTSIDE WORLD</div>
+    <ul className="text-sm mt-2 m-0 text-slate-700">
+      <li>• REST APIs</li>
+      <li>• WebSocket connections</li>
+      <li>• Browser APIs</li>
+      <li>• LocalStorage</li>
+      <li>• Timers & Intervals</li>
+      <li>• Analytics Services</li>
+    </ul>
+  </div>
 </div>
 
 ### 🎭 The Theater Metaphor
@@ -150,24 +119,18 @@ Effects are like the backstage crew—they make everything work, but they don't 
 
 ### 📊 Effect Categories by Purpose
 
-<div style={{
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-  gap: '1rem',
-  margin: '1.5rem 0'
-}}>
+<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 my-6">
 
-<div style={{padding: '1rem', backgroundColor: '#f0f9ff', borderRadius: '0.5rem', border: '1px solid #0284c7'}}>
-<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🌐 Data Synchronization</div>
+<div className="p-4 bg-sky-50 rounded-lg border border-sky-600">
+<div className="font-bold text-xl text-slate-900">🌐 Data Synchronization</div>
 ```jsx
 useEffect(() => {
-  fetchUserProfile(userId);
+ fetchUserProfile(userId);
 }, [userId]);
 ```
 </div>
-
-<div style={{padding: '1rem', backgroundColor: '#f0fdf4', borderRadius: '0.5rem', border: '1px solid #16a34a'}}>
-<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>👂 Event Subscription</div>
+<div className="p-4 bg-green-50 rounded-lg border border-green-600">
+<div className="font-bold text-xl text-slate-900">👂 Event Subscription</div>
 ```jsx
 useEffect(() => {
   window.addEventListener('resize', handleResize);
@@ -175,9 +138,8 @@ useEffect(() => {
 }, []);
 ```
 </div>
-
-<div style={{padding: '1rem', backgroundColor: '#fefce8', borderRadius: '0.5rem', border: '1px solid #ca8a04'}}>
-<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>⏰ Time-based Operations</div>
+<div className="p-4 bg-yellow-50 rounded-lg border border-yellow-600">
+<div className="font-bold text-xl text-slate-900">⏰ Time-based Operations</div>
 ```jsx
 useEffect(() => {
   const timer = setInterval(updateClock, 1000);
@@ -185,9 +147,7 @@ useEffect(() => {
 }, []);
 ```
 </div>
-
 </div>
-
 ---
 
 ## 🚦 When Should You Use Effects
@@ -202,21 +162,23 @@ useEffect(() => {
 function UserProfile({ userId }) {
   const [user, setUser] = useState(null)
 
-  useEffect(
-    () => {
-      async function fetchUser() {
-        const response = await fetch(`/api/users/${userId}`)
-        const userData = await response.json()
-        setUser(userData)
-      }
+useEffect(
+() => {
+async function fetchUser() {
+const response = await fetch(`/api/users/${userId}`)
+const userData = await response.json()
+setUser(userData)
+}
 
       fetchUser()
     },
     [userId],
-  )
 
-  return user ? <div>Hello, {user.name}!</div> : <div>Loading...</div>
+)
+
+return user ? <div>Hello, {user.name}!</div> : <div>Loading...</div>
 }
+
 ````
 </Tab>
 <Tab>
@@ -254,20 +216,21 @@ function LiveChat({ roomId }) {
 function StockPrice({ symbol }) {
   const [price, setPrice] = useState(null)
 
-  useEffect(
-    () => {
-      const subscription = stockAPI.subscribe(symbol, setPrice)
-      return () => subscription.unsubscribe()
-    },
-    [symbol],
-  )
+useEffect(
+() => {
+const subscription = stockAPI.subscribe(symbol, setPrice)
+return () => subscription.unsubscribe()
+},
+[symbol],
+)
 
-  return (
-    <div>
-      ${symbol}: ${price}
-    </div>
-  )
-}
+return (
+
+<div>
+  ${symbol}: ${price}
+</div>
+) }
+
 ````
 </Tab>
 </Tabs>
@@ -376,17 +339,18 @@ function ScrollTracker() {
 function ExpensiveCalculation({ items, taxRate }) {
   const [total, setTotal] = useState(0)
 
-  useEffect(
-    () => {
-      const subtotal = items.reduce((sum, item) => sum + item.price, 0)
-      const totalWithTax = subtotal \* (1 + taxRate);
-      setTotal(totalWithTax)
-    },
-    [items, taxRate],
-  )
+useEffect(
+() => {
+const subtotal = items.reduce((sum, item) => sum + item.price, 0)
+const totalWithTax = subtotal \* (1 + taxRate);
+setTotal(totalWithTax)
+},
+[items, taxRate],
+)
 
-  return <div>Total: ${total}</div>
+return <div>Total: ${total}</div>
 }
+
 ````
 </Tab>
 
@@ -462,14 +426,15 @@ function SearchResults({ items, searchTerm }) {
     item.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  return (
-    <ul>
-      {filteredItems.map(item => (
-        <li key={item.id}>{item.name}</li>
-      ))}
-    </ul>
-  )
-}
+return (
+
+<ul>
+  {filteredItems.map((item) => (
+    <li key={item.id}>{item.name}</li>
+  ))}
+</ul>
+) }
+
 ````
 </Tab>
 
@@ -525,13 +490,7 @@ function MyFirstEffect() {
 }
 ```
 
-<div style={{
-  padding: '1rem',
-  backgroundColor: '#f0f9ff',
-  borderRadius: '0.5rem',
-  border: '1px solid #0284c7',
-  margin: '1rem 0'
-}}>
+<div className="p-4 bg-sky-50 dark:bg-sky-50 rounded-lg border border-sky-300 dark:border-sky-300 my-4 text-black">
 
 **🔍 What happens when you run this?**
 
@@ -622,13 +581,7 @@ function Timer() {
 }
 ```
 
-<div style={{
-  padding: '1rem',
-  backgroundColor: '#fef3c7',
-  borderRadius: '0.5rem',
-  border: '1px solid #f59e0b',
-  margin: '1rem 0'
-}}>
+<div className="p-4 bg-amber-100 rounded-lg border border-amber-500 my-4 text-black">
 
 **🔍 What happens here?**
 
@@ -655,75 +608,66 @@ function WeatherApp() {
   const [units, setUnits] = useState('celsius')
 
   // Effect 1: Fetch weather data
-  useEffect(
-    () => {
-      if (!location.trim()) {
-        setWeather(null)
-        return
-      }
+  useEffect(() => {
+    if (!location.trim()) {
+      setWeather(null)
+      return
+    }
 
-      setLoading(true)
-      setError(null)
+    setLoading(true)
+    setError(null)
 
-      // Use AbortController to cancel requests
-      const controller = new AbortController()
+    // Use AbortController to cancel requests
+    const controller = new AbortController()
 
-      async function fetchWeather() {
-        try {
-          const response = await fetch(
-            `/api/weather?location=${encodeURIComponent(location)}&units=${units}`,
-            { signal: controller.signal },
-          )
+    async function fetchWeather() {
+      try {
+        const response = await fetch(
+          `/api/weather?location=${encodeURIComponent(location)}&units=${units}`,
+          { signal: controller.signal },
+        )
 
-          if (!response.ok) {
-            throw new Error(`Weather service error: ${response.status}`)
-          }
-
-          const weatherData = await response.json()
-          setWeather(weatherData)
-        } catch (err) {
-          if (err.name !== 'AbortError') {
-            setError(err.message)
-          }
-        } finally {
-          setLoading(false)
+        if (!response.ok) {
+          throw new Error(`Weather service error: ${response.status}`)
         }
-      }
 
-      fetchWeather()
-
-      // Cleanup: Cancel request if location or units change
-      return () => {
-        controller.abort()
+        const weatherData = await response.json()
+        setWeather(weatherData)
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          setError(err.message)
+        }
+      } finally {
+        setLoading(false)
       }
-    },
-    [location, units],
-  )
+    }
+
+    fetchWeather()
+
+    // Cleanup: Cancel request if location or units change
+    return () => {
+      controller.abort()
+    }
+  }, [location, units])
 
   // Effect 2: Update document title
-  useEffect(
-    () => {
-      if (weather) {
-        document.title = `${weather.temperature}° in ${location} - Weather App`
-      } else {
-        document.title = 'Weather App'
-      }
+  useEffect(() => {
+    if (weather) {
+      document.title = `${weather.temperature}° in ${location} - Weather App`
+    } else {
+      document.title = 'Weather App'
+    }
 
-      // Cleanup: Reset title when component unmounts
-      return () => {
-        document.title = 'My App'
-      }
-    },
-    [weather, location],
-  )
+    // Cleanup: Reset title when component unmounts
+    return () => {
+      document.title = 'My App'
+    }
+  }, [weather, location])
 
   // Effect 3: Save user preferences
-  useEffect(
-    () => {
-      localStorage.setItem('weatherApp_units', units)
-    },
-    [units],
-  )
+  useEffect(() => {
+    localStorage.setItem('weatherApp_units', units)
+  }, [units])
 
   // Effect 4: Load saved preferences on mount
   useEffect(() => {
@@ -741,11 +685,11 @@ function WeatherApp() {
         <input
           type="text"
           value={location}
-          onChange={e => setLocation(e.target.value)}
+          onChange={(e) => setLocation(e.target.value)}
           placeholder="Enter city name..."
         />
 
-        <select value={units} onChange={e => setUnits(e.target.value)}>
+        <select value={units} onChange={(e) => setUnits(e.target.value)}>
           <option value="celsius">Celsius</option>
           <option value="fahrenheit">Fahrenheit</option>
         </select>
@@ -755,20 +699,19 @@ function WeatherApp() {
 
       {error && <div className="error">❌ Error: {error}</div>}
 
-      {weather &&
-        !loading && (
-          <div className="weather-display">
-            <h2>{location}</h2>
-            <div className="temperature">
-              {weather.temperature}°{units === 'celsius' ? 'C' : 'F'}
-            </div>
-            <div className="condition">{weather.condition}</div>
-            <div className="details">
-              <p>Humidity: {weather.humidity}%</p>
-              <p>Wind: {weather.windSpeed} mph</p>
-            </div>
+      {weather && !loading && (
+        <div className="weather-display">
+          <h2>{location}</h2>
+          <div className="temperature">
+            {weather.temperature}°{units === 'celsius' ? 'C' : 'F'}
           </div>
-        )}
+          <div className="condition">{weather.condition}</div>
+          <div className="details">
+            <p>Humidity: {weather.humidity}%</p>
+            <p>Wind: {weather.windSpeed} mph</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -813,18 +756,19 @@ Fetching data is a very common use case for effects. Here's how you do it safely
 useEffect(() => {
   let ignore = false
 
-  fetch('/api/data')
-    .then(res => res.json())
-    .then(data => {
-      if (!ignore) {
-        setData(data)
-      }
-    })
+fetch('/api/data')
+.then(res => res.json())
+.then(data => {
+if (!ignore) {
+setData(data)
+}
+})
 
-  return () => {
-    ignore = true
-  }
+return () => {
+ignore = true
+}
 }, [])
+
 ````
 </Tab>
 
@@ -864,9 +808,9 @@ function useFetch(url) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(
-    () => {
-      const controller = new AbortController()
+useEffect(
+() => {
+const controller = new AbortController()
 
       async function fetchData() {
         try {
@@ -890,19 +834,21 @@ function useFetch(url) {
       return () => controller.abort()
     },
     [url],
-  )
 
-  return { data, loading, error }
+)
+
+return { data, loading, error }
 }
 
 // Usage:
 function MyComponent() {
-  const { data, loading, error } = useFetch('/api/users')
+const { data, loading, error } = useFetch('/api/users')
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error}</div>
-  return <div>{JSON.stringify(data)}</div>
+if (loading) return <div>Loading...</div>
+if (error) return <div>Error: {error}</div>
+return <div>{JSON.stringify(data)}</div>
 }
+
 ````
 
 </Tab>
@@ -918,15 +864,10 @@ Always clean up async effects to avoid setting state on unmounted components!
 
 If you're just transforming data for display, use rendering or memoization instead of Effects.
 
-<div style={{
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: '1rem',
-  margin: '1rem 0'
-}}>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
 
-<div style={{padding: '1rem', backgroundColor: '#fef2f2', borderRadius: '0.5rem', border: '1px solid #ef4444'}}>
-<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>❌ Don't do this:</div>
+<div className="p-4 bg-red-50 rounded-lg border border-red-400 text-black">
+<div className="font-bold text-lg">❌ Don't do this:</div>
 ```jsx
 const [filtered, setFiltered] = useState([]);
 
@@ -937,15 +878,15 @@ useEffect(() => {
 
 </div>
 
-<div style={{padding: '1rem', backgroundColor: '#f0fdf4', borderRadius: '0.5rem', border: '1px solid #22c55e', overflowX: 'scroll'}}>
-<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>✅ Do this instead:</div>
+<div className="p-4 bg-green-50 rounded-lg border border-green-500 overflow-x-auto text-black">
+<div className="font-bold text-lg">✅ Do this instead:</div>
 ```jsx
 // Calculate during render
 const filtered = items.filter(item => item.active)
 
 // Or use useMemo for expensive calculations
 const filtered = useMemo(() => {
-  return items.filter(item => item.active), [items]
+return items.filter(item => item.active), [items]
 })
 
 ```

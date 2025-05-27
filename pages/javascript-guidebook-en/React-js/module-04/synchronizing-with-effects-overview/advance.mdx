@@ -25,21 +25,58 @@ _The second part of our comprehensive guide to mastering React's useEffect hook_
 
 Think of Effects like a stage manager in a theater production. They coordinate behind-the-scenes activities while the main performance (rendering) happens on stage.
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-8 p-6 border-2 border-slate-300 rounded-xl bg-slate-50 text-black">
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: '1rem',
+  margin: '2rem 0',
+  padding: '1.5rem',
+  border: '2px solid #e2e8f0',
+  borderRadius: '0.75rem',
+  backgroundColor: '#f8fafc'
+}}>
 
-<div className="p-4 bg-green-100 rounded-lg border-2 border-green-600 text-center">
-  <div className="font-bold text-lg">🟢 MOUNT</div>
-  <div className="text-sm mt-2">Component renders for the first time ↓ Effect runs</div>
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#dcfce7',
+    borderRadius: '0.5rem',
+    border: '2px solid #16a34a',
+    textAlign: 'center',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🟢 MOUNT</div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+    Component renders for the first time ↓ Effect runs
+  </div>
 </div>
 
-<div className="p-4 bg-amber-100 rounded-lg border-2 border-amber-500 text-center">
-  <div className="font-bold text-lg">🔄 UPDATE</div>
-  <div className="text-sm mt-2">Dependencies change ↓ Cleanup runs ↓ Effect runs</div>
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#fef3c7',
+    borderRadius: '0.5rem',
+    border: '2px solid #f59e0b',
+    textAlign: 'center',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🔄 UPDATE</div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+    Dependencies change ↓ Cleanup runs ↓ Effect runs
+  </div>
 </div>
 
-<div className="p-4 bg-red-200 rounded-lg border-2 border-red-500 text-center">
-  <div className="font-bold text-lg">🔴 UNMOUNT</div>
-  <div className="text-sm mt-2">Component is removed ↓ Cleanup runs</div>
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#fecaca',
+    borderRadius: '0.5rem',
+    border: '2px solid #ef4444',
+    textAlign: 'center',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🔴 UNMOUNT</div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Component is removed ↓ Cleanup runs</div>
 </div>
 
 </div>
@@ -96,42 +133,62 @@ function LifecycleDemo() {
 
 The dependency array is React's way of asking: "When should I re-run this Effect?"
 
-<div className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 my-6 text-black">
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+  gap: '1rem',
+  margin: '1.5rem 0'
+}}>
 
-<div className="p-4 bg-red-50 rounded-lg border border-red-500">
-<div className="font-bold text-lg text-red-600">🚫 No Array</div>
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#fef2f2',
+  borderRadius: '0.5rem',
+  border: '1px solid #ef4444'
+}}>
+<div style={{ fontWeight: 'bold', fontSize: '1.2em', color: '#dc2626' }}>🚫 No Array</div>
 ```jsx
 useEffect(() => {
   console.log("Runs after EVERY render");
 });
 ```
-<div className="text-sm mt-2">
+<div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
   <strong>When:</strong> After every single render<br/>
   <strong>Use case:</strong> Rarely needed, usually a mistake
 </div>
 </div>
 
-<div className="p-4 bg-green-50 rounded-lg border border-green-600">
-<div className="font-bold text-lg text-green-600">✅ Empty Array</div>
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#f0fdf4',
+  borderRadius: '0.5rem',
+  border: '1px solid #16a34a'
+}}>
+<div style={{ fontWeight: 'bold', fontSize: '1.2em', color: '#16a34a' }}>✅ Empty Array</div>
 ```jsx
 useEffect(() => {
   console.log("Runs only on mount");
 }, []);
 ```
-<div className="text-sm mt-2">
+<div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
   <strong>When:</strong> Only once, when component mounts<br/>
   <strong>Use case:</strong> API calls, subscriptions, timers
 </div>
 </div>
 
-<div className="p-4 bg-sky-50 rounded-lg border border-sky-600">
-<div className="font-bold text-lg text-sky-600">🎯 With Dependencies</div>
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#f0f9ff',
+  borderRadius: '0.5rem',
+  border: '1px solid #0284c7'
+}}>
+<div style={{ fontWeight: 'bold', fontSize: '1.2em', color: '#0284c7' }}>🎯 With Dependencies</div>
 ```jsx
 useEffect(() => {
   console.log("Runs when deps change");
 }, [count, name]);
 ```
-<div className="text-sm mt-2">
+<div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
   <strong>When:</strong> When any dependency changes<br/>
   <strong>Use case:</strong> Data fetching based on props/state
 </div>
@@ -153,22 +210,21 @@ function SafeDependencies() {
   const [count, setCount] = useState(0)
   const [name, setName] = useState('John')
 
-useEffect(
-() => {
-console.log(`Count: ${count}, Name: ${name}`)
-// This works perfectly because count and name are primitives
-},
-[count, name],
-) // ✅ Safe - compared by value
+  useEffect(
+    () => {
+      console.log(`Count: ${count}, Name: ${name}`)
+      // This works perfectly because count and name are primitives
+    },
+    [count, name],
+  ) // ✅ Safe - compared by value
 
-return (
-
-<div>
-  <button onClick={() => setCount((c) => c + 1)}>Count: {count}</button>
-  <input value={name} onChange={(e) => setName(e.target.value)} />
-</div>
-) }
-
+  return (
+    <div>
+      <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
+      <input value={name} onChange={e => setName(e.target.value)} />
+    </div>
+  )
+}
 ````
 </Tab>
 <Tab>
@@ -230,34 +286,33 @@ function DangerousObjects() {
 function TrickyFunctions({ onDataLoad }) {
   const [data, setData] = useState(null)
 
-// ❌ PROBLEM: onDataLoad might be recreated every render
-useEffect(
-() => {
-fetchData().then(result => {
-setData(result)
-onDataLoad(result) // Function might be stale
-})
-},
-[onDataLoad],
-) // Could cause unnecessary re-runs
+  // ❌ PROBLEM: onDataLoad might be recreated every render
+  useEffect(
+    () => {
+      fetchData().then(result => {
+        setData(result)
+        onDataLoad(result) // Function might be stale
+      })
+    },
+    [onDataLoad],
+  ) // Could cause unnecessary re-runs
 
-// ✅ SOLUTION 1: Use useCallback in parent
-// Parent should wrap onDataLoad with useCallback
+  // ✅ SOLUTION 1: Use useCallback in parent
+  // Parent should wrap onDataLoad with useCallback
 
-// ✅ SOLUTION 2: Use a ref for callback
-const callbackRef = useRef(onDataLoad)
-callbackRef.current = onDataLoad
+  // ✅ SOLUTION 2: Use a ref for callback
+  const callbackRef = useRef(onDataLoad)
+  callbackRef.current = onDataLoad
 
-useEffect(() => {
-fetchData().then(result => {
-setData(result)
-callbackRef.current(result) // Always current
-})
-}, []) // No dependency needed
+  useEffect(() => {
+    fetchData().then(result => {
+      setData(result)
+      callbackRef.current(result) // Always current
+    })
+  }, []) // No dependency needed
 
-return <div>{data ? 'Data loaded!' : 'Loading...'}</div>
+  return <div>{data ? 'Data loaded!' : 'Loading...'}</div>
 }
-
 ````
 </Tab>
 </Tabs>
@@ -270,11 +325,26 @@ return <div>{data ? 'Data loaded!' : 'Loading...'}</div>
 
 Think of reactive values like water flowing through pipes. When the source changes, the flow affects everything downstream.
 
-<div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center my-8 p-6 border-2 border-slate-300 rounded-xl bg-slate-50 text-black">
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: '1fr auto 1fr',
+  gap: '1rem',
+  alignItems: 'center',
+  margin: '2rem 0',
+  padding: '1.5rem',
+  border: '2px solid #e2e8f0',
+  borderRadius: '0.75rem',
+  backgroundColor: '#f8fafc'
+}}>
 
-<div className="p-4 bg-blue-100 rounded-lg border-2 border-blue-500">
-  <div className="font-bold text-lg">🌊 REACTIVE SOURCES</div>
-  <ul className="text-sm m-0">
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#dbeafe',
+  borderRadius: '0.5rem',
+  border: '2px solid #3b82f6'
+}}>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🌊 REACTIVE SOURCES</div>
+  <ul style={{ fontSize: '0.9rem', margin: 0 }}>
     <li>• useState values</li>
     <li>• Props from parent</li>
     <li>• Context values</li>
@@ -283,14 +353,23 @@ Think of reactive values like water flowing through pipes. When the source chang
   </ul>
 </div>
 
-<div className="text-2xl font-bold text-indigo-500">
+<div style={{
+  fontSize: '2rem',
+  fontWeight: 'bold',
+  color: '#6366f1'
+}}>
   ⚡<br/>
   Flow
 </div>
 
-<div className="p-4 bg-amber-100 rounded-lg border-2 border-amber-500">
-  <div className="font-bold text-lg">🎯 EFFECTS REACT</div>
-  <ul className="text-sm m-0">
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#fef3c7',
+  borderRadius: '0.5rem',
+  border: '2px solid #f59e0b'
+}}>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🎯 EFFECTS REACT</div>
+  <ul style={{ fontSize: '0.9rem', margin: 0 }}>
     <li>• Data fetching</li>
     <li>• Subscriptions</li>
     <li>• DOM updates</li>
@@ -418,13 +497,13 @@ function StateReactiveEffect() {
   const [sortBy, setSortBy] = useState('name')
   const [results, setResults] = useState([])
 
-// Effect reacts to state changes
-useEffect(
-() => {
-if (!searchTerm.trim()) {
-setResults([])
-return
-}
+  // Effect reacts to state changes
+  useEffect(
+    () => {
+      if (!searchTerm.trim()) {
+        setResults([])
+        return
+      }
 
       console.log(`🔍 Searching for "${searchTerm}" sorted by ${sortBy}`)
 
@@ -447,21 +526,19 @@ return
       return () => clearTimeout(timeoutId)
     },
     [searchTerm, sortBy],
+  ) // Reacts to both state values
 
-) // Reacts to both state values
-
-return (
-
-<div>
-<input
-value={searchTerm}
-onChange={e => setSearchTerm(e.target.value)}
-placeholder="Search users..."
-/>
-<select value={sortBy} onChange={e => setSortBy(e.target.value)}>
-<option value="name">Sort by Name</option>
-<option value="score">Sort by Score</option>
-</select>
+  return (
+    <div>
+      <input
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+        placeholder="Search users..."
+      />
+      <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
+        <option value="name">Sort by Name</option>
+        <option value="score">Sort by Score</option>
+      </select>
 
       <div>
         {results.map((user, index) => (
@@ -471,10 +548,8 @@ placeholder="Search users..."
         ))}
       </div>
     </div>
-
-)
+  )
 }
-
 ````
 </Tab>
 <Tab>
@@ -542,10 +617,10 @@ function ContextReactiveEffect() {
   const user = useContext(UserContext)
   const [analytics, setAnalytics] = useState([])
 
-// Effect reacts to context changes
-useEffect(
-() => {
-console.log(`📊 Tracking: theme=${theme.name}, user=${user.id}`)
+  // Effect reacts to context changes
+  useEffect(
+    () => {
+      console.log(`📊 Tracking: theme=${theme.name}, user=${user.id}`)
 
       // Track theme and user changes for analytics
       const event = {
@@ -562,20 +637,19 @@ console.log(`📊 Tracking: theme=${theme.name}, user=${user.id}`)
       setAnalytics(prev => [...prev.slice(-4), event])
     },
     [theme.name, user.id],
+  ) // Reacts to context values
 
-) // Reacts to context values
-
-return (
-
-<div
-style={{
+  return (
+    <div
+      style={{
         backgroundColor: theme.backgroundColor,
         color: theme.textColor,
         padding: '1rem',
         borderRadius: '0.5rem',
-      }} >
-<h3>Welcome, {user.name}!</h3>
-<p>Current theme: {theme.name}</p>
+      }}
+    >
+      <h3>Welcome, {user.name}!</h3>
+      <p>Current theme: {theme.name}</p>
 
       <div>
         <h4>Recent Analytics:</h4>
@@ -588,8 +662,7 @@ style={{
         ))}
       </div>
     </div>
-
-)
+  )
 }
 
 ````
@@ -689,36 +762,72 @@ function MultiSourceReactiveEffect({ productId }) {
 
 Think of your React component like a restaurant:
 
-<div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center my-8 p-6 border-2 border-slate-300 rounded-xl bg-slate-50 text-black">
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: '1fr auto 1fr',
+  gap: '1rem',
+  alignItems: 'center',
+  margin: '2rem 0',
+  padding: '1.5rem',
+  border: '2px solid #e2e8f0',
+  borderRadius: '0.75rem',
+  backgroundColor: '#f8fafc'
+}}>
 
-<div className="p-4 bg-amber-100 rounded-lg border-2 border-amber-500">
-  <div className="font-bold text-lg">🖱️ EVENTS</div>
-  <div className="text-sm mt-2">
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#fef3c7',
+    borderRadius: '0.5rem',
+    border: '2px solid #f59e0b',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🖱️ EVENTS</div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
     <strong>Like customer orders:</strong>
   </div>
-  <ul className="text-sm m-0">
+  <ul style={{ fontSize: '0.9rem', margin: 0 }}>
     <li>• Button clicks</li>
     <li>• Form submissions</li>
     <li>• Menu selections</li>
     <li>• Specific user actions</li>
   </ul>
-  <div className="text-xs text-amber-700 mt-2">Happen when user does something</div>
+  <div style={{ fontSize: '0.8rem', color: '#92400e', marginTop: '0.5rem' }}>
+    Happen when user does something
+  </div>
 </div>
 
-<div className="text-2xl font-bold text-indigo-500">vs</div>
+<div
+  style={{
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: '#6366f1',
+  }}
+>
+  vs
+</div>
 
-<div className="p-4 bg-blue-100 rounded-lg border-2 border-blue-500">
-  <div className="font-bold text-lg">⚡ EFFECTS</div>
-  <div className="text-sm mt-2">
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#dbeafe',
+    borderRadius: '0.5rem',
+    border: '2px solid #3b82f6',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>⚡ EFFECTS</div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
     <strong>Like background services:</strong>
   </div>
-  <ul className="text-sm m-0">
+  <ul style={{ fontSize: '0.9rem', margin: 0 }}>
     <li>• Keep kitchen stocked</li>
     <li>• Monitor temperature</li>
     <li>• Update menu displays</li>
     <li>• Sync with suppliers</li>
   </ul>
-  <div className="text-xs text-blue-700 mt-2">Happen when state changes</div>
+  <div style={{ fontSize: '0.8rem', color: '#1e40af', marginTop: '0.5rem' }}>
+    Happen when state changes
+  </div>
 </div>
 
 </div>
@@ -733,37 +842,42 @@ function BadSearchForm() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
 
-// ❌ PROBLEM: Using Effect for what should be an event
-useEffect(
-() => {
-if (query) {
-console.log('Searching automatically as user types...')
-searchAPI(query).then(setResults)
+  // ❌ PROBLEM: Using Effect for what should be an event
+  useEffect(
+    () => {
+      if (query) {
+        console.log('Searching automatically as user types...')
+        searchAPI(query).then(setResults)
+      }
+    },
+    [query],
+  ) // Searches on every keystroke!
+
+  return (
+    <div>
+      <input
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        placeholder="Search automatically..."
+      />
+      <button type="submit">Search</button> {/* Button does nothing! */}
+      <div>
+        {results.map(r => (
+          <div key={r.id}>{r.title}</div>
+        ))}
+      </div>
+    </div>
+  )
 }
-},
-[query],
-) // Searches on every keystroke!
-
-return (
-
-<div>
-  <input
-    value={query}
-    onChange={(e) => setQuery(e.target.value)}
-    placeholder="Search automatically..."
-  />
-  <button type="submit">Search</button> {/* Button does nothing! */}
-  <div>
-    {results.map((r) => (
-      <div key={r.id}>{r.title}</div>
-    ))}
-  </div>
-</div>
-) }
-
 ````
 
-<div className="p-4 bg-red-50 rounded-lg border border-red-500 mt-4 text-black">
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#fef2f2',
+  borderRadius: '0.5rem',
+  border: '1px solid #ef4444',
+  marginTop: '1rem'
+}}>
   <strong>🚫 Problems with this approach:</strong>
   <ul>
     <li>Searches on every keystroke (expensive!)</li>
@@ -837,9 +951,15 @@ function GoodSearchForm() {
 }
 ````
 
-<div className="p-4 bg-green-50 rounded-lg border border-green-600 mt-4">
-  <strong className="text-black">✅ Benefits of this approach:</strong>
-  <ul className="text-black">
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#f0fdf4',
+  borderRadius: '0.5rem',
+  border: '1px solid #16a34a',
+  marginTop: '1rem'
+}}>
+  <strong>✅ Benefits of this approach:</strong>
+  <ul>
     <li>Button works as expected (event)</li>
     <li>Auto-search is debounced (effect)</li>
     <li>Clear loading states</li>
@@ -847,7 +967,6 @@ function GoodSearchForm() {
     <li>User has control over when to search</li>
   </ul>
 </div>
-
 </Tab>
 <Tab>
 ```jsx
@@ -855,41 +974,40 @@ function GoodSearchForm() {
 import { useEvent } from 'react'
 
 function BestSearchForm() {
-const [query, setQuery] = useState('')
-const [results, setResults] = useState([])
-const [searchHistory, setSearchHistory] = useState([])
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
+  const [searchHistory, setSearchHistory] = useState([])
 
-// 🎯 useEvent - Stable function reference that doesn't trigger effects
-const logSearch = useEvent((searchTerm, source) => {
-console.log(`📊 Search logged: "${searchTerm}" from ${source}`)
-setSearchHistory(prev => [
-...prev.slice(-9),
-{
-term: searchTerm,
-source,
-timestamp: Date.now(),
-},
-])
-})
+  // 🎯 useEvent - Stable function reference that doesn't trigger effects
+  const logSearch = useEvent((searchTerm, source) => {
+    console.log(`📊 Search logged: "${searchTerm}" from ${source}`)
+    setSearchHistory(prev => [
+      ...prev.slice(-9),
+      {
+        term: searchTerm,
+        source,
+        timestamp: Date.now(),
+      },
+    ])
+  })
 
-// ✅ EVENT: Manual search
-async function handleSubmit(e) {
-e.preventDefault()
-if (!query.trim()) return
+  // ✅ EVENT: Manual search
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (!query.trim()) return
 
     const data = await searchAPI(query)
     setResults(data)
     logSearch(query, 'manual') // Won't trigger effect re-runs
+  }
 
-}
-
-// ✅ EFFECT: Auto-search with stable logging
-useEffect(
-() => {
-if (!query.trim()) {
-setResults([])
-return
-}
+  // ✅ EFFECT: Auto-search with stable logging
+  useEffect(
+    () => {
+      if (!query.trim()) {
+        setResults([])
+        return
+      }
 
       const timeoutId = setTimeout(async () => {
         const data = await searchAPI(query)
@@ -900,20 +1018,18 @@ return
       return () => clearTimeout(timeoutId)
     },
     [query],
+  ) // logSearch is NOT needed in dependencies!
 
-) // logSearch is NOT needed in dependencies!
-
-return (
-
-<div>
-<form onSubmit={handleSubmit}>
-<input
-value={query}
-onChange={e => setQuery(e.target.value)}
-placeholder="Smart search with history"
-/>
-<button type="submit">🔍 Search</button>
-</form>
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          placeholder="Smart search with history"
+        />
+        <button type="submit">🔍 Search</button>
+      </form>
 
       <div>
         <h4>Results:</h4>
@@ -931,8 +1047,7 @@ placeholder="Smart search with history"
         ))}
       </div>
     </div>
-
-)
+  )
 }
 
 ````
@@ -954,9 +1069,9 @@ graph TD
     E --> H[useEffect with dependencies]
     F --> I[Maybe move to utility function, service layer, or library]
 
-    style C fill:#facc15,color:#000
-    style E fill:#3b82f6,color:#fff
-    style F fill:#ef4444,color:#fff
+    style C fill:#fef3c7
+    style E fill:#dbeafe
+    style F fill:#fecaca
 ````
 
 ---
@@ -967,30 +1082,71 @@ graph TD
 
 The best Effect is one with the fewest dependencies. Here's how to achieve dependency zen:
 
-<div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  gap: '1rem',
+  margin: '1.5rem 0'
+}}>
 
-<div className="p-4 bg-green-50 rounded-md border border-green-600">
-  <div className="font-bold text-lg text-black">✅ Move Inside Effect</div>
-  <div className="text-sm mt-2 text-black">
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#f0fdf4',
+    borderRadius: '0.5rem',
+    border: '1px solid #16a34a',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em', color: '#16a34a' }}>
+    ✅ Move Inside Effect
+  </div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
     If it's only used inside the effect, define it there
   </div>
 </div>
 
-<div className="p-4 bg-sky-50 rounded-md border border-sky-600">
-  <div className="font-bold text-lg text-black">🔧 Use Refs</div>
-  <div className="text-sm mt-2 text-black">For values that don't need to trigger re-runs</div>
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#f0f9ff',
+    borderRadius: '0.5rem',
+    border: '1px solid #0284c7',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em', color: '#0284c7' }}>🔧 Use Refs</div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+    For values that don't need to trigger re-runs
+  </div>
 </div>
 
-<div className="p-4 bg-amber-100 rounded-md border border-amber-500">
-  <div className="font-bold text-lg text-black">🧮 Use Reducers</div>
-  <div className="text-sm mt-2 text-black">
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#fef3c7',
+    borderRadius: '0.5rem',
+    border: '1px solid #f59e0b',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em', color: '#f59e0b' }}>🧮 Use Reducers</div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
     For complex state updates that depend on previous state
   </div>
 </div>
 
-<div className="p-4 bg-purple-100 rounded-md border border-purple-700">
-  <div className="font-bold text-lg text-black">🎭 Extract Non-Reactive</div>
-  <div className="text-sm mt-2 text-black">Move constants and pure functions outside component</div>
+<div
+  style={{
+    padding: '1rem',
+    backgroundColor: '#f3e8ff',
+    borderRadius: '0.5rem',
+    border: '1px solid #9333ea',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em', color: '#9333ea' }}>
+    🎭 Extract Non-Reactive
+  </div>
+  <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+    Move constants and pure functions outside component
+  </div>
 </div>
 
 </div>
@@ -1005,42 +1161,41 @@ function BadTimer() {
   const [count, setCount] = useState(0)
   const [delay, setDelay] = useState(1000)
 
-// ❌ formatTime is recreated every render
-const formatTime = seconds => {
-const mins = Math.floor(seconds / 60)
-const secs = seconds % 60
-return `${mins}:${secs.toString().padStart(2, '0')}`
-}
+  // ❌ formatTime is recreated every render
+  const formatTime = seconds => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
 
-useEffect(
-() => {
-const intervalId = setInterval(() => {
-setCount(c => c + 1)
-console.log(formatTime(count)) // Uses stale count!
-}, delay)
+  useEffect(
+    () => {
+      const intervalId = setInterval(() => {
+        setCount(c => c + 1)
+        console.log(formatTime(count)) // Uses stale count!
+      }, delay)
 
       return () => clearInterval(intervalId)
     },
     [count, delay, formatTime],
+  ) // ❌ formatTime changes every render
 
-) // ❌ formatTime changes every render
-
-return <div>Time: {formatTime(count)}</div>
+  return <div>Time: {formatTime(count)}</div>
 }
 
 // ✅ Move function inside effect
 function GoodTimer() {
-const [count, setCount] = useState(0)
-const [delay, setDelay] = useState(1000)
+  const [count, setCount] = useState(0)
+  const [delay, setDelay] = useState(1000)
 
-useEffect(
-() => {
-// ✅ Define function inside effect
-const formatTime = seconds => {
-const mins = Math.floor(seconds / 60)
-const secs = seconds % 60
-return `${mins}:${secs.toString().padStart(2, '0')}`
-}
+  useEffect(
+    () => {
+      // ✅ Define function inside effect
+      const formatTime = seconds => {
+        const mins = Math.floor(seconds / 60)
+        const secs = seconds % 60
+        return `${mins}:${secs.toString().padStart(2, '0')}`
+      }
 
       const intervalId = setInterval(() => {
         setCount(c => {
@@ -1053,17 +1208,16 @@ return `${mins}:${secs.toString().padStart(2, '0')}`
       return () => clearInterval(intervalId)
     },
     [delay],
+  ) // ✅ Only depends on delay
 
-) // ✅ Only depends on delay
+  // ✅ Format for display (could also be inside effect if only used there)
+  const formatTime = seconds => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
 
-// ✅ Format for display (could also be inside effect if only used there)
-const formatTime = seconds => {
-const mins = Math.floor(seconds / 60)
-const secs = seconds % 60
-return `${mins}:${secs.toString().padStart(2, '0')}`
-}
-
-return <div>Time: {formatTime(count)}</div>
+  return <div>Time: {formatTime(count)}</div>
 }
 
 ````
@@ -1144,81 +1298,79 @@ function BadApiClient() {
   const [data, setData] = useState(null)
   const [userId, setUserId] = useState(1)
 
-// ❌ Recreated every render
-const API_CONFIG = {
-baseURL: 'https://api.example.com',
-timeout: 5000,
-headers: {
-'Content-Type': 'application/json',
-},
-}
+  // ❌ Recreated every render
+  const API_CONFIG = {
+    baseURL: 'https://api.example.com',
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
 
-useEffect(
-() => {
-async function fetchData() {
-const response = await fetch(`${API_CONFIG.baseURL}/users/${userId}`, {
-...API_CONFIG,
-})
-const result = await response.json()
-setData(result)
-}
+  useEffect(
+    () => {
+      async function fetchData() {
+        const response = await fetch(`${API_CONFIG.baseURL}/users/${userId}`, {
+          ...API_CONFIG,
+        })
+        const result = await response.json()
+        setData(result)
+      }
 
       fetchData()
     },
     [userId, API_CONFIG],
+  ) // ❌ API_CONFIG changes every render
 
-) // ❌ API_CONFIG changes every render
-
-return <div>{data?.name}</div>
+  return <div>{data?.name}</div>
 }
 
 // ✅ Extract constants outside component
 const API_CONFIG = {
-baseURL: 'https://api.example.com',
-timeout: 5000,
-headers: {
-'Content-Type': 'application/json',
-},
+  baseURL: 'https://api.example.com',
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 }
 
 function GoodApiClient() {
-const [data, setData] = useState(null)
-const [userId, setUserId] = useState(1)
+  const [data, setData] = useState(null)
+  const [userId, setUserId] = useState(1)
 
-useEffect(
-() => {
-async function fetchData() {
-const response = await fetch(`${API_CONFIG.baseURL}/users/${userId}`, {
-...API_CONFIG,
-})
-const result = await response.json()
-setData(result)
-}
+  useEffect(
+    () => {
+      async function fetchData() {
+        const response = await fetch(`${API_CONFIG.baseURL}/users/${userId}`, {
+          ...API_CONFIG,
+        })
+        const result = await response.json()
+        setData(result)
+      }
 
       fetchData()
     },
     [userId],
+  ) // ✅ Only depends on userId
 
-) // ✅ Only depends on userId
-
-return <div>{data?.name}</div>
+  return <div>{data?.name}</div>
 }
 
 // 🎯 Alternative: Move inside effect if only used there
 function AlternativeApiClient() {
-const [data, setData] = useState(null)
-const [userId, setUserId] = useState(1)
+  const [data, setData] = useState(null)
+  const [userId, setUserId] = useState(1)
 
-useEffect(
-() => {
-// ✅ Define inside effect if only used here
-const API_CONFIG = {
-baseURL: 'https://api.example.com',
-timeout: 5000,
-headers: {
-'Content-Type': 'application/json',
-},
-}
+  useEffect(
+    () => {
+      // ✅ Define inside effect if only used here
+      const API_CONFIG = {
+        baseURL: 'https://api.example.com',
+        timeout: 5000,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
 
       async function fetchData() {
         const response = await fetch(`${API_CONFIG.baseURL}/users/${userId}`, {
@@ -1231,12 +1383,10 @@ headers: {
       fetchData()
     },
     [userId],
+  ) // ✅ Only depends on userId
 
-) // ✅ Only depends on userId
-
-return <div>{data?.name}</div>
+  return <div>{data?.name}</div>
 }
-
 ````
 </Tab>
 <Tab>
@@ -1337,75 +1487,71 @@ function BadCounter() {
   const [count, setCount] = useState(0)
   const [step, setStep] = useState(1)
 
-useEffect(
-() => {
-const intervalId = setInterval(() => {
-setCount(count + step) // ❌ Reads current count - stale closure
-}, 1000)
+  useEffect(
+    () => {
+      const intervalId = setInterval(() => {
+        setCount(count + step) // ❌ Reads current count - stale closure
+      }, 1000)
 
       return () => clearInterval(intervalId)
     },
     [count, step],
+  ) // ❌ Depends on count - recreates interval constantly
 
-) // ❌ Depends on count - recreates interval constantly
-
-return (
-
-<div>
-  <p>Count: {count}</p>
-  <button onClick={() => setStep((s) => s + 1)}>Step: {step}</button>
-</div>
-) }
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setStep(s => s + 1)}>Step: {step}</button>
+    </div>
+  )
+}
 
 // ✅ Use functional updates
 function GoodCounter() {
-const [count, setCount] = useState(0)
-const [step, setStep] = useState(1)
+  const [count, setCount] = useState(0)
+  const [step, setStep] = useState(1)
 
-useEffect(
-() => {
-const intervalId = setInterval(() => {
-setCount(prevCount => prevCount + step) // ✅ Uses current step, doesn't depend on count
-}, 1000)
+  useEffect(
+    () => {
+      const intervalId = setInterval(() => {
+        setCount(prevCount => prevCount + step) // ✅ Uses current step, doesn't depend on count
+      }, 1000)
 
       return () => clearInterval(intervalId)
     },
     [step],
+  ) // ✅ Only depends on step
 
-) // ✅ Only depends on step
-
-return (
-
-<div>
-  <p>Count: {count}</p>
-  <button onClick={() => setStep((s) => s + 1)}>Step: {step}</button>
-</div>
-) }
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setStep(s => s + 1)}>Step: {step}</button>
+    </div>
+  )
+}
 
 // 🎯 Even better - eliminate step dependency too
 function BestCounter() {
-const [count, setCount] = useState(0)
-const [step, setStep] = useState(1)
-const stepRef = useRef(step)
-stepRef.current = step
+  const [count, setCount] = useState(0)
+  const [step, setStep] = useState(1)
+  const stepRef = useRef(step)
+  stepRef.current = step
 
-useEffect(() => {
-const intervalId = setInterval(() => {
-setCount(prevCount => prevCount + stepRef.current) // ✅ Always current step
-}, 1000)
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + stepRef.current) // ✅ Always current step
+    }, 1000)
 
     return () => clearInterval(intervalId)
+  }, []) // ✅ No dependencies - never recreates
 
-}, []) // ✅ No dependencies - never recreates
-
-return (
-
-<div>
-  <p>Count: {count}</p>
-  <button onClick={() => setStep((s) => s + 1)}>Step: {step}</button>
-</div>
-) }
-
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setStep(s => s + 1)}>Step: {step}</button>
+    </div>
+  )
+}
 ````
 </Tab>
 </Tabs>
@@ -1418,31 +1564,60 @@ return (
 
 Custom hooks are like creating your own magical spells in React. They encapsulate complex stateful logic and make it reusable across components.
 
-<div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '1rem',
+  margin: '1.5rem 0'
+}}>
 
-  <div className="p-4 bg-green-50 rounded-md border border-green-600 text-center">
-    <div className="text-4xl">🔄</div>
-    <div className="font-bold text-black">Reusability</div>
-    <div className="text-sm text-black">Share logic between components</div>
-  </div>
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#f0fdf4',
+  borderRadius: '0.5rem',
+  border: '1px solid #16a34a',
+  textAlign: 'center'
+}}>
+  <div style={{ fontSize: '2rem' }}>🔄</div>
+  <div style={{ fontWeight: 'bold' }}>Reusability</div>
+  <div style={{ fontSize: '0.9rem' }}>Share logic between components</div>
+</div>
 
-  <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-center">
-    <div className="text-4xl">🧹</div>
-    <div className="font-bold text-black">Separation</div>
-    <div className="text-sm text-black">Separate concerns cleanly</div>
-  </div>
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#f0f9ff',
+  borderRadius: '0.5rem',
+  border: '1px solid #0284c7',
+  textAlign: 'center'
+}}>
+  <div style={{ fontSize: '2rem' }}>🧹</div>
+  <div style={{ fontWeight: 'bold' }}>Separation</div>
+  <div style={{ fontSize: '0.9rem' }}>Separate concerns cleanly</div>
+</div>
 
-  <div className="p-4 bg-amber-100 rounded-md border border-amber-500 text-center">
-    <div className="text-4xl">🧪</div>
-    <div className="font-bold text-black">Testability</div>
-    <div className="text-sm text-black">Test logic in isolation</div>
-  </div>
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#fef3c7',
+  borderRadius: '0.5rem',
+  border: '1px solid #f59e0b',
+  textAlign: 'center'
+}}>
+  <div style={{ fontSize: '2rem' }}>🧪</div>
+  <div style={{ fontWeight: 'bold' }}>Testability</div>
+  <div style={{ fontSize: '0.9rem' }}>Test logic in isolation</div>
+</div>
 
-  <div className="p-4 bg-purple-100 rounded-md border border-purple-700 text-center">
-    <div className="text-4xl">📦</div>
-    <div className="font-bold text-black">Encapsulation</div>
-    <div className="text-sm text-black">Hide implementation details</div>
-  </div>
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#f3e8ff',
+  borderRadius: '0.5rem',
+  border: '1px solid #9333ea',
+  textAlign: 'center'
+}}>
+  <div style={{ fontSize: '2rem' }}>📦</div>
+  <div style={{ fontWeight: 'bold' }}>Encapsulation</div>
+  <div style={{ fontSize: '0.9rem' }}>Hide implementation details</div>
+</div>
 
 </div>
 
@@ -1565,12 +1740,12 @@ function useLocalStorage(key, initialValue) {
     }
   })
 
-// Return a wrapped version of useState's setter function that persists the new value to localStorage
-const setValue = useCallback(
-value => {
-try {
-// Allow value to be a function so we have the same API as useState
-const valueToStore = value instanceof Function ? value(storedValue) : value
+  // Return a wrapped version of useState's setter function that persists the new value to localStorage
+  const setValue = useCallback(
+    value => {
+      try {
+        // Allow value to be a function so we have the same API as useState
+        const valueToStore = value instanceof Function ? value(storedValue) : value
 
         setStoredValue(valueToStore)
 
@@ -1585,47 +1760,45 @@ const valueToStore = value instanceof Function ? value(storedValue) : value
       }
     },
     [key, storedValue],
+  )
 
-)
-
-// Listen for changes in other tabs/windows
-useEffect(
-() => {
-const handleStorageChange = e => {
-if (e.key === key && e.newValue !== null) {
-try {
-setStoredValue(JSON.parse(e.newValue))
-} catch (error) {
-console.warn(`Error parsing localStorage value for key "${key}":`, error)
-}
-}
-}
+  // Listen for changes in other tabs/windows
+  useEffect(
+    () => {
+      const handleStorageChange = e => {
+        if (e.key === key && e.newValue !== null) {
+          try {
+            setStoredValue(JSON.parse(e.newValue))
+          } catch (error) {
+            console.warn(`Error parsing localStorage value for key "${key}":`, error)
+          }
+        }
+      }
 
       window.addEventListener('storage', handleStorageChange)
       return () => window.removeEventListener('storage', handleStorageChange)
     },
     [key],
+  )
 
-)
-
-return [storedValue, setValue]
+  return [storedValue, setValue]
 }
 
 // 📱 Usage examples
 function SettingsPanel() {
-const [theme, setTheme] = useLocalStorage('theme', 'light')
-const [language, setLanguage] = useLocalStorage('language', 'en')
-const [notifications, setNotifications] = useLocalStorage('notifications', true)
+  const [theme, setTheme] = useLocalStorage('theme', 'light')
+  const [language, setLanguage] = useLocalStorage('language', 'en')
+  const [notifications, setNotifications] = useLocalStorage('notifications', true)
 
-return (
-
-<div
-style={{
+  return (
+    <div
+      style={{
         backgroundColor: theme === 'dark' ? '#1a1a1a' : '#ffffff',
         color: theme === 'dark' ? '#ffffff' : '#000000',
         padding: '1rem',
-      }} >
-<h2>Settings</h2>
+      }}
+    >
+      <h2>Settings</h2>
 
       <div>
         <label>
@@ -1659,39 +1832,37 @@ style={{
         </label>
       </div>
     </div>
-
-)
+  )
 }
 
 function ShoppingCart() {
-const [cartItems, setCartItems] = useLocalStorage('cart', [])
+  const [cartItems, setCartItems] = useLocalStorage('cart', [])
 
-const addItem = product => {
-setCartItems(items => [...items, product])
-}
+  const addItem = product => {
+    setCartItems(items => [...items, product])
+  }
 
-const removeItem = productId => {
-setCartItems(items => items.filter(item => item.id !== productId))
-}
+  const removeItem = productId => {
+    setCartItems(items => items.filter(item => item.id !== productId))
+  }
 
-const clearCart = () => {
-setCartItems([])
-}
+  const clearCart = () => {
+    setCartItems([])
+  }
 
-return (
-
-<div>
-  <h2>Shopping Cart ({cartItems.length} items)</h2>
-  {cartItems.map((item) => (
-    <div key={item.id}>
-      {item.name} - ${item.price}
-      <button onClick={() => removeItem(item.id)}>Remove</button>
+  return (
+    <div>
+      <h2>Shopping Cart ({cartItems.length} items)</h2>
+      {cartItems.map(item => (
+        <div key={item.id}>
+          {item.name} - ${item.price}
+          <button onClick={() => removeItem(item.id)}>Remove</button>
+        </div>
+      ))}
+      <button onClick={clearCart}>Clear Cart</button>
     </div>
-  ))}
-  <button onClick={clearCart}>Clear Cart</button>
-</div>
-) }
-
+  )
+}
 ````
 
 </Tab>
@@ -1895,19 +2066,19 @@ function useGeolocation(options = {}) {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
-const optionsRef = useRef({
-enableHighAccuracy: false,
-timeout: 5000,
-maximumAge: 0,
-...options,
-})
-optionsRef.current = { ...optionsRef.current, ...options }
+  const optionsRef = useRef({
+    enableHighAccuracy: false,
+    timeout: 5000,
+    maximumAge: 0,
+    ...options,
+  })
+  optionsRef.current = { ...optionsRef.current, ...options }
 
-const getCurrentPosition = useCallback(() => {
-if (!navigator.geolocation) {
-setError('Geolocation is not supported by this browser.')
-return
-}
+  const getCurrentPosition = useCallback(() => {
+    if (!navigator.geolocation) {
+      setError('Geolocation is not supported by this browser.')
+      return
+    }
 
     setLoading(true)
     setError(null)
@@ -1928,14 +2099,13 @@ return
       },
       optionsRef.current,
     )
+  }, [])
 
-}, [])
-
-const watchPosition = useCallback(() => {
-if (!navigator.geolocation) {
-setError('Geolocation is not supported by this browser.')
-return null
-}
+  const watchPosition = useCallback(() => {
+    if (!navigator.geolocation) {
+      setError('Geolocation is not supported by this browser.')
+      return null
+    }
 
     setLoading(true)
     setError(null)
@@ -1958,113 +2128,111 @@ return null
     )
 
     return watchId
+  }, [])
 
-}, [])
+  const clearWatch = useCallback(watchId => {
+    if (watchId && navigator.geolocation) {
+      navigator.geolocation.clearWatch(watchId)
+    }
+  }, [])
 
-const clearWatch = useCallback(watchId => {
-if (watchId && navigator.geolocation) {
-navigator.geolocation.clearWatch(watchId)
-}
-}, [])
-
-return {
-location,
-error,
-loading,
-getCurrentPosition,
-watchPosition,
-clearWatch,
-}
+  return {
+    location,
+    error,
+    loading,
+    getCurrentPosition,
+    watchPosition,
+    clearWatch,
+  }
 }
 
 // 📱 Usage examples
 function LocationDisplay() {
-const { location, error, loading, getCurrentPosition } = useGeolocation({
-enableHighAccuracy: true,
-timeout: 10000,
-})
+  const { location, error, loading, getCurrentPosition } = useGeolocation({
+    enableHighAccuracy: true,
+    timeout: 10000,
+  })
 
-useEffect(
-() => {
-getCurrentPosition() // Get location on mount
-},
-[getCurrentPosition],
-)
+  useEffect(
+    () => {
+      getCurrentPosition() // Get location on mount
+    },
+    [getCurrentPosition],
+  )
 
-if (loading) return <div>🌍 Getting your location...</div>
-if (error) return <div>❌ Error: {error}</div>
+  if (loading) return <div>🌍 Getting your location...</div>
+  if (error) return <div>❌ Error: {error}</div>
 
-return (
-
-<div>
-  <h2>Your Location</h2>
-  {location.latitude ? (
+  return (
     <div>
-      <p>📍 Latitude: {location.latitude.toFixed(6)}</p>
-      <p>📍 Longitude: {location.longitude.toFixed(6)}</p>
-      <p>🎯 Accuracy: {location.accuracy} meters</p>
-      <p>⏰ Last updated: {new Date(location.timestamp).toLocaleString()}</p>
-      <button onClick={getCurrentPosition}>Refresh Location</button>
+      <h2>Your Location</h2>
+      {location.latitude ? (
+        <div>
+          <p>📍 Latitude: {location.latitude.toFixed(6)}</p>
+          <p>📍 Longitude: {location.longitude.toFixed(6)}</p>
+          <p>🎯 Accuracy: {location.accuracy} meters</p>
+          <p>⏰ Last updated: {new Date(location.timestamp).toLocaleString()}</p>
+          <button onClick={getCurrentPosition}>Refresh Location</button>
+        </div>
+      ) : (
+        <p>No location data available</p>
+      )}
     </div>
-  ) : (
-    <p>No location data available</p>
-  )}
-</div>
-) }
+  )
+}
 
 function LocationTracker() {
-const { location, error, watchPosition, clearWatch } = useGeolocation()
-const [isTracking, setIsTracking] = useState(false)
-const [positions, setPositions] = useState([])
-const watchIdRef = useRef(null)
+  const { location, error, watchPosition, clearWatch } = useGeolocation()
+  const [isTracking, setIsTracking] = useState(false)
+  const [positions, setPositions] = useState([])
+  const watchIdRef = useRef(null)
 
-const startTracking = () => {
-const watchId = watchPosition()
-watchIdRef.current = watchId
-setIsTracking(true)
-}
+  const startTracking = () => {
+    const watchId = watchPosition()
+    watchIdRef.current = watchId
+    setIsTracking(true)
+  }
 
-const stopTracking = () => {
-if (watchIdRef.current) {
-clearWatch(watchIdRef.current)
-watchIdRef.current = null
-}
-setIsTracking(false)
-}
+  const stopTracking = () => {
+    if (watchIdRef.current) {
+      clearWatch(watchIdRef.current)
+      watchIdRef.current = null
+    }
+    setIsTracking(false)
+  }
 
-// Track position changes
-useEffect(
-() => {
-if (location.latitude && location.longitude) {
-setPositions(prev => [
-...prev.slice(-19),
-{
-// Keep last 20 positions
-...location,
-id: Date.now(),
-},
-])
-}
-},
-[location],
-)
+  // Track position changes
+  useEffect(
+    () => {
+      if (location.latitude && location.longitude) {
+        setPositions(prev => [
+          ...prev.slice(-19),
+          {
+            // Keep last 20 positions
+            ...location,
+            id: Date.now(),
+          },
+        ])
+      }
+    },
+    [location],
+  )
 
-// Cleanup on unmount
-useEffect(
-() => {
-return () => {
-if (watchIdRef.current) {
-clearWatch(watchIdRef.current)
-}
-}
-},
-[clearWatch],
-)
+  // Cleanup on unmount
+  useEffect(
+    () => {
+      return () => {
+        if (watchIdRef.current) {
+          clearWatch(watchIdRef.current)
+        }
+      }
+    },
+    [clearWatch],
+  )
 
-return (
-
-<div>
-<h2>Location Tracker</h2>
+  return (
+    <div>
+      <h2>Location Tracker</h2>
 
       <div>
         <button onClick={isTracking ? stopTracking : startTracking}>
@@ -2096,10 +2264,8 @@ return (
         </div>
       </div>
     </div>
-
-)
+  )
 }
-
 ````
 
 </Tab>
@@ -2449,35 +2615,50 @@ function PomodoroTimer() {
 
 ### ✅ Do's and ❌ Don'ts
 
-<div className="grid grid-cols-2 gap-8 my-8">
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '2rem',
+  margin: '2rem 0'
+}}>
 
-  <div className="p-6 bg-green-50 rounded-md border border-green-600 text-black">
-    <div className="text-green-600 mt-0 font-bold text-[1.1em]">✅ Best Practices</div>
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: '#f0fdf4',
+  borderRadius: '0.5rem',
+  border: '1px solid #16a34a'
+}}>
+<div style={{ color: '#16a34a', marginTop: 0, fontWeight: 'bold', fontSize: '1.1em' }}>✅ Best Practices</div>
 
-    - **Start with "use"** - Follow naming convention
-    - **Return objects** - More flexible than arrays
-    - **Use useCallback** - For functions that might be dependencies
-    - **Handle cleanup** - Always clean up side effects
-    - **Provide stable APIs** - Don't change return structure
-    - **Document well** - Custom hooks should be self-explanatory
-    - **Keep focused** - One responsibility per hook
-    - **Test independently** - Hooks should be unit testable
+- **Start with "use"** - Follow naming convention
+- **Return objects** - More flexible than arrays
+- **Use useCallback** - For functions that might be dependencies
+- **Handle cleanup** - Always clean up side effects
+- **Provide stable APIs** - Don't change return structure
+- **Document well** - Custom hooks should be self-explanatory
+- **Keep focused** - One responsibility per hook
+- **Test independently** - Hooks should be unit testable
 
-  </div>
+</div>
 
-  <div className="p-6 bg-red-50 rounded-md border border-red-600 text-black">
-    <div className="text-red-600 mt-0 font-bold text-[1.1em]">❌ Common Mistakes</div>
+<div style={{
+  padding: '1.5rem',
+  backgroundColor: '#fef2f2',
+  borderRadius: '0.5rem',
+  border: '1px solid #dc2626'
+}}>
+<div style={{ color: '#dc2626', marginTop: 0, fontWeight: 'bold', fontSize: '1.1em' }}>❌ Common Mistakes</div>
 
-    - **Don't call conditionally** - Hooks must be called in same order
-    - **Don't return different shapes** - Breaks component expectations
-    - **Don't forget dependencies** - Causes stale closures
-    - **Don't make too complex** - Split into smaller hooks
-    - **Don't ignore cleanup** - Memory leaks and bugs
-    - **Don't mutate state directly** - Always use setters
-    - **Don't call outside components** - Only in React functions
-    - **Don't make everything a hook** - Some logic belongs elsewhere
+- **Don't call conditionally** - Hooks must be called in same order
+- **Don't return different shapes** - Breaks component expectations
+- **Don't forget dependencies** - Causes stale closures
+- **Don't make too complex** - Split into smaller hooks
+- **Don't ignore cleanup** - Memory leaks and bugs
+- **Don't mutate state directly** - Always use setters
+- **Don't call outside components** - Only in React functions
+- **Don't make everything a hook** - Some logic belongs elsewhere
 
-  </div>
+</div>
 
 </div>
 
@@ -2506,7 +2687,7 @@ function useAdvancedSearch() {
 
       // Add to history
       if (newQuery.trim()) {
-        setHistory((prev) => [
+        setHistory(prev => [
           { query: newQuery, filters: newFilters, timestamp: Date.now() },
           ...prev.slice(0, 9), // Keep last 10 searches
         ])
@@ -2535,657 +2716,3 @@ function useAdvancedSearch() {
   }
 }
 ```
-
-## 🛠️ Advanced Patterns
-
-### 🎭 Effect Composition Patterns
-
-<div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-
-  <div className="p-4 bg-green-50 rounded-md border border-green-600 text-black">
-    <div className="font-bold text-lg text-green-600">🎯 Sequential Effects</div>
-    ```jsx
-    function SequentialEffects() {
-      const [step, setStep] = useState(1)
-      const [data, setData] = useState(null)
-
-      // First effect: Fetch initial data
-      useEffect(() => {
-        fetchInitialData().then(setData)
-      }, [])
-
-      // Second effect: Process data when available
-      useEffect(() => {
-        if (data) {
-          processData(data)
-        }
-      }, [data])
-
-      // Third effect: Update UI based on processed data
-      useEffect(() => {
-        if (data && step > 1) {
-          updateUI(data)
-        }
-      }, [data, step])
-    }
-    ```
-
-  </div>
-
-  <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-black">
-    <div className="font-bold text-lg text-sky-600">🔄 Parallel Effects</div>
-    ```jsx
-    function ParallelEffects() {
-      const [user, setUser] = useState(null)
-      const [posts, setPosts] = useState([])
-      const [notifications, setNotifications] = useState([])
-
-      // Independent effects running in parallel
-      useEffect(() => {
-        fetchUser().then(setUser)
-      }, [])
-
-      useEffect(() => {
-        fetchPosts().then(setPosts)
-      }, [])
-
-      useEffect(() => {
-        fetchNotifications().then(setNotifications)
-      }, [])
-    }
-    ```
-
-  </div>
-
-  <div className="p-4 bg-amber-100 rounded-md border border-amber-500 text-black">
-    <div className="font-bold text-lg text-amber-500">🎭 Conditional Effects</div>
-    ```jsx
-    function ConditionalEffects() {
-      const [isEnabled, setIsEnabled] = useState(false)
-      const [data, setData] = useState(null)
-
-      // Only run effect when enabled
-      useEffect(() => {
-        if (!isEnabled) return
-
-        const subscription = subscribeToData()
-        return () => subscription.unsubscribe()
-
-      }, [isEnabled])
-    }
-    ```
-
-  </div>
-
-</div>
-
-### 🔄 Advanced Effect Patterns
-
-<Tabs items={['Race Conditions', 'Debouncing', 'Throttling', 'Polling']}>
-<Tab>
-```jsx
-// 🏃‍♂️ Handling Race Conditions
-function RaceConditionExample() {
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(false)
-
-useEffect(() => {
-let isCurrentRequest = true
-
-    async function fetchData() {
-      setLoading(true)
-      try {
-        const result = await fetch('/api/data')
-        if (isCurrentRequest) {
-          setData(result)
-        }
-      } finally {
-        if (isCurrentRequest) {
-          setLoading(false)
-        }
-      }
-    }
-
-    fetchData()
-
-    return () => {
-      isCurrentRequest = false
-    }
-
-}, [])
-
-return <div>{loading ? 'Loading...' : data}</div>
-}
-
-````
-
-</Tab>
-<Tab>
-```jsx
-// ⏱️ Debouncing Effects
-function DebouncedSearch() {
-  const [query, setQuery] = useState('')
-  const [results, setResults] = useState([])
-
-useEffect(() => {
-const timeoutId = setTimeout(() => {
-if (query) {
-searchAPI(query).then(setResults)
-}
-}, 500)
-
-    return () => clearTimeout(timeoutId)
-
-}, [query])
-
-return (
-
-<div>
-  <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search..." />
-  <div>
-    {results.map((r) => (
-      <div key={r.id}>{r.title}</div>
-    ))}
-  </div>
-</div>
-) }
-
-````
-
-</Tab>
-<Tab>
-```jsx
-// 🚦 Throttling Effects
-function ThrottledScroll() {
-  const [scrollCount, setScrollCount] = useState(0)
-  const lastScrollTime = useRef(0)
-
-useEffect(() => {
-const handleScroll = () => {
-const now = Date.now()
-if (now - lastScrollTime.current >= 1000) {
-setScrollCount(c => c + 1)
-lastScrollTime.current = now
-}
-}
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-
-}, [])
-
-return <div>Scroll events: {scrollCount}</div>
-}
-
-````
-
-</Tab>
-<Tab>
-```jsx
-// 🔄 Polling with Effects
-function PollingExample() {
-  const [data, setData] = useState(null)
-  const [error, setError] = useState(null)
-
-useEffect(() => {
-let isPolling = true
-
-    async function poll() {
-      while (isPolling) {
-        try {
-          const result = await fetch('/api/status')
-          if (isPolling) {
-            setData(result)
-          }
-        } catch (err) {
-          if (isPolling) {
-            setError(err)
-          }
-        }
-        await new Promise(resolve => setTimeout(resolve, 5000))
-      }
-    }
-
-    poll()
-
-    return () => {
-      isPolling = false
-    }
-
-}, [])
-
-return (
-
-<div>{error ? <div>Error: {error.message}</div> : <div>Status: {data}</div>}</div>) }
-
-````
-
-</Tab>
-</Tabs>
-
-## 🐛 Common Mistakes & Debugging
-
-### 🚫 Common Effect Mistakes
-
-<div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-
-  <div className="p-4 bg-red-50 rounded-md border border-red-600 text-black">
-    <div className="font-bold text-lg text-red-600">❌ Missing Dependencies</div>
-    ```jsx
-    // ❌ Wrong
-    useEffect(() => {
-      console.log(count) // Uses count but not in deps
-    }, []) // Missing count dependency
-
-    // ✅ Correct
-    useEffect(() => {
-      console.log(count)
-    }, [count]) // Include all dependencies
-    ```
-
-  </div>
-
-  <div className="p-4 bg-red-50 rounded-md border border-red-600 text-black">
-    <div className="font-bold text-lg text-red-600">❌ Infinite Loops</div>
-    ```jsx
-    // ❌ Wrong
-    useEffect(() => {
-      setCount(count + 1) // Updates state, triggers re-render
-    }, [count]) // Depends on count, creates loop
-
-    // ✅ Correct
-    useEffect(() => {
-      const timer = setInterval(() => {
-        setCount(c => c + 1) // Functional update
-      }, 1000)
-      return () => clearInterval(timer)
-    }, []) // No dependencies
-    ```
-
-  </div>
-
-  <div className="p-4 bg-red-50 rounded-md border border-red-600 text-black">
-    <div className="font-bold text-lg text-red-600">❌ Missing Cleanup</div>
-    ```jsx
-    // ❌ Wrong
-    useEffect(() => {
-      const subscription = subscribe() // No cleanup
-    }, [])
-
-    // ✅ Correct
-    useEffect(() => {
-      const subscription = subscribe()
-      return () => subscription.unsubscribe() // Proper cleanup
-    }, [])
-    ```
-
-  </div>
-
-</div>
-
-### 🔍 Debugging Techniques
-
-<Tabs items={['Console Logging', 'React DevTools', 'Error Boundaries', 'Performance Profiling']}>
-<Tab>
-```jsx
-// 📝 Console Logging Strategy
-function DebuggingExample() {
-  const [count, setCount] = useState(0)
-
-useEffect(() => {
-console.log('🔄 Effect running with count:', count)
-
-    return () => {
-      console.log('🧹 Cleanup running with count:', count)
-    }
-
-}, [count])
-
-// Debug render
-console.log('🎨 Rendering with count:', count)
-
-return <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>
-}
-
-````
-
-</Tab>
-<Tab>
-```jsx
-// 🛠️ Using React DevTools
-function DevToolsExample() {
-  const [state, setState] = useState({
-    count: 0,
-    step: 1
-  })
-
-// Effect with complex state
-useEffect(() => {
-console.log('State changed:', state)
-}, [state])
-
-// Use React DevTools to:
-// 1. Inspect component state
-// 2. Monitor effect runs
-// 3. Check component tree
-// 4. Profile renders
-
-return <div>Count: {state.count}</div>
-}
-
-````
-
-</Tab>
-<Tab>
-```jsx
-// 🛡️ Error Boundary for Effects
-class EffectErrorBoundary extends React.Component {
-  state = { hasError: false, error: null }
-
-static getDerivedStateFromError(error) {
-return { hasError: true, error }
-}
-
-componentDidCatch(error, errorInfo) {
-console.error('Effect Error:', error, errorInfo)
-}
-
-render() {
-if (this.state.hasError) {
-return <div>Something went wrong: {this.state.error.message}</div>
-}
-return this.props.children
-}
-}
-
-// Usage
-
-<EffectErrorBoundary>
-  <ComponentWithEffects />
-</EffectErrorBoundary>
-```
-</Tab>
-<Tab>
-```jsx
-// 📊 Performance Profiling
-function ProfilingExample() {
-  const [data, setData] = useState([])
-
-useEffect(() => {
-// Use React Profiler to measure:
-// 1. Effect execution time
-// 2. Re-render frequency
-// 3. Component mount/unmount
-// 4. State updates
-
-    const fetchData = async () => {
-      const start = performance.now()
-      const result = await fetch('/api/data')
-      const end = performance.now()
-      console.log(`Fetch took ${end - start}ms`)
-      setData(result)
-    }
-
-    fetchData()
-
-}, [])
-
-return <div>{data.length} items</div>
-}
-
-````
-
-</Tab>
-</Tabs>
-
-## 📚 Complete Reference
-
-### 🎯 Effect API Reference
-
-<div className="grid gap-4 my-6" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-
-  <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-black">
-    <div className="font-bold text-lg text-sky-600">📝 Basic Usage</div>
-    ```jsx
-    useEffect(() => {
-      // Effect code
-      return () => {
-        // Cleanup code
-      }
-    }, [/* dependencies */])
-    ```
-  </div>
-
-  <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-black">
-    <div className="font-bold text-lg text-sky-600">⚡ Common Patterns</div>
-    ```jsx
-    // Mount only
-    useEffect(() => {}, [])
-
-    // On dependency change
-    useEffect(() => {}, [dep1, dep2])
-
-    // Cleanup on unmount
-    useEffect(() => {
-      return () => {}
-    }, [])
-    ```
-  </div>
-
-  <div className="p-4 bg-sky-50 rounded-md border border-sky-600 text-black">
-    <div className="font-bold text-lg text-sky-600">🔧 Advanced Usage</div>
-    ```jsx
-    // Async effect
-    useEffect(() => {
-      async function fetchData() {
-        const result = await api.getData()
-        setData(result)
-      }
-      fetchData()
-    }, [])
-
-    // Multiple effects
-    useEffect(() => {}, [dep1])
-    useEffect(() => {}, [dep2])
-    ```
-  </div>
-
-</div>
-
-
-### 📋 Effect Lifecycle
-
-```mermaid
-graph TD
-    A[Component Mount] --> B[Effect Setup]
-    B --> C[Effect Runs]
-    C --> D{Dependencies Change?}
-    D -->|Yes| E[Cleanup Previous Effect]
-    E --> C
-    D -->|No| F[Component Update]
-    F --> D
-    D -->|Unmount| G[Final Cleanup]
-```
-
-## Guidelines and Best Practices
-
-### 1. Performance Optimization Guidelines
-
-<Callout type="info">Follow these guidelines to ensure optimal performance with effects:</Callout>
-
-1. **Dependency Management**
-
-   - Keep dependency arrays as small as possible
-   - Use the ESLint exhaustive-deps rule
-   - Consider using `useCallback` and `useMemo` for complex dependencies
-   - Avoid unnecessary dependencies
-
-2. **Effect Cleanup**
-
-   - Always clean up subscriptions and event listeners
-   - Handle race conditions in async effects
-   - Clean up timers and intervals
-   - Reset state in cleanup when necessary
-
-3. **Effect Organization**
-   - Group related effects together
-   - Separate concerns into different effects
-   - Keep effects focused and single-purpose
-   - Use custom hooks for reusable effect logic
-
-### 2. Testing Guidelines
-
-<Callout type="warning">Testing effects requires special consideration:</Callout>
-
-1. **Unit Testing**
-
-   ```jsx
-   // Example of testing an effect
-   test('effect runs on mount', () => {
-     const { result } = renderHook(() => {
-       const [count, setCount] = useState(0)
-       useEffect(() => {
-         setCount(1)
-       }, [])
-       return count
-     })
-     expect(result.current).toBe(1)
-   })
-   ```
-
-2. **Integration Testing**
-
-   - Test effect interactions with other components
-   - Verify cleanup functions
-   - Test async effects
-   - Mock external dependencies
-
-3. **Custom Hook Testing**
-   - Test hook behavior in isolation
-   - Verify hook dependencies
-   - Test cleanup functions
-   - Test error handling
-
-### 3. Security Guidelines
-
-<Callout type="warning">Security considerations for effects:</Callout>
-
-1. **Data Fetching**
-
-   - Validate API responses
-   - Handle errors gracefully
-   - Sanitize user input
-   - Use proper authentication
-
-2. **Event Handling**
-   - Prevent memory leaks
-   - Handle edge cases
-   - Validate event data
-   - Implement proper error boundaries
-
-### 4. Accessibility Guidelines
-
-<Callout type="info">Ensure effects don't impact accessibility:</Callout>
-
-1. **Focus Management**
-
-   - Maintain focus after effects
-   - Handle keyboard navigation
-   - Preserve screen reader context
-   - Manage focus traps
-
-2. **State Announcements**
-   - Announce state changes
-   - Handle loading states
-   - Manage error states
-   - Provide feedback for user actions
-
-### 5. Migration Guidelines
-
-<Callout type="warning">When migrating from class components or older patterns:</Callout>
-
-1. **Class to Function Components**
-
-   - Convert lifecycle methods to effects
-   - Handle state properly
-   - Manage refs correctly
-   - Update event handlers
-
-2. **Legacy Code Updates**
-   - Update deprecated patterns
-   - Modernize effect usage
-   - Implement proper cleanup
-   - Use modern React patterns
-
-### 6. Debugging Guidelines
-
-<Callout type="info">Effective debugging strategies for effects:</Callout>
-
-1. **Common Issues**
-
-   - Infinite loops
-   - Missing dependencies
-   - Race conditions
-   - Memory leaks
-
-2. **Debugging Tools**
-   - React DevTools
-   - Console logging
-   - Error boundaries
-   - Performance profiling
-
-### 7. Documentation Guidelines
-
-<Callout type="info">Best practices for documenting effects:</Callout>
-
-1. **Code Comments**
-
-   - Document complex logic
-   - Explain dependencies
-   - Note cleanup requirements
-   - Document side effects
-
-2. **Component Documentation**
-   - Document effect purposes
-   - Explain dependencies
-   - Note cleanup requirements
-   - Document side effects
-
-### 8. Performance Monitoring
-
-<Callout type="warning">Monitor effect performance:</Callout>
-
-1. **Metrics to Track**
-
-   - Effect execution time
-   - Re-render frequency
-   - Memory usage
-   - Network requests
-
-2. **Optimization Strategies**
-   - Use React.memo
-   - Implement proper cleanup
-   - Optimize dependencies
-   - Use proper state management
-
-### 🎨 Effect Best Practices Checklist
-
-- [ ] Include all dependencies in dependency array
-- [ ] Implement proper cleanup functions
-- [ ] Handle async operations correctly
-- [ ] Avoid infinite loops
-- [ ] Use appropriate effect patterns
-- [ ] Consider performance implications
-- [ ] Test effect behavior
-- [ ] Document effect purposes
-- [ ] Handle error cases
-- [ ] Consider race conditions
-
-### 📚 Additional Resources
-
-- [React Documentation](https://reactjs.org/docs/hooks-effect.html)
-- [useEffect Complete Guide](https://overreacted.io/a-complete-guide-to-useeffect/)
-- [React Hooks FAQ](https://reactjs.org/docs/hooks-faq.html)
-- [Effect Patterns](https://reactpatterns.com/#effect-patterns)
-- [Effect Testing](https://reactjs.org/docs/testing-recipes.html#testing-hooks)
-````
