@@ -1,10 +1,6 @@
 {
-  "referencing-values-with-refs": "৪.১ - Refs দিয়ে মান রেফারেন্স করা",
-  "manipulating-dom-with-refs": "৪.২ - Refs দিয়ে DOM ম্যানিপুলেট করা",
-  "forwarding-refs": "৪.৩ - Refs ফরওয়ার্ড করা: অন্য কম্পোনেন্টের DOM নোড অ্যাক্সেস করা",
-  "useImperativeHandle": "৪.৪ - UseImperativeHandle: Imperative Handle দিয়ে API এর একটি অংশ এক্সপোজ করা",
-  "flushing-state-updates-synchronously": "৪.৫ - flushSync দিয়ে State আপডেট সিঙ্ক্রোনাসভাবে Flush করা",
-  "synchronizing-with-effects-overview": "৪.৬ - Effects এর সাথে সিঙ্ক্রোনাইজ করা: React ইফেক্টসের সম্পূর্ণ গাইড",
+  "working-with-refs": "৪.১ - React-এ Refs এবং DOM নিয়ে কাজ করা",
+  "synchronizing-with-effects-overview": "৪.২ - Effects এর সাথে সিঙ্ক্রোনাইজ করা: React ইফেক্টসের সম্পূর্ণ গাইড",
   "handling-effects-firing-twice": "৪.৭ - ডেভেলপমেন্টে Effects দুইবার চালু হওয়া পরিচালনা করা",
   "fetching-data": "৪.৮ - Effects এর সাথে সিঙ্ক্রোনাইজ করা: ডেটা Fetch করা",
   "you-might-not-need-an-effect": "৪.৯ - আপনার হয়তো একটি Effect এর প্রয়োজন নেই",
