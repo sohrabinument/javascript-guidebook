@@ -1,0 +1,973 @@
+import { Callout, Tabs, Tab } from 'nextra/components'
+
+# 🔄 The Complete Guide to React Effects: Core Concepts & Fundamentals
+
+_The first part of our comprehensive guide to mastering React's useEffect hook_
+
+---
+
+## 📋 Table of Contents
+
+1. 🎯 What You'll Master
+2. 🌟 What Are Effects? (Overview)
+3. 🚦 When Should You Use Effects
+4. 📚 Learning Effects Step by Step
+5. 🎯 Real-World Examples
+6. 🔧 Handling Effects Firing Twice in Development
+7. 🌐 Fetching Data with Effects
+8. 🤷‍♂️ You Might Not Need an Effect
+
+---
+
+## 🎯 What You'll Master
+
+By the end of this first part, you'll be able to:
+
+- ✅ Write basic Effects that work correctly
+- 🐛 Debug common Effect problems
+- 🧠 Know when to use Effects and when to avoid them
+- 🌐 Handle basic data fetching
+- 🔄 Understand Effect lifecycles
+
+---
+
+## 🌟 What Are Effects? (Overview)
+
+### 🤔 What Are Effects? (The Deep Explanation)
+
+Effects are React's way of letting you perform **side effects** in functional components. But what exactly is a "side effect"?
+
+Think of your React component like a pure mathematical function:
+
+```
+Component(props, state) → JSX
+```
+
+A pure function:
+
+- ✅ Always returns the same output for the same input
+- ✅ Doesn't modify anything outside itself
+- ✅ Has no side effects
+
+But real applications need to do "impure" things:
+
+- 🌐 Fetch data from servers
+- 👂 Listen to browser events
+- 📝 Update the document title
+- ⏰ Start timers
+- 📊 Log analytics events
+
+These are **side effects** because they affect something outside the pure render function.
+
+### 🌍 The Two Worlds Visualization
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: '1fr auto 1fr',
+  gap: '1rem',
+  alignItems: 'center',
+  margin: '2rem 0',
+  padding: '1.5rem',
+  border: '2px solid #e2e8f0',
+  borderRadius: '0.75rem',
+  backgroundColor: '#f8fafc'
+}}>
+
+<div
+  style={{
+    padding: '1.5rem',
+    backgroundColor: '#dbeafe',
+    borderRadius: '0.5rem',
+    border: '2px solid #3b82f6',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🌟 REACT WORLD</div>
+  <ul style={{ fontSize: '0.9rem', margin: 0 }}>
+    <li>• Components</li>
+    <li>• Props & State</li>
+    <li>• JSX Elements</li>
+    <li>• Event Handlers</li>
+    <li>• Render Cycle</li>
+    <li>• Virtual DOM</li>
+  </ul>
+  <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: '#059669' }}>
+    <div>✅ Predictable</div>
+    <div>✅ Pure Functions</div>
+    <div>✅ Testable</div>
+  </div>
+</div>
+
+<div
+  style={{
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: '#6366f1',
+  }}
+>
+  🌉
+  <br />
+  useEffect
+</div>
+
+<div
+  style={{
+    padding: '1.5rem',
+    backgroundColor: '#fef3c7',
+    borderRadius: '0.5rem',
+    border: '2px solid #f59e0b',
+  }}
+>
+  <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🌍 OUTSIDE WORLD</div>
+  <ul style={{ fontSize: '0.9rem', margin: 0 }}>
+    <li>• REST APIs</li>
+    <li>• WebSocket connections</li>
+    <li>• Browser APIs</li>
+    <li>• LocalStorage</li>
+    <li>• Timers & Intervals</li>
+    <li>• Analytics Services</li>
+  </ul>
+</div>
+
+</div>
+
+### 🎭 The Theater Metaphor
+
+Imagine React components as actors on a theater stage:
+
+<Tabs items={['🎬 During Performance', '🎪 Behind the Scenes']}>
+  <Tab>
+    **During the Performance (Rendering):** - 🎭 Actors deliver their lines (JSX) - 🎪 Stage props
+    are arranged (state/props) - 📜 Everything is scripted and predictable
+  </Tab>
+  <Tab>
+    **Behind the Scenes (Effects):** - 💡 Lighting technicians adjust spotlights - 🔊 Sound
+    engineers manage audio levels - 🎪 Stagehands move props between scenes - 🎫 Box office sells
+    tickets (analytics) - 🔒 Security monitors the audience
+  </Tab>
+</Tabs>
+
+Effects are like the backstage crew—they make everything work, but they don't interfere with the main performance.
+
+### 📊 Effect Categories by Purpose
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+  gap: '1rem',
+  margin: '1.5rem 0'
+}}>
+
+<div style={{padding: '1rem', backgroundColor: '#f0f9ff', borderRadius: '0.5rem', border: '1px solid #0284c7'}}>
+<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>🌐 Data Synchronization</div>
+```jsx
+useEffect(() => {
+  fetchUserProfile(userId);
+}, [userId]);
+```
+</div>
+
+<div style={{padding: '1rem', backgroundColor: '#f0fdf4', borderRadius: '0.5rem', border: '1px solid #16a34a'}}>
+<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>👂 Event Subscription</div>
+```jsx
+useEffect(() => {
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+```
+</div>
+
+<div style={{padding: '1rem', backgroundColor: '#fefce8', borderRadius: '0.5rem', border: '1px solid #ca8a04'}}>
+<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>⏰ Time-based Operations</div>
+```jsx
+useEffect(() => {
+  const timer = setInterval(updateClock, 1000);
+  return () => clearInterval(timer);
+}, []);
+```
+</div>
+
+</div>
+
+---
+
+## 🚦 When Should You Use Effects
+
+### ✅ Perfect Use Cases for Effects
+
+#### 1. 🌐 Network Operations
+
+<Tabs items={['API Data Fetching', 'WebSocket Connections', 'Real-time Subscriptions']}>
+<Tab>
+```jsx
+function UserProfile({ userId }) {
+  const [user, setUser] = useState(null)
+
+  useEffect(
+    () => {
+      async function fetchUser() {
+        const response = await fetch(`/api/users/${userId}`)
+        const userData = await response.json()
+        setUser(userData)
+      }
+
+      fetchUser()
+    },
+    [userId],
+  )
+
+  return user ? <div>Hello, {user.name}!</div> : <div>Loading...</div>
+}
+````
+</Tab>
+<Tab>
+```jsx
+function LiveChat({ roomId }) {
+  const [messages, setMessages] = useState([])
+
+  useEffect(
+    () => {
+      const ws = new WebSocket(`ws://chat.example.com/${roomId}`)
+
+      ws.onmessage = event => {
+        const message = JSON.parse(event.data)
+        setMessages(prev => [...prev, message])
+      }
+
+      return () => ws.close()
+    },
+    [roomId],
+  )
+
+  return (
+    <div>
+      {messages.map(msg => (
+        <div key={msg.id}>{msg.text}</div>
+      ))}
+    </div>
+  )
+}
+````
+
+</Tab>
+<Tab>
+```jsx
+function StockPrice({ symbol }) {
+  const [price, setPrice] = useState(null)
+
+  useEffect(
+    () => {
+      const subscription = stockAPI.subscribe(symbol, setPrice)
+      return () => subscription.unsubscribe()
+    },
+    [symbol],
+  )
+
+  return (
+    <div>
+      ${symbol}: ${price}
+    </div>
+  )
+}
+````
+</Tab>
+</Tabs>
+
+#### 2. 🖱️ Browser Event Management
+
+<Tabs items={['Window Events', 'Keyboard Shortcuts', 'Scroll Tracking']}>
+<Tab>
+```jsx
+function WindowDimensions() {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+
+  useEffect(() => {
+    function updateDimensions() {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      })
+    }
+
+    updateDimensions() // Set initial value
+    window.addEventListener('resize', updateDimensions)
+
+    return () => window.removeEventListener('resize', updateDimensions)
+  }, [])
+
+  return (
+    <div>
+      {dimensions.width} x {dimensions.height}
+    </div>
+  )
+}
+````
+
+</Tab>
+<Tab>
+```jsx
+function KeyboardShortcuts({ onSave, onUndo }) {
+  useEffect(
+    () => {
+      function handleKeyDown(event) {
+        if (event.ctrlKey || event.metaKey) {
+          switch (event.key) {
+            case 's':
+              event.preventDefault()
+              onSave()
+              break
+            case 'z':
+              event.preventDefault()
+              onUndo()
+              break
+          }
+        }
+      }
+
+      document.addEventListener('keydown', handleKeyDown)
+      return () => document.removeEventListener('keydown', handleKeyDown)
+    },
+    [onSave, onUndo],
+
+)
+
+return null // This component just handles shortcuts
+}
+
+````
+</Tab>
+<Tab>
+```jsx
+function ScrollTracker() {
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <div className={`scroll-indicator ${scrollY > 100 ? 'scrolled' : ''}`}>
+      Scrolled: {scrollY}
+      px
+    </div>
+  )
+}
+````
+
+</Tab>
+</Tabs>
+
+### ❌ When NOT to Use Effects
+
+<Callout type="warning" emoji="⚠️">
+  **Common Anti-Pattern Alert!** Many developers overuse Effects. Here's when to avoid them:
+</Callout>
+
+#### 1. 🧮 Calculating Values from Props/State
+
+<Tabs items={['❌ Wrong Way', '✅ Right Way', '✅ For Expensive Calculations']}>
+<Tab>
+```jsx
+// ❌ DON'T DO THIS - Unnecessary Effect
+function ExpensiveCalculation({ items, taxRate }) {
+  const [total, setTotal] = useState(0)
+
+  useEffect(
+    () => {
+      const subtotal = items.reduce((sum, item) => sum + item.price, 0)
+      const totalWithTax = subtotal \* (1 + taxRate);
+      setTotal(totalWithTax)
+    },
+    [items, taxRate],
+  )
+
+  return <div>Total: ${total}</div>
+}
+````
+</Tab>
+
+<Tab>
+```jsx
+// ✅ DO THIS INSTEAD - Calculate during render
+function ExpensiveCalculation({ items, taxRate }) {
+  // This calculation happens during render - no Effect needed!
+  const subtotal = items.reduce((sum, item) => sum + item.price, 0)
+  const total = subtotal * (1 + taxRate)
+
+  return <div>Total: ${total}</div>
+}
+````
+
+</Tab>
+<Tab>
+```jsx
+// ✅ FOR EXPENSIVE CALCULATIONS - Use useMemo
+function ExpensiveCalculation({ items, taxRate }) {
+  const total = useMemo(
+    () => {
+      console.log('Calculating total...') // Only runs when inputs change
+      const subtotal = items.reduce((sum, item) => sum + item.price, 0)
+      return subtotal * (1 + taxRate)
+    },
+    [items, taxRate],
+  )
+
+return <div>Total: ${total}</div>
+}
+
+````
+</Tab>
+</Tabs>
+
+#### 2. 🎨 Transforming Data for Rendering
+
+<Tabs items={['❌ Wrong Way', '✅ Right Way', '✅ With Optimization']}>
+<Tab>
+```jsx
+// ❌ DON'T DO THIS
+function SearchResults({ items, searchTerm }) {
+  const [filteredItems, setFilteredItems] = useState([])
+
+  useEffect(
+    () => {
+      const filtered = items.filter(item =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      )
+      setFilteredItems(filtered)
+    },
+    [items, searchTerm],
+  )
+
+  return (
+    <ul>
+      {filteredItems.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  )
+}
+````
+
+</Tab>
+<Tab>
+```jsx
+// ✅ DO THIS INSTEAD
+function SearchResults({ items, searchTerm }) {
+  // Filter during render - no Effect needed!
+  const filteredItems = items.filter(item =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
+
+  return (
+    <ul>
+      {filteredItems.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  )
+}
+````
+</Tab>
+
+<Tab>
+```jsx
+// ✅ FOR EXPENSIVE FILTERING - Use useMemo
+function SearchResults({ items, searchTerm }) {
+  const filteredItems = useMemo(
+    () => {
+      return items.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    },
+    [items, searchTerm],
+  )
+
+  return (
+    <ul>
+      {filteredItems.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  )
+}
+````
+
+</Tab>
+</Tabs>
+
+---
+
+## 📚 Learning Effects Step by Step
+
+### Step 1: Your First Effect
+
+Let's start with the absolute basics:
+
+```jsx
+import { useEffect, useState } from 'react'
+
+function MyFirstEffect() {
+  const [count, setCount] = useState(0)
+
+  // This Effect runs after every render
+  useEffect(() => {
+    console.log('Effect ran! Count is:', count)
+  })
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  )
+}
+```
+
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#f0f9ff',
+  borderRadius: '0.5rem',
+  border: '1px solid #0284c7',
+  margin: '1rem 0'
+}}>
+
+**🔍 What happens when you run this?**
+
+1. Component renders → Shows "Count: 0"
+2. Effect runs → Logs "Effect ran! Count is: 0"
+3. You click button → `setCount(1)` → Component re-renders
+4. Effect runs again → Logs "Effect ran! Count is: 1"
+
+**💡 Key Learning**: By default, Effects run after every render!
+
+</div>
+
+### Step 2: Controlling When Effects Run
+
+Running after every render is usually too much. Here's how to control it:
+
+#### Pattern A: Run Only Once (On Mount)
+
+```jsx
+function RunOnce() {
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    console.log('This only runs once when component mounts!')
+
+    // Simulate API call
+    setTimeout(() => {
+      setData('Data loaded!')
+    }, 2000)
+  }, []) // ← Empty dependency array
+
+  return <div>{data || 'Loading...'}</div>
+}
+```
+
+<Callout type="info" emoji="📝">
+  **The empty array `[]` means**: "This Effect has no dependencies, so run it only once when the
+  component mounts."
+</Callout>
+
+#### Pattern B: Run When Specific Values Change
+
+```jsx
+function RunOnChange({ userId }) {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    console.log('User ID changed to:', userId)
+
+    // Fetch new user data
+    fetchUser(userId).then(setUser)
+  }, [userId]) // ← Runs when userId changes
+
+  return <div>{user ? `Hello, ${user.name}!` : 'Loading user...'}</div>
+}
+```
+
+<Callout type="info" emoji="🔄">
+  **The dependency array `[userId]` means**: "Run this Effect whenever `userId` changes."
+</Callout>
+
+### Step 3: Cleanup (The Most Important Concept!)
+
+Many Effects need to "clean up" after themselves. This prevents memory leaks and bugs.
+
+#### Basic Cleanup Example
+
+```jsx
+function Timer() {
+  const [seconds, setSeconds] = useState(0)
+
+  useEffect(() => {
+    console.log('⚡ Setting up timer')
+
+    // Setup: Start the timer
+    const intervalId = setInterval(() => {
+      setSeconds((prevSeconds) => prevSeconds + 1)
+    }, 1000)
+
+    // Cleanup function: Stop the timer
+    return () => {
+      console.log('🧹 Cleaning up timer')
+      clearInterval(intervalId)
+    }
+  }, []) // Run once
+
+  return <div>Timer: {seconds} seconds</div>
+}
+```
+
+<div style={{
+  padding: '1rem',
+  backgroundColor: '#fef3c7',
+  borderRadius: '0.5rem',
+  border: '1px solid #f59e0b',
+  margin: '1rem 0'
+}}>
+
+**🔍 What happens here?**
+
+1. Component mounts → "Setting up timer" → Timer starts
+2. Every second → Timer increments `seconds`
+3. Component unmounts → "Cleaning up timer" → Timer stops
+
+**⚠️ Without cleanup**: Timer would run forever, even after component is gone! 💥
+
+</div>
+
+---
+
+## 🎯 Real-World Examples
+
+### Example 1: Complete Weather App
+
+```jsx
+function WeatherApp() {
+  const [location, setLocation] = useState('')
+  const [weather, setWeather] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [units, setUnits] = useState('celsius')
+
+  // Effect 1: Fetch weather data
+  useEffect(
+    () => {
+      if (!location.trim()) {
+        setWeather(null)
+        return
+      }
+
+      setLoading(true)
+      setError(null)
+
+      // Use AbortController to cancel requests
+      const controller = new AbortController()
+
+      async function fetchWeather() {
+        try {
+          const response = await fetch(
+            `/api/weather?location=${encodeURIComponent(location)}&units=${units}`,
+            { signal: controller.signal },
+          )
+
+          if (!response.ok) {
+            throw new Error(`Weather service error: ${response.status}`)
+          }
+
+          const weatherData = await response.json()
+          setWeather(weatherData)
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            setError(err.message)
+          }
+        } finally {
+          setLoading(false)
+        }
+      }
+
+      fetchWeather()
+
+      // Cleanup: Cancel request if location or units change
+      return () => {
+        controller.abort()
+      }
+    },
+    [location, units],
+  )
+
+  // Effect 2: Update document title
+  useEffect(
+    () => {
+      if (weather) {
+        document.title = `${weather.temperature}° in ${location} - Weather App`
+      } else {
+        document.title = 'Weather App'
+      }
+
+      // Cleanup: Reset title when component unmounts
+      return () => {
+        document.title = 'My App'
+      }
+    },
+    [weather, location],
+  )
+
+  // Effect 3: Save user preferences
+  useEffect(
+    () => {
+      localStorage.setItem('weatherApp_units', units)
+    },
+    [units],
+  )
+
+  // Effect 4: Load saved preferences on mount
+  useEffect(() => {
+    const savedUnits = localStorage.getItem('weatherApp_units')
+    if (savedUnits) {
+      setUnits(savedUnits)
+    }
+  }, []) // Run once on mount
+
+  return (
+    <div className="weather-app">
+      <h1>🌤️ Weather App</h1>
+
+      <div className="controls">
+        <input
+          type="text"
+          value={location}
+          onChange={e => setLocation(e.target.value)}
+          placeholder="Enter city name..."
+        />
+
+        <select value={units} onChange={e => setUnits(e.target.value)}>
+          <option value="celsius">Celsius</option>
+          <option value="fahrenheit">Fahrenheit</option>
+        </select>
+      </div>
+
+      {loading && <div className="loading">🌀 Loading weather...</div>}
+
+      {error && <div className="error">❌ Error: {error}</div>}
+
+      {weather &&
+        !loading && (
+          <div className="weather-display">
+            <h2>{location}</h2>
+            <div className="temperature">
+              {weather.temperature}°{units === 'celsius' ? 'C' : 'F'}
+            </div>
+            <div className="condition">{weather.condition}</div>
+            <div className="details">
+              <p>Humidity: {weather.humidity}%</p>
+              <p>Wind: {weather.windSpeed} mph</p>
+            </div>
+          </div>
+        )}
+    </div>
+  )
+}
+```
+
+---
+
+## 🔧 Handling Effects Firing Twice in Development
+
+<Callout type="info" emoji="🧪">
+  In React Strict Mode, Effects run twice on mount to help you catch bugs. This only happens in
+  development!
+</Callout>
+
+```jsx
+useEffect(() => {
+  // This will run twice in Strict Mode (dev only)
+  console.log('Effect running...')
+
+  return () => {
+    // Cleanup runs twice too!
+    console.log('Cleanup running...')
+  }
+}, [])
+```
+
+**Why does React do this?** It helps you find Effects that aren't properly cleaned up. If your Effect causes problems when run twice, you probably need better cleanup!
+
+<Callout type="warning" emoji="⚠️">
+  Add cleanup functions to avoid memory leaks or duplicate subscriptions.
+</Callout>
+
+---
+
+## 🌐 Fetching Data with Effects
+
+Fetching data is a very common use case for effects. Here's how you do it safely:
+
+<Tabs items={['Basic Pattern', 'With AbortController', 'With Custom Hook']}>
+<Tab>
+```jsx
+useEffect(() => {
+  let ignore = false
+
+  fetch('/api/data')
+    .then(res => res.json())
+    .then(data => {
+      if (!ignore) {
+        setData(data)
+      }
+    })
+
+  return () => {
+    ignore = true
+  }
+}, [])
+````
+</Tab>
+
+<Tab>
+```jsx
+useEffect(() => {
+  const controller = new AbortController()
+
+  async function fetchData() {
+    try {
+      const response = await fetch('/api/data', {
+        signal: controller.signal,
+      })
+      const data = await response.json()
+      setData(data)
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        setError(error.message)
+      }
+    }
+  }
+
+  fetchData()
+
+  return () => {
+    controller.abort()
+  }
+}, [])
+````
+
+</Tab>
+
+<Tab>
+```jsx
+function useFetch(url) {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(
+    () => {
+      const controller = new AbortController()
+
+      async function fetchData() {
+        try {
+          setLoading(true)
+          const response = await fetch(url, {
+            signal: controller.signal,
+          })
+          const result = await response.json()
+          setData(result)
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            setError(err.message)
+          }
+        } finally {
+          setLoading(false)
+        }
+      }
+
+      fetchData()
+
+      return () => controller.abort()
+    },
+    [url],
+  )
+
+  return { data, loading, error }
+}
+
+// Usage:
+function MyComponent() {
+  const { data, loading, error } = useFetch('/api/users')
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
+  return <div>{JSON.stringify(data)}</div>
+}
+````
+
+</Tab>
+</Tabs>
+
+<Callout type="warning" emoji="⚠️">
+Always clean up async effects to avoid setting state on unmounted components!
+</Callout>
+
+---
+
+## 🤷‍♂️ You Might Not Need an Effect
+
+If you're just transforming data for display, use rendering or memoization instead of Effects.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '1rem',
+  margin: '1rem 0'
+}}>
+
+<div style={{padding: '1rem', backgroundColor: '#fef2f2', borderRadius: '0.5rem', border: '1px solid #ef4444'}}>
+<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>❌ Don't do this:</div>
+```jsx
+const [filtered, setFiltered] = useState([]);
+
+useEffect(() => {
+  setFiltered(items.filter(item => item.active));
+}, [items]);
+````
+
+</div>
+
+<div style={{padding: '1rem', backgroundColor: '#f0fdf4', borderRadius: '0.5rem', border: '1px solid #22c55e', overflowX: 'scroll'}}>
+<div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>✅ Do this instead:</div>
+```jsx
+// Calculate during render
+const filtered = items.filter(item => item.active)
+
+// Or use useMemo for expensive calculations
+const filtered = useMemo(() => {
+  return items.filter(item => item.active), [items]
+})
+
+```
+</div>
+
+</div>
+
+<Callout type="info" emoji="💡">
+Effects are for side effects, not for calculations you can do in render!
+</Callout>
+
+---
+
+Continue to [Part 2: Advanced Patterns and Best Practices](/javascript-guidebook-en/React-js/module-04/synchronizing-with-effects-overview/synchronizing-with-effects-advanced) to learn about:
+
+- 🔄 Effect Lifecycle and Dependencies
+- ⚡ Effects React to Reactive Values
+- 🖱️ Separating Events from Effects
+- ✂️ Removing Effect Dependencies
+- 🪝 Reusing Logic with Custom Hooks
+- 🛠️ Advanced Patterns
+- 🐛 Common Mistakes & Debugging
+-    Complete Reference
+
+```
