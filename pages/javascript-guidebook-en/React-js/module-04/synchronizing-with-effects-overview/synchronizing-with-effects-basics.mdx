@@ -162,23 +162,21 @@ useEffect(() => {
 function UserProfile({ userId }) {
   const [user, setUser] = useState(null)
 
-useEffect(
-() => {
-async function fetchUser() {
-const response = await fetch(`/api/users/${userId}`)
-const userData = await response.json()
-setUser(userData)
-}
+  useEffect(
+    () => {
+      async function fetchUser() {
+        const response = await fetch(`/api/users/${userId}`)
+        const userData = await response.json()
+        setUser(userData)
+      }
 
       fetchUser()
     },
     [userId],
+  )
 
-)
-
-return user ? <div>Hello, {user.name}!</div> : <div>Loading...</div>
+  return user ? <div>Hello, {user.name}!</div> : <div>Loading...</div>
 }
-
 ````
 </Tab>
 <Tab>
@@ -216,21 +214,20 @@ function LiveChat({ roomId }) {
 function StockPrice({ symbol }) {
   const [price, setPrice] = useState(null)
 
-useEffect(
-() => {
-const subscription = stockAPI.subscribe(symbol, setPrice)
-return () => subscription.unsubscribe()
-},
-[symbol],
-)
+  useEffect(
+    () => {
+      const subscription = stockAPI.subscribe(symbol, setPrice)
+      return () => subscription.unsubscribe()
+    },
+    [symbol],
+  )
 
-return (
-
-<div>
-  ${symbol}: ${price}
-</div>
-) }
-
+  return (
+    <div>
+      ${symbol}: ${price}
+    </div>
+  )
+}
 ````
 </Tab>
 </Tabs>
@@ -290,12 +287,10 @@ function KeyboardShortcuts({ onSave, onUndo }) {
       return () => document.removeEventListener('keydown', handleKeyDown)
     },
     [onSave, onUndo],
+  )
 
-)
-
-return null // This component just handles shortcuts
+  return null // This component just handles shortcuts
 }
-
 ````
 </Tab>
 <Tab>
@@ -339,18 +334,17 @@ function ScrollTracker() {
 function ExpensiveCalculation({ items, taxRate }) {
   const [total, setTotal] = useState(0)
 
-useEffect(
-() => {
-const subtotal = items.reduce((sum, item) => sum + item.price, 0)
-const totalWithTax = subtotal \* (1 + taxRate);
-setTotal(totalWithTax)
-},
-[items, taxRate],
-)
+  useEffect(
+    () => {
+      const subtotal = items.reduce((sum, item) => sum + item.price, 0)
+      const totalWithTax = subtotal \* (1 + taxRate);
+      setTotal(totalWithTax)
+    },
+    [items, taxRate],
+  )
 
-return <div>Total: ${total}</div>
+  return <div>Total: ${total}</div>
 }
-
 ````
 </Tab>
 
@@ -380,7 +374,7 @@ function ExpensiveCalculation({ items, taxRate }) {
     [items, taxRate],
   )
 
-return <div>Total: ${total}</div>
+  return <div>Total: ${total}</div>
 }
 
 ````
@@ -426,15 +420,14 @@ function SearchResults({ items, searchTerm }) {
     item.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-return (
-
-<ul>
-  {filteredItems.map((item) => (
-    <li key={item.id}>{item.name}</li>
-  ))}
-</ul>
-) }
-
+  return (
+    <ul>
+      {filteredItems.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  )
+}
 ````
 </Tab>
 
@@ -537,12 +530,15 @@ function RunOnce() {
 function RunOnChange({ userId }) {
   const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    console.log('User ID changed to:', userId)
+  useEffect(
+    () => {
+      console.log('User ID changed to:', userId)
 
-    // Fetch new user data
-    fetchUser(userId).then(setUser)
-  }, [userId]) // ← Runs when userId changes
+      // Fetch new user data
+      fetchUser(userId).then(setUser)
+    },
+    [userId],
+  ) // ← Runs when userId changes
 
   return <div>{user ? `Hello, ${user.name}!` : 'Loading user...'}</div>
 }
@@ -567,7 +563,7 @@ function Timer() {
 
     // Setup: Start the timer
     const intervalId = setInterval(() => {
-      setSeconds((prevSeconds) => prevSeconds + 1)
+      setSeconds(prevSeconds => prevSeconds + 1)
     }, 1000)
 
     // Cleanup function: Stop the timer
@@ -608,66 +604,75 @@ function WeatherApp() {
   const [units, setUnits] = useState('celsius')
 
   // Effect 1: Fetch weather data
-  useEffect(() => {
-    if (!location.trim()) {
-      setWeather(null)
-      return
-    }
-
-    setLoading(true)
-    setError(null)
-
-    // Use AbortController to cancel requests
-    const controller = new AbortController()
-
-    async function fetchWeather() {
-      try {
-        const response = await fetch(
-          `/api/weather?location=${encodeURIComponent(location)}&units=${units}`,
-          { signal: controller.signal },
-        )
-
-        if (!response.ok) {
-          throw new Error(`Weather service error: ${response.status}`)
-        }
-
-        const weatherData = await response.json()
-        setWeather(weatherData)
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          setError(err.message)
-        }
-      } finally {
-        setLoading(false)
+  useEffect(
+    () => {
+      if (!location.trim()) {
+        setWeather(null)
+        return
       }
-    }
 
-    fetchWeather()
+      setLoading(true)
+      setError(null)
 
-    // Cleanup: Cancel request if location or units change
-    return () => {
-      controller.abort()
-    }
-  }, [location, units])
+      // Use AbortController to cancel requests
+      const controller = new AbortController()
+
+      async function fetchWeather() {
+        try {
+          const response = await fetch(
+            `/api/weather?location=${encodeURIComponent(location)}&units=${units}`,
+            { signal: controller.signal },
+          )
+
+          if (!response.ok) {
+            throw new Error(`Weather service error: ${response.status}`)
+          }
+
+          const weatherData = await response.json()
+          setWeather(weatherData)
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            setError(err.message)
+          }
+        } finally {
+          setLoading(false)
+        }
+      }
+
+      fetchWeather()
+
+      // Cleanup: Cancel request if location or units change
+      return () => {
+        controller.abort()
+      }
+    },
+    [location, units],
+  )
 
   // Effect 2: Update document title
-  useEffect(() => {
-    if (weather) {
-      document.title = `${weather.temperature}° in ${location} - Weather App`
-    } else {
-      document.title = 'Weather App'
-    }
+  useEffect(
+    () => {
+      if (weather) {
+        document.title = `${weather.temperature}° in ${location} - Weather App`
+      } else {
+        document.title = 'Weather App'
+      }
 
-    // Cleanup: Reset title when component unmounts
-    return () => {
-      document.title = 'My App'
-    }
-  }, [weather, location])
+      // Cleanup: Reset title when component unmounts
+      return () => {
+        document.title = 'My App'
+      }
+    },
+    [weather, location],
+  )
 
   // Effect 3: Save user preferences
-  useEffect(() => {
-    localStorage.setItem('weatherApp_units', units)
-  }, [units])
+  useEffect(
+    () => {
+      localStorage.setItem('weatherApp_units', units)
+    },
+    [units],
+  )
 
   // Effect 4: Load saved preferences on mount
   useEffect(() => {
@@ -685,11 +690,11 @@ function WeatherApp() {
         <input
           type="text"
           value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          onChange={e => setLocation(e.target.value)}
           placeholder="Enter city name..."
         />
 
-        <select value={units} onChange={(e) => setUnits(e.target.value)}>
+        <select value={units} onChange={e => setUnits(e.target.value)}>
           <option value="celsius">Celsius</option>
           <option value="fahrenheit">Fahrenheit</option>
         </select>
@@ -699,19 +704,20 @@ function WeatherApp() {
 
       {error && <div className="error">❌ Error: {error}</div>}
 
-      {weather && !loading && (
-        <div className="weather-display">
-          <h2>{location}</h2>
-          <div className="temperature">
-            {weather.temperature}°{units === 'celsius' ? 'C' : 'F'}
+      {weather &&
+        !loading && (
+          <div className="weather-display">
+            <h2>{location}</h2>
+            <div className="temperature">
+              {weather.temperature}°{units === 'celsius' ? 'C' : 'F'}
+            </div>
+            <div className="condition">{weather.condition}</div>
+            <div className="details">
+              <p>Humidity: {weather.humidity}%</p>
+              <p>Wind: {weather.windSpeed} mph</p>
+            </div>
           </div>
-          <div className="condition">{weather.condition}</div>
-          <div className="details">
-            <p>Humidity: {weather.humidity}%</p>
-            <p>Wind: {weather.windSpeed} mph</p>
-          </div>
-        </div>
-      )}
+        )}
     </div>
   )
 }
@@ -756,19 +762,18 @@ Fetching data is a very common use case for effects. Here's how you do it safely
 useEffect(() => {
   let ignore = false
 
-fetch('/api/data')
-.then(res => res.json())
-.then(data => {
-if (!ignore) {
-setData(data)
-}
-})
+  fetch('/api/data')
+    .then(res => res.json())
+    .then(data => {
+      if (!ignore) {
+        setData(data)
+      }
+    })
 
-return () => {
-ignore = true
-}
+  return () => {
+    ignore = true
+  }
 }, [])
-
 ````
 </Tab>
 
@@ -808,9 +813,9 @@ function useFetch(url) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-useEffect(
-() => {
-const controller = new AbortController()
+  useEffect(
+    () => {
+      const controller = new AbortController()
 
       async function fetchData() {
         try {
@@ -834,19 +839,18 @@ const controller = new AbortController()
       return () => controller.abort()
     },
     [url],
+  )
 
-)
-
-return { data, loading, error }
+  return { data, loading, error }
 }
 
 // Usage:
 function MyComponent() {
-const { data, loading, error } = useFetch('/api/users')
+  const { data, loading, error } = useFetch('/api/users')
 
-if (loading) return <div>Loading...</div>
-if (error) return <div>Error: {error}</div>
-return <div>{JSON.stringify(data)}</div>
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
+  return <div>{JSON.stringify(data)}</div>
 }
 
 ````
@@ -869,11 +873,14 @@ If you're just transforming data for display, use rendering or memoization inste
 <div className="p-4 bg-red-50 rounded-lg border border-red-400 text-black">
 <div className="font-bold text-lg">❌ Don't do this:</div>
 ```jsx
-const [filtered, setFiltered] = useState([]);
+const [filtered, setFiltered] = useState([])
 
-useEffect(() => {
-  setFiltered(items.filter(item => item.active));
-}, [items]);
+useEffect(
+  () => {
+    setFiltered(items.filter(item => item.active))
+  },
+  [items],
+)
 ````
 
 </div>
@@ -886,7 +893,7 @@ const filtered = items.filter(item => item.active)
 
 // Or use useMemo for expensive calculations
 const filtered = useMemo(() => {
-return items.filter(item => item.active), [items]
+  return items.filter(item => item.active), [items]
 })
 
 ```
@@ -911,4 +918,3 @@ Continue to [Part 2: Advanced Patterns and Best Practices](/javascript-guidebook
 - 🐛 Common Mistakes & Debugging
 -    Complete Reference
 
-```
