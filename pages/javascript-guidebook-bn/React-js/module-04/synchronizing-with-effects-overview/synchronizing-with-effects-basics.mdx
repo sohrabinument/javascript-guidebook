@@ -1,82 +1,82 @@
 import { Callout, Tabs, Tab } from 'nextra/components'
 
-# 🔄 The Complete Guide to React Effects: Core Concepts & Fundamentals
+# 🔄 React Effects-এর সম্পূর্ণ গাইড: মূল ধারণা ও মৌলিক বিষয়াবলী
 
-_The first part of our comprehensive guide to mastering React's useEffect hook_
-
----
-
-## 📋 Table of Contents
-
-1. 🎯 What You'll Master
-2. 🌟 What Are Effects? (Overview)
-3. 🚦 When Should You Use Effects
-4. 📚 Learning Effects Step by Step
-5. 🎯 Real-World Examples
-6. 🔧 Handling Effects Firing Twice in Development
-7. 🌐 Fetching Data with Effects
-8. 🤷‍♂️ You Might Not Need an Effect
+_React-এর useEffect হুক আয়ত্ত করার জন্য আমাদের বিস্তৃত গাইডের প্রথম অংশ_
 
 ---
 
-## 🎯 What You'll Master
+## 📋 পাঠক্রমের তালিকা
 
-By the end of this first part, you'll be able to:
-
-- ✅ Write basic Effects that work correctly
-- 🐛 Debug common Effect problems
-- 🧠 Know when to use Effects and when to avoid them
-- 🌐 Handle basic data fetching
-- 🔄 Understand Effect lifecycles
+1. 🎯 আপনি যা আয়ত্ত করবেন
+2. 🌟 Effects কী? (সংক্ষিপ্ত বিবরণ)
+3. 🚦 কখন আপনার Effects ব্যবহার করা উচিত
+4. 📚 ধাপে ধাপে Effects শেখা
+5. 🎯 বাস্তব জীবনের উদাহরণ
+6. 🔧 Development-এ Effects দুইবার চালু হওয়ার সমস্যা সমাধান
+7. 🌐 Effects দিয়ে ডেটা আনা
+8. 🤷‍♂️ আপনার হয়তো Effect-এর প্রয়োজন নেই
 
 ---
 
-## 🌟 What Are Effects? (Overview)
+## 🎯 আপনি যা আয়ত্ত করবেন
 
-### 🤔 What Are Effects? (The Deep Explanation)
+এই প্রথম অংশের শেষে, আপনি সক্ষম হবেন:
 
-Effects are React's way of letting you perform **side effects** in functional components. But what exactly is a "side effect"?
+- ✅ সঠিকভাবে কাজ করে এমন মৌলিক Effects লিখতে
+- 🐛 সাধারণ Effect সমস্যাগুলো ডিবাগ করতে
+- 🧠 কখন Effects ব্যবহার করবেন এবং কখন এড়িয়ে চলবেন তা জানতে
+- 🌐 মৌলিক ডেটা আনার কাজ পরিচালনা করতে
+- 🔄 Effect-এর জীবনচক্র বুঝতে
 
-Think of your React component like a pure mathematical function:
+---
+
+## 🌟 Effects কী? (সংক্ষিপ্ত বিবরণ)
+
+### 🤔 Effects কী? (বিস্তারিত ব্যাখ্যা)
+
+Effects হলো React-এর একটি উপায় যার মাধ্যমে আপনি functional components-এ **side effects** সম্পাদন করতে পারেন। কিন্তু "side effect" আসলে কী?
+
+আপনার React component-কে একটি শুদ্ধ গাণিতিক ফাংশনের মতো ভাবুন:
 
 ```
 Component(props, state) → JSX
 ```
 
-A pure function:
+একটি শুদ্ধ ফাংশন:
 
-- ✅ Always returns the same output for the same input
-- ✅ Doesn't modify anything outside itself
-- ✅ Has no side effects
+- ✅ একই ইনপুটের জন্য সর্বদা একই আউটপুট প্রদান করে
+- ✅ নিজের বাইরে কিছু পরিবর্তন করে না
+- ✅ কোনো side effect নেই
 
-But real applications need to do "impure" things:
+কিন্তু বাস্তব অ্যাপ্লিকেশনগুলোতে "অশুদ্ধ" কাজ করতে হয়:
 
-- 🌐 Fetch data from servers
-- 👂 Listen to browser events
-- 📝 Update the document title
-- ⏰ Start timers
-- 📊 Log analytics events
+- 🌐 সার্ভার থেকে ডেটা আনা
+- 👂 ব্রাউজার ইভেন্ট শোনা
+- 📝 ডকুমেন্ট টাইটেল আপডেট করা
+- ⏰ টাইমার শুরু করা
+- 📊 অ্যানালিটিক্স ইভেন্ট লগ করা
 
-These are **side effects** because they affect something outside the pure render function.
+এগুলো **side effects** কারণ এরা শুদ্ধ রেন্ডার ফাংশনের বাইরে কিছু প্রভাবিত করে।
 
-### 🌍 The Two Worlds Visualization
+### 🌍 দুই জগতের ভিজ্যুয়ালাইজেশন
 
 <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center my-8 p-6 border-2 border-slate-200 rounded-xl bg-slate-50">
 
 <div className="p-6 bg-blue-100 rounded-lg border-2 border-blue-500">
-  <div className="font-bold text-xl text-slate-900">🌟 REACT WORLD</div>
+  <div className="font-bold text-xl text-slate-900">🌟 REACT-এর জগত</div>
   <ul className="text-sm mt-2 m-0 text-slate-700">
     <li>• Components</li>
-    <li>• Props & State</li>
+    <li>• Props ও State</li>
     <li>• JSX Elements</li>
     <li>• Event Handlers</li>
     <li>• Render Cycle</li>
     <li>• Virtual DOM</li>
   </ul>
   <div className="mt-4 text-xs text-emerald-600">
-    <div>✅ Predictable</div>
-    <div>✅ Pure Functions</div>
-    <div>✅ Testable</div>
+    <div>✅ পূর্বাভাসযোগ্য</div>
+    <div>✅ শুদ্ধ ফাংশন</div>
+    <div>✅ পরীক্ষাযোগ্য</div>
   </div>
 </div>
 
@@ -87,42 +87,39 @@ These are **side effects** because they affect something outside the pure render
 </div>
 
   <div className="p-6 bg-yellow-100 rounded-lg border-2 border-amber-500">
-    <div className="font-bold text-xl text-slate-900">🌍 OUTSIDE WORLD</div>
+    <div className="font-bold text-xl text-slate-900">🌍 বাইরের জগত</div>
     <ul className="text-sm mt-2 m-0 text-slate-700">
       <li>• REST APIs</li>
       <li>• WebSocket connections</li>
       <li>• Browser APIs</li>
       <li>• LocalStorage</li>
-      <li>• Timers & Intervals</li>
+      <li>• Timers ও Intervals</li>
       <li>• Analytics Services</li>
     </ul>
   </div>
 </div>
 
-### 🎭 The Theater Metaphor
+### 🎭 থিয়েটার রূপক
 
-Imagine React components as actors on a theater stage:
+React components-কে একটি থিয়েটার মঞ্চের অভিনেতা হিসেবে কল্পনা করুন:
 
-<Tabs items={['🎬 During Performance', '🎪 Behind the Scenes']}>
+<Tabs items={['🎬 পারফরম্যান্সের সময়', '🎪 মঞ্চের পেছনে']}>
   <Tab>
-    **During the Performance (Rendering):** - 🎭 Actors deliver their lines (JSX) - 🎪 Stage props
-    are arranged (state/props) - 📜 Everything is scripted and predictable
+    **পারফরম্যান্সের সময় (Rendering):** - 🎭 অভিনেতারা তাদের সংলাপ বলেন (JSX) - 🎪 মঞ্চের প্রপস সাজানো হয় (state/props) - 📜 সবকিছু স্ক্রিপ্ট অনুযায়ী এবং পূর্বাভাসযোগ্য
   </Tab>
   <Tab>
-    **Behind the Scenes (Effects):** - 💡 Lighting technicians adjust spotlights - 🔊 Sound
-    engineers manage audio levels - 🎪 Stagehands move props between scenes - 🎫 Box office sells
-    tickets (analytics) - 🔒 Security monitors the audience
+    **মঞ্চের পেছনে (Effects):** - 💡 আলো কর্মীরা স্পটলাইট সমন্বয় করেন - 🔊 সাউন্ড ইঞ্জিনিয়াররা অডিও লেভেল পরিচালনা করেন - 🎪 স্টেজহ্যান্ডরা দৃশ্যের মাঝে প্রপস সরান - 🎫 বক্স অফিস টিকিট বিক্রি করে (analytics) - 🔒 নিরাপত্তা দর্শকদের নজরদারি করে
   </Tab>
 </Tabs>
 
-Effects are like the backstage crew—they make everything work, but they don't interfere with the main performance.
+Effects-গুলো মঞ্চের পেছনের দলের মতো—তারা সবকিছু কাজ করায়, কিন্তু মূল পারফরম্যান্সে হস্তক্ষেপ করে না।
 
-### 📊 Effect Categories by Purpose
+### 📊 উদ্দেশ্য অনুযায়ী Effect-এর শ্রেণীবিভাগ
 
 <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 my-6">
 
 <div className="p-4 bg-sky-50 rounded-lg border border-sky-600">
-<div className="font-bold text-xl text-slate-900">🌐 Data Synchronization</div>
+<div className="font-bold text-xl text-slate-900">🌐 ডেটা সিঙ্ক্রোনাইজেশন</div>
 ```jsx
 useEffect(() => {
  fetchUserProfile(userId);
@@ -130,7 +127,7 @@ useEffect(() => {
 ```
 </div>
 <div className="p-4 bg-green-50 rounded-lg border border-green-600">
-<div className="font-bold text-xl text-slate-900">👂 Event Subscription</div>
+<div className="font-bold text-xl text-slate-900">👂 ইভেন্ট সাবস্ক্রিপশন</div>
 ```jsx
 useEffect(() => {
   window.addEventListener('resize', handleResize);
@@ -139,7 +136,7 @@ useEffect(() => {
 ```
 </div>
 <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-600">
-<div className="font-bold text-xl text-slate-900">⏰ Time-based Operations</div>
+<div className="font-bold text-xl text-slate-900">⏰ সময়-ভিত্তিক অপারেশন</div>
 ```jsx
 useEffect(() => {
   const timer = setInterval(updateClock, 1000);
@@ -150,13 +147,13 @@ useEffect(() => {
 </div>
 ---
 
-## 🚦 When Should You Use Effects
+## 🚦 কখন আপনার Effects ব্যবহার করা উচিত
 
-### ✅ Perfect Use Cases for Effects
+### ✅ Effects-এর জন্য নিখুঁত ব্যবহারের ক্ষেত্র
 
-#### 1. 🌐 Network Operations
+#### 1. 🌐 নেটওয়ার্ক অপারেশন
 
-<Tabs items={['API Data Fetching', 'WebSocket Connections', 'Real-time Subscriptions']}>
+<Tabs items={['API ডেটা আনা', 'WebSocket সংযোগ', 'রিয়েল-টাইম সাবস্ক্রিপশন']}>
 <Tab>
 ```jsx
 function UserProfile({ userId }) {
@@ -175,9 +172,9 @@ function UserProfile({ userId }) {
     [userId],
   )
 
-  return user ? <div>Hello, {user.name}!</div> : <div>Loading...</div>
+  return user ? <div>হ্যালো, {user.name}!</div> : <div>লোড হচ্ছে...</div>
 }
-````
+```
 </Tab>
 <Tab>
 ```jsx
@@ -206,7 +203,7 @@ function LiveChat({ roomId }) {
     </div>
   )
 }
-````
+```
 
 </Tab>
 <Tab>
@@ -228,13 +225,13 @@ function StockPrice({ symbol }) {
     </div>
   )
 }
-````
+```
 </Tab>
 </Tabs>
 
-#### 2. 🖱️ Browser Event Management
+#### 2. 🖱️ ব্রাউজার ইভেন্ট ব্যবস্থাপনা
 
-<Tabs items={['Window Events', 'Keyboard Shortcuts', 'Scroll Tracking']}>
+<Tabs items={['উইন্ডো ইভেন্ট', 'কীবোর্ড শর্টকাট', 'স্ক্রল ট্র্যাকিং']}>
 <Tab>
 ```jsx
 function WindowDimensions() {
@@ -248,7 +245,7 @@ function WindowDimensions() {
       })
     }
 
-    updateDimensions() // Set initial value
+    updateDimensions() // প্রাথমিক মান সেট করুন
     window.addEventListener('resize', updateDimensions)
 
     return () => window.removeEventListener('resize', updateDimensions)
@@ -260,7 +257,7 @@ function WindowDimensions() {
     </div>
   )
 }
-````
+```
 
 </Tab>
 <Tab>
@@ -289,9 +286,9 @@ function KeyboardShortcuts({ onSave, onUndo }) {
     [onSave, onUndo],
   )
 
-  return null // This component just handles shortcuts
+  return null // এই component শুধু শর্টকাট হ্যান্ডেল করে
 }
-````
+```
 </Tab>
 <Tab>
 ```jsx
@@ -309,84 +306,82 @@ function ScrollTracker() {
 
   return (
     <div className={`scroll-indicator ${scrollY > 100 ? 'scrolled' : ''}`}>
-      Scrolled: {scrollY}
-      px
+      স্ক্রল: {scrollY}px
     </div>
   )
 }
-````
+```
 
 </Tab>
 </Tabs>
 
-### ❌ When NOT to Use Effects
+### ❌ কখন Effects ব্যবহার করবেন না
 
 <Callout type="warning" emoji="⚠️">
-  **Common Anti-Pattern Alert!** Many developers overuse Effects. Here's when to avoid them:
+  **সাধারণ ভুল প্যাটার্ন সতর্কতা!** অনেক ডেভেলপার Effects অতিরিক্ত ব্যবহার করেন। এখানে কখন এড়িয়ে চলতে হবে:
 </Callout>
 
-#### 1. 🧮 Calculating Values from Props/State
+#### 1. 🧮 Props/State থেকে মান গণনা করা
 
-<Tabs items={['❌ Wrong Way', '✅ Right Way', '✅ For Expensive Calculations']}>
+<Tabs items={['❌ ভুল উপায়', '✅ সঠিক উপায়', '✅ ব্যয়বহুল গণনার জন্য']}>
 <Tab>
 ```jsx
-// ❌ DON'T DO THIS - Unnecessary Effect
+// ❌ এটি করবেন না - অপ্রয়োজনীয় Effect
 function ExpensiveCalculation({ items, taxRate }) {
   const [total, setTotal] = useState(0)
 
   useEffect(
     () => {
       const subtotal = items.reduce((sum, item) => sum + item.price, 0)
-      const totalWithTax = subtotal \* (1 + taxRate);
+      const totalWithTax = subtotal * (1 + taxRate);
       setTotal(totalWithTax)
     },
     [items, taxRate],
   )
 
-  return <div>Total: ${total}</div>
+  return <div>মোট: ${total}</div>
 }
-````
+```
 </Tab>
 
 <Tab>
 ```jsx
-// ✅ DO THIS INSTEAD - Calculate during render
+// ✅ এর পরিবর্তে এটি করুন - রেন্ডারের সময় গণনা করুন
 function ExpensiveCalculation({ items, taxRate }) {
-  // This calculation happens during render - no Effect needed!
+  // এই গণনা রেন্ডারের সময় ঘটে - কোনো Effect প্রয়োজন নেই!
   const subtotal = items.reduce((sum, item) => sum + item.price, 0)
   const total = subtotal * (1 + taxRate)
 
-  return <div>Total: ${total}</div>
+  return <div>মোট: ${total}</div>
 }
-````
+```
 
 </Tab>
 <Tab>
 ```jsx
-// ✅ FOR EXPENSIVE CALCULATIONS - Use useMemo
+// ✅ ব্যয়বহুল গণনার জন্য - useMemo ব্যবহার করুন
 function ExpensiveCalculation({ items, taxRate }) {
   const total = useMemo(
     () => {
-      console.log('Calculating total...') // Only runs when inputs change
+      console.log('মোট গণনা করা হচ্ছে...') // শুধুমাত্র ইনপুট পরিবর্তনের সময় চলে
       const subtotal = items.reduce((sum, item) => sum + item.price, 0)
       return subtotal * (1 + taxRate)
     },
     [items, taxRate],
   )
 
-  return <div>Total: ${total}</div>
+  return <div>মোট: ${total}</div>
 }
-
-````
+```
 </Tab>
 </Tabs>
 
-#### 2. 🎨 Transforming Data for Rendering
+#### ২. 🎨 রেন্ডারিংয়ের জন্য ডেটা রূপান্তর
 
-<Tabs items={['❌ Wrong Way', '✅ Right Way', '✅ With Optimization']}>
+<Tabs items={['❌ ভুল উপায়', '✅ সঠিক উপায়', '✅ অপ্টিমাইজেশন সহ']}>
 <Tab>
 ```jsx
-// ❌ DON'T DO THIS
+// ❌ এটি করবেন না
 function SearchResults({ items, searchTerm }) {
   const [filteredItems, setFilteredItems] = useState([])
 
@@ -408,14 +403,14 @@ function SearchResults({ items, searchTerm }) {
     </ul>
   )
 }
-````
+```
 
 </Tab>
 <Tab>
 ```jsx
-// ✅ DO THIS INSTEAD
+// ✅ এর পরিবর্তে এটি করুন
 function SearchResults({ items, searchTerm }) {
-  // Filter during render - no Effect needed!
+  // রেন্ডারের সময় ফিল্টার করুন - কোনো Effect প্রয়োজন নেই!
   const filteredItems = items.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
@@ -428,12 +423,12 @@ function SearchResults({ items, searchTerm }) {
     </ul>
   )
 }
-````
+```
 </Tab>
 
 <Tab>
 ```jsx
-// ✅ FOR EXPENSIVE FILTERING - Use useMemo
+// ✅ ব্যয়বহুল ফিল্টারিংয়ের জন্য - useMemo ব্যবহার করুন
 function SearchResults({ items, searchTerm }) {
   const filteredItems = useMemo(
     () => {
@@ -450,18 +445,18 @@ function SearchResults({ items, searchTerm }) {
     </ul>
   )
 }
-````
+```
 
 </Tab>
 </Tabs>
 
 ---
 
-## 📚 Learning Effects Step by Step
+## 📚 ধাপে ধাপে Effects শেখা
 
-### Step 1: Your First Effect
+### ধাপ ১: আপনার প্রথম Effect
 
-Let's start with the absolute basics:
+চলুন একদম মৌলিক বিষয় দিয়ে শুরু করি:
 
 ```jsx
 import { useEffect, useState } from 'react'
@@ -469,15 +464,15 @@ import { useEffect, useState } from 'react'
 function MyFirstEffect() {
   const [count, setCount] = useState(0)
 
-  // This Effect runs after every render
+  // এই Effect প্রতি রেন্ডারের পরে চলে
   useEffect(() => {
-    console.log('Effect ran! Count is:', count)
+    console.log('Effect চললো! Count হল:', count)
   })
 
   return (
     <div>
       <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count + 1)}>বৃদ্ধি করুন</button>
     </div>
   )
 }
@@ -485,46 +480,45 @@ function MyFirstEffect() {
 
 <div className="p-4 bg-sky-50 dark:bg-sky-50 rounded-lg border border-sky-300 dark:border-sky-300 my-4 text-black">
 
-**🔍 What happens when you run this?**
+**🔍 এটি চালালে কী হয়?**
 
-1. Component renders → Shows "Count: 0"
-2. Effect runs → Logs "Effect ran! Count is: 0"
-3. You click button → `setCount(1)` → Component re-renders
-4. Effect runs again → Logs "Effect ran! Count is: 1"
+1. কম্পোনেন্ট রেন্ডার হয় → "Count: 0" দেখায়
+2. Effect চলে → "Effect চললো! Count হল: 0" লগ করে
+3. আপনি বাটনে ক্লিক করেন → `setCount(1)` → কম্পোনেন্ট পুনরায় রেন্ডার হয়
+4. Effect আবার চলে → "Effect চললো! Count হল: 1" লগ করে
 
-**💡 Key Learning**: By default, Effects run after every render!
+**💡 মূল শিক্ষা**: ডিফল্টভাবে, Effects প্রতি রেন্ডারের পরে চলে!
 
 </div>
 
-### Step 2: Controlling When Effects Run
+### ধাপ ২: Effects কখন চলবে তা নিয়ন্ত্রণ করা
 
-Running after every render is usually too much. Here's how to control it:
+প্রতি রেন্ডারের পরে চালানো সাধারণত অতিরিক্ত। এটি কীভাবে নিয়ন্ত্রণ করবেন:
 
-#### Pattern A: Run Only Once (On Mount)
+#### প্যাটার্ন ক: শুধুমাত্র একবার চালান (Mount এ)
 
 ```jsx
 function RunOnce() {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    console.log('This only runs once when component mounts!')
+    console.log('এটি শুধুমাত্র কম্পোনেন্ট মাউন্ট হওয়ার সময় একবার চলে!')
 
-    // Simulate API call
+    // API কল সিমুলেট করা
     setTimeout(() => {
-      setData('Data loaded!')
+      setData('ডেটা লোড হয়েছে!')
     }, 2000)
-  }, []) // ← Empty dependency array
+  }, []) // ← খালি dependency array
 
-  return <div>{data || 'Loading...'}</div>
+  return <div>{data || 'লোড হচ্ছে...'}</div>
 }
 ```
 
 <Callout type="info" emoji="📝">
-  **The empty array `[]` means**: "This Effect has no dependencies, so run it only once when the
-  component mounts."
+  **খালি array `[]` মানে**: "এই Effect এর কোনো dependency নেই, তাই কম্পোনেন্ট মাউন্ট হওয়ার সময় শুধুমাত্র একবার চালান।"
 </Callout>
 
-#### Pattern B: Run When Specific Values Change
+#### প্যাটার্ন খ: নির্দিষ্ট মান পরিবর্তিত হলে চালান
 
 ```jsx
 function RunOnChange({ userId }) {
@@ -532,68 +526,68 @@ function RunOnChange({ userId }) {
 
   useEffect(
     () => {
-      console.log('User ID changed to:', userId)
+      console.log('User ID পরিবর্তিত হয়েছে:', userId)
 
-      // Fetch new user data
+      // নতুন ব্যবহারকারীর ডেটা আনুন
       fetchUser(userId).then(setUser)
     },
     [userId],
-  ) // ← Runs when userId changes
+  ) // ← userId পরিবর্তিত হলে চলে
 
-  return <div>{user ? `Hello, ${user.name}!` : 'Loading user...'}</div>
+  return <div>{user ? `হ্যালো, ${user.name}!` : 'ব্যবহারকারী লোড হচ্ছে...'}</div>
 }
 ```
 
 <Callout type="info" emoji="🔄">
-  **The dependency array `[userId]` means**: "Run this Effect whenever `userId` changes."
+  **dependency array `[userId]` মানে**: "যখনই `userId` পরিবর্তিত হয় তখন এই Effect চালান।"
 </Callout>
 
-### Step 3: Cleanup (The Most Important Concept!)
+### ধাপ ৩: ক্লিনআপ (সবচেয়ে গুরুত্বপূর্ণ ধারণা!)
 
-Many Effects need to "clean up" after themselves. This prevents memory leaks and bugs.
+অনেক Effects নিজেদের পরে "পরিষ্কার" করতে হয়। এটি মেমরি লিক এবং বাগ প্রতিরোধ করে।
 
-#### Basic Cleanup Example
+#### মৌলিক ক্লিনআপ উদাহরণ
 
 ```jsx
 function Timer() {
   const [seconds, setSeconds] = useState(0)
 
   useEffect(() => {
-    console.log('⚡ Setting up timer')
+    console.log('⚡ টাইমার সেট আপ করা হচ্ছে')
 
-    // Setup: Start the timer
+    // সেটআপ: টাইমার শুরু করুন
     const intervalId = setInterval(() => {
       setSeconds(prevSeconds => prevSeconds + 1)
     }, 1000)
 
-    // Cleanup function: Stop the timer
+    // ক্লিনআপ ফাংশন: টাইমার বন্ধ করুন
     return () => {
-      console.log('🧹 Cleaning up timer')
+      console.log('🧹 টাইমার পরিষ্কার করা হচ্ছে')
       clearInterval(intervalId)
     }
-  }, []) // Run once
+  }, []) // একবার চালান
 
-  return <div>Timer: {seconds} seconds</div>
+  return <div>টাইমার: {seconds} সেকেন্ড</div>
 }
 ```
 
 <div className="p-4 bg-amber-100 rounded-lg border border-amber-500 my-4 text-black">
 
-**🔍 What happens here?**
+**🔍 এখানে কী হয়?**
 
-1. Component mounts → "Setting up timer" → Timer starts
-2. Every second → Timer increments `seconds`
-3. Component unmounts → "Cleaning up timer" → Timer stops
+1. কম্পোনেন্ট মাউন্ট হয় → "টাইমার সেট আপ করা হচ্ছে" → টাইমার শুরু হয়
+2. প্রতি সেকেন্ডে → টাইমার `seconds` বৃদ্ধি করে
+3. কম্পোনেন্ট আনমাউন্ট হয় → "টাইমার পরিষ্কার করা হচ্ছে" → টাইমার বন্ধ হয়
 
-**⚠️ Without cleanup**: Timer would run forever, even after component is gone! 💥
+**⚠️ ক্লিনআপ ছাড়া**: টাইমার চিরকাল চলতে থাকবে, কম্পোনেন্ট চলে যাওয়ার পরেও! 💥
 
 </div>
 
 ---
 
-## 🎯 Real-World Examples
+## 🎯 বাস্তব জীবনের উদাহরণ
 
-### Example 1: Complete Weather App
+### উদাহরণ ১: সম্পূর্ণ আবহাওয়া অ্যাপ
 
 ```jsx
 function WeatherApp() {
@@ -603,7 +597,7 @@ function WeatherApp() {
   const [error, setError] = useState(null)
   const [units, setUnits] = useState('celsius')
 
-  // Effect 1: Fetch weather data
+  // Effect ১: আবহাওয়ার ডেটা আনুন
   useEffect(
     () => {
       if (!location.trim()) {
@@ -614,7 +608,7 @@ function WeatherApp() {
       setLoading(true)
       setError(null)
 
-      // Use AbortController to cancel requests
+      // রিকুয়েস্ট বাতিল করতে AbortController ব্যবহার করুন
       const controller = new AbortController()
 
       async function fetchWeather() {
@@ -625,7 +619,7 @@ function WeatherApp() {
           )
 
           if (!response.ok) {
-            throw new Error(`Weather service error: ${response.status}`)
+            throw new Error(`আবহাওয়া সেবা ত্রুটি: ${response.status}`)
           }
 
           const weatherData = await response.json()
@@ -641,7 +635,7 @@ function WeatherApp() {
 
       fetchWeather()
 
-      // Cleanup: Cancel request if location or units change
+      // ক্লিনআপ: স্থান বা একক পরিবর্তিত হলে রিকুয়েস্ট বাতিল করুন
       return () => {
         controller.abort()
       }
@@ -649,24 +643,24 @@ function WeatherApp() {
     [location, units],
   )
 
-  // Effect 2: Update document title
+  // Effect ২: ডকুমেন্ট টাইটেল আপডেট করুন
   useEffect(
     () => {
       if (weather) {
-        document.title = `${weather.temperature}° in ${location} - Weather App`
+        document.title = `${weather.temperature}° in ${location} - আবহাওয়া অ্যাপ`
       } else {
-        document.title = 'Weather App'
+        document.title = 'আবহাওয়া অ্যাপ'
       }
 
-      // Cleanup: Reset title when component unmounts
+      // ক্লিনআপ: কম্পোনেন্ট আনমাউন্ট হলে টাইটেল রিসেট করুন
       return () => {
-        document.title = 'My App'
+        document.title = 'আমার অ্যাপ'
       }
     },
     [weather, location],
   )
 
-  // Effect 3: Save user preferences
+  // Effect ৩: ব্যবহারকারীর পছন্দ সংরক্ষণ করুন
   useEffect(
     () => {
       localStorage.setItem('weatherApp_units', units)
@@ -674,35 +668,35 @@ function WeatherApp() {
     [units],
   )
 
-  // Effect 4: Load saved preferences on mount
+  // Effect ৪: মাউন্টের সময় সংরক্ষিত পছন্দ লোড করুন
   useEffect(() => {
     const savedUnits = localStorage.getItem('weatherApp_units')
     if (savedUnits) {
       setUnits(savedUnits)
     }
-  }, []) // Run once on mount
+  }, []) // মাউন্টে একবার চালান
 
   return (
     <div className="weather-app">
-      <h1>🌤️ Weather App</h1>
+      <h1>🌤️ আবহাওয়া অ্যাপ</h1>
 
       <div className="controls">
         <input
           type="text"
           value={location}
           onChange={e => setLocation(e.target.value)}
-          placeholder="Enter city name..."
+          placeholder="শহরের নাম লিখুন..."
         />
 
         <select value={units} onChange={e => setUnits(e.target.value)}>
-          <option value="celsius">Celsius</option>
-          <option value="fahrenheit">Fahrenheit</option>
+          <option value="celsius">সেলসিয়াস</option>
+          <option value="fahrenheit">ফারেনহাইট</option>
         </select>
       </div>
 
-      {loading && <div className="loading">🌀 Loading weather...</div>}
+      {loading && <div className="loading">🌀 আবহাওয়া লোড হচ্ছে...</div>}
 
-      {error && <div className="error">❌ Error: {error}</div>}
+      {error && <div className="error">❌ ত্রুটি: {error}</div>}
 
       {weather &&
         !loading && (
@@ -713,8 +707,8 @@ function WeatherApp() {
             </div>
             <div className="condition">{weather.condition}</div>
             <div className="details">
-              <p>Humidity: {weather.humidity}%</p>
-              <p>Wind: {weather.windSpeed} mph</p>
+              <p>আর্দ্রতা: {weather.humidity}%</p>
+              <p>বাতাস: {weather.windSpeed} mph</p>
             </div>
           </div>
         )}
@@ -725,38 +719,37 @@ function WeatherApp() {
 
 ---
 
-## 🔧 Handling Effects Firing Twice in Development
+## 🔧 ডেভেলপমেন্টে Effects দুইবার চালানো পরিচালনা
 
 <Callout type="info" emoji="🧪">
-  In React Strict Mode, Effects run twice on mount to help you catch bugs. This only happens in
-  development!
+  React Strict Mode এ, বাগ ধরতে সহায়তার জন্য Effects মাউন্টে দুইবার চলে। এটি শুধুমাত্র ডেভেলপমেন্টে হয়!
 </Callout>
 
 ```jsx
 useEffect(() => {
-  // This will run twice in Strict Mode (dev only)
-  console.log('Effect running...')
+  // এটি Strict Mode এ দুইবার চলবে (শুধু dev এ)
+  console.log('Effect চলছে...')
 
   return () => {
-    // Cleanup runs twice too!
-    console.log('Cleanup running...')
+    // ক্লিনআপও দুইবার চলে!
+    console.log('ক্লিনআপ চলছে...')
   }
 }, [])
 ```
 
-**Why does React do this?** It helps you find Effects that aren't properly cleaned up. If your Effect causes problems when run twice, you probably need better cleanup!
+**React কেন এটি করে?** এটি আপনাকে এমন Effects খুঁজে পেতে সাহায্য করে যেগুলো সঠিকভাবে পরিষ্কার করা হয়নি। যদি আপনার Effect দুইবার চালানোতে সমস্যা হয়, তাহলে সম্ভবত আপনার আরও ভালো ক্লিনআপ প্রয়োজন!
 
 <Callout type="warning" emoji="⚠️">
-  Add cleanup functions to avoid memory leaks or duplicate subscriptions.
+  মেমরি লিক বা ডুপ্লিকেট সাবস্ক্রিপশন এড়াতে ক্লিনআপ ফাংশন যোগ করুন।
 </Callout>
 
 ---
 
-## 🌐 Fetching Data with Effects
+## 🌐 Effects দিয়ে ডেটা আনা
 
-Fetching data is a very common use case for effects. Here's how you do it safely:
+ডেটা আনা effects এর জন্য একটি খুবই সাধারণ ব্যবহার। এভাবে নিরাপদে করবেন:
 
-<Tabs items={['Basic Pattern', 'With AbortController', 'With Custom Hook']}>
+<Tabs items={['মৌলিক প্যাটার্ন', 'AbortController সহ', 'কাস্টম হুক সহ']}>
 <Tab>
 ```jsx
 useEffect(() => {
@@ -774,7 +767,7 @@ useEffect(() => {
     ignore = true
   }
 }, [])
-````
+```
 </Tab>
 
 <Tab>
@@ -802,7 +795,7 @@ useEffect(() => {
     controller.abort()
   }
 }, [])
-````
+```
 
 </Tab>
 
@@ -844,34 +837,33 @@ function useFetch(url) {
   return { data, loading, error }
 }
 
-// Usage:
+// ব্যবহার:
 function MyComponent() {
   const { data, loading, error } = useFetch('/api/users')
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error}</div>
+  if (loading) return <div>লোড হচ্ছে...</div>
+  if (error) return <div>ত্রুটি: {error}</div>
   return <div>{JSON.stringify(data)}</div>
 }
-
-````
+```
 
 </Tab>
 </Tabs>
 
 <Callout type="warning" emoji="⚠️">
-Always clean up async effects to avoid setting state on unmounted components!
+আনমাউন্ট হওয়া কম্পোনেন্টে স্টেট সেট করা এড়াতে সর্বদা async effects পরিষ্কার করুন!
 </Callout>
 
 ---
 
-## 🤷‍♂️ You Might Not Need an Effect
+## 🤷‍♂️ আপনার Effect এর প্রয়োজন নাও হতে পারে
 
-If you're just transforming data for display, use rendering or memoization instead of Effects.
+যদি আপনি শুধুমাত্র প্রদর্শনের জন্য ডেটা রূপান্তর করছেন, তাহলে Effects এর পরিবর্তে রেন্ডারিং বা মেমোইজেশন ব্যবহার করুন।
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
 
 <div className="p-4 bg-red-50 rounded-lg border border-red-400 text-black">
-<div className="font-bold text-lg">❌ Don't do this:</div>
+<div className="font-bold text-lg">❌ এটি করবেন না:</div>
 ```jsx
 const [filtered, setFiltered] = useState([])
 
@@ -881,40 +873,38 @@ useEffect(
   },
   [items],
 )
-````
+```
 
 </div>
 
 <div className="p-4 bg-green-50 rounded-lg border border-green-500 overflow-x-auto text-black">
-<div className="font-bold text-lg">✅ Do this instead:</div>
+<div className="font-bold text-lg">✅ এর পরিবর্তে এটি করুন:</div>
 ```jsx
-// Calculate during render
+// রেন্ডারের সময় গণনা করুন
 const filtered = items.filter(item => item.active)
 
-// Or use useMemo for expensive calculations
+// অথবা ব্যয়বহুল গণনার জন্য useMemo ব্যবহার করুন
 const filtered = useMemo(() => {
   return items.filter(item => item.active), [items]
 })
-
 ```
 </div>
 
 </div>
 
 <Callout type="info" emoji="💡">
-Effects are for side effects, not for calculations you can do in render!
+Effects সাইড ইফেক্ট এর জন্য, রেন্ডারে করা যায় এমন গণনার জন্য নয়!
 </Callout>
 
 ---
 
-Continue to [Part 2: Advanced Patterns and Best Practices](/javascript-guidebook-en/React-js/module-04/synchronizing-with-effects-overview/synchronizing-with-effects-advanced) to learn about:
+পার্ট ২: [উন্নত প্যাটার্ন ও সর্বোত্তম অনুশীলনে](/javascript-guidebook-bn/React-js/module-04/synchronizing-with-effects-overview/synchronizing-with-effects-advanced) এগিয়ে যান, যেখানে আপনি জানতে পারবেন:
 
-- 🔄 Effect Lifecycle and Dependencies
-- ⚡ Effects React to Reactive Values
-- 🖱️ Separating Events from Effects
-- ✂️ Removing Effect Dependencies
-- 🪝 Reusing Logic with Custom Hooks
-- 🛠️ Advanced Patterns
-- 🐛 Common Mistakes & Debugging
--    Complete Reference
-
+- 🔄 Effect জীবনচক্র এবং Dependencies 
+- ⚡ Effects রিঅ্যাক্টিভ মানের সাথে প্রতিক্রিয়া করে
+- 🖱️ Effects থেকে ইভেন্ট আলাদা করা
+- ✂️ Effect Dependencies অপসারণ
+- 🪝 কাস্টম হুক দিয়ে লজিক পুনরায় ব্যবহার
+- 🛠️ উন্নত প্যাটার্ন
+- 🐛 সাধারণ ভুল এবং ডিবাগিং
+- সম্পূর্ণ রেফারেন্স
